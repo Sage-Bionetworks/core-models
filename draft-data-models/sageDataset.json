@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "includedInDataCatalog": {
+      "description": "A data catalog which contains this dataset. Supersedes includedDataCatalog, catalog. Inverse property: dataset.",
+      "$ref": "https://schema.org/DataCatalog"
+    },
+    "measurementTechnique": {
+      "description": "A technique, method, or technology used in an Observation, StatisticalVariable, or Dataset. This property helps clarify how a measuredProperty was measured.",
+      "oneOf": [
+        { "type": "string", "description": "Text" },
+        { "$ref": "https://schema.org/DefinedTerm" },
+        { "type": "string", "format": "url", "description": "URL" }
+      ]
+    },
+    "citation": {
+      "description": "A citation or reference to another creative work, such as another publication, web page, or scholarly article.",
+      "oneOf": [
+        { "$ref": "https://schema.org/CreativeWork" },
+        { "type": "string", "description": "Text" }
+      ]
+    },
+    "conditionsOfAccess": {
+      "description": "Conditions that affect the availability of or access to an item. This property is expressed in natural language and is not suitable for use as a general web access control mechanism.",
+      "type": "string"
+    },
+    "creator": {
+      "description": "The creator or author of this CreativeWork. This is the same as the Author property for CreativeWork.",
+      "oneOf": [
+        { "$ref": "https://schema.org/Organization" },
+        { "$ref": "https://schema.org/Person" }
+      ]
+    },
+    "dateCreated": {
+      "description": "The date on which the CreativeWork was created or the item was added to a DataFeed.",
+      "oneOf": [
+        { "type": "string", "format": "date" },
+        { "type": "string", "format": "date-time" }
+      ]
+    },
+    "dateModified": {
+      "description": "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.",
+      "oneOf": [
+        { "type": "string", "format": "date" },
+        { "type": "string", "format": "date-time" }
+      ]
+    },
+    "datePublished": {
+      "description": "The date of first publication or broadcast of the CreativeWork.",
+      "oneOf": [
+        { "type": "string", "format": "date" },
+        { "type": "string", "format": "date-time" }
+      ]
+    },
+    "keywords": {
+      "description": "Keywords or tags used to describe the item. Multiple entries are typically delimited by commas.",
+      "oneOf": [
+        { "type": "string" },
+        { "$ref": "https://schema.org/DefinedTerm" },
+        { "type": "string", "format": "url" }
+      ]
+    },
+    "maintainer": {
+      "description": "A maintainer of a Dataset or software package. This is a Person or Organization that manages contributions or publication of the artifact.",
+      "oneOf": [
+        { "$ref": "https://schema.org/Organization" },
+        { "$ref": "https://schema.org/Person" }
+      ]
+    },
+    "alternateName": {
+      "description": "An alias or alternative name for the item.",
+      "type": "string"
+    },
+    "description": {
+      "description": "A description of the item.",
+      "oneOf": [
+        { "type": "string" },
+        { "$ref": "https://schema.org/TextObject" }
+      ]
+    }
+  },
+  "required": ["description", "creator", "dateCreated"]
+}
+
