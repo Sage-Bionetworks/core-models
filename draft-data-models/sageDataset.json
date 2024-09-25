@@ -1,142 +1,67 @@
 {
-  "schema": {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-      "name": {
-        "description": "The name of the dataset or item.",
-        "type": "string"
-      },
-      "alternateName": {
-        "description": "An alias or alternative name for the item.",
-        "type": "string"
-      },
-      "description": {
-        "description": "A description of the item.",
-        "type": "string"
-      },
-      "keywords": {
-        "description": "Keywords or tags used to describe the item. Multiple entries are typically delimited by commas.",
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
+  "@context": {
+    "name": "https://schema.org/name",
+    "alternateName": "https://schema.org/alternateName",
+    "description": "https://schema.org/description",
+    "keywords": "https://schema.org/keywords",
+    "creator": "https://schema.org/creator",
+    "maintainer": "https://schema.org/maintainer",
+    "dateCreated": "https://schema.org/dateCreated",
+    "dateModified": "https://schema.org/dateModified",
+    "datePublished": "https://schema.org/datePublished",
+    "includedInDataCatalog": "https://schema.org/includedInDataCatalog",
+    "citation": "https://schema.org/citation",
+    "conditionsOfAccess": "https://schema.org/conditionsOfAccess",
+    "measurementTechnique": "https://schema.org/measurementTechnique",
+    "Person": "https://schema.org/Person",
+    "Organization": "https://schema.org/Organization",
+    "DataCatalog": "https://schema.org/DataCatalog",
+    "email": "https://schema.org/email",
+    "url": "https://schema.org/url"
+  },
+  "@graph": [
+    {
+      "@id": "http://example.com/dataset/1",
+      "@type": "Dataset",
+      "name": "Example Dataset",
+      "alternateName": "Sample Dataset",
+      "description": "This is a sample description for the dataset.",
+      "keywords": ["data", "science", "research"],
       "creator": {
-        "description": "The creator or author of this CreativeWork. This can be either an individual or an organization.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the creator."
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "Person",
-              "Organization"
-            ],
-            "description": "The type of creator, either 'Person' or 'Organization'."
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "The URL associated with the creator (if applicable)."
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "The email of the creator (if applicable)."
-          }
-        },
-        "required": [
-          "name",
-          "type"
-        ]
+        "@id": "http://example.com/person/1"
       },
       "maintainer": {
-        "description": "A maintainer of a Dataset or software package. This is a Person or Organization that manages contributions or publication of the artifact.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the maintainer."
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "Person",
-              "Organization"
-            ],
-            "description": "The type of maintainer, either 'Person' or 'Organization'."
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "The URL associated with the maintainer (if applicable)."
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "The email of the maintainer (if applicable)."
-          }
-        },
-        "required": [
-          "name",
-          "type"
-        ]
+        "@id": "http://example.com/org/1"
       },
-      "dateCreated": {
-        "description": "The date on which the CreativeWork was created or the item was added to a DataFeed.",
-        "type": "string",
-        "format": "date"
-      },
-      "dateModified": {
-        "description": "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.",
-        "type": "string",
-        "format": "date"
-      },
-      "datePublished": {
-        "description": "The date of first publication or broadcast of the CreativeWork.",
-        "type": "string",
-        "format": "date"
-      },
+      "dateCreated": "2024-09-01",
+      "dateModified": "2024-09-10",
+      "datePublished": "2024-09-15",
       "includedInDataCatalog": {
-        "description": "A data catalog which contains this dataset. Supersedes includedDataCatalog, catalog.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the data catalog."
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "The URL of the data catalog."
-          }
-        },
-        "required": [
-          "name"
-        ]
+        "@id": "http://example.com/datacatalog/1"
       },
-      "citation": {
-        "description": "A citation or reference to another creative work, such as another publication, web page, or scholarly article.",
-        "type": "string"
-      },
-      "conditionsOfAccess": {
-        "description": "Conditions that affect the availability of or access to an item. This property is expressed in natural language.",
-        "type": "string"
-      },
-      "measurementTechnique": {
-        "description": "A technique, method, or technology used in an Observation, StatisticalVariable, or Dataset. This property helps clarify how a measuredProperty was measured.",
-        "type": "string"
-      }
+      "citation": "Doe, J. (2023). Example Citation. Journal of Examples.",
+      "conditionsOfAccess": "Accessible only from logged-in accounts.",
+      "measurementTechnique": "mass spectrometry"
     },
-    "required": [
-      "name",
-      "description",
-      "creator",
-      "dateCreated"
-    ]
-  }
+    {
+      "@id": "http://example.com/person/1",
+      "@type": "Person",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "url": "https://example.com/johndoe"
+    },
+    {
+      "@id": "http://example.com/org/1",
+      "@type": "Organization",
+      "name": "Example Organization",
+      "email": "info@example.com",
+      "url": "https://example.com"
+    },
+    {
+      "@id": "http://example.com/datacatalog/1",
+      "@type": "DataCatalog",
+      "name": "Example Data Catalog",
+      "url": "https://example.com/datacatalog"
+    }
+  ]
 }
