@@ -1,67 +1,121 @@
 {
-  "@context": {
-    "name": "https://schema.org/name",
-    "alternateName": "https://schema.org/alternateName",
-    "description": "https://schema.org/description",
-    "keywords": "https://schema.org/keywords",
-    "creator": "https://schema.org/creator",
-    "maintainer": "https://schema.org/maintainer",
-    "dateCreated": "https://schema.org/dateCreated",
-    "dateModified": "https://schema.org/dateModified",
-    "datePublished": "https://schema.org/datePublished",
-    "includedInDataCatalog": "https://schema.org/includedInDataCatalog",
-    "citation": "https://schema.org/citation",
-    "conditionsOfAccess": "https://schema.org/conditionsOfAccess",
-    "measurementTechnique": "https://schema.org/measurementTechnique",
-    "Person": "https://schema.org/Person",
-    "Organization": "https://schema.org/Organization",
-    "DataCatalog": "https://schema.org/DataCatalog",
-    "email": "https://schema.org/email",
-    "url": "https://schema.org/url"
-  },
-  "@graph": [
-    {
-      "@id": "http://example.com/dataset/1",
-      "@type": "Dataset",
-      "name": "Example Dataset",
-      "alternateName": "Sample Dataset",
-      "description": "This is a sample description for the dataset.",
-      "keywords": ["data", "science", "research"],
-      "creator": {
-        "@id": "http://example.com/person/1"
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/org.synapse.nf-portaldataset",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "The name of the dataset."
       },
-      "maintainer": {
-        "@id": "http://example.com/org/1"
+      "description": {
+        "type": "string",
+        "description": "A description of the dataset."
       },
-      "dateCreated": "2024-09-01",
-      "dateModified": "2024-09-10",
-      "datePublished": "2024-09-15",
+      "alternateName": {
+        "type": "string",
+        "description": "An alternative name for the dataset."
+      },
       "includedInDataCatalog": {
-        "@id": "http://example.com/datacatalog/1"
+        "type": "string",
+        "description": "The data catalog that includes this dataset."
       },
-      "citation": "Doe, J. (2023). Example Citation. Journal of Examples.",
-      "conditionsOfAccess": "Accessible only from logged-in accounts.",
-      "measurementTechnique": "mass spectrometry"
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Keywords or tags associated with the dataset."
+      },
+      "measurementTechnique": {
+        "description": "The technique or technology used to measure the data.",
+        "enum": [
+          "ATAC-seq",
+          "CAPP-seq",
+          "ChIP-seq",
+          "CUT&RUN",
+          "ERR bisulfite sequencing",
+          "HI-C",
+          "ISO-seq",
+          "lncRNA-seq",
+          "miRNA-seq",
+          "NOMe-seq",
+          "oxBS-seq",
+          "ribo-seq",
+          "RNA-seq",
+          "SaferSeqS",
+          "scCGI-seq",
+          "single cell ATAC-seq",
+          "single-cell RNA-seq",
+          "single-nucleus RNA-seq",
+          "SNP array",
+          "targeted exome sequencing",
+          "T cell receptor repertoire sequencing",
+          "whole exome sequencing",
+          "whole genome sequencing",
+          "3D confocal imaging",
+          "3D electron microscopy",
+          "3D imaging",
+          "atomic force microscopy",
+          "brightfield microscopy",
+          "confocal microscopy",
+          "electron microscopy",
+          "fluorescence in situ hybridization (FISH)",
+          "functional MRI",
+          "high frequency ultrasound",
+          "in vivo bioluminescence",
+          "in vivo PDX viability",
+          "in vivo tumor growth",
+          "laser speckle imaging",
+          "magnetic resonance spectroscopy",
+          "MRI",
+          "optical coherence tomography",
+          "optical tomography",
+          "optokinetic reflex assay",
+          "pattern electroretinogram",
+          "PET (positron emission tomography)",
+          "phase-contrast microscopy",
+          "spatial frequency domain imaging",
+          "spatial transcriptomics"
+        ],
+        "type": "string"
+      },
+      "dateModified": {
+        "type": "integer",
+        "description": "The date on which the dataset was last modified."
+      },
+      "dateCreated": {
+        "type": "integer",
+        "description": "The date on which the dataset was created."
+      },
+      "creator": {
+        "type": "string",
+        "description": "The creator of the dataset."
+      },
+      "funding": {
+        "type": "string",
+        "description": "The funding source for the dataset."
+      },
+      "isPartOf": {
+        "type": "string",
+        "description": "The data repository or portal to which this dataset belongs.",
+        "enum": [
+          "NF Data Portal"
+        ]
+      },
+      "conditionsOfAccess": {
+        "type": "string",
+        "description": "Conditions of access for the dataset."
+      },
+      "citation": {
+        "type": "string",
+        "description": "Citation details for the dataset."
+      }
     },
-    {
-      "@id": "http://example.com/person/1",
-      "@type": "Person",
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "url": "https://example.com/johndoe"
-    },
-    {
-      "@id": "http://example.com/org/1",
-      "@type": "Organization",
-      "name": "Example Organization",
-      "email": "info@example.com",
-      "url": "https://example.com"
-    },
-    {
-      "@id": "http://example.com/datacatalog/1",
-      "@type": "DataCatalog",
-      "name": "Example Data Catalog",
-      "url": "https://example.com/datacatalog"
-    }
-  ]
+    "required": [
+      "name",
+      "description",
+      "includedInDataCatalog",
+      "keywords"
+    ]
+  }
 }
