@@ -4,66 +4,59 @@
   },
   "@graph": [
     {
-      "@id": "bts:Xsmall",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "0.05",
-      "rdfs:label": "Xsmall",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "xsmall",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:Small",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "0.10",
-      "rdfs:label": "Small",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "small",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:FunctionTable",
+      "@id": "bts:SizeName",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
-      "rdfs:label": "FunctionTable",
-      "rdfs:subClassOf": [
+      "rdfs:label": "SizeName",
+      "sms:displayName": "sizeName",
+      "sms:required": "true",
+      "schema:rangeIncludes": [
         {
-          "@id": "bts:Thing"
+          "@id": "bts:Xsmall"
+        },
+        {
+          "@id": "bts:Small"
+        },
+        {
+          "@id": "bts:Medium"
+        },
+        {
+          "@id": "bts:Xlarge"
+        },
+        {
+          "@id": "bts:Large"
         }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "functionTable",
-      "sms:required": "sms:false"
+      ]
+    },
+    {
+      "@id": "bts:SizeTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeTable",
+      "sms:displayName": "sizeTable",
+      "sms:required": "sms:false",
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        },
+        {
+          "@id": "bts:SizeName"
+        }
+      ]
+    },
+    {
+      "@id": "bts:SizePK",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizePK",
+      "sms:displayName": "size_PK",
+      "sms:required": "true"
     },
     {
       "@id": "bts:ProjectAllocationTable",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
       "rdfs:label": "ProjectAllocationTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
       "sms:displayName": "projectAllocationTable",
       "sms:required": "sms:false",
       "sms:requiresComponent": [
@@ -91,104 +84,62 @@
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
       "rdfs:label": "ProductOrServiceTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
       "sms:displayName": "productOrServiceTable",
       "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:SizeName",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizeName",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "sizeName",
-      "sms:required": "true",
-      "schema:rangeIncludes": [
-        {
-          "@id": "bts:Xsmall"
-        },
-        {
-          "@id": "bts:Small"
-        },
-        {
-          "@id": "bts:Medium"
-        },
-        {
-          "@id": "bts:Xlarge"
-        },
-        {
-          "@id": "bts:Large"
-        }
-      ]
-    },
-    {
-      "@id": "bts:SizeTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizeTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "sizeTable",
-      "sms:required": "sms:false",
-      "sms:requiresDependency": [
-        {
-          "@id": "bts:SizePK"
-        },
-        {
-          "@id": "bts:SizeName"
-        }
-      ]
-    },
-    {
-      "@id": "bts:SizePK",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizePK",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "size_PK",
-      "sms:required": "true"
     },
     {
       "@id": "bts:ActivityTable",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
       "rdfs:label": "ActivityTable",
+      "sms:displayName": "activityTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:FunctionTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "FunctionTable",
+      "sms:displayName": "functionTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Xsmall",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.05",
+      "rdfs:label": "Xsmall",
       "rdfs:subClassOf": [
         {
-          "@id": "bts:Thing"
+          "@id": "bts:SizeName"
         }
       ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "activityTable",
+      "sms:displayName": "xsmall",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Small",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.10",
+      "rdfs:label": "Small",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "small",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Medium",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.20",
+      "rdfs:label": "Medium",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "medium",
       "sms:required": "sms:false"
     },
     {
@@ -201,9 +152,6 @@
           "@id": "bts:SizeName"
         }
       ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
       "sms:displayName": "large",
       "sms:required": "sms:false"
     },
@@ -217,68 +165,58 @@
           "@id": "bts:SizeName"
         }
       ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
       "sms:displayName": "xlarge",
       "sms:required": "sms:false"
     },
     {
-      "@id": "bts:Medium",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "0.20",
-      "rdfs:label": "Medium",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "medium",
-      "sms:required": "sms:false"
-    },
-    {
       "@id": "bts:FunctionPK",
+      "@type": "rdfs:Class",
       "sms:displayName": "FunctionPK",
       "sms:required": "true"
     },
     {
       "@id": "bts:Function",
+      "@type": "rdfs:Class",
       "sms:displayName": "Function",
       "sms:required": "true"
     },
     {
       "@id": "bts:ActivityPK",
+      "@type": "rdfs:Class",
       "sms:displayName": "ActivityPK",
       "sms:required": "true"
     },
     {
       "@id": "bts:Activity",
+      "@type": "rdfs:Class",
       "sms:displayName": "Activity",
       "sms:required": "true"
     },
     {
       "@id": "bts:ProductServicePK",
+      "@type": "rdfs:Class",
       "sms:displayName": "ProductServicePK",
       "sms:required": "true"
     },
     {
       "@id": "bts:ProductService",
+      "@type": "rdfs:Class",
       "sms:displayName": "ProductService",
       "sms:required": "true"
     },
     {
       "@id": "bts:JobTitle",
+      "@type": "rdfs:Class",
       "sms:displayName": "JobTitle"
     },
     {
       "@id": "bts:AssignedEmployee",
+      "@type": "rdfs:Class",
       "sms:displayName": "AssignedEmployee"
     },
     {
       "@id": "bts:SizeDescription",
+      "@type": "rdfs:Class",
       "sms:displayName": "SizeDescription",
       "sms:required": "false"
     }
