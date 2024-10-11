@@ -45,14 +45,6 @@
       ]
     },
     {
-      "@id": "bts:SizePK",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizePK",
-      "sms:displayName": "size_PK",
-      "sms:required": "true"
-    },
-    {
       "@id": "bts:ProjectAllocationTable",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
@@ -128,6 +120,14 @@
       ],
       "sms:displayName": "small",
       "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:SizePK",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizePK",
+      "sms:displayName": "SizePK",
+      "sms:required": "true"
     },
     {
       "@id": "bts:Medium",
