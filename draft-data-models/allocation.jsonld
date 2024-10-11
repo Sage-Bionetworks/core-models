@@ -4,38 +4,6 @@
   },
   "@graph": [
     {
-      "@id": "bts:SizePK",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizePK",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "size_PK",
-      "sms:required": "sms:true"
-    },
-    {
-      "@id": "bts:SizeName",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizeName",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "sizeName",
-      "sms:required": "sms:true"
-    },
-    {
       "@id": "bts:FunctionTable",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
@@ -65,95 +33,6 @@
         "@id": "http://schema.biothings.io"
       },
       "sms:displayName": "productOrServiceTable",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:Xsmall",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "0.05",
-      "rdfs:label": "Xsmall",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "xsmall",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:SizeTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizeTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "sizeTable",
-      "sms:required": "sms:false",
-      "sms:requiresDependency": [
-        {
-          "@id": "bts:SizePK"
-        },
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:rangeIncludes": [
-        {
-          "@id": "bts:Xsmall"
-        },
-        {
-          "@id": "bts:Xlarge"
-        },
-        {
-          "@id": "bts:Large"
-        },
-        {
-          "@id": "bts:Medium"
-        },
-        {
-          "@id": "bts:Small"
-        }
-      ]
-    },
-    {
-      "@id": "bts:Small",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "0.10",
-      "rdfs:label": "Small",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:SizeName"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "small",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:SubActivityTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SubActivityTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "subActivityTable",
       "sms:required": "sms:false"
     },
     {
@@ -211,10 +90,50 @@
       "sms:required": "sms:false"
     },
     {
-      "@id": "bts:Xlarge",
+      "@id": "bts:SizeTable",
       "@type": "rdfs:Class",
-      "rdfs:comment": "1.00",
-      "rdfs:label": "Xlarge",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "sizeTable",
+      "sms:required": "sms:false",
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        },
+        {
+          "@id": "bts:SizeName"
+        }
+      ]
+    },
+    {
+      "@id": "bts:SubActivityTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SubActivityTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "subActivityTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Xsmall",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.05",
+      "rdfs:label": "Xsmall",
       "rdfs:subClassOf": [
         {
           "@id": "bts:SizeName"
@@ -223,8 +142,73 @@
       "schema:isPartOf": {
         "@id": "http://schema.biothings.io"
       },
-      "sms:displayName": "xlarge",
+      "sms:displayName": "xsmall",
       "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Small",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.10",
+      "rdfs:label": "Small",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "small",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:SizePK",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizePK",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "size_PK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:SizeName",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeName",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "sizeName",
+      "sms:required": "true",
+      "schema:rangeIncludes": [
+        {
+          "@id": "bts:Xsmall"
+        },
+        {
+          "@id": "bts:Small"
+        },
+        {
+          "@id": "bts:Medium"
+        },
+        {
+          "@id": "bts:Xlarge"
+        },
+        {
+          "@id": "bts:Large"
+        }
+      ]
     },
     {
       "@id": "bts:Medium",
@@ -240,6 +224,22 @@
         "@id": "http://schema.biothings.io"
       },
       "sms:displayName": "medium",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Xlarge",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "1.00",
+      "rdfs:label": "Xlarge",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "xlarge",
       "sms:required": "sms:false"
     },
     {
