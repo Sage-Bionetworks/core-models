@@ -4,132 +4,6 @@
   },
   "@graph": [
     {
-      "@id": "bts:FunctionTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "FunctionTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "functionTable",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:ProductOrServiceTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "ProductOrServiceTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "productOrServiceTable",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:ProjectAllocationTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "ProjectAllocationTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "projectAllocationTable",
-      "sms:required": "sms:false",
-      "sms:requiresComponent": [
-        {
-          "@id": "bts:ProductOrServiceTable"
-        },
-        {
-          "@id": "bts:FunctionTable"
-        },
-        {
-          "@id": "bts:ActivityTable"
-        },
-        {
-          "@id": "bts:SubActivityTable"
-        },
-        {
-          "@id": "bts:SizeTable"
-        }
-      ],
-      "sms:requiresDependency": [
-        {
-          "@id": "bts:SizePK"
-        }
-      ]
-    },
-    {
-      "@id": "bts:ActivityTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "ActivityTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "activityTable",
-      "sms:required": "sms:false"
-    },
-    {
-      "@id": "bts:SizeTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SizeTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "sizeTable",
-      "sms:required": "sms:false",
-      "sms:requiresDependency": [
-        {
-          "@id": "bts:SizePK"
-        },
-        {
-          "@id": "bts:SizeName"
-        }
-      ]
-    },
-    {
-      "@id": "bts:SubActivityTable",
-      "@type": "rdfs:Class",
-      "rdfs:comment": "TBD",
-      "rdfs:label": "SubActivityTable",
-      "rdfs:subClassOf": [
-        {
-          "@id": "bts:Thing"
-        }
-      ],
-      "schema:isPartOf": {
-        "@id": "http://schema.biothings.io"
-      },
-      "sms:displayName": "subActivityTable",
-      "sms:required": "sms:false"
-    },
-    {
       "@id": "bts:Xsmall",
       "@type": "rdfs:Class",
       "rdfs:comment": "0.05",
@@ -162,10 +36,10 @@
       "sms:required": "sms:false"
     },
     {
-      "@id": "bts:SizePK",
+      "@id": "bts:FunctionTable",
       "@type": "rdfs:Class",
       "rdfs:comment": "TBD",
-      "rdfs:label": "SizePK",
+      "rdfs:label": "FunctionTable",
       "rdfs:subClassOf": [
         {
           "@id": "bts:Thing"
@@ -174,8 +48,59 @@
       "schema:isPartOf": {
         "@id": "http://schema.biothings.io"
       },
-      "sms:displayName": "size_PK",
-      "sms:required": "true"
+      "sms:displayName": "functionTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:ProjectAllocationTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ProjectAllocationTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "projectAllocationTable",
+      "sms:required": "sms:false",
+      "sms:requiresComponent": [
+        {
+          "@id": "bts:ProductOrServiceTable"
+        },
+        {
+          "@id": "bts:FunctionTable"
+        },
+        {
+          "@id": "bts:ActivityTable"
+        },
+        {
+          "@id": "bts:SizeTable"
+        }
+      ],
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        }
+      ]
+    },
+    {
+      "@id": "bts:ProductOrServiceTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ProductOrServiceTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "productOrServiceTable",
+      "sms:required": "sms:false"
     },
     {
       "@id": "bts:SizeName",
@@ -211,10 +136,66 @@
       ]
     },
     {
-      "@id": "bts:Medium",
+      "@id": "bts:SizeTable",
       "@type": "rdfs:Class",
-      "rdfs:comment": "0.20",
-      "rdfs:label": "Medium",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "sizeTable",
+      "sms:required": "sms:false",
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        },
+        {
+          "@id": "bts:SizeName"
+        }
+      ]
+    },
+    {
+      "@id": "bts:SizePK",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizePK",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "size_PK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ActivityTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ActivityTable",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:Thing"
+        }
+      ],
+      "schema:isPartOf": {
+        "@id": "http://schema.biothings.io"
+      },
+      "sms:displayName": "activityTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Large",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.50",
+      "rdfs:label": "Large",
       "rdfs:subClassOf": [
         {
           "@id": "bts:SizeName"
@@ -223,7 +204,7 @@
       "schema:isPartOf": {
         "@id": "http://schema.biothings.io"
       },
-      "sms:displayName": "medium",
+      "sms:displayName": "large",
       "sms:required": "sms:false"
     },
     {
@@ -243,10 +224,10 @@
       "sms:required": "sms:false"
     },
     {
-      "@id": "bts:Large",
+      "@id": "bts:Medium",
       "@type": "rdfs:Class",
-      "rdfs:comment": "0.50",
-      "rdfs:label": "Large",
+      "rdfs:comment": "0.20",
+      "rdfs:label": "Medium",
       "rdfs:subClassOf": [
         {
           "@id": "bts:SizeName"
@@ -255,8 +236,51 @@
       "schema:isPartOf": {
         "@id": "http://schema.biothings.io"
       },
-      "sms:displayName": "large",
+      "sms:displayName": "medium",
       "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:FunctionPK",
+      "sms:displayName": "FunctionPK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:Function",
+      "sms:displayName": "Function",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ActivityPK",
+      "sms:displayName": "ActivityPK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:Activity",
+      "sms:displayName": "Activity",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ProductServicePK",
+      "sms:displayName": "ProductServicePK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ProductService",
+      "sms:displayName": "ProductService",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:JobTitle",
+      "sms:displayName": "JobTitle"
+    },
+    {
+      "@id": "bts:AssignedEmployee",
+      "sms:displayName": "AssignedEmployee"
+    },
+    {
+      "@id": "bts:SizeDescription",
+      "sms:displayName": "SizeDescription",
+      "sms:required": "false"
     }
   ]
 }
