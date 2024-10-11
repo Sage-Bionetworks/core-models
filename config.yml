@@ -25,12 +25,12 @@ manifest:
   title: "example"
   # Data types of manifests to be generated or data type (singular) to validate manifest against
   data_type:
-    - DUOTemplate
+    - ProjectAllocationTable
 
 # Describes the location of your schema
 model:
   # Location of your schema jsonld, it must be a path relative to this file or absolute
-  location: "/workspaces/core-models/draft-data-models/challenges.jsonld"
+  location: "/workspaces/core-models/draft-data-models/allocation.jsonld"
 
 # This section is for using google sheets with Schematic
 google_sheets:
