@@ -4,7 +4,37 @@
   "title": "test",
   "type": "object",
   "properties": {
-    "size_PK": {}
+    "JobTitle": {},
+    "FunctionPK": {
+      "not": {
+        "type": "null"
+      },
+      "minLength": 1
+    },
+    "ProductServicePK": {
+      "not": {
+        "type": "null"
+      },
+      "minLength": 1
+    },
+    "ActivityPK": {
+      "not": {
+        "type": "null"
+      },
+      "minLength": 1
+    },
+    "SizePK": {
+      "not": {
+        "type": "null"
+      },
+      "minLength": 1
+    },
+    "AssignedEmployee": {}
   },
-  "required": []
+  "required": [
+    "FunctionPK",
+    "ProductServicePK",
+    "ActivityPK",
+    "SizePK"
+  ]
 }
