@@ -4,8 +4,24 @@
   "title": "SizeTable",
   "type": "object",
   "properties": {
-    "sizeName": {},
-    "size_PK": {}
+    "sizeName": {
+      "enum": [
+        "xsmall",
+        "medium",
+        "small",
+        "large",
+        "xlarge"
+      ]
+    },
+    "size_PK": {
+      "not": {
+        "type": "null"
+      },
+      "minLength": 1
+    }
   },
-  "required": []
+  "required": [
+    "sizeName",
+    "size_PK"
+  ]
 }
