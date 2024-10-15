@@ -98,5 +98,6 @@ schematic manifest -c config.yml get -t 'EdamConcept' -s -dt EdamConcept -o '/wo
 ```bash
 python importcsv.py
 ```
-# make sure the directory is correct.  If running in CodeSpace, make sure the directory is relative to your github environment (for example /workspaces/core-models/)
+### Other tips 
+1. Make sure the directory is correct.  If running in CodeSpace, make sure the directory is relative to your github environment (for example /workspaces/core-models/)
 
