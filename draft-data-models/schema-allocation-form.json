@@ -1,0 +1,63 @@
+{
+  "title": "Submission Form for Project Allocation",
+  "type": "object",
+  "properties": {
+    "userInfo": {
+      "type": "object",
+      "title": "Your Information",
+      "required": ["name", "project"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "First and Last Name"
+        },
+        "last_name": {
+          "type": "string",
+          "title": "Last Name"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project",
+          "default": ""
+        }
+      }
+    },
+    "allocationSection": {
+      "type": "object",
+      "title": "Submit Your Observations",
+      "properties": {
+        "observations": {
+          "type": "array",
+          "title": "Add Products and Services",
+          "items": {
+            "type": "object",
+            "required": ["productService", "function"],
+            "properties": {
+              "productService": {
+                "type": "string",
+                "title": "Product or Service",
+                "enum": [
+                  "Create Portal",
+                  "Governance",
+                  "Data Management",
+                  "Design"
+                ]
+              },
+            "function": {
+                "type": "string",
+                "title": "Product or Service",
+                "enum": [
+                  "Web Engineering",
+                  "Governance",
+                  "Data Manager",
+                  "Designer"
+                ]
+              }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
