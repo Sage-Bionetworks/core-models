@@ -68,14 +68,18 @@ Change location inside config.yml to the jsonld you want to create the template 
 ### Generate a Google Sheet Manifest
 ```bash
 schematic manifest -c config.yml get -t 'test' -s -dt DUOTemplate
-schematic manifest -c config.yml get -t 'test' -s -dt ProjectAllocationTable
+schematic manifest -c config.yml get -t 'ProjectAllocationTable' -s -dt ProjectAllocationTable
 
 ```
 
 ### Generate a Google Sheet Manifest for Project Allocation
 ```bash
 schematic manifest -c config.yml get -t 'ProjectAllocationTable' -s -dt ProjectAllocationTable
+schematic manifest -c config.yml get -t 'FunctionTable' -s -dt FunctionTable
+schematic manifest -c config.yml get -t 'ProductOrServiceTable' -s -dt ProductOrServiceTable
 schematic manifest -c config.yml get -t 'SizeTable' -s -dt SizeTable
+schematic manifest -c config.yml get -t 'ActivityTable' -s -dt ActivityTable
+
 
 ```
 ---

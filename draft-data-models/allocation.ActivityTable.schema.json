@@ -1,17 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/SizeTable",
-  "title": "SizeTable",
+  "$id": "http://example.com/ActivityTable",
+  "title": "ActivityTable",
   "type": "object",
   "properties": {
-    "SizeDescription": {},
-    "sizeName": {
+    "Activity": {
       "not": {
         "type": "null"
       },
       "minLength": 1
     },
-    "SizePK": {
+    "ActivityPK": {
       "not": {
         "type": "null"
       },
@@ -19,7 +18,7 @@
     }
   },
   "required": [
-    "sizeName",
-    "SizePK"
+    "Activity",
+    "ActivityPK"
   ]
 }

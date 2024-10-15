@@ -5,7 +5,10 @@
     "userInfo": {
       "type": "object",
       "title": "Your Information",
-      "required": ["name", "project"],
+      "required": [
+        "name",
+        "project"
+      ],
       "properties": {
         "name": {
           "type": "string",
@@ -31,7 +34,10 @@
           "title": "Add Products and Services",
           "items": {
             "type": "object",
-            "required": ["productService", "function"],
+            "required": [
+              "productService",
+              "function"
+            ],
             "properties": {
               "productService": {
                 "type": "string",
@@ -43,7 +49,7 @@
                   "Design"
                 ]
               },
-            "function": {
+              "function": {
                 "type": "string",
                 "title": "Product or Service",
                 "enum": [
@@ -52,7 +58,6 @@
                   "Data Manager",
                   "Designer"
                 ]
-              }
               }
             }
           }

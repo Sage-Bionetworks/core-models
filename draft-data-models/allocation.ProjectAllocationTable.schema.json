@@ -1,10 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/test",
-  "title": "test",
+  "$id": "http://example.com/ProjectAllocationTable",
+  "title": "ProjectAllocationTable",
   "type": "object",
   "properties": {
-    "JobTitle": {},
     "FunctionPK": {
       "not": {
         "type": "null"
@@ -17,6 +16,8 @@
       },
       "minLength": 1
     },
+    "JobTitle": {},
+    "AssignedEmployee": {},
     "ActivityPK": {
       "not": {
         "type": "null"
@@ -28,8 +29,7 @@
         "type": "null"
       },
       "minLength": 1
-    },
-    "AssignedEmployee": {}
+    }
   },
   "required": [
     "FunctionPK",
