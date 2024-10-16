@@ -9,7 +9,7 @@
   "@graph": [
       {
           "sms:required": "sms:true",
-          "sms:displayName": "assay",
+          "sms:displayName": "measurementTechnique",
           "rdfs:subClassOf": [
               {
                   "@id": "bts:Thing"
