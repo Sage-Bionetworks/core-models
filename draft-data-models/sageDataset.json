@@ -27,7 +27,7 @@
     },
     "measurementTechnique": {
       "description": "The technique or technology used to measure the data.",
-      "$ref": "https://raw.githubusercontent.com/Sage-Bionetworks/core-models/refs/heads/main/draft-data-models/reference%20enums/measurementTechnique.jsonld"
+      "$ref": "./reference enums/measurementTechnique.jsonld"
     },
     "dateModified": {
       "type": "string",
