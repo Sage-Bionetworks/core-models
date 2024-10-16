@@ -16,7 +16,8 @@
     },
     "includedInDataCatalog": {
       "type": "string",
-      "description": "The data catalog that includes this dataset."
+      "description": "The data catalog that includes this dataset.",
+      "default": "sagebionetworks.org"
     },
     "keywords": {
       "type": "array",
@@ -213,10 +214,12 @@
     },
     "dateModified": {
       "type": "string",
+      "format": "date",
       "description": "The date on which the dataset was last modified."
     },
     "dateCreated": {
       "type": "string",
+      "format": "date",
       "description": "The date on which the dataset was created."
     },
     "creator": {
@@ -225,13 +228,17 @@
     },
     "funding": {
       "type": "string",
-      "description": "The funding source for the dataset."
+      "description": "The funding source for the dataset. Preference: Link to ROR (https://ror.org/)",
+      "default": "https://ror.org/"
     },
     "isPartOf": {
       "type": "string",
       "description": "The data repository or portal to which this dataset belongs.",
       "enum": [
-        "NF Data Portal"
+        "NF Data Portal",
+        "AD Knowledge Portal",
+        "Genie",
+        "HTAN"
       ]
     },
     "conditionsOfAccess": {
