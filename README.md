@@ -101,3 +101,34 @@ python importcsv.py
 ### Other tips 
 1. Make sure the directory is correct.  If running in CodeSpace, make sure the directory is relative to your github environment (for example /workspaces/core-models/)
 
+
+
+### Using SynapseClient
+
+Each time you run codespace: 
+```bash
+echo $SYNAPSE_AUTH | base64 -d > synapsecreds.json
+```
+
+To get informationa about an organization:  
+```bash
+$ curl -X GET "https://repo-prod.prod.sagebase.org/repo/v1/schema/organization?name=SynapseDocs"
+```
+
+To list all organizations
+```bash
+curl -X POST "https://repo-prod.prod.sagebase.org/repo/v1/schema/organization/list" \
+     -H "Content-Type: application/json" \
+     -d '{}'
+```
+
+To delete an organization
+```bash
+curl -X DELETE "https://repo-prod.prod.sagebase.org/repo/v1/schema/organization/{id}"
+```
+
+To delete a schema
+
+```bash
+curl -X DELETE "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/{id}" \
+```
