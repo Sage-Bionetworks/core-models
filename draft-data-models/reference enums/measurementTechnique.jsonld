@@ -1,0 +1,201 @@
+{
+    "@context": {
+      "@vocab": "http://schema.org/",
+      "measurementTechnique": {
+        "@id": "http://schema.org/measurementTechnique"
+      }
+    },
+    "@id": "https://example.com/schemas/measurementTechniqueEnum.jsonld",
+    "@type": "Enum",
+    "measurementTechnique": [
+      {
+        "@value": "ATAC-seq",
+        "description": "Assay for Transposase-Accessible Chromatin using sequencing."
+      },
+      {
+        "@value": "CAPP-seq",
+        "description": "Circulating tumor DNA analysis by targeted sequencing."
+      },
+      {
+        "@value": "ChIP-seq",
+        "description": "Chromatin Immunoprecipitation followed by sequencing."
+      },
+      {
+        "@value": "CUT&RUN",
+        "description": "Cleavage Under Targets & Release Using Nuclease."
+      },
+      {
+        "@value": "ERR bisulfite sequencing",
+        "description": "Enhanced reduced representation bisulfite sequencing."
+      },
+      {
+        "@value": "HI-C",
+        "description": "Chromosome conformation capture using high-throughput sequencing."
+      },
+      {
+        "@value": "ISO-seq",
+        "description": "Isoform sequencing for full-length transcript sequencing."
+      },
+      {
+        "@value": "lncRNA-seq",
+        "description": "Sequencing of long non-coding RNAs."
+      },
+      {
+        "@value": "miRNA-seq",
+        "description": "Sequencing of microRNAs."
+      },
+      {
+        "@value": "NOMe-seq",
+        "description": "Nucleosome Occupancy and Methylome sequencing."
+      },
+      {
+        "@value": "oxBS-seq",
+        "description": "Oxidative bisulfite sequencing."
+      },
+      {
+        "@value": "ribo-seq",
+        "description": "Ribosome profiling sequencing."
+      },
+      {
+        "@value": "RNA-seq",
+        "description": "RNA sequencing."
+      },
+      {
+        "@value": "SaferSeqS",
+        "description": "Safety-sequencing for highly sensitive detection of mutations."
+      },
+      {
+        "@value": "scCGI-seq",
+        "description": "Single-cell CpG island sequencing."
+      },
+      {
+        "@value": "single cell ATAC-seq",
+        "description": "Single-cell Assay for Transposase-Accessible Chromatin."
+      },
+      {
+        "@value": "single-cell RNA-seq",
+        "description": "Single-cell RNA sequencing."
+      },
+      {
+        "@value": "single-nucleus RNA-seq",
+        "description": "Single-nucleus RNA sequencing."
+      },
+      {
+        "@value": "SNP array",
+        "description": "Single nucleotide polymorphism array."
+      },
+      {
+        "@value": "targeted exome sequencing",
+        "description": "Targeted sequencing of exonic regions."
+      },
+      {
+        "@value": "T cell receptor repertoire sequencing",
+        "description": "Sequencing of T cell receptor repertoire."
+      },
+      {
+        "@value": "whole exome sequencing",
+        "description": "Sequencing of all protein-coding regions in the genome."
+      },
+      {
+        "@value": "whole genome sequencing",
+        "description": "Sequencing of the entire genome."
+      },
+      {
+        "@value": "3D confocal imaging",
+        "description": "Three-dimensional imaging using confocal microscopy."
+      },
+      {
+        "@value": "3D electron microscopy",
+        "description": "Three-dimensional imaging using electron microscopy."
+      },
+      {
+        "@value": "3D imaging",
+        "description": "General three-dimensional imaging techniques."
+      },
+      {
+        "@value": "atomic force microscopy",
+        "description": "Atomic force microscopy for high-resolution imaging."
+      },
+      {
+        "@value": "brightfield microscopy",
+        "description": "Brightfield microscopy technique for imaging."
+      },
+      {
+        "@value": "confocal microscopy",
+        "description": "Microscopy technique using point illumination and spatial pinholes."
+      },
+      {
+        "@value": "electron microscopy",
+        "description": "Imaging technique using a beam of electrons."
+      },
+      {
+        "@value": "fluorescence in situ hybridization (FISH)",
+        "description": "Technique to detect and localize DNA sequences in tissues."
+      },
+      {
+        "@value": "functional MRI",
+        "description": "Functional magnetic resonance imaging."
+      },
+      {
+        "@value": "high frequency ultrasound",
+        "description": "Ultrasound imaging using high frequency sound waves."
+      },
+      {
+        "@value": "in vivo bioluminescence",
+        "description": "Imaging using bioluminescent markers in living organisms."
+      },
+      {
+        "@value": "in vivo PDX viability",
+        "description": "Viability testing in patient-derived xenografts."
+      },
+      {
+        "@value": "in vivo tumor growth",
+        "description": "Monitoring of tumor growth in live organisms."
+      },
+      {
+        "@value": "laser speckle imaging",
+        "description": "Imaging technique using laser speckle contrast."
+      },
+      {
+        "@value": "magnetic resonance spectroscopy",
+        "description": "Technique using magnetic resonance for chemical analysis."
+      },
+      {
+        "@value": "MRI",
+        "description": "Magnetic resonance imaging for body structure visualization."
+      },
+      {
+        "@value": "optical coherence tomography",
+        "description": "Imaging technique using light to capture micrometer-scale images."
+      },
+      {
+        "@value": "optical tomography",
+        "description": "Imaging technique using light to form cross-sectional images."
+      },
+      {
+        "@value": "optokinetic reflex assay",
+        "description": "Technique to assess visual function using eye movement."
+      },
+      {
+        "@value": "pattern electroretinogram",
+        "description": "Technique to measure electrical responses of retinal cells."
+      },
+      {
+        "@value": "PET (positron emission tomography)",
+        "description": "Imaging technique using radioactive tracers."
+      },
+      {
+        "@value": "phase-contrast microscopy",
+        "description": "Microscopy technique enhancing contrast in transparent specimens."
+      },
+      {
+        "@value": "spatial frequency domain imaging",
+        "description": "Imaging technique to map tissue properties."
+      },
+      {
+        "@value": "spatial transcriptomics",
+        "description": "Technique to study gene expression with spatial context."
+      }
+    ]
+  }
+  
