@@ -27,7 +27,7 @@
     },
     "measurementTechnique": {
       "description": "The technique or technology used to measure the data.",
-      "$ref": "./reference enums/measurementTechnique.jsonld"
+      "$ref": "./reference%20enums/measurementTechnique.jsonld"
     },
     "dateModified": {
       "type": "string",
