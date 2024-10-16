@@ -1,0 +1,27 @@
+{
+    "@context": {
+        "bts": "http://schema.biothings.io/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "schema": "http://schema.org/"
+    },
+    "@graph": [
+        {
+            "@id": "bts:Course",
+            "@type": "rdfs:Class",
+            "rdfs:label": "Course",
+            "rdfs:comment": "A class or subject that students can enroll in.",
+            "rdfs:subClassOf": {
+                "@id": "bts:AcademicOffering"
+            }
+        },
+        {
+            "@id": "bts:AcademicOffering",
+            "@type": "rdfs:Class",
+            "rdfs:label": "Academic Offering",
+            "rdfs:comment": "An offering of a course or program by an educational institution.",
+            "rdfs:subClassOf": {
+                "@id": "bts:Institution"
+            }
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "@context": {
+        "bts": "http://schema.biothings.io/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "schema": "http://schema.org/"
+    },
+    "@graph": [
+        {
+            "@id": "bts:Student",
+            "@type": "rdfs:Class",
+            "rdfs:label": "Student",
+            "rdfs:comment": "An individual who is enrolled in a course or program.",
+            "rdfs:subClassOf": {
+                "@id": "bts:Person"
+            }
+        },
+        {
+            "@id": "bts:Person",
+            "@type": "rdfs:Class",
+            "rdfs:label": "Person",
+            "rdfs:comment": "An individual human being."
+        }
+    ]
+}

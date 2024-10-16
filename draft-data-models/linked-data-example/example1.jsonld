@@ -1,0 +1,24 @@
+{
+    "@context": {
+        "bts": "http://schema.biothings.io/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "schema": "http://schema.org/"
+    },
+    "@graph": [
+        {
+            "@id": "bts:University",
+            "@type": "rdfs:Class",
+            "rdfs:label": "University",
+            "rdfs:comment": "A higher education institution.",
+            "rdfs:subClassOf": {
+                "@id": "bts:Institution"
+            }
+        },
+        {
+            "@id": "bts:Institution",
+            "@type": "rdfs:Class",
+            "rdfs:label": "Institution",
+            "rdfs:comment": "An organization or entity that provides education."
+        }
+    ]
+}
