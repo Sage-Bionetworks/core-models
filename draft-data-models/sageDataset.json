@@ -1,31 +1,70 @@
 {
-  "@context": {
-    "@vocab": "http://schema.org/"
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Submit Dataset",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the dataset."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of the dataset."
+    },
+    "alternateName": {
+      "type": "string",
+      "description": "An alternative name for the dataset."
+    },
+    "includedInDataCatalog": {
+      "type": "string",
+      "description": "The data catalog that includes this dataset."
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Keywords or tags associated with the dataset."
+    },
+    "measurementTechnique": {
+      "description": "The technique or technology used to measure the data.",
+      "$ref": "https://raw.githubusercontent.com/Sage-Bionetworks/core-models/refs/heads/main/draft-data-models/reference%20enums/measurementTechnique.jsonld"
+    },
+    "dateModified": {
+      "type": "string",
+      "description": "The date on which the dataset was last modified."
+    },
+    "dateCreated": {
+      "type": "string",
+      "description": "The date on which the dataset was created."
+    },
+    "creator": {
+      "type": "string",
+      "description": "The creator of the dataset."
+    },
+    "funding": {
+      "type": "string",
+      "description": "The funding source for the dataset."
+    },
+    "isPartOf": {
+      "type": "string",
+      "description": "The data repository or portal to which this dataset belongs.",
+      "enum": [
+        "NF Data Portal"
+      ]
+    },
+    "conditionsOfAccess": {
+      "type": "string",
+      "description": "Conditions of access for the dataset."
+    },
+    "citation": {
+      "type": "string",
+      "description": "Citation details for the dataset."
+    }
   },
-  "@type": "Enum",
-  "measurementTechnique": [
-    "ATAC-seq",
-    "CAPP-seq",
-    "ChIP-seq",
-    "CUT&RUN",
-    "ERR bisulfite sequencing",
-    "HI-C",
-    "ISO-seq",
-    "lncRNA-seq",
-    "miRNA-seq",
-    "NOMe-seq",
-    "oxBS-seq",
-    "ribo-seq",
-    "RNA-seq",
-    "SaferSeqS",
-    "scCGI-seq",
-    "single cell ATAC-seq",
-    "single-cell RNA-seq",
-    "single-nucleus RNA-seq",
-    "SNP array",
-    "targeted exome sequencing",
-    "T cell receptor repertoire sequencing",
-    "whole exome sequencing",
-    "whole genome sequencing"
+  "required": [
+    "name",
+    "description",
+    "includedInDataCatalog",
+    "keywords"
   ]
 }
