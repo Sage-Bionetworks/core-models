@@ -1,9 +1,8 @@
 {
-    "@context": {
-      "@vocab": "http://schema.org/"
-    },
-    "@type": "Enum",
-    "measurementTechnique": [
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Measurement Technique Enum",
+    "type": "string",
+    "enum": [
       "ATAC-seq",
       "CAPP-seq",
       "ChIP-seq",
@@ -26,7 +25,31 @@
       "targeted exome sequencing",
       "T cell receptor repertoire sequencing",
       "whole exome sequencing",
-      "whole genome sequencing"
+      "whole genome sequencing",
+      "3D confocal imaging",
+      "3D electron microscopy",
+      "3D imaging",
+      "atomic force microscopy",
+      "brightfield microscopy",
+      "confocal microscopy",
+      "electron microscopy",
+      "fluorescence in situ hybridization (FISH)",
+      "functional MRI",
+      "high frequency ultrasound",
+      "in vivo bioluminescence",
+      "in vivo PDX viability",
+      "in vivo tumor growth",
+      "laser speckle imaging",
+      "magnetic resonance spectroscopy",
+      "MRI",
+      "optical coherence tomography",
+      "optical tomography",
+      "optokinetic reflex assay",
+      "pattern electroretinogram",
+      "PET (positron emission tomography)",
+      "phase-contrast microscopy",
+      "spatial frequency domain imaging",
+      "spatial transcriptomics"
     ]
   }
   
