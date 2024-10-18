@@ -1,0 +1,140 @@
+{
+  "title": "Effort Based Cost Estimator",
+  "type": "object",
+  "properties": {
+    "userInfo": {
+      "type": "object",
+      "title": "Your Information",
+      "required": [
+        "projectCategory",
+        "projectName",
+        "email"
+      ],
+      "properties": {
+        "projectCategory": {
+          "type": "string",
+          "title": "Project Category",
+          "enum": [
+            "Challenge",
+            "Portal"
+          ]
+        },
+        "projectName": {
+          "type": "string",
+          "title": "Project Name"
+        },
+        "projectLead": {
+          "type": "string",
+          "title": "Project Lead(s) Name(s)"
+        }
+      }
+    },
+    "addModule": {
+      "type": "object",
+      "title": "Products/Services Required",
+      "properties": {
+        "module": {
+          "type": "array",
+          "title": "Add a product or service",
+          "items": {
+            "type": "object",
+            "required": [
+              "productService",
+              "function",
+              "activity",
+              "effortSize"
+            ],
+            "properties": {
+              "productService": {
+                "type": "string",
+                "title": "Product or Service",
+                "enum": [
+                  "Synapse Clients",
+                  "Data Curation Software (DCTS)",
+                  "Portal",
+                  "Explorer",
+                  "ORCA (Bioinformatics Workflows)",
+                  "ETL",
+                  "Synapse Data Warehouse (Snowflake ETL and Dimensional Modeling)",
+                  "py-orca",
+                  "Data Coordination Quality Control"
+                ]
+              },
+              "function": {
+                "type": "array",
+                "title": "Select Job Functions Required",
+                "help": "Hold control or command key to select multiple",
+                "multiple": false,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Accountant",
+                    "Administrative Coordinator",
+                    "Bioinformatics Engineer",
+                    "Biomedical Data Manager",
+                    "Biostatistician",
+                    "Business Operations Coordinator",
+                    "Communications and Marketing Manager",
+                    "Data Scientist",
+                    "Financial Analyst",
+                    "Grants and Contract Manager",
+                    "HR Generalist",
+                    "IT and App Support Engineer",
+                    "Privacy and Data Protection Analyst",
+                    "Product Designer",
+                    "Regulatory Affairs Specialist",
+                    "Research Scientist",
+                    "Research Software Engineer",
+                    "Scientific Community Manager",
+                    "Scientific Program Manager",
+                    "Security and Compliance Manager",
+                    "Technical Program Manager"
+                  ]
+                }
+              },
+              "activity": {
+                "type": "string",
+                "title": "Activity",
+                "enum": [
+                  "ETL (Data Processing Using Existing Pipeline)",
+                  "ETL (New Data Processing Pipeline)",
+                  "Synapse Data Warehouse (Snowflake ETL and Dimensional Modeling)",
+                  "py-orca Custom Connectors",
+                  "Synapse Clients - new features",
+                  "Acquire, clean, and normalize data; update models; automate workflows; QC data; manage release cycles.",
+                  "Coordinate meetings; engage stakeholders; address data issues; manage contributor relationships.",
+                  "Write technical docs, SOPs; maintain websites; train contributors; lead workshops.",
+                  "Lead projects; define goals; manage timelines; organize summits and presentations.",
+                  "Develop tools/scripts for data workflows; optimize processes; review code.",
+                  "Work with partners for integration; attend consortium meetings; align strategies.",
+                  "Ensure compliance with agreements; review and approve data sharing plans; manage governance.",
+                  "Design/refine data models; improve portal usability; streamline data submission processes.",
+                  "Improve data workflows; streamline contributor onboarding and submissions.",
+                  "Allocate resources for projects; facilitate contributor collaboration.",
+                  "Identify integration opportunities; promote data reuse; experiment with new platforms.",
+                  "Prepare reports; generate statistics; experiment with data analysis tools (e.g., Snowflake).",
+                  "Reporting to data contributors",
+                  "Reporting to funders"
+                ]
+              },
+              "effortSize": {
+                "title": "Effort Size",
+                "enum": [
+                  "extra-small",
+                  "small",
+                  "medium",
+                  "large",
+                  "extra-large"
+                ]
+              },
+              "additionalComments": {
+                "type": "string",
+                "title": "Additional Comments"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
