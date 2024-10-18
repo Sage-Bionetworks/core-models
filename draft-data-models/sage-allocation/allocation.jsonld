@@ -246,6 +246,7 @@
     },
     {
       "@id": "bts:MakePortal",
+      "@type": "rdfs:Class",
       "rdfs:subClassOf": [
         {
           "@id": "bts:ProductService"
@@ -255,6 +256,7 @@
     },
     {
       "@id": "bts:SynapseClients",
+      "@type": "rdfs:Class",
       "rdfs:subClassOf": [
         {
           "@id": "bts:ProductService"
@@ -264,6 +266,7 @@
     },
     {
       "@id": "bts:DataCurationSoftware",
+      "@type": "rdfs:Class",
       "rdfs:subClassOf": [
         {
           "@id": "bts:ProductService"
