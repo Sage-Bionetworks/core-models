@@ -1,0 +1,45 @@
+{
+    "type": "object",
+    "anyOf": [
+        {
+            "title": "Biomedical Data Manager",
+            "properties": {
+                "activityBiomedicalDataManager": {
+                    "type": "string",
+                    "title": "Activity",
+                    "enum": [
+                        "Chuck"
+                    ]
+                },
+                "effort": {
+                    "type": "string",
+                    "title": "effort",
+                    "enum": [
+                        "small",
+                        "medium"
+                    ]
+                }
+            }
+        },
+        {
+            "title": "Research Software Engineer",
+            "properties": {
+                "activityBiomedicalDataManager": {
+                    "type": "string",
+                    "title": "Activity",
+                    "enum": [
+                        "Chuck"
+                    ]
+                },
+                "effort": {
+                    "type": "string",
+                    "title": "effort",
+                    "enum": [
+                        "small",
+                        "medium"
+                    ]
+                }
+            }
+        }
+    ]
+}
