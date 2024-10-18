@@ -220,6 +220,17 @@
       "@id": "bts:ProductService",
       "@type": "rdfs:Class",
       "rdfs:label": "ProductService",
+      "schema:rangeIncludes": [
+        {
+          "@id": "bts:MakePortal"
+        },
+        {
+          "@id": "bts:DataCurationSoftware"
+        },
+        {
+          "@id": "bts:SynapseClients"
+        }
+      ],
       "sms:displayName": "ProductService",
       "sms:required": "sms:true"
     },
