@@ -48,7 +48,11 @@
               "productService": {
                 "type": "string",
                 "title": "Product or Service",
-                "enum": [] 
+                "enum": [
+                  "MakePortal",
+                  "DataCurationSoftware",
+                  "SynapseClients"
+                ]
               },
               "function": {
                 "type": "array",
