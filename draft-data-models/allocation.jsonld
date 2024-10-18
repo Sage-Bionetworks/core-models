@@ -1,355 +1,349 @@
 {
   "@context": {
-      "schema": "http://schema.org/"
+    "schema": "http://schema.org/"
   },
   "@graph": [
-      {
-          "@id": "bts:FunctionTable",
-          "@type": "rdfs:Class",
-          "rdfs:label": "FunctionTable",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "functionTable",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [
-              {
-                  "@id": "bts:FunctionPK"
-              },
-              {
-                  "@id": "bts:Function"
-              }
-          ],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:ProjectAllocationTable",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ProjectAllocationTable",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "projectAllocationTable",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [
-              {
-                  "@id": "bts:SizePK"
-              },
-              {
-                  "@id": "bts:FunctionPK"
-              },
-              {
-                  "@id": "bts:ActivityPK"
-              },
-              {
-                  "@id": "bts:ProductServicePK"
-              },
-              {
-                  "@id": "bts:AssignedEmployee"
-              },
-              {
-                  "@id": "bts:JobTitle"
-              }
-          ],
-          "sms:requiresComponent": [
-              {
-                  "@id": "bts:ProductOrServiceTable"
-              },
-              {
-                  "@id": "bts:FunctionTable"
-              },
-              {
-                  "@id": "bts:ActivityTable"
-              },
-              {
-                  "@id": "bts:SizeTable"
-              }
-          ],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:ProductOrServiceTable",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ProductOrServiceTable",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "productOrServiceTable",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [
-              {
-                  "@id": "bts:ProductServicePK"
-              },
-              {
-                  "@id": "bts:ProductService"
-              }
-          ],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:Xsmall",
-          "@type": "rdfs:Class",
-          "rdfs:comment": "",
-          "rdfs:label": "Xsmall",
-          "rdfs:subClassOf": [
-              {
-                  "@id": "bts:SizeName"
-              }
-          ],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "xsmall",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:SizePK",
-          "@type": "rdfs:Class",
-          "rdfs:label": "SizePK",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "SizePK",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:ActivityTable",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ActivityTable",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "activityTable",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [
-              {
-                  "@id": "bts:ActivityPK"
-              },
-              {
-                  "@id": "bts:Activity"
-              }
-          ],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:Small",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Small",
-          "rdfs:subClassOf": [
-              {
-                  "@id": "bts:SizeName"
-              }
-          ],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "small",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:SizeTable",
-          "@type": "rdfs:Class",
-          "rdfs:label": "SizeTable",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "sizeTable",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [
-              {
-                  "@id": "bts:SizePK"
-              },
-              {
-                  "@id": "bts:SizeName"
-              },
-              {
-                  "@id": "bts:SizeDescription"
-              }
-          ],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:SizeName",
-          "@type": "rdfs:Class",
-          "rdfs:label": "SizeName",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "sizeName",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:Xlarge",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Xlarge",
-          "rdfs:subClassOf": [
-              {
-                  "@id": "bts:SizeName"
-              }
-          ],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "xlarge",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:Medium",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Medium",
-          "rdfs:subClassOf": [
-              {
-                  "@id": "bts:SizeName"
-              }
-          ],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "medium",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:Large",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Large",
-          "rdfs:subClassOf": [
-              {
-                  "@id": "bts:SizeName"
-              }
-          ],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "large",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": [],
-          "sms:validationRules": null
-      },
-      {
-          "@id": "bts:FunctionPK",
-          "@type": "rdfs:Class",
-          "rdfs:label": "FunctionPK",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "FunctionPK",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:Function",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Function",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "Function",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:ActivityPK",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ActivityPK",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "ActivityPK",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:Activity",
-          "@type": "rdfs:Class",
-          "rdfs:label": "Activity",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "Activity",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:ProductServicePK",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ProductServicePK",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "ProductServicePK",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:ProductService",
-          "@type": "rdfs:Class",
-          "rdfs:label": "ProductService",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "ProductService",
-          "sms:required": "sms:true",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:JobTitle",
-          "@type": "rdfs:Class",
-          "rdfs:label": "JobTitle",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "JobTitle",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:AssignedEmployee",
-          "@type": "rdfs:Class",
-          "rdfs:label": "AssignedEmployee",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "AssignedEmployee",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      },
-      {
-          "@id": "bts:SizeDescription",
-          "@type": "rdfs:Class",
-          "rdfs:label": "SizeDescription",
-          "rdfs:subClassOf": [],
-          "schema:domainIncludes": [],
-          "schema:rangeIncludes": [],
-          "sms:displayName": "SizeDescription",
-          "sms:required": "sms:false",
-          "sms:requiresDependency": [],
-          "sms:requiresComponent": []
-      }
+    {
+      "@id": "bts:FunctionTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "FunctionTable",
+      "sms:displayName": "functionTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:ProjectAllocationTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ProjectAllocationTable",
+      "sms:displayName": "projectAllocationTable",
+      "sms:required": "sms:false",
+      "sms:requiresComponent": [
+        {
+          "@id": "bts:ProductOrServiceTable"
+        },
+        {
+          "@id": "bts:FunctionTable"
+        },
+        {
+          "@id": "bts:ActivityTable"
+        },
+        {
+          "@id": "bts:SizeTable"
+        }
+      ],
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        }
+      ]
+    },
+    {
+      "@id": "bts:ProductOrServiceTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ProductOrServiceTable",
+      "sms:displayName": "productOrServiceTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Xsmall",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.05",
+      "rdfs:label": "Xsmall",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "xsmall",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:SizePK",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizePK",
+      "sms:displayName": "SizePK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ActivityTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "ActivityTable",
+      "sms:displayName": "activityTable",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Small",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.10",
+      "rdfs:label": "Small",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "small",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:SizeTable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeTable",
+      "sms:displayName": "sizeTable",
+      "sms:required": "sms:false",
+      "sms:requiresDependency": [
+        {
+          "@id": "bts:SizePK"
+        },
+        {
+          "@id": "bts:SizeName"
+        }
+      ]
+    },
+    {
+      "@id": "bts:SizeName",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "TBD",
+      "rdfs:label": "SizeName",
+      "sms:displayName": "sizeName",
+      "sms:required": "true",
+      "schema:rangeIncludes": [
+        {
+          "@id": "bts:Xsmall"
+        },
+        {
+          "@id": "bts:Small"
+        },
+        {
+          "@id": "bts:Medium"
+        },
+        {
+          "@id": "bts:Large"
+        },
+        {
+          "@id": "bts:Xlarge"
+        }
+      ]
+    },
+    {
+      "@id": "bts:Xlarge",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "1.00",
+      "rdfs:label": "Xlarge",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "xlarge",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Medium",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.20",
+      "rdfs:label": "Medium",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "medium",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:Large",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "0.50",
+      "rdfs:label": "Large",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:SizeName"
+        }
+      ],
+      "sms:displayName": "large",
+      "sms:required": "sms:false"
+    },
+    {
+      "@id": "bts:FunctionPK",
+      "@type": "rdfs:Class",
+      "sms:displayName": "FunctionPK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:Function",
+      "@type": "rdfs:Class",
+      "sms:displayName": "Function",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ActivityPK",
+      "@type": "rdfs:Class",
+      "sms:displayName": "ActivityPK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:Activity",
+      "@type": "rdfs:Class",
+      "sms:displayName": "Activity",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ProductServicePK",
+      "@type": "rdfs:Class",
+      "sms:displayName": "ProductServicePK",
+      "sms:required": "true"
+    },
+    {
+      "@id": "bts:ProductService",
+      "@type": "rdfs:Class",
+      "sms:displayName": "ProductService",
+      "sms:required": "true",
+      "schema:rangeIncludes": [
+        {
+          "@id": "bts:Portal"
+        },
+        {
+          "@id": "bts:SynapseClients"
+        },
+        {
+          "@id": "bts:DataCurationSoftware"
+        },
+        {
+          "@id": "bts:SynapseDataWarehouse"
+        },
+        {
+          "@id": "bts:ETL"
+        },
+        {
+          "@id": "bts:DataCoordinationQualityControl"
+        }
+      ]
+    },
+    {
+      "@id": "bts:JobTitle",
+      "@type": "rdfs:Class",
+      "sms:displayName": "JobTitle"
+    },
+    {
+      "@id": "bts:AssignedEmployee",
+      "@type": "rdfs:Class",
+      "sms:displayName": "AssignedEmployee"
+    },
+    {
+      "@id": "bts:SizeDescription",
+      "@type": "rdfs:Class",
+      "sms:displayName": "SizeDescription",
+      "sms:required": "false"
+    },
+    {
+      "@id": "bts:QualifiersTable",
+      "@type": "rdfs:Class",
+      "sms:displayName": "QualifiersTable"
+    },
+    {
+      "@id": "bts:QualifiersPK",
+      "@type": "rdfs:Class",
+      "sms:displayName": "QualifiersPK"
+    },
+    {
+      "@id": "bts:Qualifiers",
+      "@type": "rdfs:Class",
+      "sms:displayName": "Qualifiers"
+    },
+    {
+      "@id": "bts:Portal",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "Portal"
+    },
+    {
+      "@id": "bts:SynapseClients",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "SynapseClients"
+    },
+    {
+      "@id": "bts:DataCurationSoftware",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "DataCurationSoftware"
+    },
+    {
+      "@id": "bts:Explorer",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "Explorer"
+    },
+    {
+      "@id": "bts:ORCA",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "ORCA"
+    },
+    {
+      "@id": "bts:ETL",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "ETL"
+    },
+    {
+      "@id": "bts:SynapseDataWarehouse",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "SynapseDataWarehouse"
+    },
+    {
+      "@id": "bts:PyORCA",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "PyORCA"
+    },
+    {
+      "@id": "bts:DataCoordinationQualityControl",
+      "@type": "rdfs:Class",
+      "rdfs:subClassOf": [
+        {
+          "@id": "bts:ProductService"
+        }
+      ],
+      "sms:displayName": "DataCoordinationQualityControl"
+    }
   ]
 }
