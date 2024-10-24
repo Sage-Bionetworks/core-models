@@ -1,108 +1,11 @@
 {
-  "title": "Effort Based Cost Estimator",
-  "type": "object",
-  "properties": {
-    "category": {
-      "type": "object",
-      "title": "",
-      "properties": {
-        "projectCategory": {
-          "type": "string",
-          "title": "What kind of project is this?",
-          "default": "P1",
-          "enum": [
-            "P1",
-            "P2",
-            "P3",
-            "P4",
-            "P5",
-            "P6",
-            "P7"
-          ]
-        }
-      }
-    },
-    "projectInfo": {
-      "type": "object",
-      "title": "",
-      "properties": {
-        "projectName": {
-          "type": "string",
-          "title": "Project Name"
-        },
-        "projectLead": {
-          "type": "string",
-          "title": "Project Lead(s) Name(s)"
-        }
-      }
-    },
-    "a1Object": {
-      "type": "object",
-      "title": "",
-      "properties": {
-        "a1String": {
-          "type": "string",
-          "title": "Will you require a1?",
-          "default": "a1e1",
-          "enum": [
-            "a1e1",
-            "a1e2",
-            "a1e3"
-          ]
-        }
-      }
-    },
-    "b1Object": {
-      "type": "object",
-      "title": "",
-      "properties": {
-        "b1String": {
-          "type": "string",
-          "title": "Will you require b1?",
-          "default": "b1e1",
-          "enum": [
-            "b1e1",
-            "b2e2",
-            "b2e3"
-          ]
-        }
-      }
-    }
-  },
-  "allOf": [
-    {
       "if": {
         "properties": {
-          "category": {
+          "a1Module": {
             "properties": {
-              "projectCategory": {
-                "const": "Other"
-              }
-            }
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "category": {
-            "properties": {
-              "otherProjectCategory": {
-                "type": "string",
-                "title": "Please specify the type of project"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "a1Object": {
-            "properties": {
-              "a1String": {
+              "a1": {
                 "enum": [
-                  "a1e1"
+                  "a1e2"
                 ]
               }
             }
@@ -111,53 +14,53 @@
       },
       "then": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "type": "object",
                 "title": "",
-                "description": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
                 "properties": {
-                  "r1Object": {
+                  "r1Module": {
                     "type": "object",
                     "title": "",
                     "properties": {
-                      "r1Boolean": {
+                      "r1": {
                         "type": "boolean",
-                        "title": "",
+                        "title": "a1e2r1",
                         "default": true
                       }
                     }
                   },
-                  "r2Object": {
+                  "r2Module": {
                     "type": "object",
                     "title": "",
                     "properties": {
-                      "r2Boolean": {
+                      "r2": {
                         "type": "boolean",
-                        "title": "",
+                        "title": "a1e2r2",
                         "default": true
                       }
                     }
                   },
-                  "r3Object": {
+                  "r3Module": {
                     "type": "object",
                     "title": "",
                     "properties": {
-                      "r3Boolean": {
+                      "r3": {
                         "type": "boolean",
-                        "title": "",
+                        "title": "a1e2r3",
                         "default": true
                       }
                     }
                   },
-                  "r4Object": {
+                  "r4Module": {
                     "type": "object",
                     "title": "",
                     "properties": {
-                      "r4Boolean": {
+                      "r4": {
                         "type": "boolean",
-                        "title": "",
+                        "title": "a1e2r4",
                         "default": true
                       }
                     }
@@ -172,13 +75,87 @@
     {
       "if": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "a1": {
+                "enum": [
+                  "a1e3"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
                 "properties": {
-                  "r1Object": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
                     "properties": {
-                      "r1Boolean": {
+                      "r1": {
+                        "type": "boolean",
+                        "title": "a1e3r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r2": {
+                        "type": "boolean",
+                        "title": "a1e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r3": {
+                        "type": "boolean",
+                        "title": "a1e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r4": {
+                        "type": "boolean",
+                        "title": "a1e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1": {
                         "const": false
                       }
                     }
@@ -191,15 +168,15 @@
       },
       "then": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r1Object": {
+                  "r1Module": {
                     "properties": {
-                      "r1String": {
+                      "r1Comment": {
                         "type": "string",
-                        "title": "",
+                        "title": "Please comment with requests to allocation for r1",
                         "minLength": 1
                       }
                     }
@@ -214,13 +191,13 @@
     {
       "if": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r2Object": {
+                  "r2Module": {
                     "properties": {
-                      "r2Boolean": {
+                      "r2": {
                         "const": false
                       }
                     }
@@ -233,15 +210,15 @@
       },
       "then": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r2Object": {
+                  "r2Module": {
                     "properties": {
-                      "r2String": {
+                      "r2Comment": {
                         "type": "string",
-                        "title": "",
+                        "title": "Please comment with requests to allocation for r2",
                         "minLength": 1
                       }
                     }
@@ -256,13 +233,13 @@
     {
       "if": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r3Object": {
+                  "r3Module": {
                     "properties": {
-                      "r3Boolean": {
+                      "r3": {
                         "const": false
                       }
                     }
@@ -275,15 +252,15 @@
       },
       "then": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r3Object": {
+                  "r3Module": {
                     "properties": {
-                      "r3String": {
+                      "r3Comment": {
                         "type": "string",
-                        "title": "",
+                        "title": "Please comment with requests to allocation for r3",
                         "minLength": 1
                       }
                     }
@@ -298,13 +275,13 @@
     {
       "if": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r4Object": {
+                  "r4Module": {
                     "properties": {
-                      "r4Boolean": {
+                      "r4": {
                         "const": false
                       }
                     }
@@ -317,15 +294,15 @@
       },
       "then": {
         "properties": {
-          "a1Object": {
+          "a1Module": {
             "properties": {
-              "rObject": {
+              "rModule": {
                 "properties": {
-                  "r4Object": {
+                  "r4Module": {
                     "properties": {
-                      "r4String": {
+                      "r4Comment": {
                         "type": "string",
-                        "title": "",
+                        "title": "Please comment with requests to allocation for r4",
                         "minLength": 1
                       }
                     }

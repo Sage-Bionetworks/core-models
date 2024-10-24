@@ -1,0 +1,316 @@
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "a2": {
+            "enum": [
+              "a2e2"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "type": "object",
+            "title": "",
+            "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+            "properties": {
+              "r1Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r1": {
+                    "type": "boolean",
+                    "title": "a2e2r1",
+                    "default": true
+                  }
+                }
+              },
+              "r2Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r2": {
+                    "type": "boolean",
+                    "title": "a2e2r2",
+                    "default": true
+                  }
+                }
+              },
+              "r3Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r3": {
+                    "type": "boolean",
+                    "title": "a2e2r3",
+                    "default": true
+                  }
+                }
+              },
+              "r4Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r4": {
+                    "type": "boolean",
+                    "title": "a2e2r4",
+                    "default": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "a2": {
+            "enum": [
+              "a2e3"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "type": "object",
+            "title": "",
+            "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+            "properties": {
+              "r1Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r1": {
+                    "type": "boolean",
+                    "title": "a2e3r1",
+                    "default": true
+                  }
+                }
+              },
+              "r2Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r2": {
+                    "type": "boolean",
+                    "title": "a2e3r2",
+                    "default": true
+                  }
+                }
+              },
+              "r3Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r3": {
+                    "type": "boolean",
+                    "title": "a2e3r3",
+                    "default": true
+                  }
+                }
+              },
+              "r4Module": {
+                "type": "object",
+                "title": "",
+                "properties": {
+                  "r4": {
+                    "type": "boolean",
+                    "title": "a2e3r4",
+                    "default": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r1Module": {
+                "properties": {
+                  "r1": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r1Module": {
+                "properties": {
+                  "r1Comment": {
+                    "type": "string",
+                    "title": "Please comment with requests to allocation for r1",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r2Module": {
+                "properties": {
+                  "r2": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r2Module": {
+                "properties": {
+                  "r2Comment": {
+                    "type": "string",
+                    "title": "Please comment with requests to allocation for r2",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r3Module": {
+                "properties": {
+                  "r3": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r3Module": {
+                "properties": {
+                  "r3Comment": {
+                    "type": "string",
+                    "title": "Please comment with requests to allocation for r3",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "if": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r4Module": {
+                "properties": {
+                  "r4": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "a2Module": {
+        "properties": {
+          "rModule": {
+            "properties": {
+              "r4Module": {
+                "properties": {
+                  "r4Comment": {
+                    "type": "string",
+                    "title": "Please comment with requests to allocation for r4",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

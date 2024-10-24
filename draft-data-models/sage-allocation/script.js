@@ -55,7 +55,7 @@ function getRequiredRoles(enumId, graph) {
   });
 }
 
-// Generate the form schema
+// Generate the form schema using "allOf"
 function generateFormSchema(dataModel) {
   const graph = dataModel["@graph"];
   
@@ -87,35 +87,46 @@ function generateFormSchema(dataModel) {
     required: ["projectCategory", "activities"]
   };
 
-  // Adding activities and dependencies
+  // Adding activities and dependencies using "allOf"
   activities.forEach(activity => {
-    const enums = activity.enums.reduce((acc, activityEnum) => {
-      acc[activityEnum.id] = {
-        type: "string",
-        title: activityEnum.name,
-        dependencies: {}
-      };
-      if (activityEnum.roles.length > 0) {
-        const roleDependencies = {};
-        activityEnum.roles.forEach(role => {
-          roleDependencies[role.id] = {
+    const activityEnums = activity.enums.map(activityEnum => {
+      const roleSchemas = activityEnum.roles.map(role => ({
+        type: "object",
+        properties: {
+          [role.id]: {
             type: "string",
             title: `${role.name} effort`,
             enum: role.effort,
             enumNames: ["extra small", "small", "medium", "large", "extra large"]
-          };
-        });
-        acc[activityEnum.id].dependencies = { roles: roleDependencies };
-      }
-      return acc;
-    }, {});
+          }
+        }
+      }));
+
+      return {
+        if: {
+          properties: {
+            [activity.id]: { const: activityEnum.id }
+          }
+        },
+        then: {
+          properties: {
+            roles: {
+              type: "object",
+              properties: roleSchemas.reduce((acc, schema) => {
+                return { ...acc, ...schema.properties };
+              }, {})
+            }
+          }
+        }
+      };
+    });
 
     formSchema.properties.activities.properties[activity.id] = {
       type: "string",
       title: `What ${activity.name} activities are needed?`,
       enum: activity.enums.map(e => e.id),
       enumNames: activity.enums.map(e => e.name),
-      dependencies: enums
+      allOf: activityEnums
     };
   });
 
