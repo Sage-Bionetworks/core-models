@@ -1,0 +1,447 @@
+{
+  "title": "Project and Activities Form",
+  "type": "object",
+  "properties": {
+    "projectCategory": {
+      "type": "string",
+      "title": "What is the project?",
+      "enum": [
+        "p1",
+        "p2",
+        "p4",
+        "p5"
+      ],
+      "enumNames": [
+        "New DCC",
+        "DCC Addendum",
+        "Digital Health",
+        "Research"
+      ]
+    },
+    "activities": {
+      "type": "object",
+      "properties": {
+        "a2": {
+          "type": "string",
+          "title": "What Data Storage activities are needed?",
+          "enum": [
+            "a2e5",
+            "a2e3",
+            "a2e1",
+            "a2e2",
+            "a2e4"
+          ],
+          "enumNames": [
+            "No Data Storage",
+            "Federated Data Storage",
+            "Data stored in Synapse - US Data Contributors",
+            "Data stored in Synapse + International Data Contributors",
+            "Other Data Storage (External Buckets?)"
+          ],
+          "dependencies": {
+            "a2e5": {
+              "type": "string",
+              "title": "No Data Storage",
+              "dependencies": {}
+            },
+            "a2e3": {
+              "type": "string",
+              "title": "Federated Data Storage",
+              "dependencies": {}
+            },
+            "a2e1": {
+              "type": "string",
+              "title": "Data stored in Synapse - US Data Contributors",
+              "dependencies": {}
+            },
+            "a2e2": {
+              "type": "string",
+              "title": "Data stored in Synapse + International Data Contributors",
+              "dependencies": {}
+            },
+            "a2e4": {
+              "type": "string",
+              "title": "Other Data Storage (External Buckets?)",
+              "dependencies": {}
+            }
+          }
+        },
+        "a1": {
+          "type": "string",
+          "title": "What Data Processing activities are needed?",
+          "enum": [
+            "a1e1",
+            "a1e3"
+          ],
+          "enumNames": [
+            "Yes, using existing workflows",
+            "No"
+          ],
+          "dependencies": {
+            "a1e1": {
+              "type": "string",
+              "title": "Yes, using existing workflows",
+              "dependencies": {
+                "roles": {
+                  "r1": {
+                    "type": "string",
+                    "title": "(Research) Software Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  },
+                  "r2": {
+                    "type": "string",
+                    "title": "Bioinformatics Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  },
+                  "r3": {
+                    "type": "string",
+                    "title": "Biomedical Data Manager effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            },
+            "a1e3": {
+              "type": "string",
+              "title": "No",
+              "dependencies": {}
+            }
+          }
+        },
+        "a6": {
+          "type": "string",
+          "title": "What Data Metrics activities are needed?",
+          "enum": [
+            "a6e2",
+            "a6e1"
+          ],
+          "enumNames": [
+            "No Data Metrics",
+            "Snowflake dashboard/metrics"
+          ],
+          "dependencies": {
+            "a6e2": {
+              "type": "string",
+              "title": "No Data Metrics",
+              "dependencies": {}
+            },
+            "a6e1": {
+              "type": "string",
+              "title": "Snowflake dashboard/metrics",
+              "dependencies": {
+                "roles": {
+                  "r1": {
+                    "type": "string",
+                    "title": "(Research) Software Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "a4": {
+          "type": "string",
+          "title": "What Data Quality Control activities are needed?",
+          "enum": [
+            "a4e3",
+            "a4e1",
+            "a4e2"
+          ],
+          "enumNames": [
+            "No Quality Control",
+            "Utilizing DCQC",
+            "Utilizing New Method"
+          ],
+          "dependencies": {
+            "a4e3": {
+              "type": "string",
+              "title": "No Quality Control",
+              "dependencies": {}
+            },
+            "a4e1": {
+              "type": "string",
+              "title": "Utilizing DCQC",
+              "dependencies": {
+                "roles": {
+                  "r1": {
+                    "type": "string",
+                    "title": "(Research) Software Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            },
+            "a4e2": {
+              "type": "string",
+              "title": "Utilizing New Method",
+              "dependencies": {}
+            }
+          }
+        },
+        "a3": {
+          "type": "string",
+          "title": "What Data Portal activities are needed?",
+          "enum": [
+            "a3e2",
+            "a3e1",
+            "a3e3",
+            "a3e5",
+            "a3e4"
+          ],
+          "enumNames": [
+            "Existing Portal Maintenance w/ new minor features",
+            "New Portal w/ existing components or minor changes",
+            "Portal Feature (Add-on to Data Portal) Cohort Builder",
+            "No Data Portal",
+            "New Feature (like the first time making cohort builder)"
+          ],
+          "dependencies": {
+            "a3e2": {
+              "type": "string",
+              "title": "Existing Portal Maintenance w/ new minor features",
+              "dependencies": {}
+            },
+            "a3e1": {
+              "type": "string",
+              "title": "New Portal w/ existing components or minor changes",
+              "dependencies": {
+                "roles": {
+                  "r2": {
+                    "type": "string",
+                    "title": "Bioinformatics Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  },
+                  "r1": {
+                    "type": "string",
+                    "title": "(Research) Software Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  },
+                  "r7": {
+                    "type": "string",
+                    "title": "Product Designer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            },
+            "a3e3": {
+              "type": "string",
+              "title": "Portal Feature (Add-on to Data Portal) Cohort Builder",
+              "dependencies": {}
+            },
+            "a3e5": {
+              "type": "string",
+              "title": "No Data Portal",
+              "dependencies": {}
+            },
+            "a3e4": {
+              "type": "string",
+              "title": "New Feature (like the first time making cohort builder)",
+              "dependencies": {
+                "roles": {
+                  "r1": {
+                    "type": "string",
+                    "title": "(Research) Software Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  },
+                  "r2": {
+                    "type": "string",
+                    "title": "Bioinformatics Engineer effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "a5": {
+          "type": "string",
+          "title": "What Data Curation activities are needed?",
+          "enum": [
+            "a5e1",
+            "a5e2",
+            "a5e4"
+          ],
+          "enumNames": [
+            "Data Curation and Management - Large Consortia",
+            "Data Curation and Management - Small Consortia",
+            "No Data Curation"
+          ],
+          "dependencies": {
+            "a5e1": {
+              "type": "string",
+              "title": "Data Curation and Management - Large Consortia",
+              "dependencies": {
+                "roles": {
+                  "r3": {
+                    "type": "string",
+                    "title": "Biomedical Data Manager effort",
+                    "enum": [
+                      "sz1",
+                      "sz2",
+                      "sz3",
+                      "sz4",
+                      "sz5"
+                    ],
+                    "enumNames": [
+                      "extra small",
+                      "small",
+                      "medium",
+                      "large",
+                      "extra large"
+                    ]
+                  }
+                }
+              }
+            },
+            "a5e2": {
+              "type": "string",
+              "title": "Data Curation and Management - Small Consortia",
+              "dependencies": {}
+            },
+            "a5e4": {
+              "type": "string",
+              "title": "No Data Curation",
+              "dependencies": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "projectCategory",
+    "activities"
+  ]
+}

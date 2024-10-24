@@ -1,0 +1,95 @@
+{
+    "if": {
+      "properties": {
+        "{{module}}": {
+          "properties": {
+            "{{moduleCondition}}": {
+              "enum": [
+                "{{conditionValue}}"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "{{module}}": {
+          "properties": {
+            "{{moduleCondition}}": {
+              "type": "object",
+              "title": "",
+              "description": "If you agree, leave these boxes checked. If you want to request changes, please uncheck the box and specify the allocation.",
+              "properties": {
+                "{{role1Module}}": {
+                  "type": "object",
+                  "title": "",
+                  "properties": {
+                    "{{role1}}": {
+                      "type": "boolean",
+                      "title": "{{role1Name}} {{role1Allocation}}",
+                      "default": true
+                    },
+                    "allocation": {
+                      "type": "string",
+                      "title": "Allocation",
+                      "default": "{{role1Allocation}}"
+                    }
+                  }
+                },
+                "{{role2Module}}": {
+                  "type": "object",
+                  "title": "",
+                  "properties": {
+                    "{{role2}}": {
+                      "type": "boolean",
+                      "title": "{{role2Name}} {{role2Allocation}}",
+                      "default": true
+                    },
+                    "allocation": {
+                      "type": "string",
+                      "title": "Allocation",
+                      "default": "{{role2Allocation}}"
+                    }
+                  }
+                },
+                "{{role3Module}}": {
+                  "type": "object",
+                  "title": "",
+                  "properties": {
+                    "{{role3}}": {
+                      "type": "boolean",
+                      "title": "{{role3Name}} {{role3Allocation}}",
+                      "default": true
+                    },
+                    "allocation": {
+                      "type": "string",
+                      "title": "Allocation",
+                      "default": "{{role3Allocation}}"
+                    }
+                  }
+                },
+                "{{role4Module}}": {
+                  "type": "object",
+                  "title": "",
+                  "properties": {
+                    "{{role4}}": {
+                      "type": "boolean",
+                      "title": "{{role4Name}} {{role4Allocation}}",
+                      "default": true
+                    },
+                    "allocation": {
+                      "type": "string",
+                      "title": "Allocation",
+                      "default": "{{role4Allocation}}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

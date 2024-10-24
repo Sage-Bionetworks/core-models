@@ -1,0 +1,341 @@
+{
+  "title": "Effort Based Cost Estimator",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "projectCategory": {
+          "type": "string",
+          "title": "What kind of project is this?",
+          "default": "P1",
+          "enum": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "P6",
+            "P7"
+          ]
+        }
+      }
+    },
+    "projectInfo": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "title": "Project Name"
+        },
+        "projectLead": {
+          "type": "string",
+          "title": "Project Lead(s) Name(s)"
+        }
+      }
+    },
+    "a1Object": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "a1String": {
+          "type": "string",
+          "title": "Will you require a1?",
+          "default": "a1e1",
+          "enum": [
+            "a1e1",
+            "a1e2",
+            "a1e3"
+          ]
+        }
+      }
+    },
+    "b1Object": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "b1String": {
+          "type": "string",
+          "title": "Will you require b1?",
+          "default": "b1e1",
+          "enum": [
+            "b1e1",
+            "b2e2",
+            "b2e3"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "category": {
+            "properties": {
+              "projectCategory": {
+                "const": "Other"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "category": {
+            "properties": {
+              "otherProjectCategory": {
+                "type": "string",
+                "title": "Please specify the type of project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "a1String": {
+                "enum": [
+                  "a1e1"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "type": "object",
+                "title": "",
+                "description": "",
+                "properties": {
+                  "r1Object": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r1Boolean": {
+                        "type": "boolean",
+                        "title": "",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Object": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r2Boolean": {
+                        "type": "boolean",
+                        "title": "",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Object": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r3Boolean": {
+                        "type": "boolean",
+                        "title": "",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Object": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "r4Boolean": {
+                        "type": "boolean",
+                        "title": "",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r1Object": {
+                    "properties": {
+                      "r1Boolean": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r1Object": {
+                    "properties": {
+                      "r1String": {
+                        "type": "string",
+                        "title": "",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r2Object": {
+                    "properties": {
+                      "r2Boolean": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r2Object": {
+                    "properties": {
+                      "r2String": {
+                        "type": "string",
+                        "title": "",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r3Object": {
+                    "properties": {
+                      "r3Boolean": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r3Object": {
+                    "properties": {
+                      "r3String": {
+                        "type": "string",
+                        "title": "",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r4Object": {
+                    "properties": {
+                      "r4Boolean": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Object": {
+            "properties": {
+              "rObject": {
+                "properties": {
+                  "r4Object": {
+                    "properties": {
+                      "r4String": {
+                        "type": "string",
+                        "title": "",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

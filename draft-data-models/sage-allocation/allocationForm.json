@@ -2,23 +2,29 @@
   "title": "Effort Based Cost Estimator",
   "type": "object",
   "properties": {
-    "userInfo": {
+    "category": {
       "type": "object",
-      "title": "Your Information",
-      "required": [
-        "projectCategory",
-        "projectName",
-        "email"
-      ],
+      "title": "",
       "properties": {
         "projectCategory": {
           "type": "string",
-          "title": "Project Category",
+          "title": "What kind of project is this?",
+          "default": "New DCC",
           "enum": [
+            "New DCC",
+            "DCC Addendum",
             "Challenge",
-            "Portal"
+            "Digital Health",
+            "Research",
+            "Other"
           ]
-        },
+        }
+      }
+    },
+    "projectInfo": {
+      "type": "object",
+      "title": "",
+      "properties": {
         "projectName": {
           "type": "string",
           "title": "Project Name"
@@ -29,101 +35,609 @@
         }
       }
     },
-    "addModule": {
+    "dataProcessingModule": {
       "type": "object",
-      "title": "Products/Services Required",
+      "title": "",
       "properties": {
-        "module": {
-          "type": "array",
-          "title": "Add a product or service",
-          "items": {
-            "type": "object",
-            "required": [
-              "productService",
-              "function",
-              "activity",
-              "effortSize"
-            ],
+        "dataProcessing": {
+          "type": "string",
+          "title": "Will you require DATA PROCESSING?",
+          "default": "No",
+          "enum": [
+            "Yes, using existing workflows",
+            "Yes, with the creation of new workflows",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataStorageModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataStorage": {
+          "type": "string",
+          "title": "Will you require DATA STORAGE?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataHarmonizationModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataHarmonization": {
+          "type": "string",
+          "title": "Will you require DATA HARMONIZATION?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataQualityControlModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataQualityControl": {
+          "type": "string",
+          "title": "Will you require DATA QUALITY CONTROL?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataCurationModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataCuration": {
+          "type": "string",
+          "title": "Will you require DATA CURATION?",
+          "default": "No",
+          "enum": [
+            "Yes, Data Curation and Management - Large Consortia",
+            "Yes, Data Curation and Management - Small Consortia",
+            "No"
+          ]
+        }
+      }
+    },
+    "portalModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "portal": {
+          "type": "string",
+          "title": "Will you require DATA PORTAL?",
+          "default": "No",
+          "enum": [
+            "Yes, New portal with existing components or minor chanes",
+            "Yes, Existiing portal maintenance with new minor features",
+            "Yes, Portal Feature (Add-on to Data Portal)",
+            "Yes, New Feature",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataMetricsModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataMetrics": {
+          "type": "string",
+          "title": "Will you require DATA METRICS?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "dataAnalysisModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "dataAnalysis": {
+          "type": "string",
+          "title": "Will you require DATA ANALYSIS?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    },
+    "designServicesModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "designServices": {
+          "type": "string",
+          "title": "Will you require DATA DESIGN SERVICES?",
+          "default": "No",
+          "enum": [
+            "Initial User Research",
+            "Usability Studies",
+            "Logo Deisgn",
+            "Graphic Design, Marketing Assets",
+            "No"
+          ]
+        }
+      }
+    },
+    "scientificProjectManagementModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "scientificProjectManagement": {
+          "type": "string",
+          "title": "Will you require SCIENTIFIC PROJECT MANAGEMENT?",
+          "default": "No",
+          "enum": [
+            "Sage as primamry",
+            "Sage as secondary",
+            "Small project",
+            "No"
+          ]
+        }
+      }
+    },
+    "communityManagementModule": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "communityManagement": {
+          "type": "string",
+          "title": "Will you require COMMUNITY MANAGEMENT?",
+          "default": "No",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "category": {
             "properties": {
-              "productService": {
+              "projectCategory": {
+                "const": "Other"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "category": {
+            "properties": {
+              "otherProjectCategory": {
                 "type": "string",
-                "title": "Product or Service",
-                "enum": [] 
-              },
-              "function": {
-                "type": "array",
-                "title": "Select Job Functions Required",
-                "multiple": false,
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "Accountant",
-                    "Administrative Coordinator",
-                    "Bioinformatics Engineer",
-                    "Biomedical Data Manager",
-                    "Biostatistician",
-                    "Business Operations Coordinator",
-                    "Communications and Marketing Manager",
-                    "Data Scientist",
-                    "Financial Analyst",
-                    "Grants and Contract Manager",
-                    "HR Generalist",
-                    "IT and App Support Engineer",
-                    "Privacy and Data Protection Analyst",
-                    "Product Designer",
-                    "Regulatory Affairs Specialist",
-                    "Research Scientist",
-                    "Research Software Engineer",
-                    "Scientific Community Manager",
-                    "Scientific Program Manager",
-                    "Security and Compliance Manager",
-                    "Technical Program Manager"
-                  ]
+                "title": "Please specify the type of project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "dataProcessing": {
+                "enum": [
+                  "Yes, using existing workflows"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "PrincipalInvestigatorModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "PrincipalInvestigator": {
+                        "type": "boolean",
+                        "title": "PI/Co-PI 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "BiomedicalDataManagerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "BiomedicalDataManager": {
+                        "type": "boolean",
+                        "title": "Biomedical Data Manager 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "GovernanceAnalystModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "GovernanceAnalyst": {
+                        "type": "boolean",
+                        "title": "Governance Analyst 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "SoftwareEngineerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "SoftwareEngineer": {
+                        "type": "boolean",
+                        "title": "Software Engineer 0.30",
+                        "default": true
+                      }
+                    }
+                  }
                 }
-              },
-              "activity": {
-                "type": "string",
-                "title": "Activity",
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "dataProcessing": {
                 "enum": [
-                  "ETL (Data Processing Using Existing Pipeline)",
-                  "ETL (New Data Processing Pipeline)",
-                  "Synapse Data Warehouse (Snowflake ETL and Dimensional Modeling)",
-                  "py-orca Custom Connectors",
-                  "Synapse Clients - new features",
-                  "Acquire, clean, and normalize data; update models; automate workflows; QC data; manage release cycles.",
-                  "Coordinate meetings; engage stakeholders; address data issues; manage contributor relationships.",
-                  "Write technical docs, SOPs; maintain websites; train contributors; lead workshops.",
-                  "Lead projects; define goals; manage timelines; organize summits and presentations.",
-                  "Develop tools/scripts for data workflows; optimize processes; review code.",
-                  "Work with partners for integration; attend consortium meetings; align strategies.",
-                  "Ensure compliance with agreements; review and approve data sharing plans; manage governance.",
-                  "Design/refine data models; improve portal usability; streamline data submission processes.",
-                  "Improve data workflows; streamline contributor onboarding and submissions.",
-                  "Allocate resources for projects; facilitate contributor collaboration.",
-                  "Identify integration opportunities; promote data reuse; experiment with new platforms.",
-                  "Prepare reports; generate statistics; experiment with data analysis tools (e.g., Snowflake).",
-                  "Reporting to data contributors",
-                  "Reporting to funders"
+                  "Yes, with the creation of new workflows"
                 ]
-              },
-              "effortSize": {
-                "title": "Effort Size",
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "PrincipalInvestigatorModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "PrincipalInvestigator": {
+                        "type": "boolean",
+                        "title": "PI/Co-PI 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "BiomedicalDataManagerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "BiomedicalDataManager": {
+                        "type": "boolean",
+                        "title": "Biomedical Data Manager 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "GovernanceAnalystModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "GovernanceAnalyst": {
+                        "type": "boolean",
+                        "title": "Governance Analyst 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "SoftwareEngineerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "SoftwareEngineer": {
+                        "type": "boolean",
+                        "title": "Software Engineer 0.30",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "PrincipalInvestigatorModule": {
+                    "properties": {
+                      "PrincipalInvestigator": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "PrincipalInvestigatorModule": {
+                    "properties": {
+                      "PIComment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for Principal Investigator",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "rolesModule.PrincipalInvestigatorModule.PIComment"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "BiomedicalDataManagerModule": {
+                    "properties": {
+                      "BiomedicalDataManager": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "BiomedicalDataManagerModule": {
+                    "properties": {
+                      "BDMComment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for Biomedical Data Manager",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "rolesModule.BiomedicalDataManagerModule.BDMComment"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "GovernanceAnalystModule": {
+                    "properties": {
+                      "GovernanceAnalyst": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "GovernanceAnalystModule": {
+                    "properties": {
+                      "GAComment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for Governance Analyst",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "rolesModule.GovernanceAnalystModule.GAComment"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "SoftwareEngineerModule": {
+                    "properties": {
+                      "SoftwareEngineer": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataProcessingModule": {
+            "properties": {
+              "rolesModule": {
+                "properties": {
+                  "SoftwareEngineerModule": {
+                    "properties": {
+                      "SEComment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for Software Engineer",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "rolesModule.SoftwareEngineerModule.SEComment"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dataStorageModule": {
+            "properties": {
+              "dataStorage": {
                 "enum": [
-                  "extra-small",
-                  "small",
-                  "medium",
-                  "large",
-                  "extra-large"
+                  "Yes"
                 ]
-              },
-              "additionalComments": {
-                "type": "string",
-                "title": "Additional Comments"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "dataStorageModule": {
+            "properties": {
+              "rolesModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "PrincipalInvestigatorModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "PrincipalInvestigator": {
+                        "type": "boolean",
+                        "title": "PI/Co-PI 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "BiomedicalDataManagerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "BiomedicalDataManager": {
+                        "type": "boolean",
+                        "title": "Biomedical Data Manager 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "GovernanceAnalystModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "GovernanceAnalyst": {
+                        "type": "boolean",
+                        "title": "Governance Analyst 0.30",
+                        "default": true
+                      }
+                    }
+                  },
+                  "SoftwareEngineerModule": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "SoftwareEngineer": {
+                        "type": "boolean",
+                        "title": "Software Engineer 0.30",
+                        "default": true
+                      }
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
     }
-  }
+  ]
 }

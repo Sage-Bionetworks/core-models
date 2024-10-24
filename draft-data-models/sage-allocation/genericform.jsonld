@@ -1,0 +1,517 @@
+{
+  "@context": {
+      "schema": "http://schema.org/"
+  },
+  "@graph": [
+      {
+          "displayName": "projectCategory",
+          "rangeIncludes": [
+              {
+                  "@id": "p1"
+              },
+              {
+                  "@id": "p2"
+              },
+              {
+                  "@id": "p4"
+              },
+              {
+                  "@id": "p5"
+              }
+          ],
+          "@id": "projectCategory"
+      },
+      {
+          "displayName": "New DCC",
+          "@id": "p1",
+          "requiresDependency": [
+              {
+                  "@id": "a1"
+              },
+              {
+                  "@id": "a6"
+              },
+              {
+                  "@id": "a4"
+              }
+          ]
+      },
+      {
+          "displayName": "DCC Addendum",
+          "@id": "p2"
+      },
+      {
+          "displayName": "Challenge",
+          "@id": "p3"
+      },
+      {
+          "displayName": "activity",
+          "rangeIncludes": [
+              {
+                  "@id": "a2"
+              },
+              {
+                  "@id": "a1"
+              },
+              {
+                  "@id": "a6"
+              },
+              {
+                  "@id": "a4"
+              },
+              {
+                  "@id": "a3"
+              },
+              {
+                  "@id": "a5"
+              }
+          ],
+          "@id": "activity"
+      },
+      {
+          "displayName": "Data Processing",
+          "@id": "a1",
+          "requiresDependency": [
+              {
+                  "@id": "a1e1"
+              },
+              {
+                  "@id": "a1e3"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Storage",
+          "@id": "a2",
+          "requiresDependency": [
+              {
+                  "@id": "a2e5"
+              },
+              {
+                  "@id": "a2e3"
+              },
+              {
+                  "@id": "a2e1"
+              },
+              {
+                  "@id": "a2e2"
+              },
+              {
+                  "@id": "a2e4"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Portal",
+          "@id": "a3",
+          "requiresDependency": [
+              {
+                  "@id": "a3e2"
+              },
+              {
+                  "@id": "a3e1"
+              },
+              {
+                  "@id": "a3e3"
+              },
+              {
+                  "@id": "a3e5"
+              },
+              {
+                  "@id": "a3e4"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Quality Control",
+          "@id": "a4",
+          "requiresDependency": [
+              {
+                  "@id": "a4e3"
+              },
+              {
+                  "@id": "a4e1"
+              },
+              {
+                  "@id": "a4e2"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Curation",
+          "@id": "a5",
+          "requiresDependency": [
+              {
+                  "@id": "a5e1"
+              },
+              {
+                  "@id": "a5e2"
+              },
+              {
+                  "@id": "a5e4"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Metrics",
+          "@id": "a6",
+          "requiresDependency": [
+              {
+                  "@id": "a6e2"
+              },
+              {
+                  "@id": "a6e1"
+              }
+          ]
+      },
+      {
+          "displayName": "(Research) Software Engineer",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz5"
+              },
+              {
+                  "@id": "sz4"
+              }
+          ],
+          "@id": "r1"
+      },
+      {
+          "displayName": "Bioinformatics Engineer",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r2"
+      },
+      {
+          "displayName": "Biomedical Data Manager",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r3"
+      },
+      {
+          "displayName": "Biostatistician",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r4"
+      },
+      {
+          "displayName": "Scientific Community Manager",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r5"
+      },
+      {
+          "displayName": "Data Scientist",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r6"
+      },
+      {
+          "displayName": "Product Designer",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r7"
+      },
+      {
+          "displayName": "Research Scientist",
+          "rangeIncludes": [
+              {
+                  "@id": "sz1"
+              },
+              {
+                  "@id": "sz2"
+              },
+              {
+                  "@id": "sz3"
+              },
+              {
+                  "@id": "sz4"
+              },
+              {
+                  "@id": "sz5"
+              }
+          ],
+          "@id": "r8"
+      },
+      {
+          "displayName": "Yes, using existing workflows",
+          "@id": "a1e1",
+          "requiresDependency": [
+              {
+                  "@id": "r1"
+              },
+              {
+                  "@id": "r2"
+              },
+              {
+                  "@id": "r3"
+              }
+          ]
+      },
+      {
+          "displayName": "Yes, with the creation of new workflows",
+          "@id": "a1e2",
+          "requiresDependency": [
+              {
+                  "@id": "r1"
+              },
+              {
+                  "@id": "r3"
+              }
+          ]
+      },
+      {
+          "displayName": "No",
+          "@id": "a1e3"
+      },
+      {
+          "displayName": "Data stored in Synapse - US Data Contributors",
+          "@id": "a2e1"
+      },
+      {
+          "displayName": "Data stored in Synapse + International Data Contributors",
+          "@id": "a2e2"
+      },
+      {
+          "displayName": "New Portal w/ existing components or minor changes",
+          "@id": "a3e1",
+          "requiresDependency": [
+              {
+                  "@id": "r2"
+              },
+              {
+                  "@id": "r1"
+              },
+              {
+                  "@id": "r7"
+              }
+          ]
+      },
+      {
+          "displayName": "Utilizing DCQC",
+          "@id": "a4e1",
+          "requiresDependency": [
+              {
+                  "@id": "r1"
+              }
+          ]
+      },
+      {
+          "displayName": "Data Curation and Management - Large Consortia",
+          "@id": "a5e1",
+          "requiresDependency": [
+              {
+                  "@id": "r3"
+              }
+          ]
+      },
+      {
+          "displayName": "extra small",
+          "@id": "sz1"
+      },
+      {
+          "displayName": "small",
+          "@id": "sz2"
+      },
+      {
+          "displayName": "medium",
+          "@id": "sz3"
+      },
+      {
+          "displayName": "large",
+          "@id": "sz4"
+      },
+      {
+          "displayName": "extra large",
+          "@id": "sz5"
+      },
+      {
+          "displayName": "Digital Health",
+          "@id": "p4"
+      },
+      {
+          "displayName": "Research",
+          "@id": "p5"
+      },
+      {
+          "displayName": "Other",
+          "@id": "p6"
+      },
+      {
+          "displayName": "Federated Data Storage",
+          "@id": "a2e3"
+      },
+      {
+          "displayName": "Other Data Storage (External Buckets?)",
+          "@id": "a2e4"
+      },
+      {
+          "displayName": "No Data Storage",
+          "@id": "a2e5"
+      },
+      {
+          "displayName": "Existing Portal Maintenance w/ new minor features",
+          "@id": "a3e2"
+      },
+      {
+          "displayName": "Portal Feature (Add-on to Data Portal) Cohort Builder",
+          "@id": "a3e3"
+      },
+      {
+          "displayName": "New Feature (like the first time making cohort builder)",
+          "@id": "a3e4",
+          "requiresDependency": [
+              {
+                  "@id": "r1"
+              },
+              {
+                  "@id": "r2"
+              }
+          ]
+      },
+      {
+          "displayName": "No Data Portal",
+          "@id": "a3e5"
+      },
+      {
+          "displayName": "Utilizing New Method",
+          "@id": "a4e2"
+      },
+      {
+          "displayName": "No Quality Control",
+          "@id": "a4e3"
+      },
+      {
+          "displayName": "Data Curation and Management - Small Consortia",
+          "@id": "a5e2"
+      },
+      {
+          "displayName": "Utilizing DCA / Future DCTS",
+          "@id": "a5e3",
+          "requiresDependency": [
+              {
+                  "@id": "r3"
+              },
+              {
+                  "@id": "r2"
+              }
+          ]
+      },
+      {
+          "displayName": "No Data Curation",
+          "@id": "a5e4"
+      },
+      {
+          "displayName": "Snowflake dashboard/metrics",
+          "@id": "a6e1",
+          "requiresDependency": [
+              {
+                  "@id": "r1"
+              }
+          ]
+      },
+      {
+          "displayName": "No Data Metrics",
+          "@id": "a6e2"
+      }
+  ]
+}
