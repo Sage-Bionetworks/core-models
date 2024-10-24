@@ -41,7 +41,7 @@
         "a1": {
           "type": "string",
           "title": "Will you require a1?",
-          "default": "No",
+          "default": "a1e1",
           "enum": [
             "a1e1",
             "a1e2",
@@ -57,7 +57,7 @@
         "a2": {
           "type": "string",
           "title": "Will you require a2?",
-          "default": "No",
+          "default": "a2e1",
           "enum": [
             "a2e1",
             "a2e2",
@@ -73,7 +73,7 @@
         "a3": {
           "type": "string",
           "title": "Will you require a3?",
-          "default": "No",
+          "default": "a3e1",
           "enum": [
             "a3e1",
             "a3e2",
@@ -89,7 +89,7 @@
         "a4": {
           "type": "string",
           "title": "Will you require a4?",
-          "default": "No",
+          "default": "a4e1",
           "enum": [
             "a4e1",
             "a4e2",
@@ -105,7 +105,7 @@
         "a5": {
           "type": "string",
           "title": "Will you require a5?",
-          "default": "No",
+          "default": "a5e1",
           "enum": [
             "a5e1",
             "a5e2",
@@ -121,7 +121,7 @@
         "a6": {
           "type": "string",
           "title": "Will you require a6?",
-          "default": "No",
+          "default": "a6e1",
           "enum": [
             "a6e1",
             "a6e2",
