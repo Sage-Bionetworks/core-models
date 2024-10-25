@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Mapper</title>
+    <script>
+        async function replaceIdsWithDisplayNames() {
+            try {
+                // Fetch the JSON schema and JSON-LD graph
+                const schemaResponse = await fetch(document.getElementById('schema-url').value);
+                const jsonLdResponse = await fetch(document.getElementById('graph-url').value);
+                
+                if (!schemaResponse.ok || !jsonLdResponse.ok) {
+                    throw new Error('Failed to fetch JSON schema or JSON-LD graph');
+                }
+
+                const jsonSchema = await schemaResponse.json();
+                const jsonLdGraph = await jsonLdResponse.json();
+
+                // Create a mapping from @id to displayName
+                const idToDisplayName = {};
+                jsonLdGraph["@graph"].forEach(item => {
+                    idToDisplayName[item["@id"]] = item["displayName"];
+                });
+
+                // Function to replace @ids in the schema with display names
+                function replaceIds(data) {
+                    if (typeof data === 'string' && data.startsWith('@id:')) {
+                        const id = data.split(':')[1];
+                        return idToDisplayName[id] || data;
+                    } else if (Array.isArray(data)) {
+                        return data.map(replaceIds);
+                    } else if (typeof data === 'object' && data !== null) {
+                        const newData = {};
+                        for (const key in data) {
+                            newData[key] = replaceIds(data[key]);
+                        }
+                        return newData;
+                    }
+                    return data;
+                }
+
+                // Replace @ids in the JSON schema
+                const updatedSchema = replaceIds(jsonSchema);
+
+                // Display the updated schema
+                document.getElementById('output').textContent = JSON.stringify(updatedSchema, null, 2);
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred: ' + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>JSON Schema Mapper</h1>
+    <label for="schema-url">JSON Schema URL:</label>
+    <input type="text" id="schema-url" placeholder="Enter the URL to the JSON Schema"><br><br>
+
+    <label for="graph-url">JSON-LD Graph URL:</label>
+    <input type="text" id="graph-url" placeholder="Enter the URL to the JSON-LD Graph"><br><br>
+
+    <button onclick="replaceIdsWithDisplayNames()">Replace @ids with Display Names</button>
+
+    <h2>Updated JSON Schema:</h2>
+    <pre id="output" style="background: #f0f0f0; padding: 1em; border-radius: 5px; max-height: 500px; overflow-y: auto;"></pre>
+</body>
+</html>
