@@ -24,24 +24,29 @@
                     idToDisplayName[item["@id"]] = item["displayName"];
                 });
 
-                // Function to replace @ids in the schema with display names
+                // Function to replace @ids and titles/comments with display names
                 function replaceIds(data) {
-                    if (typeof data === 'string' && data.startsWith('@id:')) {
-                        const id = data.split(':')[1];
-                        return idToDisplayName[id] || data;
+                    if (typeof data === 'string') {
+                        if (data.startsWith('@id:')) {
+                            const id = data.split(':')[1];
+                            return idToDisplayName[id] || data;
+                        } else if (data.includes('@id:')) {
+                            return data.replace(/@id:([a-zA-Z0-9]+)/g, (match, p1) => idToDisplayName[p1] || match);
+                        }
                     } else if (Array.isArray(data)) {
                         return data.map(replaceIds);
                     } else if (typeof data === 'object' && data !== null) {
                         const newData = {};
                         for (const key in data) {
-                            newData[key] = replaceIds(data[key]);
+                            const newKey = key.startsWith('@id:') ? idToDisplayName[key.split(':')[1]] || key : key;
+                            newData[newKey] = replaceIds(data[key]);
                         }
                         return newData;
                     }
                     return data;
                 }
 
-                // Replace @ids in the JSON schema
+                // Replace @ids and update titles/comments in the JSON schema
                 const updatedSchema = replaceIds(jsonSchema);
 
                 // Display the updated schema
@@ -51,19 +56,75 @@
                 alert('An error occurred: ' + error.message);
             }
         }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function saveAsFile() {
+            const output = document.getElementById('output').textContent;
+            const blob = new Blob([output], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'updated_schema.json';
+            link.click();
+        }
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 0.5em 1em;
+            margin-right: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            background: #f0f0f0;
+            padding: 1em;
+            border-radius: 5px;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 1em;
+        }
+    </style>
 </head>
 <body>
     <h1>JSON Schema Mapper</h1>
     <label for="schema-url">JSON Schema URL:</label>
-    <input type="text" id="schema-url" placeholder="Enter the URL to the JSON Schema"><br><br>
+    <input type="text" id="schema-url" placeholder="Enter the URL to the JSON Schema"><br>
 
     <label for="graph-url">JSON-LD Graph URL:</label>
-    <input type="text" id="graph-url" placeholder="Enter the URL to the JSON-LD Graph"><br><br>
+    <input type="text" id="graph-url" placeholder="Enter the URL to the JSON-LD Graph"><br>
 
     <button onclick="replaceIdsWithDisplayNames()">Replace @ids with Display Names</button>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <button onclick="saveAsFile()">Save as File</button>
 
     <h2>Updated JSON Schema:</h2>
-    <pre id="output" style="background: #f0f0f0; padding: 1em; border-radius: 5px; max-height: 500px; overflow-y: auto;"></pre>
+    <pre id="output"></pre>
 </body>
 </html>

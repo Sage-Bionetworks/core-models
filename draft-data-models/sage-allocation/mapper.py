@@ -37,3 +37,4 @@ def import_and_replace_ids(input_file, output_file):
         json.dump(form, file, indent=2)
 
 # Example usage
+import_and_replace_ids('draft-data-models/sage-allocation/genericAllocationForm.json', '/workspaces/core-models/draft-data-models/sage-allocation/genericAllocationFormUpdated.json')
