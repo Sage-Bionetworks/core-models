@@ -1,0 +1,104 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+  },
+  "@type": "Dataset",
+  "properties": {
+    "PublicationDoi": {
+      "@type": "PropertyValue",
+      "description": "The digital object identifier associated with the publication in the form of https://www.doi.org/{doi} to comply with CrossRef DOI display guidelines.",
+      "required": false,
+      "validationRules": "unique"
+    },
+    "PublicationJournal": {
+      "@type": "Text",
+      "description": "The name of the periodical publication in which the publication was published.",
+      "required": true
+    },
+    "PubmedId": {
+      "@type": "PropertyValue",
+      "description": "The PubMed identifier associated with the publication.",
+      "required": true,
+      "validationRules": "unique"
+    },
+    "PubmedUrl": {
+      "@type": "URL",
+      "description": "PubMed URL for the publication",
+      "required": true,
+      "validationRules": "url"
+    },
+    "PublicationTitle": {
+      "@type": "Text",
+      "description": "Title of the publication",
+      "required": true
+    },
+    "PublicationYear": {
+      "@type": "Date",
+      "description": "Year of the publication",
+      "required": true
+    },
+    "PublicationKeywords": {
+      "@type": "Text",
+      "description": "Keywords associated with the publication. Multiple values permitted, comma separated.",
+      "required": false,
+      "validationRules": "list"
+    },
+    "PublicationAuthors": {
+      "@type": "Person",
+      "description": "Authors of the publication. Multiple values permitted, comma separated.",
+      "required": true,
+      "validationRules": "list"
+    },
+    "PublicationAbstract": {
+      "@type": "Text",
+      "description": "The abstract of the publication.",
+      "required": true
+    },
+    "PublicationAssay": {
+      "@type": "Text",
+      "description": "Assay(s) associated with the publication. Multiple values permitted, comma separated.",
+      "required": true,
+      "validationRules": "list"
+    },
+    "PublicationTumorType": {
+      "@type": "Text",
+      "description": "Tumor type(s) associated with the publication. Multiple values permitted, comma separated.",
+      "required": true,
+      "validationRules": "list"
+    },
+    "PublicationTissue": {
+      "@type": "Text",
+      "description": "Tissue type(s) associated with the publication. Multiple values permitted, comma separated.",
+      "required": true,
+      "validationRules": "list"
+    },
+    "PublicationAccessibility": {
+      "@type": "Text",
+      "description": "Whether there are non-monetary restrictions on accessing the publication.",
+      "required": true
+    },
+    "PublicationView": {
+      "@type": "Text",
+      "description": "The denormalized manifest for publication submission.",
+      "required": false
+    },
+    "PublicationGrantNumber": {
+      "@type": "PropertyValue",
+      "description": "Relevant grant number associated with the publication's development. Multiple values permitted, comma separated.",
+      "required": true,
+      "validationRules": "list"
+    },
+    "PublicationDatasetAlias": {
+      "@type": "PropertyValue",
+      "description": "A list of the dataset aliases associated with the publication. Multiple values permitted, comma separated.",
+      "required": false,
+      "validationRules": "list"
+    },
+    "PublicationView_id": {
+      "@type": "PropertyValue",
+      "description": "A unique primary key that enables record updates using schematic.",
+      "required": true,
+      "validationRules": "unique"
+    }
+  }
+}
