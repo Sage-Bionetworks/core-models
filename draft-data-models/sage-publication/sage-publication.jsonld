@@ -1,125 +1,152 @@
 {
   "@context": {
-    "@vocab": "https://schema.org/"
+    "@vocab": "https://schema.org/",
+    "sms": "https://example.com/sms#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
   "@graph": [
     {
-      "@type": "Dataset",
-      "properties": [
-        {
-          "@id": "PublicationDoi",
-          "@type": "PropertyValue",
-          "description": "The digital object identifier associated with the publication in the form of https://www.doi.org/{doi} to comply with CrossRef DOI display guidelines.",
-          "required": false,
-          "validationRules": "unique"
-        },
-        {
-          "@id": "PublicationJournal",
-          "@type": "Text",
-          "description": "The name of the periodical publication in which the publication was published.",
-          "required": true
-        },
-        {
-          "@id": "PubmedId",
-          "@type": "PropertyValue",
-          "description": "The PubMed identifier associated with the publication.",
-          "required": true,
-          "validationRules": "unique"
-        },
-        {
-          "@id": "PubmedUrl",
-          "@type": "URL",
-          "description": "PubMed URL for the publication",
-          "required": true,
-          "validationRules": "url"
-        },
-        {
-          "@id": "PublicationTitle",
-          "@type": "Text",
-          "description": "Title of the publication",
-          "required": true
-        },
-        {
-          "@id": "PublicationYear",
-          "@type": "Date",
-          "description": "Year of the publication",
-          "required": true
-        },
-        {
-          "@id": "PublicationKeywords",
-          "@type": "Text",
-          "description": "Keywords associated with the publication. Multiple values permitted, comma separated.",
-          "required": false,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationAuthors",
-          "@type": "Person",
-          "description": "Authors of the publication. Multiple values permitted, comma separated.",
-          "required": true,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationAbstract",
-          "@type": "Text",
-          "description": "The abstract of the publication.",
-          "required": true
-        },
-        {
-          "@id": "PublicationAssay",
-          "@type": "Text",
-          "description": "Assay(s) associated with the publication. Multiple values permitted, comma separated.",
-          "required": true,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationTumorType",
-          "@type": "Text",
-          "description": "Tumor type(s) associated with the publication. Multiple values permitted, comma separated.",
-          "required": true,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationTissue",
-          "@type": "Text",
-          "description": "Tissue type(s) associated with the publication. Multiple values permitted, comma separated.",
-          "required": true,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationAccessibility",
-          "@type": "Text",
-          "description": "Whether there are non-monetary restrictions on accessing the publication.",
-          "required": true
-        },
-        {
-          "@id": "PublicationView",
-          "@type": "Text",
-          "description": "The denormalized manifest for publication submission.",
-          "required": false
-        },
-        {
-          "@id": "PublicationGrantNumber",
-          "@type": "PropertyValue",
-          "description": "Relevant grant number associated with the publication's development. Multiple values permitted, comma separated.",
-          "required": true,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationDatasetAlias",
-          "@type": "PropertyValue",
-          "description": "A list of the dataset aliases associated with the publication. Multiple values permitted, comma separated.",
-          "required": false,
-          "validationRules": "list"
-        },
-        {
-          "@id": "PublicationView_id",
-          "@type": "PropertyValue",
-          "description": "A unique primary key that enables record updates using schematic.",
-          "required": true,
-          "validationRules": "unique"
-        }
-      ]
+      "@id": "doi",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "Digital Object Identifier for the publication",
+      "sms:displayName": "DOI",
+      "Label": "DOI",
+      "@type": "LargeText",
+      "sms:required": true,
+      "rdfs:label": "DOI",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "diseaseFocus",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "The disease focus of the publication",
+      "sms:displayName": "Disease Focus",
+      "Label": "Disease Focus",
+      "@type": "String",
+      "sms:required": true,
+      "rdfs:label": "Disease Focus",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "journal",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "The journal where the article was published",
+      "sms:displayName": "Journal",
+      "Label": "Journal",
+      "@type": "String",
+      "sms:required": true,
+      "rdfs:label": "Journal",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "title",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "The title of the publication",
+      "sms:displayName": "Title",
+      "Label": "Title",
+      "@type": "LargeText",
+      "sms:required": true,
+      "rdfs:label": "Title",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "year",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Integer",
+      "rdfs:comment": "The publication year",
+      "sms:displayName": "Year",
+      "Label": "Year",
+      "@type": "Integer",
+      "sms:required": true,
+      "rdfs:label": "Year",
+      "rdfs:subClassOf": "Integer"
+    },
+    {
+      "@id": "pmid",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "PubMed ID of the publication",
+      "sms:displayName": "PMID",
+      "Label": "PMID",
+      "@type": "String",
+      "sms:required": false,
+      "rdfs:label": "PMID",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "author",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "List of authors",
+      "sms:displayName": "Author",
+      "Label": "Author",
+      "@type": "StringList",
+      "sms:required": true,
+      "rdfs:label": "Author",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "manifestation",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "Manifestations related to the publication",
+      "sms:displayName": "Manifestation",
+      "Label": "Manifestation",
+      "@type": "StringList",
+      "sms:required": false,
+      "rdfs:label": "Manifestation",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "fundingAgency",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "Funding agencies supporting the publication",
+      "sms:displayName": "Funding Agency",
+      "Label": "Funding Agency",
+      "@type": "StringList",
+      "sms:required": false,
+      "rdfs:label": "Funding Agency",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "studyId",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "Study ID associated with the publication",
+      "sms:displayName": "Study ID",
+      "Label": "Study ID",
+      "@type": "StringList",
+      "sms:required": false,
+      "rdfs:label": "Study ID",
+      "rdfs:subClassOf": "Text"
+    },
+    {
+      "@id": "studyName",
+      "sms:requiresDependency": [],
+      "sms:validationRules": [],
+      "schema:rangeIncludes": "Text",
+      "rdfs:comment": "Study name associated with the publication",
+      "sms:displayName": "Study Name",
+      "Label": "Study Name",
+      "@type": "StringList",
+      "sms:required": false,
+      "rdfs:label": "Study Name",
+      "rdfs:subClassOf": "Text"
     }
   ]
 }
