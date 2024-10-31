@@ -1,141 +1,260 @@
 {
-  "@context": {
-    "@vocab": "https://schema.org/",
-    "sms": "https://example.com/sms#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
-  },
-  "@graph": [
-    {
-      "@id": "doi",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "Digital Object Identifier for the publication",
-      "sms:displayName": "DOI",
-      "rdfs:label": "DOI",
-      "@type": "LargeText",
-      "sms:required": true,
-      "rdfs:subClassOf": "Text"
+    "@context": {
+        "schema": "http://schema.org/",
+        "@vocab": "https://schema.org/",
+        "sms": "https://example.com/sms#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
     },
-    {
-      "@id": "diseaseFocus",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "The disease focus of the publication",
-      "sms:displayName": "Disease Focus",
-      "rdfs:label": "Disease Focus",
-      "@type": "String",
-      "sms:required": true,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "journal",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "The journal where the article was published",
-      "sms:displayName": "Journal",
-      "rdfs:label": "Journal",
-      "@type": "String",
-      "sms:required": true,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "title",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "The title of the publication",
-      "sms:displayName": "Title",
-      "rdfs:label": "Title",
-      "@type": "LargeText",
-      "sms:required": true,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "year",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Integer",
-      "rdfs:comment": "The publication year",
-      "sms:displayName": "Year",
-      "rdfs:label": "Year",
-      "@type": "Integer",
-      "sms:required": true,
-      "rdfs:subClassOf": "Integer"
-    },
-    {
-      "@id": "pmid",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "PubMed ID of the publication",
-      "sms:displayName": "PMID",
-      "rdfs:label": "PMID",
-      "@type": "String",
-      "sms:required": false,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "author",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "List of authors",
-      "sms:displayName": "Author",
-      "rdfs:label": "Author",
-      "@type": "StringList",
-      "sms:required": true,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "manifestation",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "Manifestations related to the publication",
-      "sms:displayName": "Manifestation",
-      "rdfs:label": "Manifestation",
-      "@type": "StringList",
-      "sms:required": false,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "fundingAgency",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "Funding agencies supporting the publication",
-      "sms:displayName": "Funding Agency",
-      "rdfs:label": "Funding Agency",
-      "@type": "StringList",
-      "sms:required": false,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "studyId",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "Study ID associated with the publication",
-      "sms:displayName": "Study ID",
-      "rdfs:label": "Study ID",
-      "@type": "StringList",
-      "sms:required": false,
-      "rdfs:subClassOf": "Text"
-    },
-    {
-      "@id": "studyName",
-      "sms:requiresDependency": [],
-      "sms:validationRules": [],
-      "schema:rangeIncludes": "Text",
-      "rdfs:comment": "Study name associated with the publication",
-      "sms:displayName": "Study Name",
-      "rdfs:label": "Study Name",
-      "@type": "StringList",
-      "sms:required": false,
-      "rdfs:subClassOf": "Text"
-    }
-  ]
+    "@graph": [
+        {
+            "@id": "doi",
+            "sms:displayName": "DOI",
+            "rdfs:comment": "Digital Object Identifier for the publication",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "DOI",
+            "mc2:displayName": "Publication Doi",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "DOI"
+        },
+        {
+            "@id": "diseaseFocus",
+            "sms:displayName": "Disease Focus",
+            "rdfs:comment": "The disease focus of the publication",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Disease Focus",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "Disease Focus"
+        },
+        {
+            "@id": "journal",
+            "sms:displayName": "Journal",
+            "rdfs:comment": "The journal where the article was published",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Journal",
+            "mc2:displayName": "Publication Journal",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Journal"
+        },
+        {
+            "@id": "title",
+            "sms:displayName": "Title",
+            "rdfs:comment": "The title of the publication",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Title",
+            "mc2:displayName": "Publication Title",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Title"
+        },
+        {
+            "@id": "year",
+            "sms:displayName": "Year",
+            "rdfs:comment": "The publication year",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Year",
+            "mc2:displayName": "Publication Year",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Year"
+        },
+        {
+            "@id": "pmid",
+            "sms:displayName": "PMID",
+            "rdfs:comment": "PubMed ID of the publication",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "PMID",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "PMID"
+        },
+        {
+            "@id": "author",
+            "sms:displayName": "Author",
+            "rdfs:comment": "List of authors",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Author",
+            "mc2:displayName": "Publication Author",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Author"
+        },
+        {
+            "@id": "manifestation",
+            "sms:displayName": "Manifestation",
+            "rdfs:comment": "Manifestations related to the publication",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Manifestation",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "Manifestation"
+        },
+        {
+            "@id": "fundingAgency",
+            "sms:displayName": "Funding Agency",
+            "rdfs:comment": "Funding agencies supporting the publication",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Funding Agency",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "Funding Agency"
+        },
+        {
+            "@id": "studyId",
+            "sms:displayName": "Study ID",
+            "rdfs:comment": "Study ID associated with the publication",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Study ID",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "Study ID"
+        },
+        {
+            "@id": "studyName",
+            "sms:displayName": "Study Name",
+            "rdfs:comment": "Study name associated with the publication",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Study Name",
+            "mc2:included": false,
+            "nf:included": true,
+            "nf:displayName": "Study Name"
+        },
+        {
+            "@id": "accessibility",
+            "sms:displayName": "Accessibility",
+            "rdfs:comment": "Whether there are non-monetary restrictions on accessing the publication.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Accessibility",
+            "mc2:displayName": "Publication Accessibility",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Accessibility"
+        },
+        {
+            "@id": "assay",
+            "sms:displayName": "Assay",
+            "rdfs:comment": "Assay(s) associated with the publication. Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Assay",
+            "mc2:displayName": "Publication Assay",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Assay"
+        },
+        {
+            "@id": "keywords",
+            "sms:displayName": "Keywords",
+            "rdfs:comment": "Keywords associated with the publication. Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Keywords",
+            "mc2:displayName": "Publication Keywords",
+            "mc2:included": true,
+            "nf:included": true,
+            "nf:displayName": "Keywords"
+        },
+        {
+            "@id": "tumorType",
+            "sms:displayName": "Tumor Type",
+            "rdfs:comment": "Tumor type(s) associated with the publication. Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Tumor Type",
+            "mc2:displayName": "Publication Tumor Type",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "abstract",
+            "sms:displayName": "Abstract",
+            "rdfs:comment": "The abstract of the publication",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Abstract",
+            "mc2:displayName": "Publication Abstract",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "tissue",
+            "sms:displayName": "Tissue",
+            "rdfs:comment": "Tissue type(s) associated with the publication. Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Tissue",
+            "mc2:displayName": "Publication Tissue",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "view",
+            "sms:displayName": "View",
+            "rdfs:comment": "The denormalized manifest for publication submission.",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "View",
+            "mc2:displayName": "Publication View",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "url",
+            "sms:displayName": "URL",
+            "rdfs:comment": "PubMed URL for the publication",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "URL",
+            "mc2:displayName": "Publication Url",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "datasetAlias",
+            "sms:displayName": "Dataset Alias",
+            "rdfs:comment": "A list of the dataset aliases (e.g., GEO identifier such as GSE12345, or a DOI). Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "False",
+            "rdfs:label": "Dataset Alias",
+            "mc2:displayName": "Publication Dataset Alias",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "grantNumber",
+            "sms:displayName": "Grant Number",
+            "rdfs:comment": "Relevant grant number associated with the publication's development. Multiple values permitted, comma separated.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "Grant Number",
+            "mc2:displayName": "Publication Grant Number",
+            "mc2:included": true,
+            "nf:included": false
+        },
+        {
+            "@id": "viewId",
+            "sms:displayName": "View_id",
+            "rdfs:comment": "A unique primary key that enables record updates using schematic.",
+            "@type": "class",
+            "sms:required": "True",
+            "rdfs:label": "View_id",
+            "mc2:displayName": "Publication View_id",
+            "mc2:included": true,
+            "nf:included": false
+        }
+    ]
 }
