@@ -14,7 +14,7 @@
 5. Ask Christina to add you to the **“Sage Template - Make a Copy Only”** project.
 6. Once added, click **Duplicate** to create your own copy of the Sage Template.
 
-### [Video 1: Making a New Project and Importing Data Model](https://scribehow.com/shared/Core_Models_Part_1_Making_a_new_project__WzmIsAptQQaYJGG8L9AYTw)
+### [Scribe Instructions: Making a New Project and Importing Data Model](https://scribehow.com/shared/Core_Models_Part_1_Making_a_new_project__WzmIsAptQQaYJGG8L9AYTw)
 
 ### Getting Started with Your Project
 
@@ -70,4 +70,4 @@
 
 ### Tips
 
-19. [Add your tips here if applicable]
+19. [Scribe instructions: How to embed schema.org metadata on a webpage](https://scribehow.com/embed-preview/Edit_Schemaorg_Content_for_a_DCC_page__clPPtQNrSLer0UjeYk3Ufw)
