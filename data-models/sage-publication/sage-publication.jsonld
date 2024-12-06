@@ -1,0 +1,259 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "sms": "https://example.com/sms#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "@graph": [
+    {
+      "@id": "doi",
+      "rdfs:comment": "Digital Object Identifier for the publication",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "DOI",
+      "sms:displayName": "DOI",
+      "mc2:displayName": "Publication Doi",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "DOI"
+    },
+    {
+      "@id": "diseaseFocus",
+      "rdfs:comment": "The disease focus of the publication",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Disease Focus",
+      "sms:displayName": "Disease Focus",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "Disease Focus"
+    },
+    {
+      "@id": "journal",
+      "rdfs:comment": "The journal where the article was published",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Journal",
+      "sms:displayName": "Journal",
+      "mc2:displayName": "Publication Journal",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Journal"
+    },
+    {
+      "@id": "title",
+      "rdfs:comment": "The title of the publication",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Title",
+      "sms:displayName": "Title",
+      "mc2:displayName": "Publication Title",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Title"
+    },
+    {
+      "@id": "year",
+      "rdfs:comment": "The publication year",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Year",
+      "sms:displayName": "Year",
+      "mc2:displayName": "Publication Year",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Year"
+    },
+    {
+      "@id": "pmid",
+      "rdfs:comment": "PubMed ID of the publication",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "PMID",
+      "sms:displayName": "PMID",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "PMID"
+    },
+    {
+      "@id": "author",
+      "rdfs:comment": "List of authors",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Author",
+      "sms:displayName": "Author",
+      "mc2:displayName": "Publication Author",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Author"
+    },
+    {
+      "@id": "manifestation",
+      "rdfs:comment": "Manifestations related to the publication",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Manifestation",
+      "sms:displayName": "Manifestation",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "Manifestation"
+    },
+    {
+      "@id": "fundingAgency",
+      "rdfs:comment": "Funding agencies supporting the publication",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Funding Agency",
+      "sms:displayName": "Funding Agency",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "Funding Agency"
+    },
+    {
+      "@id": "studyId",
+      "rdfs:comment": "Study ID associated with the publication",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Study ID",
+      "sms:displayName": "Study ID",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "Study ID"
+    },
+    {
+      "@id": "studyName",
+      "rdfs:comment": "Study name associated with the publication",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Study Name",
+      "sms:displayName": "Study Name",
+      "mc2:included": false,
+      "nf:included": true,
+      "nf:displayName": "Study Name"
+    },
+    {
+      "@id": "assay",
+      "rdfs:comment": "Assay(s) associated with the publication. Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Assay",
+      "sms:displayName": "Assay",
+      "mc2:displayName": "Publication Assay",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Assay"
+    },
+    {
+      "@id": "accessibility",
+      "rdfs:comment": "Whether there are non-monetary restrictions on accessing the publication.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Accessibility",
+      "sms:displayName": "Accessibility",
+      "mc2:displayName": "Publication Accessibility",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Accessibility"
+    },
+    {
+      "@id": "abstract",
+      "rdfs:comment": "The abstract of the publication",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Abstract",
+      "sms:displayName": "Abstract",
+      "mc2:displayName": "Publication Abstract",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "keywords",
+      "rdfs:comment": "Keywords associated with the publication. Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Keywords",
+      "sms:displayName": "Keywords",
+      "mc2:displayName": "Publication Keywords",
+      "mc2:included": true,
+      "nf:included": true,
+      "nf:displayName": "Keywords"
+    },
+    {
+      "@id": "tissue",
+      "rdfs:comment": "Tissue type(s) associated with the publication. Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Tissue",
+      "sms:displayName": "Tissue",
+      "mc2:displayName": "Publication Tissue",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "tumorType",
+      "rdfs:comment": "Tumor type(s) associated with the publication. Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Tumor Type",
+      "sms:displayName": "Tumor Type",
+      "mc2:displayName": "Publication Tumor Type",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "view",
+      "rdfs:comment": "The denormalized manifest for publication submission.",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "View",
+      "sms:displayName": "View",
+      "mc2:displayName": "Publication View",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "url",
+      "rdfs:comment": "PubMed URL for the publication",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "URL",
+      "sms:displayName": "URL",
+      "mc2:displayName": "Publication Url",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "datasetAlias",
+      "rdfs:comment": "A list of the dataset aliases (e.g., GEO identifier such as GSE12345, or a DOI). Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "False",
+      "rdfs:label": "Dataset Alias",
+      "sms:displayName": "Dataset Alias",
+      "mc2:displayName": "Publication Dataset Alias",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "viewId",
+      "rdfs:comment": "A unique primary key that enables record updates using schematic.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "View_id",
+      "sms:displayName": "View_id",
+      "mc2:displayName": "Publication View_id",
+      "mc2:included": true,
+      "nf:included": false
+    },
+    {
+      "@id": "grantNumber",
+      "rdfs:comment": "Relevant grant number associated with the publication's development. Multiple values permitted, comma separated.",
+      "@type": "class",
+      "sms:required": "True",
+      "rdfs:label": "Grant Number",
+      "sms:displayName": "Grant Number",
+      "mc2:displayName": "Publication Grant Number",
+      "mc2:included": true,
+      "nf:included": false
+    }
+  ]
+}
