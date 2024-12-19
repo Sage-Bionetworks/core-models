@@ -8,22 +8,25 @@
       "@id": "p1",
       "requiresDependency": [
         {
-          "@id": "a2"
-        },
-        {
           "@id": "a1"
         },
         {
-          "@id": "a4"
+          "@id": "a2"
         },
         {
           "@id": "a3"
+        },
+        {
+          "@id": "a4"
         },
         {
           "@id": "a5"
         },
         {
           "@id": "a6"
+        },
+        {
+          "@id": "a7"
         },
         {
           "@id": "a9"
@@ -33,9 +36,6 @@
         },
         {
           "@id": "a8"
-        },
-        {
-          "@id": "a7"
         }
       ],
       "required": false
@@ -47,31 +47,62 @@
     },
     {
       "displayName": "Challenge",
-      "@id": "p4",
-      "requiresDependency": [
-        {
-          "@id": "a5"
-        },
-        {
-          "@id": "a3"
-        }
-      ],
+      "@id": "p2",
       "required": false
     },
     {
       "displayName": "Data processing",
       "@id": "a3",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a3e1"
+        },
+        {
+          "@id": "a3e2"
+        },
+        {
+          "@id": "a3e4"
+        },
+        {
+          "@id": "a3e3"
+        }
+      ],
+      "required": true
     },
     {
       "displayName": "Data portal",
       "@id": "a7",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a7e1"
+        },
+        {
+          "@id": "a7e2"
+        },
+        {
+          "@id": "a7e4"
+        },
+        {
+          "@id": "a7e5"
+        },
+        {
+          "@id": "a7e6"
+        },
+        {
+          "@id": "a7e3"
+        }
+      ],
+      "required": true
     },
     {
-      "displayName": "Data quality control",
+      "displayName": "Data Quality Control",
       "@id": "a4",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a4e2"
+        }
+      ],
+      "required": true
     },
     {
       "displayName": "Data collection and curation",
@@ -87,30 +118,60 @@
           "@id": "a1e3"
         }
       ],
-      "required": false
+      "required": true
     },
     {
       "displayName": "Data metrics",
       "@id": "a5",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a5e1"
+        },
+        {
+          "@id": "a5e2"
+        },
+        {
+          "@id": "a5e3"
+        },
+        {
+          "@id": "a5e4"
+        }
+      ],
+      "required": true
     },
     {
-      "displayName": "Yes, using existing workflows",
+      "displayName": "Utilizing Existing Nextflow Workflows",
       "@id": "a3e2",
+      "element": [
+        {
+          "@id": "a3e2r1"
+        },
+        {
+          "@id": "a3e2r2"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Yes, with the creation of new workflows",
+      "displayName": "New Nextflow workflows need to be created",
       "@id": "a3e3",
+      "element": [
+        {
+          "@id": "a3e3r1"
+        },
+        {
+          "@id": "a3e3r2"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "No Data Processing",
+      "displayName": "No Data Processing Expected",
       "@id": "a3e1",
       "required": false
     },
     {
-      "displayName": "No quality control",
+      "displayName": "No Expected Need for Data Quality Control by DPE",
       "@id": "a4e1",
       "required": false
     },
@@ -159,48 +220,40 @@
     },
     {
       "displayName": "Digital health app",
-      "@id": "p3",
-      "requiresDependency": [
-        {
-          "@id": "a7"
-        },
-        {
-          "@id": "a1"
-        }
-      ],
+      "@id": "p4",
       "required": false
     },
     {
       "displayName": "Research",
-      "@id": "p2",
-      "requiresDependency": [
-        {
-          "@id": "a1"
-        },
-        {
-          "@id": "a3"
-        }
-      ],
+      "@id": "p3",
       "required": false
     },
     {
-      "displayName": "Other data processing work",
+      "displayName": "Other Data Processing Work",
       "@id": "a3e4",
+      "element": [
+        {
+          "@id": "a3e4r1"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "No data portal",
       "@id": "a7e1",
-      "element": [
-        {
-          "@id": "a7e1r1"
-        }
-      ],
       "required": false
     },
     {
-      "displayName": "Utilizing DCQC",
+      "displayName": "Utilizing DPE DCQC Tooling",
       "@id": "a4e2",
+      "element": [
+        {
+          "@id": "a4e2r1"
+        },
+        {
+          "@id": "a4e2r2"
+        }
+      ],
       "required": false
     },
     {
@@ -220,10 +273,10 @@
           "@id": "a1e2r4"
         },
         {
-          "@id": "a1e2r5"
+          "@id": "a1e2r6"
         },
         {
-          "@id": "a1e2r6"
+          "@id": "a1e2r5"
         },
         {
           "@id": "a1e2r7"
@@ -251,7 +304,7 @@
       "required": false
     },
     {
-      "displayName": "No data metrics",
+      "displayName": "No Project Metric Support Needed",
       "@id": "a5e1",
       "required": false
     },
@@ -269,7 +322,7 @@
           "@id": "a2e3"
         }
       ],
-      "required": false
+      "required": true
     },
     {
       "displayName": "Utilizing an existing pattern (e.g. passing manifest via DRS)",
@@ -323,6 +376,9 @@
         },
         {
           "@id": "a2e3r9"
+        },
+        {
+          "@id": "a2e3r10"
         }
       ],
       "required": false
@@ -330,60 +386,141 @@
     {
       "displayName": "R/Python client features",
       "@id": "a6",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a6e1"
+        },
+        {
+          "@id": "a6e2"
+        },
+        {
+          "@id": "a6e5"
+        },
+        {
+          "@id": "a6e4"
+        },
+        {
+          "@id": "a6e3"
+        }
+      ],
+      "required": true
     },
     {
-      "displayName": "Python client maintenance",
+      "displayName": "Python client maintenance and support",
       "@id": "a6e2",
+      "element": [
+        {
+          "@id": "a6e2r1"
+        },
+        {
+          "@id": "a6e2r2"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Python client advancements (new features)",
       "@id": "a6e3",
+      "element": [
+        {
+          "@id": "a6e3r1"
+        },
+        {
+          "@id": "a6e3r2"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "R client maintenance",
       "@id": "a6e4",
+      "element": [
+        {
+          "@id": "a6e4r1"
+        },
+        {
+          "@id": "a6e4r2"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "R client advancements (new features)",
       "@id": "a6e5",
+      "element": [
+        {
+          "@id": "a6e5r1"
+        },
+        {
+          "@id": "a6e5r2"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Analysis web app",
-      "@id": "a7e5",
+      "displayName": "Analysis Web App (Agora Like)",
+      "@id": "a7e6",
       "required": false
     },
     {
-      "displayName": "Usability studies",
-      "@id": "a8e2",
+      "displayName": "Usability Studies",
+      "@id": "a8e5",
+      "element": [
+        {
+          "@id": "a8e5r1"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Logo design",
+      "displayName": "Logo Design",
       "@id": "a8e3",
+      "element": [
+        {
+          "@id": "a8e3r1"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Graphic design, marketing assets",
+      "displayName": "Graphic Design, Marking Assets",
       "@id": "a8e4",
+      "element": [
+        {
+          "@id": "a8e4r1"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Scientific project management",
       "@id": "a9",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a9e1"
+        },
+        {
+          "@id": "a9e2"
+        },
+        {
+          "@id": "a9e3"
+        },
+        {
+          "@id": "a9e4"
+        },
+        {
+          "@id": "a9e5"
+        }
+      ],
+      "required": true
     },
     {
-      "displayName": "Sage as primary",
+      "displayName": "Sage as prime",
       "@id": "a9e2",
       "required": false
     },
     {
-      "displayName": "Sage as secondary on grant",
+      "displayName": "Sage as subawardee",
       "@id": "a9e3",
       "required": false
     },
@@ -400,7 +537,18 @@
     {
       "displayName": "Community management",
       "@id": "a10",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a10e1"
+        },
+        {
+          "@id": "a10e2"
+        },
+        {
+          "@id": "a10e3"
+        }
+      ],
+      "required": true
     },
     {
       "displayName": "Events",
@@ -420,11 +568,27 @@
     {
       "displayName": "Snowflake dashboard/metrics - more involved",
       "@id": "a5e3",
+      "element": [
+        {
+          "@id": "a5e3r1"
+        },
+        {
+          "@id": "a5e3r2"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Snowflake dashboard/metrics - full support",
       "@id": "a5e4",
+      "element": [
+        {
+          "@id": "a5e4r1"
+        },
+        {
+          "@id": "a5e4r2"
+        }
+      ],
       "required": false
     },
     {
@@ -438,281 +602,702 @@
       "required": false
     },
     {
-      "displayName": "Biomedical data manager",
-      "@id": "a7e1r1",
-      "required": true
-    },
-    {
-      "displayName": "Portal feature (add-on to data portal like cohort builder)",
-      "@id": "a7e3",
-      "required": false
-    },
-    {
-      "displayName": "New feature - such as first time making cohort builder",
-      "@id": "a7e4",
-      "required": false
-    },
-    {
-      "displayName": "Existing portal maintenance w/ new minor features",
-      "@id": "a7e2",
-      "required": false
-    },
-    {
       "displayName": "Snowflake dashboard/metrics - minimal",
       "@id": "a5e2",
+      "element": [
+        {
+          "@id": "a5e2r1"
+        },
+        {
+          "@id": "a5e2r2"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New Feature (e.g. First Time Making Cohort Builder)",
+      "@id": "a7e5",
+      "required": false
+    },
+    {
+      "displayName": "Existing Portal Maintenance w/ Minor New Features",
+      "@id": "a7e3",
+      "element": [
+        {
+          "@id": "a7e3r1"
+        },
+        {
+          "@id": "a7e3r2"
+        },
+        {
+          "@id": "a7e3r3"
+        },
+        {
+          "@id": "a7e3r4"
+        },
+        {
+          "@id": "a7e3r5"
+        },
+        {
+          "@id": "a7e3r6"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "Portal Feature (Add-on to Data Portal) Cohort Builder",
+      "@id": "a7e4",
+      "element": [
+        {
+          "@id": "a7e4r1"
+        },
+        {
+          "@id": "a7e4r2"
+        },
+        {
+          "@id": "a7e4r3"
+        },
+        {
+          "@id": "a7e4r4"
+        },
+        {
+          "@id": "a7e4r5"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Design services",
       "@id": "a8",
-      "required": false
+      "requiresDependency": [
+        {
+          "@id": "a8e1"
+        },
+        {
+          "@id": "a8e2"
+        },
+        {
+          "@id": "a8e5"
+        },
+        {
+          "@id": "a8e3"
+        },
+        {
+          "@id": "a8e4"
+        }
+      ],
+      "required": true
     },
     {
       "displayName": "Science and Data Biomedical Data Manager ",
       "@id": "a1e2r1",
       "required": false,
-      "sizeYearOne": "L",
+      "sizeFirstYear": "L",
       "sizeRemainder": "L"
     },
     {
       "displayName": "Science and Data Scientific Community Manager",
       "@id": "a1e2r2",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "S",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Governance Innovation Associate Director",
       "@id": "a1e2r3",
-      "required": false
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "S"
     },
     {
       "displayName": "Governance Innovation Privacy and Data Protection Analyst",
       "@id": "a1e2r4",
-      "required": false
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
     },
     {
       "displayName": "Technology Front End Software Engineer",
       "@id": "a1e2r5",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "S",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Technology Back End Software Engineer",
-      "@id": "a1e2r6",
+      "@id": "a1e2r7",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "S",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Technology Product Manager",
-      "@id": "a1e2r7",
+      "@id": "a1e2r8",
       "required": false,
-      "sizeYearOne": "XXS",
+      "sizeFirstYear": "XXS",
       "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Technical Program Manager",
-      "@id": "a1e2r8",
+      "@id": "a1e2r9",
       "required": false,
-      "sizeYearOne": "XS",
+      "sizeFirstYear": "XS",
       "sizeRemainder": "XS"
     },
     {
       "displayName": "Technology Associate Director",
-      "@id": "a1e2r9",
+      "@id": "a1e2r10",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "XXS"
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
     },
     {
       "displayName": "Science and Data Bioinformatics Engineer",
       "@id": "a1e3r1",
       "required": false,
-      "sizeYearOne": "?",
+      "sizeFirstYear": "?",
       "sizeRemainder": "?"
     },
     {
       "displayName": "Science and Data Biomedical Data Manager ",
       "@id": "a1e3r2",
       "required": false,
-      "sizeYearOne": "XL",
+      "sizeFirstYear": "XL",
       "sizeRemainder": "XL"
     },
     {
       "displayName": "Science and Data Associate Director",
       "@id": "a1e3r3",
       "required": false,
-      "sizeYearOne": "?",
+      "sizeFirstYear": "?",
       "sizeRemainder": "?"
     },
     {
       "displayName": "Science and Data Scientific Community Manager",
       "@id": "a1e3r4",
       "required": false,
-      "sizeYearOne": "M",
+      "sizeFirstYear": "M",
       "sizeRemainder": "M"
     },
     {
       "displayName": "Governance Innovation Associate Director",
       "@id": "a1e3r5",
       "required": false,
-      "sizeYearOne": "?",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
     },
     {
       "displayName": "Governance Innovation Privacy and Data Protection Analyst",
       "@id": "a1e3r6",
       "required": false,
-      "sizeYearOne": "?",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "XL",
+      "sizeRemainder": "L"
     },
     {
       "displayName": "Governance Innovation Technical Program Manager",
       "@id": "a1e3r7",
       "required": false,
-      "sizeYearOne": "?",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "M",
+      "sizeRemainder": "XL"
     },
     {
       "displayName": "Technology Front End Software Engineer",
       "@id": "a1e3r8",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "S",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Technology Back End Software Engineer",
       "@id": "a1e3r9",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "S",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Technology Product Manager",
       "@id": "a1e3r10",
       "required": false,
-      "sizeYearOne": "XXS",
+      "sizeFirstYear": "XXS",
       "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Associate Director",
       "@id": "a1e3r11",
       "required": false,
-      "sizeYearOne": "XXS",
+      "sizeFirstYear": "XXS",
       "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Technical Program Manager",
       "@id": "a1e3r12",
       "required": false,
-      "sizeYearOne": "XS",
+      "sizeFirstYear": "XS",
       "sizeRemainder": "XS"
     },
     {
       "displayName": "Technology Front End Software Engineer",
       "@id": "a2e2r1",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Product Manager",
       "@id": "a2e2r2",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Technical Program Manage",
       "@id": "a2e2r3",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Associate Director",
       "@id": "a2e2r4",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
     },
     {
       "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
       "@id": "a2e2r5",
       "required": false,
-      "sizeYearOne": "XS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XS"
     },
     {
       "displayName": "Principle Security and Compliance Manager",
-      "@id": "a2e3r1",
+      "@id": "a2e3r2",
       "required": false,
-      "sizeYearOne": "M",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "M"
     },
     {
       "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
-      "@id": "a2e3r2",
+      "@id": "a2e3r1",
       "required": false,
-      "sizeYearOne": "XS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XS"
     },
     {
-      "displayName": "Governance Innovation Privacy and Data Protection Analyst",
+      "displayName": "Governance Innovation Associate Director",
       "@id": "a2e3r3",
       "required": false,
-      "sizeYearOne": "S",
+      "sizeFirstYear": "?",
       "sizeRemainder": "S"
     },
     {
       "displayName": "Technology Front End Software Engineer",
-      "@id": "a2e3r4",
+      "@id": "a2e3r5",
       "required": false,
-      "sizeYearOne": "M",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "M"
     },
     {
       "displayName": "Technology Back End Software Engineer",
-      "@id": "a2e3r5",
+      "@id": "a2e3r6",
       "required": false,
-      "sizeYearOne": "M",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "M"
     },
     {
       "displayName": "Technology Product Manager",
-      "@id": "a2e3r6",
+      "@id": "a2e3r7",
       "required": false,
-      "sizeYearOne": "XS",
-      "sizeRemainder": "XXS"
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XS"
     },
     {
       "displayName": "Technology Technical Program Manager",
-      "@id": "a2e3r7",
+      "@id": "a2e3r8",
       "required": false,
-      "sizeYearOne": "XS",
+      "sizeFirstYear": "XS",
       "sizeRemainder": "XS"
     },
     {
       "displayName": "Technology Product Designer",
-      "@id": "a2e3r8",
+      "@id": "a2e3r9",
       "required": false,
-      "sizeYearOne": "XXS",
-      "sizeRemainder": "?"
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
     },
     {
       "displayName": "Technology Associate Director",
-      "@id": "a2e3r9",
+      "@id": "a2e3r10",
       "required": false,
-      "sizeYearOne": "XS",
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Governance Innovation Technical Program Manager",
+      "@id": "a1e2r6",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Governance Innovation Technical Program Manager",
+      "@id": "a2e3r4",
+      "required": false,
+      "sizeFirstYear": "?",
+      "sizeRemainder": "M"
+    },
+    {
+      "required": false
+    },
+    {
+      "displayName": "Biomedical Data Manager",
+      "@id": "Biomedical Data Manager",
+      "required": false,
+      "sizeFirstYear": "0.3",
+      "sizeRemainder": "0.7"
+    },
+    {
+      "displayName": "Principle Security and Compliance Manager",
+      "required": false
+    },
+    {
+      "displayName": "Project Type",
+      "@id": "p0",
+      "requiresDependency": [
+        {
+          "@id": "p1"
+        },
+        {
+          "@id": "p2"
+        },
+        {
+          "@id": "p3"
+        },
+        {
+          "@id": "p5"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a3e2r1",
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a3e2r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a3e3r1",
+      "required": false,
+      "sizeFirstYear": "XL",
+      "sizeRemainder": "XL"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a3e3r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a3e4r1",
+      "required": false,
+      "sizeFirstYear": "?",
       "sizeRemainder": "?"
     },
     {
-      "@id": "a1e2r10",
+      "displayName": "Technology (Research) Software Engineer",
+      "@id": "a4e2r1",
       "required": false,
-      "sizeYearOne": "M",
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a4e2r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a5e2r1",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a5e2r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a5e3r1",
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a5e3r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+      "@id": "a5e4r1",
+      "required": false,
+      "sizeFirstYear": "L/XL",
+      "sizeRemainder": "L/XL"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a5e4r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology (Research) Software Engineer",
+      "@id": "a6e2r1",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a6e2r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology (Research) Software Engineer",
+      "@id": "a6e3r1",
+      "required": false,
+      "sizeFirstYear": "L",
+      "sizeRemainder": "L"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a6e3r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology (Research) Software Engineer",
+      "@id": "a6e4r1",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a6e4r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology (Research) Software Engineer",
+      "@id": "a6e5r1",
+      "required": false,
+      "sizeFirstYear": "L",
+      "sizeRemainder": "L"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a6e5r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "New Data Portal",
+      "@id": "a7e2",
+      "element": [
+        {
+          "@id": "a7e2r1"
+        },
+        {
+          "@id": "a7e2r2"
+        },
+        {
+          "@id": "a7e2r3"
+        },
+        {
+          "@id": "a7e2r4"
+        },
+        {
+          "@id": "a7e2r5"
+        },
+        {
+          "@id": "a7e2r6"
+        },
+        {
+          "@id": "a7e2r7"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "Technology Front End Software Engineer",
+      "@id": "a7e2r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a7e2r2",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Technology IT and App Support Engineer",
+      "@id": "a7e2r3",
+      "required": false,
+      "sizeFirstYear": "?",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a7e2r4",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Science and Data Biomedical Data Manager ",
+      "@id": "a7e2r5",
+      "required": false,
+      "sizeFirstYear": "XXS",
       "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Technology Technical Program Manager",
+      "@id": "a7e2r6",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Science and Data Technical Program Manager",
+      "@id": "a7e2r7",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Technology Director",
+      "@id": "a7e3r1",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Technology Front End Software Engineer",
+      "@id": "a7e3r2",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a7e3r3",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Technology Technical Program Manager",
+      "@id": "a7e3r4",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Science and Data Biomedical Data Manager ",
+      "@id": "a7e3r5",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Science and Data Technical Program Manager",
+      "@id": "a7e3r6",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Technical Director",
+      "@id": "a7e4r1",
+      "required": false
+    },
+    {
+      "displayName": "Technology Front End Software Engineer",
+      "@id": "a7e4r2",
+      "required": false
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a7e4r3",
+      "required": false
+    },
+    {
+      "displayName": "Science and Data Biomedical Data Manager",
+      "@id": "a7e4r4",
+      "required": false
+    },
+    {
+      "displayName": "Technology Back End Software Engineer",
+      "@id": "a7e4r5",
+      "required": false
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a8e2r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a8e5r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a8e3r1",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Technology Product Designer",
+      "@id": "a8e4r1",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "?"
     }
   ]
 }
