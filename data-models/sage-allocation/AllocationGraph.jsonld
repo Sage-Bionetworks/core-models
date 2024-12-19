@@ -29,13 +29,22 @@
           "@id": "a7"
         },
         {
+          "@id": "a8"
+        },
+        {
           "@id": "a9"
         },
         {
           "@id": "a10"
         },
         {
-          "@id": "a8"
+          "@id": "a11"
+        },
+        {
+          "@id": "a12"
+        },
+        {
+          "@id": "a13"
         }
       ],
       "required": false
@@ -515,23 +524,43 @@
       "required": true
     },
     {
-      "displayName": "Sage as prime",
+      "displayName": "Sage as Prime On Grant",
       "@id": "a9e2",
+      "element": [
+        {
+          "@id": "a9e2r1"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Sage as subawardee",
+      "displayName": "Sage as Subawardee On Grant",
       "@id": "a9e3",
+      "element": [
+        {
+          "@id": "a9e3r1"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Small project",
       "@id": "a9e4",
+      "element": [
+        {
+          "@id": "a9e4r1"
+        }
+      ],
       "required": false
     },
     {
       "displayName": "Specialty work",
       "@id": "a9e5",
+      "element": [
+        {
+          "@id": "a9e5r1"
+        }
+      ],
       "required": false
     },
     {
@@ -551,13 +580,23 @@
       "required": true
     },
     {
-      "displayName": "Events",
+      "displayName": "Events - Highly Variable",
       "@id": "a10e3",
+      "element": [
+        {
+          "@id": "a10e3r1"
+        }
+      ],
       "required": false
     },
     {
-      "displayName": "Community communications",
+      "displayName": "Community Communications",
       "@id": "a10e2",
+      "element": [
+        {
+          "@id": "a10e2r1"
+        }
+      ],
       "required": false
     },
     {
@@ -592,12 +631,12 @@
       "required": false
     },
     {
-      "displayName": "No community management",
+      "displayName": "No Community Management",
       "@id": "a10e1",
       "required": false
     },
     {
-      "displayName": "No scientific project management",
+      "displayName": "No Scientific Project Management is Needed",
       "@id": "a9e1",
       "required": false
     },
@@ -1298,6 +1337,241 @@
       "required": false,
       "sizeFirstYear": "XXS",
       "sizeRemainder": "?"
+    },
+    {
+      "displayName": "IRB Protocol Development, Submission, Renewals",
+      "@id": "a11",
+      "requiresDependency": [
+        {
+          "@id": "a11e2"
+        },
+        {
+          "@id": "a11e1"
+        }
+      ],
+      "required": true
+    },
+    {
+      "displayName": "Legal review of applicable regulations",
+      "@id": "a12",
+      "required": true
+    },
+    {
+      "displayName": "Establish Community Governance Strategy",
+      "@id": "a13",
+      "required": true
+    },
+    {
+      "displayName": "Scientific Program Management",
+      "@id": "a9e2r1",
+      "required": false,
+      "sizeFirstYear": "XL",
+      "sizeRemainder": "L"
+    },
+    {
+      "displayName": "Scientific Program Management",
+      "@id": "a9e3r1",
+      "required": false,
+      "sizeFirstYear": "L",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Scientific Program Management",
+      "@id": "a9e4r1",
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Scientific Program Management",
+      "@id": "a9e5r1",
+      "required": false,
+      "sizeFirstYear": "?",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Science and Data Scientific Community Manager",
+      "@id": "a10e3r1",
+      "required": false,
+      "sizeFirstYear": "?",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Science and Data Scientific Community Manager",
+      "@id": "a10e2r1",
+      "required": false,
+      "sizeFirstYear": "?",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "If Sage is PI, co-PI / Data Contributor/ Data Controller",
+      "@id": "a11e2",
+      "required": false
+    },
+    {
+      "displayName": "When Sage is Project Collaborator / Data Controller",
+      "@id": "a12e1",
+      "required": false
+    },
+    {
+      "displayName": "Not Sage Responsibility",
+      "@id": "a11e1",
+      "required": false
+    },
+    {
+      "displayName": "New DCC - US Data in Synapse (small consortia)",
+      "@id": "a13e1",
+      "element": [
+        {
+          "@id": "a13e1r1"
+        },
+        {
+          "@id": "a13e1r2"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New DCC - US Data in Synapse (large consortia)",
+      "@id": "a13e2",
+      "element": [
+        {
+          "@id": "a13e2r1"
+        },
+        {
+          "@id": "a13e2r2"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New DCC in Synapse - US & International Data Contributors (small Consortia)",
+      "@id": "a13e3",
+      "element": [
+        {
+          "@id": "a13e3r1"
+        },
+        {
+          "@id": "a13e3r2"
+        },
+        {
+          "@id": "a13e3r3"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New DCC in Synapse - US & International Data Contributors (large Consortia)",
+      "@id": "a13e4",
+      "element": [
+        {
+          "@id": "a13e4r1"
+        },
+        {
+          "@id": "a13e4r2"
+        },
+        {
+          "@id": "a13e4r3"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New contributor to an existing DCC (e.g. CDCP, ADKP)",
+      "@id": "a13e5",
+      "element": [
+        {
+          "@id": "a13e5r1"
+        },
+        {
+          "@id": "a13e5r2"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "Community Governance Strategy Associate Director",
+      "@id": "a13e5r1",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
+      "@id": "a13e5r2",
+      "required": false,
+      "sizeFirstYear": "XXS",
+      "sizeRemainder": "?"
+    },
+    {
+      "displayName": "Community Governance Strategy Associate Director",
+      "@id": "a13e4r1",
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
+      "@id": "a13e4r2",
+      "required": false,
+      "sizeFirstYear": "XL",
+      "sizeRemainder": "L"
+    },
+    {
+      "displayName": "Chief Privacy and Compliance Officer",
+      "@id": "a13e4r3",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "S"
+    },
+    {
+      "displayName": "Community Governance Strategy Associate Director",
+      "@id": "a13e3r1",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
+      "@id": "a13e3r2",
+      "required": false,
+      "sizeFirstYear": "L",
+      "sizeRemainder": "M"
+    },
+    {
+      "displayName": "Chief Privacy and Compliance Officer",
+      "@id": "a13e3r3",
+      "required": false,
+      "sizeFirstYear": "S",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Community Governance Strategy Associate Director",
+      "@id": "a13e1r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
+      "@id": "a13e1r2",
+      "required": false,
+      "sizeFirstYear": "M",
+      "sizeRemainder": "XS"
+    },
+    {
+      "displayName": "Community Governance Strategy Associate Director",
+      "@id": "a13e2r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XXS"
+    },
+    {
+      "displayName": "Community Governance Strategy Privacy & Data Protection Analyst",
+      "@id": "a13e2r2",
+      "required": false,
+      "sizeFirstYear": "L",
+      "sizeRemainder": "S"
     }
   ]
 }
