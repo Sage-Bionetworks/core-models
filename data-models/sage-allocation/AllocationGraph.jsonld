@@ -8,10 +8,10 @@
       "@id": "p1",
       "requiresDependency": [
         {
-          "@id": "a1"
+          "@id": "a2"
         },
         {
-          "@id": "a2"
+          "@id": "a1"
         },
         {
           "@id": "a3"
@@ -107,6 +107,9 @@
       "displayName": "Data Quality Control",
       "@id": "a4",
       "requiresDependency": [
+        {
+          "@id": "a4e1"
+        },
         {
           "@id": "a4e2"
         }
@@ -641,24 +644,6 @@
       "required": false
     },
     {
-      "displayName": "Snowflake dashboard/metrics - minimal",
-      "@id": "a5e2",
-      "element": [
-        {
-          "@id": "a5e2r1"
-        },
-        {
-          "@id": "a5e2r2"
-        }
-      ],
-      "required": false
-    },
-    {
-      "displayName": "New Feature (e.g. First Time Making Cohort Builder)",
-      "@id": "a7e5",
-      "required": false
-    },
-    {
       "displayName": "Existing Portal Maintenance w/ Minor New Features",
       "@id": "a7e3",
       "element": [
@@ -701,6 +686,24 @@
         },
         {
           "@id": "a7e4r5"
+        }
+      ],
+      "required": false
+    },
+    {
+      "displayName": "New Feature (e.g. First Time Making Cohort Builder)",
+      "@id": "a7e5",
+      "required": false
+    },
+    {
+      "displayName": "Snowflake dashboard/metrics - minimal",
+      "@id": "a5e2",
+      "element": [
+        {
+          "@id": "a5e2r1"
+        },
+        {
+          "@id": "a5e2r2"
         }
       ],
       "required": false
@@ -1009,6 +1012,9 @@
         },
         {
           "@id": "p2"
+        },
+        {
+          "@id": "p4"
         },
         {
           "@id": "p3"
