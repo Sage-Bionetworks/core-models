@@ -77,7 +77,8 @@
           "enum": [
             "@id:a3e1",
             "@id:a3e2",
-            "@id:a3e3"
+            "@id:a3e3",
+            "@id:a3e4"
           ]
         }
       }
@@ -92,8 +93,7 @@
           "default": "@id:a4e1",
           "enum": [
             "@id:a4e1",
-            "@id:a4e2",
-            "@id:a4e3"
+            "@id:a4e2"
           ]
         }
       }
@@ -109,7 +109,8 @@
           "enum": [
             "@id:a5e1",
             "@id:a5e2",
-            "@id:a5e3"
+            "@id:a5e3",
+            "@id:a5e4"
           ]
         }
       }
@@ -125,7 +126,132 @@
           "enum": [
             "@id:a6e1",
             "@id:a6e2",
-            "@id:a6e3"
+            "@id:a6e3",
+            "@id:a6e4",
+            "@id:a6e5"
+          ]
+        }
+      }
+    }
+  },
+      "a7Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a7": {
+          "type": "string",
+          "title": "Will you require @id:a7?",
+          "default": "@id:a7e1",
+          "enum": [
+            "@id:a7e1",
+            "@id:a7e2",
+            "@id:a7e3",
+            "@id:a7e4",
+            "@id:a7e5",
+            "@id:a7e6"
+          ]
+        }
+      }
+    }
+  },
+    "a8Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a8": {
+          "type": "string",
+          "title": "Will you require @id:a8?",
+          "default": "@id:a8e1",
+          "enum": [
+            "@id:a8e1",
+            "@id:a8e2",
+            "@id:a8e3",
+            "@id:a8e4",
+            "@id:a8e5"
+          ]
+        }
+      }
+    }
+  },
+    "a9Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a9": {
+          "type": "string",
+          "title": "Will you require @id:a9?",
+          "default": "@id:a9e1",
+          "enum": [
+            "@id:a9e1",
+            "@id:a9e2",
+            "@id:a9e3",
+            "@id:a9e4",
+            "@id:a9e5"
+          ]
+        }
+      }
+    }
+  },
+    "a10Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a10": {
+          "type": "string",
+          "title": "Will you require @id:a10?",
+          "default": "@id:a10e1",
+          "enum": [
+            "@id:a10e1",
+            "@id:a10e2",
+            "@id:a10e3"
+          ]
+        }
+      }
+    }
+  },
+    "a11Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a11": {
+          "type": "string",
+          "title": "Will you require @id:a11?",
+          "default": "@id:a11e1",
+          "enum": [
+            "@id:a11e1",
+            "@id:a11e2"
+          ]
+        }
+      }
+    }
+  },
+    "a12Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a12": {
+          "type": "string",
+          "title": "Will you require @id:a12?",
+          "default": "@id:a12e1",
+          "enum": [
+            "@id:a12e1"
+          ]
+        }
+      }
+    }
+  },
+    "a13Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a13": {
+          "type": "string",
+          "title": "Will you require @id:a13?",
+          "default": "@id:a13e1",
+          "enum": [
+            "@id:a13e1",
+            "@id:a13e2",
+            "@id:a13e3"
           ]
         }
       }
