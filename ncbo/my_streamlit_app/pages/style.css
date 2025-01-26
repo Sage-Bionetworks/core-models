@@ -1,0 +1,25 @@
+.floating-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f0f2f6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+
+.stCheckbox {
+    margin-bottom: 10px;
+}
+
+.stButton {
+    margin-top: 10px;
+}
+
+.stForm {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

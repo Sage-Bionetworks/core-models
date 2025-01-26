@@ -1,0 +1,1143 @@
+{
+    "@context": {
+        "schema": "http://schema.org/"
+    },
+    "@graph": [
+        {
+            "@type": "DataCatalog",
+            "@id": "Sage Bionetworks"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn29654184",
+            "name": "Processed cNF Cell Line RNA-seq (Counts)",
+            "description": "Gene expression processed from RNA-seq data from the project Genetic Studies of Neurofibromatosis for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Organization",
+            "@id": "NTAP"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn30613372",
+            "name": "MPNST Cell Line SNP Arrays",
+            "description": "Genomic characterization of 8 of the most widely used MPNST cell lines ",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "Fundaci\u00f3n Proyecto Neurofibromatosis"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Organization",
+            "@id": "Fundaci\u00f3n Proyecto Neurofibromatosis"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn30865196",
+            "name": "Synodos LGG RNA-seq",
+            "description": "Partial data release",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Organization",
+            "@id": "CTF"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn30865247",
+            "name": "Synodos LGG Whole Genome Sequencing",
+            "description": "Partial data release",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn30865300",
+            "name": "Synodos LGG Methylation Arrays",
+            "description": "Partial data release",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2024-06-19",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn31546989",
+            "name": "DeepVariant Output (WES)",
+            "description": "Gene expression processed from WES data from the project Genetic Studies of Neurofibromatosis for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn31864875",
+            "name": "Strelka2 Output (WES)",
+            "description": "Gene expression processed from WES data from the project Genetic Studies of Neurofibromatosis for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562702",
+            "name": "Germline Genomic Variants - FreeBayes Pipeline ",
+            "description": "Germline variants data processed from WES data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562703",
+            "name": "Germline Genomic Variants - Mutect2 Pipeline ",
+            "description": "Germline variants data processed from WES data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562704",
+            "name": "Germline Genomic Variants - Strelka Pipeline ",
+            "description": "Germline variants data processed from WES data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562705",
+            "name": "Germline Genomic Variants - DeepVariant Pipeline ",
+            "description": "Germline variants data processed from WES data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562794",
+            "name": "Germline Genomic Variants - FreeBayes Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Targeting the mechanisms underlying cutaneous neurofibroma formation in NF1 - a clinical translational approach for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562795",
+            "name": "Germline Genomic Variants - Mutect2 Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Targeting the mechanisms underlying cutaneous neurofibroma formation in NF1 - a clinical translational approach for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562796",
+            "name": "Germline Genomic Variants - Strelka Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Targeting the mechanisms underlying cutaneous neurofibroma formation in NF1 - a clinical translational approach for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562797",
+            "name": "Germline Genomic Variants - DeepVariant Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Targeting the mechanisms underlying cutaneous neurofibroma formation in NF1 - a clinical translational approach for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562836",
+            "name": "Germline Genomic Variants - FreeBayes Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Ultra-low-pass whole genome sequencing of plasma cfDNA from patients with plexiform neurofibroma and malignant peripheral nerve sheath tumors for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562837",
+            "name": "Germline Genomic Variants - Mutect2 Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Ultra-low-pass whole genome sequencing of plasma cfDNA from patients with plexiform neurofibroma and malignant peripheral nerve sheath tumors for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562838",
+            "name": "Germline Genomic Variants - Strelka Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Ultra-low-pass whole genome sequencing of plasma cfDNA from patients with plexiform neurofibroma and malignant peripheral nerve sheath tumors for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35562839",
+            "name": "Germline Genomic Variants - DeepVariant Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Ultra-low-pass whole genome sequencing of plasma cfDNA from patients with plexiform neurofibroma and malignant peripheral nerve sheath tumors for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35563960",
+            "name": "Germline Genomic Variants - FreeBayes Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Development of a Preclinical NF1-MPNST Platform Suitable for Precision Oncology Drug Discovery and Evaluation for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35563961",
+            "name": "Germline Genomic Variants - Mutect2 Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Development of a Preclinical NF1-MPNST Platform Suitable for Precision Oncology Drug Discovery and Evaluation for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35563962",
+            "name": "Germline Genomic Variants - Strelka Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Development of a Preclinical NF1-MPNST Platform Suitable for Precision Oncology Drug Discovery and Evaluation for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn35563963",
+            "name": "Germline Genomic Variants - DeepVariant Pipeline ",
+            "description": "Germline variants data processed from WGS data from the project Development of a Preclinical NF1-MPNST Platform Suitable for Precision Oncology Drug Discovery and Evaluation for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn39840966",
+            "name": "Formatted Files - Germline Variants",
+            "description": "Germline variants data processed from WES data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn40908928",
+            "name": "Gene Expression Quantification from the JHU NF1 Biospecimen Repository RNA-seq Data",
+            "description": "geneExpression data processed from RNA-seq data from the project The Johns Hopkins NF1 Biospecimen Repository for the NF-OSI Processing Initiative",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51200209",
+            "name": "Whole Exome Sequencing of Plexiform Neurofibromas (pNFs)",
+            "description": "Raw data from WES of whole plexiform neurofibroma tumors. The aim of this data is to find distinctions that help explain risk of tumor malignancy, the extent of affected tissue, and locations of tumor appearance.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51585677",
+            "name": "MPNST Cell Line Whole Genome Sequencing",
+            "description": "MPNST Cell Line Whole Genome Sequencing",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "Fundaci\u00f3n Proyecto Neurofibromatosis"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51585807",
+            "name": "MPNST Cell Line Whole Exome Sequencing",
+            "description": "MPNST Cell Line Whole Exome Sequencing",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "Fundaci\u00f3n Proyecto Neurofibromatosis"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51586253",
+            "name": "MPNST Cell Line Methylation Arrays",
+            "description": "MPNST Cell Line Methylation Arrays",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "Fundaci\u00f3n Proyecto Neurofibromatosis"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51914129",
+            "name": "Synodos NF2 Processed RNA-seq - 2017 Release",
+            "description": "RNAseq data were generated from an Nf2fl/fl mouse model dorsal root ganglion tissue and cell line models of meningioma and schwannoma. In addition, data were generated from cell line models of meningioma and schwannoma with vehicle control, or 12 different single agent or combinations of small molecule inhibitors. This is data from the 2017 release.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2017,
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51914478",
+            "name": "Synodos NF2 Drug Screen - 2017 Release",
+            "description": "Raw and processed drugscreening data from the Synodos NF2 project. ",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2016,
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51914953",
+            "name": "Single Agent Screens of pNF Cell Lines",
+            "description": "Single agent screen of the MIPE 4.0 library of approx. 1912 small molecules against 9 different cell-lines (5 NF1 nullizygous, 1 carrier, 2 normal, and 1 control) with diverse modes of action, and the generation of single agent viability results for each cell line to ID ~40 top hits (with highest potency and efficacy)",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2024-04-26",
+            "dateCreated": 2015,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51915059",
+            "name": "Gene expression profiling of Schwann cells and macrophages in mouse nerves and neurofibromas",
+            "description": "Gene expression profiling with RNA array to study macrophage-Schwann cell interactions that may shape tumor development.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2016,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51915976",
+            "name": "Copy Number Variation from the Columbia University NF1 Glioma Project",
+            "description": "CNV data from NF1 gliomas as seg files.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2024-06-13",
+            "dateCreated": 2017,
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51916091",
+            "name": "CTF-UCF-Cenix Complete Compound Drug Screen for anti-NF2 Candidates",
+            "description": "MS01 and MS11 mouse Schwann cells (NF2-/- and NF2 wild-type) were screened with 95 different drugs and vehicle conditions for 48 hours in an 8-point dose response format. The screen also included a 30 minute incubation wih 10uM EdU to assess DNA replication in all conditions. At the end of the incubation period, phenotypic measurements were performed with an automated microscope.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2015,
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51917001",
+            "name": "10x10 Combination Screens of pNF Cell Lines",
+            "description": "Execution of 10 x 10 screen of top 72 compounds from 2nd screen, in order to focus on 9 combinations prioritized for validation in mouse NF1-/- primary Schwann cells",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2024-04-26",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51917244",
+            "name": "6x6 Combination Screens of pNF Cell Lines",
+            "description": "Execution of 6 x 6 screen of the top 40 compounds from initial screening, to elicit 780 combinations, such that the top 72 unique combinations (with preliminary optimal synergism profiles) can be elucidated",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2024-04-26",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51927498",
+            "name": "Drug-Target Explorer",
+            "description": "Data files in text and R binary format for the Drug-Target Explorer application.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "TBD",
+            "dateModified": "2023-07-25",
+            "dateCreated": 2022,
+            "funding": {
+                "@type": "Organization",
+                "@id": "CTF"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51930713",
+            "name": "Gene Expression Quantification from RNA-seq",
+            "description": "Processed gene expression data of IPS cells with distinct NF1 genotypes.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-27",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51930741",
+            "name": "Gene Expression Quantification from RNA-seq",
+            "description": "Processed gene expression data of cutaneous neurofibromas (cNFs) under conditions of Scwann cell-fibroblast interactions ",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-27",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51930775",
+            "name": "Gene Expression Quantification from RNA-seq",
+            "description": "Processed gene expression data characterizing Let7-HMGA2 perturbations",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-27",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn51930817",
+            "name": "Gene Expression Quantification from RNA-seq",
+            "description": "Processed gene expression profiles reflecting a human Schwann cell model for cNF and to identify differences in susceptibility to NF1 loss in different stages of Schwann cell development.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-07-27",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn52163155",
+            "name": "Drug screens with 3D Plexiform Neurofibroma Model System",
+            "description": "Data characterizing 3D co-culture models of NF1 Plexiform Neurofibromas and drug screens using these models.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "drugScreen",
+            "dateModified": "2023-07-27",
+            "dateCreated": 2016,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn52298742",
+            "name": "Copy Number Variation of malignant peripheral nerve sheath tumors",
+            "description": "Copy number variants include those from 10 samples.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "Copy Number Variants",
+            "dateModified": "2023-12-22",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn52299273",
+            "name": "Copy Number Variation from from patients with plexiform neurofibroma and malignant peripheral nerve sheath tumors",
+            "description": "Copy number variants include those from 59 individuals.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "Copy Number Variants",
+            "dateModified": "2023-12-22",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn52299972",
+            "name": "Copy Number Variation from cutaneous neurofibroma study",
+            "description": "Copy number variants include those from 10 individuals.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "TBD",
+            "measurementTechnique": "Copy Number Variants",
+            "dateModified": "2023-12-22",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53132831",
+            "name": "Whole exome sequencing of Johns Hopkins NF1 Biospecimen Repository cohort",
+            "description": "Whole exome sequencing of 68 patients, with multiple primary tumor types and control samples, from The Johns Hopkins NF1 Biospecimen Repository.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "genomicVariants",
+            "dateModified": "2024-07-10",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53133024",
+            "name": "Bulk RNA-sequencing of Johns Hopkins NF1 Biospecimen Repository cohort",
+            "description": "Bulk RNA-sequencing of 58 patients for multiple primary tumor types from The Johns Hopkins NF1 Biospecimen Repository.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2023-12-22",
+            "dateCreated": "TBD",
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53140231",
+            "name": "Processed RNA-seq STAR Salmon outputs",
+            "description": "TBD",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2024-06-11",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53141534",
+            "name": "Processed RNA-seq Counts Matrix",
+            "description": "TBD",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2024-06-11",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53149128",
+            "name": "Processed Somatic Variants - Strelka Pipeline",
+            "description": "Dataset includes genomic variants for 53 patients across multiple batches processed in 2023 from The Johns Hopkins NF1 Biospecimen Repository.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "SomaticVariants",
+            "dateModified": "2023-12-22",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn53149144",
+            "name": "Processed Somatic Genomic Variants - Mutect2 Pipeline",
+            "description": "TBD",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "SomaticVariants",
+            "dateModified": "2024-06-13",
+            "dateCreated": 2023,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn61847288",
+            "name": "Aligned reads from RNA-seq of cutaneous neurofibroma organoid model",
+            "description": "Aligned reads (.bam) from RNA-seq data, includes 54 cutaneous neurofibroma organoid model specimens. These are intermediate outputs from the STAR and Salmon workflow, with samtools stats available per file.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "AlignedReads",
+            "dateModified": "2024-07-25",
+            "dateCreated": 2024,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn61847298",
+            "name": "Gene expression quantification of cutaneous neurofibroma organoid model",
+            "description": "Quantified gene expression of 55 cutaneous neurofibroma organoid model specimens from the STAR and Salmon workflow.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "geneExpression",
+            "dateModified": "2024-07-25",
+            "dateCreated": 2024,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn61849995",
+            "name": "Germline variants in cutaneous neurofibroma",
+            "description": "Germline variants were derived from whole genome sequencing data of normal tissue (saliva) contributed by a cohort with cutaneous neurofibromas. The current version of the dataset includes variant calls from data batches 1-4 (208 individuals total) obtained using Strelka2 from the nextflow Sarek workflow.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "GermlineVariants",
+            "dateModified": "2024-12-17",
+            "dateCreated": 2024,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        },
+        {
+            "@type": "Dataset",
+            "@id": "syn61851460",
+            "name": "Copy number variants of cutaneous neurofibromas",
+            "description": "Copy number variants were derived from whole genome sequencing data of normal tissue (saliva) contributed by a cohort of individuals with cutaneous neurofibromas. The current version of the dataset includes processing of data batches 1 (53 individuals) with CNVkit from the nextflow Sarek workflow.",
+            "alternateName": "To Be Determined",
+            "includedInDataCatalog": {
+                "@id": "Sage Bionetworks"
+            },
+            "keywords": "Neurofibromatosis type 1",
+            "measurementTechnique": "CopyNumberVariants",
+            "dateModified": "2024-12-17",
+            "dateCreated": 2024,
+            "funding": {
+                "@type": "Organization",
+                "@id": "NTAP"
+            },
+            "conditionsOfAccess": "To Be Determined",
+            "citation": "To Be Determined"
+        }
+    ]
+}
