@@ -29,7 +29,7 @@
         },
         {
             "@type": "Organization",
-            "@id": "NTAP-Test"
+            "@id": "NTAP"
         },
         {
             "@type": "Dataset",
