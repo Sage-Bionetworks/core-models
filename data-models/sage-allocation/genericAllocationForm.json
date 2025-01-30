@@ -228,7 +228,8 @@
                     "title": "Will you require @id:a12?",
                     "default": "@id:a12e1",
                     "enum": [
-                        "@id:a12e1"
+                        "@id:a12e1",
+                        "@id:a12e2"
                     ]
                 }
             }
@@ -244,7 +245,8 @@
                     "enum": [
                         "@id:a13e1",
                         "@id:a13e2",
-                        "@id:a13e3"
+                        "@id:a13e3",
+                        "@id:a13e4"
                     ]
                 }
             }
