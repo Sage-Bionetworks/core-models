@@ -1368,7 +1368,7 @@
       "required": true
     },
     {
-      "displayName": "Legal review of applicable regulations",
+      "displayName": "Is Sage's role a project collaborator / data controller?",
       "@id": "a12",
       "requiresDependency": [
         {
@@ -1450,8 +1450,13 @@
       "required": false
     },
     {
-      "displayName": "When Sage is Project Collaborator / Data Controller",
+      "displayName": "If yes, legal review is required.",
       "@id": "a12e2",
+      "element": [
+        {
+          "@id": "a12e2r1"
+        }
+      ],
       "required": false
     },
     {
@@ -1620,7 +1625,7 @@
       "required": false
     },
     {
-      "displayName": "No legal review",
+      "displayName": "No. Sage's role is not a project collaborator / data controller.",
       "@id": "a12e1",
       "required": false
     },
@@ -1628,6 +1633,13 @@
       "displayName": "No design services needed",
       "@id": "a8e1",
       "required": false
+    },
+    {
+      "displayName": "Chief Privacy and Compliance Officer",
+      "@id": "a12e2r1",
+      "required": false,
+      "sizeFirstYear": "XS",
+      "sizeRemainder": "XXS"
     }
   ]
 }
