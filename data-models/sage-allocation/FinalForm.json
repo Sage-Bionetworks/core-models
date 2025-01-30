@@ -1,0 +1,6697 @@
+{
+  "title": "Effort Based Cost Estimator Generic",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "projectCategory": {
+          "type": "string",
+          "title": "What kind of project is this?",
+          "default": "DCC",
+          "enum": [
+            "DCC",
+            "Challenge",
+            "Research",
+            "Digital health app",
+            "Other"
+          ]
+        }
+      }
+    },
+    "projectInfo": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "title": "Project Name"
+        },
+        "projectLead": {
+          "type": "string",
+          "title": "Project Lead(s) Name(s)"
+        }
+      }
+    },
+    "a1Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data collection and curation": {
+          "type": "string",
+          "title": "Will you require Data collection and curation?",
+          "default": "No data curation by Sage",
+          "enum": [
+            "No data curation by Sage",
+            "Data curation and management - small consortia or supplemental project",
+            "Data curation and management - large consortia"
+          ]
+        }
+      }
+    },
+    "a2Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data platform integration": {
+          "type": "string",
+          "title": "Will you require Data platform integration?",
+          "default": "No Platform integration",
+          "enum": [
+            "No Platform integration",
+            "Utilizing an existing pattern (e.g. passing manifest via DRS)",
+            "Will require a new platform integration pattern (e.g. not utilizing DRS)"
+          ]
+        }
+      }
+    },
+    "a3Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data processing": {
+          "type": "string",
+          "title": "Will you require Data processing?",
+          "default": "No Data Processing Expected",
+          "enum": [
+            "No Data Processing Expected",
+            "Utilizing Existing Nextflow Workflows",
+            "New Nextflow workflows need to be created",
+            "Other Data Processing Work"
+          ]
+        }
+      }
+    },
+    "a4Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data Quality Control": {
+          "type": "string",
+          "title": "Will you require Data Quality Control?",
+          "default": "No Expected Need for Data Quality Control by DPE",
+          "enum": [
+            "No Expected Need for Data Quality Control by DPE",
+            "Utilizing DPE DCQC Tooling"
+          ]
+        }
+      }
+    },
+    "a5Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data metrics": {
+          "type": "string",
+          "title": "Will you require Data metrics?",
+          "default": "No Project Metric Support Needed",
+          "enum": [
+            "No Project Metric Support Needed",
+            "Snowflake dashboard/metrics - minimal",
+            "Snowflake dashboard/metrics - more involved",
+            "Snowflake dashboard/metrics - full support"
+          ]
+        }
+      }
+    },
+    "a6Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "R/Python client features": {
+          "type": "string",
+          "title": "Will you require R/Python client features?",
+          "default": "No new client features requested",
+          "enum": [
+            "No new client features requested",
+            "Python client maintenance and support",
+            "Python client advancements (new features)",
+            "R client maintenance",
+            "R client advancements (new features)"
+          ]
+        }
+      }
+    },
+    "a7Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Data portal": {
+          "type": "string",
+          "title": "Will you require Data portal?",
+          "default": "No data portal",
+          "enum": [
+            "No data portal",
+            "New Data Portal",
+            "Existing Portal Maintenance w/ Minor New Features",
+            "Portal Feature (Add-on to Data Portal) Cohort Builder",
+            "New Feature (e.g. First Time Making Cohort Builder)",
+            "Analysis Web App (Agora Like)"
+          ]
+        }
+      }
+    },
+    "a8Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Design services": {
+          "type": "string",
+          "title": "Will you require Design services?",
+          "default": "No design services needed",
+          "enum": [
+            "No design services needed",
+            "Initial User Research",
+            "Logo Design",
+            "Graphic Design, Marking Assets",
+            "Usability Studies"
+          ]
+        }
+      }
+    },
+    "a9Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Scientific project management": {
+          "type": "string",
+          "title": "Will you require Scientific project management?",
+          "default": "No Scientific Project Management is Needed",
+          "enum": [
+            "No Scientific Project Management is Needed",
+            "Sage as Prime On Grant",
+            "Sage as Subawardee On Grant",
+            "Small project",
+            "Specialty work"
+          ]
+        }
+      }
+    },
+    "a10Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Community management": {
+          "type": "string",
+          "title": "Will you require Community management?",
+          "default": "No Community Management",
+          "enum": [
+            "No Community Management",
+            "Community Communications",
+            "Events - Highly Variable"
+          ]
+        }
+      }
+    },
+    "a11Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "IRB Protocol Development, Submission, Renewals": {
+          "type": "string",
+          "title": "Will you require IRB Protocol Development, Submission, Renewals?",
+          "default": "Not Sage Responsibility",
+          "enum": [
+            "Not Sage Responsibility",
+            "If Sage is PI, co-PI / Data Contributor/ Data Controller"
+          ]
+        }
+      }
+    },
+    "a12Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Legal review of applicable regulations": {
+          "type": "string",
+          "title": "Will you require Legal review of applicable regulations?",
+          "default": "No legal review",
+          "enum": [
+            "No legal review",
+            "When Sage is Project Collaborator / Data Controller"
+          ]
+        }
+      }
+    },
+    "a13Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "Establish Community Governance Strategy": {
+          "type": "string",
+          "title": "Will you require Establish Community Governance Strategy?",
+          "default": "Not required",
+          "enum": [
+            "Not required",
+            "New DCC - US Data in Synapse (small consortia)",
+            "New DCC - US Data in Synapse (large consortia)",
+            "New DCC in Synapse - US & International Data Contributors (small Consortia)",
+            "New DCC in Synapse - US & International Data Contributors (large Consortia)"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "category": {
+            "properties": {
+              "projectCategory": {
+                "const": "Other"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "category": {
+            "properties": {
+              "otherProjectCategory": {
+                "type": "string",
+                "title": "Please specify the type of project"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "Data collection and curation": {
+                "enum": [
+                  "Data curation and management - small consortia or supplemental project"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Governance Innovation Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Governance Innovation Privacy and Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "Data collection and curation": {
+                "enum": [
+                  "Data curation and management - large consortia"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Science and Data Bioinformatics Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Science and Data Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "Data platform integration": {
+                "enum": [
+                  "Utilizing an existing pattern (e.g. passing manifest via DRS)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Front End Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Product Manager",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Technology Technical Program Manage",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Technology Associate Director",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "Data platform integration": {
+                "enum": [
+                  "Will require a new platform integration pattern (e.g. not utilizing DRS)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Principle Security and Compliance Manager",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Governance Innovation Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Governance Innovation Technical Program Manager",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "Data processing": {
+                "enum": [
+                  "Utilizing Existing Nextflow Workflows"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a3e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a3e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "Data processing": {
+                "enum": [
+                  "New Nextflow workflows need to be created"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a3e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a3e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "Data Quality Control": {
+                "enum": [
+                  "Utilizing DPE DCQC Tooling"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a4e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a4e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "Data Quality Control": {
+                "enum": [
+                  "@id:a4e3"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a4e3r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a4e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a4e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a4e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "Data metrics": {
+                "enum": [
+                  "Snowflake dashboard/metrics - minimal"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a5e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a5e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "Data metrics": {
+                "enum": [
+                  "Snowflake dashboard/metrics - more involved"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a5e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a5e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "Data metrics": {
+                "enum": [
+                  "Snowflake dashboard/metrics - full support"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a5e4r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a5e4r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "R/Python client features": {
+                "enum": [
+                  "Python client maintenance and support"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a6e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a6e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "R/Python client features": {
+                "enum": [
+                  "Python client advancements (new features)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a6e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a6e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "R/Python client features": {
+                "enum": [
+                  "R client maintenance"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a6e4r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a6e4r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "R/Python client features": {
+                "enum": [
+                  "R client advancements (new features)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a6e5r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a6e5r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "New Data Portal"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Front End Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Technology IT and App Support Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "Existing Portal Maintenance w/ Minor New Features"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Front End Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Technology Technical Program Manager",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "Portal Feature (Add-on to Data Portal) Cohort Builder"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technical Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Technology Front End Software Engineer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "Science and Data Biomedical Data Manager",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "New Feature (e.g. First Time Making Cohort Builder)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a7e5r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a7e5r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a7e5r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a7e5r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "Analysis Web App (Agora Like)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "Data portal": {
+                "enum": [
+                  "Analysis Web App (Agora Like)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a7e6r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "Design services": {
+                "enum": [
+                  "Initial User Research"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a8e2r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a8e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a8e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "Design services": {
+                "enum": [
+                  "Logo Design"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a8e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a8e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a8e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "Design services": {
+                "enum": [
+                  "Graphic Design, Marking Assets"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a8e4r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a8e4r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a8e4r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "Design services": {
+                "enum": [
+                  "Usability Studies"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Technology Product Designer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a8e5r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a8e5r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a8e5r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "Scientific project management": {
+                "enum": [
+                  "Sage as Prime On Grant"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Scientific Program Management",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a9e2r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a9e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a9e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "Scientific project management": {
+                "enum": [
+                  "Sage as Subawardee On Grant"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Scientific Program Management",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a9e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a9e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a9e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "Scientific project management": {
+                "enum": [
+                  "Small project"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Scientific Program Management",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a9e4r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a9e4r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a9e4r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "Scientific project management": {
+                "enum": [
+                  "Specialty work"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Scientific Program Management",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a9e5r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a9e5r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a9e5r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a9Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "Community management": {
+                "enum": [
+                  "Community Communications"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a10e2r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a10e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a10e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "Community management": {
+                "enum": [
+                  "Events - Highly Variable"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a10e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a10e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a10e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "IRB Protocol Development, Submission, Renewals": {
+                "enum": [
+                  "If Sage is PI, co-PI / Data Contributor/ Data Controller"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a11e2r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a11e2r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a11e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a11e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "IRB Protocol Development, Submission, Renewals": {
+                "enum": [
+                  "@id:a11e3"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a11e3r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a11e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a11e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a11e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a11Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "Legal review of applicable regulations": {
+                "enum": [
+                  "When Sage is Project Collaborator / Data Controller"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a12e2r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a12e2r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a12e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a12e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "Legal review of applicable regulations": {
+                "enum": [
+                  "@id:a12e3"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "@id:a12e3r1",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "@id:a12e3r2",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a12e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a12e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "Establish Community Governance Strategy": {
+                "enum": [
+                  "New DCC - US Data in Synapse (small consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a13e2r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a13e2r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "Establish Community Governance Strategy": {
+                "enum": [
+                  "New DCC - US Data in Synapse (large consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "@id:a13e3r3",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a13e3r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "Establish Community Governance Strategy": {
+                "enum": [
+                  "New DCC in Synapse - US & International Data Contributors (small Consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Chief Privacy and Compliance Officer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a13e4r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "Establish Community Governance Strategy": {
+                "enum": [
+                  "New DCC in Synapse - US & International Data Contributors (large Consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "type": "object",
+                "title": "",
+                "description": "If you agree, leave these boxes checked.  If you want to request changes, please uncheck the box and specify the allocation.",
+                "properties": {
+                  "r1Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r1": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r2Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r2": {
+                        "type": "boolean",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r3Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r3": {
+                        "type": "boolean",
+                        "title": "Chief Privacy and Compliance Officer",
+                        "default": true
+                      }
+                    }
+                  },
+                  "r4Module": {
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                      "@id:r4": {
+                        "type": "boolean",
+                        "title": "@id:a13e5r4",
+                        "default": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "@id:r1": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r1Module": {
+                    "properties": {
+                      "r1Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r1",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "@id:r2": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r2Module": {
+                    "properties": {
+                      "r2Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r2",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "@id:r3": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r3Module": {
+                    "properties": {
+                      "r3Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r3",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "@id:r4": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "properties": {
+                  "r4Module": {
+                    "properties": {
+                      "r4Comment": {
+                        "type": "string",
+                        "title": "Please comment with requests to allocation for @id:r4",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
