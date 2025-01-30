@@ -1317,6 +1317,16 @@
       "required": false
     },
     {
+      "displayName": "Initial User Research",
+      "@id": "a8e2",
+      "element": [
+        {
+          "@id": "a8e2r1"
+        }
+      ],
+      "required": false
+    },
+    {
       "displayName": "Technology Product Designer",
       "@id": "a8e2r1",
       "required": false,
@@ -1360,11 +1370,36 @@
     {
       "displayName": "Legal review of applicable regulations",
       "@id": "a12",
+      "requiresDependency": [
+        {
+          "@id": "a12e2"
+        },
+        {
+          "@id": "a12e1"
+        }
+      ],
       "required": true
     },
     {
       "displayName": "Establish Community Governance Strategy",
       "@id": "a13",
+      "requiresDependency": [
+        {
+          "@id": "a13e2"
+        },
+        {
+          "@id": "a13e4"
+        },
+        {
+          "@id": "a13e3"
+        },
+        {
+          "@id": "a13e5"
+        },
+        {
+          "@id": "a13e1"
+        }
+      ],
       "required": true
     },
     {
@@ -1585,7 +1620,7 @@
       "required": false
     },
     {
-      "displayName": "No",
+      "displayName": "No legal review",
       "@id": "a12e1",
       "required": false
     }
