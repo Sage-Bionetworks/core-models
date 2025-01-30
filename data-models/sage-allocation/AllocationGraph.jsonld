@@ -713,12 +713,6 @@
       "@id": "a8",
       "requiresDependency": [
         {
-          "@id": "a8e1"
-        },
-        {
-          "@id": "a8e2"
-        },
-        {
           "@id": "a8e5"
         },
         {
@@ -726,6 +720,12 @@
         },
         {
           "@id": "a8e4"
+        },
+        {
+          "@id": "a8e2"
+        },
+        {
+          "@id": "a8e1"
         }
       ],
       "required": true
@@ -1622,6 +1622,11 @@
     {
       "displayName": "No legal review",
       "@id": "a12e1",
+      "required": false
+    },
+    {
+      "displayName": "No design services needed",
+      "@id": "a8e1",
       "required": false
     }
   ]
