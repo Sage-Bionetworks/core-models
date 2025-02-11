@@ -1004,7 +1004,7 @@
       "required": false
     },
     {
-      "displayName": "Project Type",
+      "displayName": "What type of project is this?",
       "@id": "p0",
       "requiresDependency": [
         {
