@@ -241,7 +241,7 @@
       "required": false
     },
     {
-      "displayName": "Other Data Processing Work",
+      "displayName": "Other data processing work",
       "@id": "a3e4",
       "element": [
         {
@@ -644,21 +644,30 @@
       "required": false
     },
     {
-      "displayName": "Snowflake dashboard/metrics - minimal",
-      "@id": "a5e2",
-      "element": [
-        {
-          "@id": "a5e2r1"
-        },
-        {
-          "@id": "a5e2r2"
-        }
-      ],
+      "displayName": "New Feature (e.g. First Time Making Cohort Builder)",
+      "@id": "a7e5",
       "required": false
     },
     {
-      "displayName": "New Feature (e.g. First Time Making Cohort Builder)",
-      "@id": "a7e5",
+      "displayName": "Portal Feature (Add-on to Data Portal) Cohort Builder",
+      "@id": "a7e4",
+      "element": [
+        {
+          "@id": "a7e4r1"
+        },
+        {
+          "@id": "a7e4r2"
+        },
+        {
+          "@id": "a7e4r3"
+        },
+        {
+          "@id": "a7e4r4"
+        },
+        {
+          "@id": "a7e4r5"
+        }
+      ],
       "required": false
     },
     {
@@ -687,29 +696,20 @@
       "required": false
     },
     {
-      "displayName": "Portal Feature (Add-on to Data Portal) Cohort Builder",
-      "@id": "a7e4",
+      "displayName": "Snowflake dashboard/metrics - minimal",
+      "@id": "a5e2",
       "element": [
         {
-          "@id": "a7e4r1"
+          "@id": "a5e2r1"
         },
         {
-          "@id": "a7e4r2"
-        },
-        {
-          "@id": "a7e4r3"
-        },
-        {
-          "@id": "a7e4r4"
-        },
-        {
-          "@id": "a7e4r5"
+          "@id": "a5e2r2"
         }
       ],
       "required": false
     },
     {
-      "displayName": "Design services",
+      "displayName": "Are design services needed?",
       "@id": "a8",
       "requiresDependency": [
         {
@@ -1004,7 +1004,7 @@
       "required": false
     },
     {
-      "displayName": "Project Type",
+      "displayName": "What type of project is this?",
       "@id": "p0",
       "requiresDependency": [
         {
@@ -1355,7 +1355,7 @@
       "sizeRemainder": "?"
     },
     {
-      "displayName": "IRB Protocol Development, Submission, Renewals",
+      "displayName": "Will IRB protocol development, submission, renewals be required?",
       "@id": "a11",
       "requiresDependency": [
         {
@@ -1368,7 +1368,7 @@
       "required": true
     },
     {
-      "displayName": "Is Sage's role a project collaborator / data controller?",
+      "displayName": "Is Sage's role a project collaborator or data controller?",
       "@id": "a12",
       "requiresDependency": [
         {
@@ -1381,7 +1381,7 @@
       "required": true
     },
     {
-      "displayName": "Establish Community Governance Strategy",
+      "displayName": "Will we need to establish community governance strategy?",
       "@id": "a13",
       "requiresDependency": [
         {
@@ -1450,7 +1450,7 @@
       "required": false
     },
     {
-      "displayName": "If yes, legal review is required.",
+      "displayName": "If yes, legal review of applicable regulations is required.",
       "@id": "a12e2",
       "element": [
         {
