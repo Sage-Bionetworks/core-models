@@ -1,0 +1,161 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a3Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a3": {
+          "type": "string",
+          "title": "Data processing",
+          "enum": [
+            "No data processing is required.",
+            "Yes, utilizing existing Nexflow workflows.",
+            "Yes, and new Nextflow workflows will need to be created.",
+            "Other data processing work"
+          ],
+          "default": "No data processing is required."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "@id:a3": {
+                "enum": [
+                  "Yes, utilizing existing Nexflow workflows."
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "M"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "@id:a3": {
+                "enum": [
+                  "Yes, and new Nextflow workflows will need to be created."
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "XL"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "@id:a3": {
+                "enum": [
+                  "Other data processing work"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a3Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

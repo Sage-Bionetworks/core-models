@@ -1,0 +1,173 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a2Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a2": {
+          "type": "string",
+          "title": "Will data platform integration be required?",
+          "enum": [
+            "No platform integration",
+            "Yes, this project will require a platform integration utilizing an existing pattern (e.g. passing manifest via DRS)",
+            "Yes, this project will require a new platform integration pattern (e.g. not utilizing DRS)"
+          ],
+          "default": "No platform integration"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "@id:a2": {
+                "enum": [
+                  "Yes, this project will require a platform integration utilizing an existing pattern (e.g. passing manifest via DRS)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "?"
+                      },
+                      "Technology Product Manager": {
+                        "type": "string",
+                        "title": "Technology Product Manager",
+                        "default": "?"
+                      },
+                      "Technology Technical Program Manage": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manage",
+                        "default": "?"
+                      },
+                      "Technology Associate Director": {
+                        "type": "string",
+                        "title": "Technology Associate Director",
+                        "default": "?"
+                      },
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "@id:a2": {
+                "enum": [
+                  "Yes, this project will require a new platform integration pattern (e.g. not utilizing DRS)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a2Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "?"
+                      },
+                      "Principle Security and Compliance Manager": {
+                        "type": "string",
+                        "title": "Principle Security and Compliance Manager",
+                        "default": "?"
+                      },
+                      "Governance Innovation Associate Director": {
+                        "type": "string",
+                        "title": "Governance Innovation Associate Director",
+                        "default": "?"
+                      },
+                      "Governance Innovation Technical Program Manager": {
+                        "type": "string",
+                        "title": "Governance Innovation Technical Program Manager",
+                        "default": "?"
+                      },
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "?"
+                      },
+                      "Technology Back End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Back End Software Engineer",
+                        "default": "?"
+                      },
+                      "Technology Product Manager": {
+                        "type": "string",
+                        "title": "Technology Product Manager",
+                        "default": "XXS"
+                      },
+                      "Technology Technical Program Manager": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manager",
+                        "default": "XS"
+                      },
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "?"
+                      },
+                      "Technology Associate Director": {
+                        "type": "string",
+                        "title": "Technology Associate Director",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

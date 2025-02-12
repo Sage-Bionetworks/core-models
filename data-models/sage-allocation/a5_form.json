@@ -1,0 +1,166 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a5Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a5": {
+          "type": "string",
+          "title": "Will data metrics be collected?",
+          "enum": [
+            "No project metric support is required.",
+            "Snowflake dashboard/metrics - minimal",
+            "Snowflake dashboard/metrics - more involved",
+            "Snowflake dashboard/metrics - full support"
+          ],
+          "default": "No project metric support is required."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "@id:a5": {
+                "enum": [
+                  "Snowflake dashboard/metrics - minimal"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "@id:a5": {
+                "enum": [
+                  "Snowflake dashboard/metrics - more involved"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "M"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "@id:a5": {
+                "enum": [
+                  "Snowflake dashboard/metrics - full support"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a5Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Bioinformatics Engineer or (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                        "default": "L/XL"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

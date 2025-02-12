@@ -1,0 +1,214 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a6Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a6": {
+          "type": "string",
+          "title": "R/Python client features",
+          "enum": [
+            "No new client features requested",
+            "Python client maintenance and support",
+            "Python client advancements (new features)",
+            "R client maintenance",
+            "R client advancements (new features)"
+          ],
+          "default": "No new client features requested"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "@id:a6": {
+                "enum": [
+                  "Python client maintenance and support"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "@id:a6": {
+                "enum": [
+                  "Python client advancements (new features)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": "L"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "@id:a6": {
+                "enum": [
+                  "R client maintenance"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "@id:a6": {
+                "enum": [
+                  "R client advancements (new features)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a6Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": "L"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

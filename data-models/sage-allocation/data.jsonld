@@ -1,0 +1,71 @@
+{
+    "@context": {
+        "schema": "http://schema.org/"
+    },
+    "displayName": "Data processing",
+    "@id": "a3",
+    "requiresDependency": [
+        {
+            "displayName": "No data processing is required.",
+            "@id": "a3e1",
+            "required": false
+        },
+        {
+            "displayName": "Yes, utilizing existing Nexflow workflows.",
+            "@id": "a3e2",
+            "element": [
+                {
+                    "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                    "@id": "a3e2r1",
+                    "required": false,
+                    "sizeFirstYear": "M",
+                    "sizeRemainder": "M"
+                },
+                {
+                    "displayName": "Technology Director",
+                    "@id": "a3e2r2",
+                    "required": false,
+                    "sizeFirstYear": "XXS",
+                    "sizeRemainder": "XXS"
+                }
+            ],
+            "required": false
+        },
+        {
+            "displayName": "Other data processing work",
+            "@id": "a3e4",
+            "element": [
+                {
+                    "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                    "@id": "a3e4r1",
+                    "required": false,
+                    "sizeFirstYear": "?",
+                    "sizeRemainder": "?"
+                }
+            ],
+            "required": false
+        },
+        {
+            "displayName": "Yes, and new Nextflow workflows will need to be created.",
+            "@id": "a3e3",
+            "element": [
+                {
+                    "displayName": "Technology Bioinformatics Engineer or (Research) Software Engineer",
+                    "@id": "a3e3r1",
+                    "required": false,
+                    "sizeFirstYear": "XL",
+                    "sizeRemainder": "XL"
+                },
+                {
+                    "displayName": "Technology Director",
+                    "@id": "a3e3r2",
+                    "required": false,
+                    "sizeFirstYear": "XXS",
+                    "sizeRemainder": "XXS"
+                }
+            ],
+            "required": false
+        }
+    ],
+    "required": true
+}

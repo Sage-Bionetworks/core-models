@@ -1,0 +1,70 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a4Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a4": {
+          "type": "string",
+          "title": "Will data quality control be required?",
+          "enum": [
+            "No data quality control is expected by DPE",
+            "Yes, utilizing DPE DCQC tooling"
+          ],
+          "default": "No data quality control is expected by DPE"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "@id:a4": {
+                "enum": [
+                  "Yes, utilizing DPE DCQC tooling"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a4Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology (Research) Software Engineer": {
+                        "type": "string",
+                        "title": "Technology (Research) Software Engineer",
+                        "default": "M"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

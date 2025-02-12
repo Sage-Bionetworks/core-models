@@ -1,0 +1,208 @@
+{
+  "title": "Section 1",
+  "type": "object",
+  "properties": {
+    "a1Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a1": {
+          "type": "string",
+          "title": "Will data collection and curation be required??",
+          "enum": [
+            "No data curation by Sage",
+            "Data curation and management - small consortia or supplemental project",
+            "Data curation and management - large consortia"
+          ],
+          "default": "No data curation by Sage"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "@id:a1": {
+                "enum": [
+                  "Data curation and management - small consortia or supplemental project"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Science and Data Biomedical Data Manager ": {
+                        "type": "string",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": "L"
+                      },
+                      "Science and Data Scientific Community Manager": {
+                        "type": "string",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": "S"
+                      },
+                      "Governance Innovation Associate Director": {
+                        "type": "string",
+                        "title": "Governance Innovation Associate Director",
+                        "default": "S"
+                      },
+                      "Governance Innovation Privacy and Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Governance Innovation Privacy and Data Protection Analyst",
+                        "default": "M"
+                      },
+                      "Governance Innovation Technical Program Manager": {
+                        "type": "string",
+                        "title": "Governance Innovation Technical Program Manager",
+                        "default": "XS"
+                      },
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Back End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Back End Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Product Manager": {
+                        "type": "string",
+                        "title": "Technology Product Manager",
+                        "default": "XXS"
+                      },
+                      "Technology Technical Program Manager": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manager",
+                        "default": "XS"
+                      },
+                      "Technology Associate Director": {
+                        "type": "string",
+                        "title": "Technology Associate Director",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "@id:a1": {
+                "enum": [
+                  "Data curation and management - large consortia"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a1Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Science and Data Bioinformatics Engineer": {
+                        "type": "string",
+                        "title": "Science and Data Bioinformatics Engineer",
+                        "default": "?"
+                      },
+                      "Science and Data Biomedical Data Manager ": {
+                        "type": "string",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": "XL"
+                      },
+                      "Science and Data Associate Director": {
+                        "type": "string",
+                        "title": "Science and Data Associate Director",
+                        "default": "?"
+                      },
+                      "Science and Data Scientific Community Manager": {
+                        "type": "string",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": "M"
+                      },
+                      "Governance Innovation Associate Director": {
+                        "type": "string",
+                        "title": "Governance Innovation Associate Director",
+                        "default": "M"
+                      },
+                      "Governance Innovation Privacy and Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Governance Innovation Privacy and Data Protection Analyst",
+                        "default": "XL"
+                      },
+                      "Governance Innovation Technical Program Manager": {
+                        "type": "string",
+                        "title": "Governance Innovation Technical Program Manager",
+                        "default": "M"
+                      },
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Back End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Back End Software Engineer",
+                        "default": "S"
+                      },
+                      "Technology Product Manager": {
+                        "type": "string",
+                        "title": "Technology Product Manager",
+                        "default": "XXS"
+                      },
+                      "Technology Associate Director": {
+                        "type": "string",
+                        "title": "Technology Associate Director",
+                        "default": "XXS"
+                      },
+                      "Technology Technical Program Manager": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manager",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

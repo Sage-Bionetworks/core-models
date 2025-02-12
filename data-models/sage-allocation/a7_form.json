@@ -1,0 +1,228 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a7Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a7": {
+          "type": "string",
+          "title": "Data portal",
+          "enum": [
+            "No data portal",
+            "New Data Portal",
+            "Existing Portal Maintenance w/ Minor New Features",
+            "Portal Feature (Add-on to Data Portal) Cohort Builder",
+            "New Feature (e.g. First Time Making Cohort Builder)",
+            "Analysis Web App (Agora Like)"
+          ],
+          "default": "No data portal"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "@id:a7": {
+                "enum": [
+                  "New Data Portal"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "XS"
+                      },
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XS"
+                      },
+                      "Technology IT and App Support Engineer": {
+                        "type": "string",
+                        "title": "Technology IT and App Support Engineer",
+                        "default": "?"
+                      },
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      },
+                      "Science and Data Biomedical Data Manager ": {
+                        "type": "string",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": "XXS"
+                      },
+                      "Technology Technical Program Manager": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manager",
+                        "default": "XS"
+                      },
+                      "Science and Data Technical Program Manager": {
+                        "type": "string",
+                        "title": "Science and Data Technical Program Manager",
+                        "default": "S"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "@id:a7": {
+                "enum": [
+                  "Existing Portal Maintenance w/ Minor New Features"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Director": {
+                        "type": "string",
+                        "title": "Technology Director",
+                        "default": "XXS"
+                      },
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "XS"
+                      },
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XS"
+                      },
+                      "Technology Technical Program Manager": {
+                        "type": "string",
+                        "title": "Technology Technical Program Manager",
+                        "default": "XS"
+                      },
+                      "Science and Data Biomedical Data Manager ": {
+                        "type": "string",
+                        "title": "Science and Data Biomedical Data Manager ",
+                        "default": "XXS"
+                      },
+                      "Science and Data Technical Program Manager": {
+                        "type": "string",
+                        "title": "Science and Data Technical Program Manager",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "@id:a7": {
+                "enum": [
+                  "Portal Feature (Add-on to Data Portal) Cohort Builder"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a7Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technical Director": {
+                        "type": "string",
+                        "title": "Technical Director",
+                        "default": "?"
+                      },
+                      "Technology Front End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Front End Software Engineer",
+                        "default": "?"
+                      },
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "?"
+                      },
+                      "Science and Data Biomedical Data Manager": {
+                        "type": "string",
+                        "title": "Science and Data Biomedical Data Manager",
+                        "default": "?"
+                      },
+                      "Technology Back End Software Engineer": {
+                        "type": "string",
+                        "title": "Technology Back End Software Engineer",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
