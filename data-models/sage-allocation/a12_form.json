@@ -1,0 +1,65 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a12Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a12": {
+          "type": "string",
+          "title": "Is Sage's role a project collaborator or data controller?",
+          "enum": [
+            "No, Sage's role is neither a project collaborator or data controller.",
+            "If yes, legal review of applicable regulations is required."
+          ],
+          "default": "No, Sage's role is neither a project collaborator or data controller."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "@id:a12": {
+                "enum": [
+                  "If yes, legal review of applicable regulations is required."
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a12Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Chief Privacy and Compliance Officer": {
+                        "type": "string",
+                        "title": "Chief Privacy and Compliance Officer",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a8Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a8": {
+          "type": "string",
+          "title": "Are design services required?",
+          "enum": [
+            "No design services are required.",
+            "Initial User Research",
+            "Logo Design",
+            "Graphic Design, Marking Assets",
+            "Usability Studies"
+          ],
+          "default": "No design services are required."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "@id:a8": {
+                "enum": [
+                  "Initial User Research"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "@id:a8": {
+                "enum": [
+                  "Logo Design"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "@id:a8": {
+                "enum": [
+                  "Graphic Design, Marking Assets"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XXS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "@id:a8": {
+                "enum": [
+                  "Usability Studies"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a8Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Technology Product Designer": {
+                        "type": "string",
+                        "title": "Technology Product Designer",
+                        "default": "XS"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

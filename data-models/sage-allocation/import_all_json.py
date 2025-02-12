@@ -61,7 +61,7 @@ def transform_jsonld_to_react_form(jsonld_data):
     return react_form
 
 #A1
-with open("a1.json", "r") as f:
+with open("modules/a1.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a1_form.json", "w") as f:
@@ -69,7 +69,7 @@ with open("a1_form.json", "w") as f:
 print("Transformation complete. Output saved as a1_form.json.")
 
 #A2
-with open("a2.json", "r") as f:
+with open("modules/a2.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a2_form.json", "w") as f:
@@ -77,7 +77,7 @@ with open("a2_form.json", "w") as f:
 print("Transformation complete. Output saved as a2_form.json.")
 
 #A3
-with open("a3.json", "r") as f:
+with open("modules/a3.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a3_form.json", "w") as f:
@@ -85,7 +85,7 @@ with open("a3_form.json", "w") as f:
 print("Transformation complete. Output saved as a3_form.json.")
 
 #A4
-with open("a4.json", "r") as f:
+with open("modules/a4.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a4_form.json", "w") as f:
@@ -93,7 +93,7 @@ with open("a4_form.json", "w") as f:
 print("Transformation complete. Output saved as a4_form.json.")
 
 #A5
-with open("a5.json", "r") as f:
+with open("modules/a5.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a5_form.json", "w") as f:
@@ -101,7 +101,7 @@ with open("a5_form.json", "w") as f:
 print("Transformation complete. Output saved as a5_form.json.")
 
 #A6
-with open("a6.json", "r") as f:
+with open("modules/a6.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a6_form.json", "w") as f:
@@ -109,7 +109,7 @@ with open("a6_form.json", "w") as f:
 print("Transformation complete. Output saved as a6_form.json.")
 
 #A7
-with open("a7.json", "r") as f:
+with open("modules/a7.json", "r") as f:
     jsonld_data = json.load(f)
 react_form_data = transform_jsonld_to_react_form(jsonld_data)
 with open("a7_form.json", "w") as f:
@@ -117,9 +117,50 @@ with open("a7_form.json", "w") as f:
 print("Transformation complete. Output saved as a7_form.json.")
 
 #A8
-# with open("a8.json", "r") as f:
-#     jsonld_data = json.load(f)
-# react_form_data = transform_jsonld_to_react_form(jsonld_data)
-# with open("a8_form.json", "w") as f:
-#     json.dump(react_form_data, f, indent=2)
-# print("Transformation complete. Output saved as a8_form.json.")
+with open("modules/a8.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a8_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a8_form.json.")
+
+#A9
+with open("modules/a9.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a9_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a9_form.json.")
+
+
+#A10
+with open("modules/a10.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a10_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a10_form.json.")
+
+#A11
+with open("modules/a11.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a11_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a11_form.json.")
+
+#A12
+with open("modules/a12.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a12_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a12_form.json.")
+
+#A13
+with open("modules/a13.json", "r") as f:
+    jsonld_data = json.load(f)
+react_form_data = transform_jsonld_to_react_form(jsonld_data)
+with open("a13_form.json", "w") as f:
+    json.dump(react_form_data, f, indent=2)
+print("Transformation complete. Output saved as a13_form.json.")

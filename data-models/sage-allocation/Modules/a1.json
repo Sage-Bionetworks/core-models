@@ -1,0 +1,183 @@
+{
+    "@context": {
+        "schema": "http://schema.org/"
+    },
+    "displayName": "Will data collection and curation be required?",
+    "@id": "a1",
+    "requiresDependency": [
+        {
+            "displayName": "No data curation by Sage",
+            "@id": "a1e1",
+            "required": false
+        },
+        {
+            "displayName": "Data curation and management - small consortia or supplemental project",
+            "@id": "a1e2",
+            "element": [
+                {
+                    "displayName": "Science and Data Biomedical Data Manager ",
+                    "@id": "a1e2r1",
+                    "required": false,
+                    "sizeFirstYear": "L",
+                    "sizeRemainder": "L"
+                },
+                {
+                    "displayName": "Science and Data Scientific Community Manager",
+                    "@id": "a1e2r2",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Governance Innovation Associate Director",
+                    "@id": "a1e2r3",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Governance Innovation Privacy and Data Protection Analyst",
+                    "@id": "a1e2r4",
+                    "required": false,
+                    "sizeFirstYear": "M",
+                    "sizeRemainder": "M"
+                },
+                {
+                    "displayName": "Governance Innovation Technical Program Manager",
+                    "@id": "a1e2r6",
+                    "required": false,
+                    "sizeFirstYear": "XS",
+                    "sizeRemainder": "XS"
+                },
+                {
+                    "displayName": "Technology Front End Software Engineer",
+                    "@id": "a1e2r5",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Technology Back End Software Engineer",
+                    "@id": "a1e2r7",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Technology Product Manager",
+                    "@id": "a1e2r8",
+                    "required": false,
+                    "sizeFirstYear": "XXS",
+                    "sizeRemainder": "XXS"
+                },
+                {
+                    "displayName": "Technology Technical Program Manager",
+                    "@id": "a1e2r9",
+                    "required": false,
+                    "sizeFirstYear": "XS",
+                    "sizeRemainder": "XS"
+                },
+                {
+                    "displayName": "Technology Associate Director",
+                    "@id": "a1e2r10",
+                    "required": false,
+                    "sizeFirstYear": "XS",
+                    "sizeRemainder": "XS"
+                }
+            ],
+            "required": false
+        },
+        {
+            "displayName": "Data curation and management - large consortia",
+            "@id": "a1e3",
+            "element": [
+                {
+                    "displayName": "Science and Data Bioinformatics Engineer",
+                    "@id": "a1e3r1",
+                    "required": false,
+                    "sizeFirstYear": "?",
+                    "sizeRemainder": "?"
+                },
+                {
+                    "displayName": "Science and Data Biomedical Data Manager ",
+                    "@id": "a1e3r2",
+                    "required": false,
+                    "sizeFirstYear": "XL",
+                    "sizeRemainder": "XL"
+                },
+                {
+                    "displayName": "Science and Data Associate Director",
+                    "@id": "a1e3r3",
+                    "required": false,
+                    "sizeFirstYear": "?",
+                    "sizeRemainder": "?"
+                },
+                {
+                    "displayName": "Science and Data Scientific Community Manager",
+                    "@id": "a1e3r4",
+                    "required": false,
+                    "sizeFirstYear": "M",
+                    "sizeRemainder": "M"
+                },
+                {
+                    "displayName": "Governance Innovation Associate Director",
+                    "@id": "a1e3r5",
+                    "required": false,
+                    "sizeFirstYear": "M",
+                    "sizeRemainder": "M"
+                },
+                {
+                    "displayName": "Governance Innovation Privacy and Data Protection Analyst",
+                    "@id": "a1e3r6",
+                    "required": false,
+                    "sizeFirstYear": "XL",
+                    "sizeRemainder": "L"
+                },
+                {
+                    "displayName": "Governance Innovation Technical Program Manager",
+                    "@id": "a1e3r7",
+                    "required": false,
+                    "sizeFirstYear": "M",
+                    "sizeRemainder": "XL"
+                },
+                {
+                    "displayName": "Technology Front End Software Engineer",
+                    "@id": "a1e3r8",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Technology Back End Software Engineer",
+                    "@id": "a1e3r9",
+                    "required": false,
+                    "sizeFirstYear": "S",
+                    "sizeRemainder": "S"
+                },
+                {
+                    "displayName": "Technology Product Manager",
+                    "@id": "a1e3r10",
+                    "required": false,
+                    "sizeFirstYear": "XXS",
+                    "sizeRemainder": "XXS"
+                },
+                {
+                    "displayName": "Technology Associate Director",
+                    "@id": "a1e3r11",
+                    "required": false,
+                    "sizeFirstYear": "XXS",
+                    "sizeRemainder": "XXS"
+                },
+                {
+                    "displayName": "Technology Technical Program Manager",
+                    "@id": "a1e3r12",
+                    "required": false,
+                    "sizeFirstYear": "XS",
+                    "sizeRemainder": "XS"
+                }
+            ],
+            "required": false
+        }
+    ],
+    "required": true
+}

@@ -1,0 +1,224 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a13Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a13": {
+          "type": "string",
+          "title": "Will Sage need to establish community governance strategy?",
+          "enum": [
+            "Not required",
+            "New DCC - US Data in Synapse (small consortia)",
+            "New DCC - US Data in Synapse (large consortia)",
+            "New DCC in Synapse - US & International Data Contributors (small Consortia)",
+            "New DCC in Synapse - US & International Data Contributors (large Consortia)"
+          ],
+          "default": "Not required"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "@id:a13": {
+                "enum": [
+                  "New DCC - US Data in Synapse (small consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Community Governance Strategy Associate Director": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": "XS"
+                      },
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "M"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "@id:a13": {
+                "enum": [
+                  "New DCC - US Data in Synapse (large consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Community Governance Strategy Associate Director": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": "XS"
+                      },
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "L"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "@id:a13": {
+                "enum": [
+                  "New DCC in Synapse - US & International Data Contributors (small Consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Community Governance Strategy Associate Director": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": "S"
+                      },
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "L"
+                      },
+                      "Chief Privacy and Compliance Officer": {
+                        "type": "string",
+                        "title": "Chief Privacy and Compliance Officer",
+                        "default": "S"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "@id:a13": {
+                "enum": [
+                  "New DCC in Synapse - US & International Data Contributors (large Consortia)"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a13Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Community Governance Strategy Associate Director": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Associate Director",
+                        "default": "M"
+                      },
+                      "Community Governance Strategy Privacy & Data Protection Analyst": {
+                        "type": "string",
+                        "title": "Community Governance Strategy Privacy & Data Protection Analyst",
+                        "default": "XL"
+                      },
+                      "Chief Privacy and Compliance Officer": {
+                        "type": "string",
+                        "title": "Chief Privacy and Compliance Officer",
+                        "default": "S"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

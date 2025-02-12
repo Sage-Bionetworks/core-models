@@ -1,0 +1,22 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a11Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a11": {
+          "type": "string",
+          "title": "Will IRB protocol development, submission, renewals be required?",
+          "enum": [
+            "Not Sage Responsibility",
+            "If Sage is PI, co-PI / Data Contributor/ Data Controller"
+          ],
+          "default": "Not Sage Responsibility"
+        }
+      }
+    }
+  },
+  "allOf": []
+}

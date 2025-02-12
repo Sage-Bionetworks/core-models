@@ -1,0 +1,108 @@
+{
+  "title": "",
+  "type": "object",
+  "properties": {
+    "a10Module": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "@id:a10": {
+          "type": "string",
+          "title": "Will community management be required?",
+          "enum": [
+            "No community management is required.",
+            "Community Communications",
+            "Events - Highly Variable"
+          ],
+          "default": "No community management is required."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "@id:a10": {
+                "enum": [
+                  "Community Communications"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Science and Data Scientific Community Manager": {
+                        "type": "string",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "@id:a10": {
+                "enum": [
+                  "Events - Highly Variable"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "a10Module": {
+            "properties": {
+              "rModule": {
+                "title": "",
+                "type": "object",
+                "properties": {
+                  "description": "",
+                  "title": "Recommended Roles",
+                  "jobRoles": {
+                    "title": "Recommended Roles",
+                    "type": "object",
+                    "properties": {
+                      "Science and Data Scientific Community Manager": {
+                        "type": "string",
+                        "title": "Science and Data Scientific Community Manager",
+                        "default": "?"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
