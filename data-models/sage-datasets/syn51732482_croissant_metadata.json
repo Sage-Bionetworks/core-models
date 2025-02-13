@@ -1,0 +1,21 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "cr": "http://mlcommons.org/croissant/",
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "recordSet": "cr:recordSet",
+        "field": "cr:field"
+    },
+    "@type": "Dataset",
+    "name": "AMP-AD_DiverseCohorts",
+    "description": "A dataset containing annotations for genomic data from Synapse.",
+    "url": "https://www.synapse.org/Synapse:syn51732482",
+    "distribution": [],
+    "recordSet": []
+}
