@@ -61,6 +61,17 @@ def get_annotations(entity_ids):
         })
     return annotations
 
+# Function to metch md5 for a speficic entity
+def find_md5(entity_id):
+    url = f"https://repo-prod.prod.sagebase.org/repo/v1/entity/{entity_id}/version"
+    response = requests.get(url, headers=HEADERS)
+    json_data = response.json()
+    for i in range (0, len(json_data['requests'])):
+        if json_data['results'][i]["versionNumber"] == json_data['totalNumberofResults']:
+            md5 = json_data['results'][i]["contentMd5"]
+            return md5
+        # needs more testing
+
 # Function to save data as a formatted JSON file
 def save_to_json(data, filename):
     with open(filename, "w", encoding="utf-8") as f:
@@ -98,7 +109,11 @@ def convert_to_croissant(input_file, output_file, dataset_metadata):
         "description": dataset_description,
         "url": dataset_url,
         "distribution": [],
-        "recordSet": []
+        "recordSet": [],
+        "citation": '',
+        "datePublished": '', # url for this is https://repo-prod.prod.sagebase.org/repo/v1/entity/{dataset_id}, createdOn is the field
+        "license": '',
+        "version": ''
     }
 
     for entry in annotations_data:
@@ -111,7 +126,8 @@ def convert_to_croissant(input_file, output_file, dataset_metadata):
             "name": file_id,
             "description": f"Data file associated with {file_id}",
             "contentUrl": f"https://www.synapse.org/Synapse:{file_id}",
-            "encodingFormat": "application/json"
+            "encodingFormat": "application/json",
+            "md5": find_md5(file_id) #need to add md5 from repo-prod.prod.sagebase.org/repo/v1/entity/{file_id}/version, contentMd5 is the field
         }
         croissant_metadata["distribution"].append(file_object)
 
