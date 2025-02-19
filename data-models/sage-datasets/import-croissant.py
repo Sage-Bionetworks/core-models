@@ -173,7 +173,8 @@ def convert_to_croissant(input_file, output_file, dataset_metadata,file_md5_map)
             "description": f"Data file associated with {file_id}",
             "contentUrl": f"https://www.synapse.org/Synapse:{file_id}",
             "encodingFormat": "application/json",
-            "md5": file_md5  # Include MD5 hash
+            "md5": file_md5,
+            "sha256": "unknown" # Include MD5 hash
         }
         croissant_metadata["distribution"].append(file_object)
 
@@ -240,7 +241,7 @@ def import_croissant(synapse_id):
 # Example usage:
 import_croissant("syn53132831")
 import_croissant("syn52623570")
-import_croissant("syn63645356")
+# import_croissant("syn63645356")
 import_croissant("syn11269541")
 import_croissant("syn51732482")
 import_croissant("syn4993293")
