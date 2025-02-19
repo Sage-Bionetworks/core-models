@@ -1,0 +1,2 @@
+synapse:
+  auth_token: "Enter token here from Synapse"
