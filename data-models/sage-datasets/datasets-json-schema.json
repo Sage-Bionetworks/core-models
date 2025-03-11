@@ -1,0 +1,187 @@
+{
+  "additionalProperties": false,
+  "description": "A slightly more specialized dataset concept intended for the specific scope of the NF Portal; see https://nf.synapse.org/Explore/Datasets.",
+  "properties": {
+    "accessType": {
+      "description": "Access type for the dataset.",
+      "title": "Access Type",
+      "enum": [
+        "Public Access",
+        "Open Access",
+        "Controlled Access",
+        "Private Access"
+      ],
+      "type": "string"
+    },
+    "alternateName": {
+      "description": "An altername name that can be used for search and discovery improvement.",
+      "title": "Alternate Name",
+      "type": "string"
+    },
+    "conditionsOfAccess": {
+      "description": "Additional requirements a user may need outside of Data Use Modifiers. This could include additional registration, updating profile information, joining a Synapse Team, or using specific authentication methods like 2FA or RAS. Omit property if not applicable/unknown.",
+      "title": "User Specific Restriction",
+      "type": "string"
+    },
+    "contributor": {
+      "description": "Organization(s) or person(s) that contributed to the dataset.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Contributor(s)",
+      "type": "array"
+    },
+    "countryOfOrigin": {
+      "description": "Origin of individuals from which data were generated. Omit if not applicable/unknown.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Country of Origin",
+      "type": "array"
+    },
+    "creator": {
+      "description": "Organization or person that is creator of the dataset. Default is the PI of the project and/or the user who created all files in the dataset.",
+      "title": "Creator",
+      "type": "string"
+    },
+    "dataUseModifiers": {
+      "description": "List of data use ontology (DUO) terms that are true for dataset, which describes the allowable scope and terms for data use. Omit property if not applicable/unknown.",
+      "items": {
+        "description": "",
+        "enum": [
+          "Clinical Care Use",
+          "Collaboration Required",
+          "Disease Specific Research",
+          "Ethics Approval Required",
+          "General Research Use",
+          "Genetic Studies Only",
+          "Geographical Restriction",
+          "Health or Medical or Biomedical Research",
+          "Institution Specific Restriction",
+          "No General Methods Research",
+          "No Restriction",
+          "Not-for-Profit Non-Commercial Use Only",
+          "Non-Commercial Use Only",
+          "Not-for-Profit Organisation Use Only",
+          "Population Origins or Ancestry Research Only",
+          "Population Origins or Ancestry Research Prohibited",
+          "Project Specific Restriction",
+          "Publication Moratorium",
+          "Publication Required",
+          "Research Specific Restrictions",
+          "Return to Database or Resource",
+          "Time Limit on Use",
+          "User Specific Restriction"
+        ],
+        "title": "Data Use Modifiers",
+        "type": "string"
+      },
+      "title": "Data Use Modifiers",
+      "type": "array"
+    },
+    "datePublished": {
+      "description": "Date data were published/available on Synapse.",
+      "title": "Date Published",
+      "type": "integer"
+    },
+    "funder": {
+      "items": {
+        "description": "",
+        "enum": [
+          "CTF",
+          "GFF",
+          "NTAP",
+          "NIH-NCI",
+          "Independent",
+          "Other"
+        ],
+        "title": "FundingAgencyEnum",
+        "type": "string"
+      },
+      "title": "Funder",
+      "type": "array"
+    },
+    "includedInDataCatalog": {
+      "description": "Link(s) to known data catalog(s) the dataset is included in.",
+      "title": "Included In Data Catalog",
+      "enum": [
+        "https://www.synapse.org/DataCatalog:0"
+      ],
+      "type": "string"
+    },
+    "keywords": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Keywords",
+      "type": "array"
+    },
+    "license": {
+      "description": "Unless information for license is clear, this should default to UNKNOWN.",
+      "title": "License",
+      "enum": [
+        "UNKNOWN",
+        "Public Domain",
+        "CC-0",
+        "ODC-PDDL",
+        "CC-BY",
+        "ODC-BY",
+        "ODC-ODbL",
+        "CC BY-SA",
+        "CC BY-NC",
+        "CC BY-ND",
+        "CC BY-NC-SA",
+        "CC BY-NC-ND"
+      ],
+      "type": "string"
+    },
+    "measurementTechnique": {
+      "description": "Assay used to generate original data. Omit if not applicable (e.g. for curated dataset such as a list compounds from a database or text extracted from Wikipedia).",
+      "title": "Measurement Technique",
+      "type": "string"
+    },
+    "species": {
+      "description": "Species of the organism(s) from which the data were generated. Omit property if not applicable, such as for data like compounds or other non-biological data.",
+      "items": {
+        "description": "",
+        "enum": [
+          "Rattus norvegicus",
+          "Gallus gallus",
+          "Pan troglodytes",
+          "Mus musculus (humanized)",
+          "Homo sapiens",
+          "Danio rerio",
+          "Drosophila melanogaster",
+          "Rhesus macaque",
+          "Sus scrofa",
+          "Oryctolagus cuniculus",
+          "Mus musculus"
+        ],
+        "title": "SpeciesEnum",
+        "type": "string"
+      },
+      "title": "Species",
+      "type": "array"
+    },
+    "subject": {
+      "description": "Applicable subject term(s) for dataset cataloging; use the Library of Congress Subject Headings (LCSH) scheme.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Subject",
+      "type": "array"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "creator",
+    "keywords"
+  ],
+  "title": "CommonDataset",
+  "type": "object",
+  "$id": "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/org.synapse.sdm-commondataset"
+}
