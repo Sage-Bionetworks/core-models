@@ -6,7 +6,7 @@ syn = synapseclient.Synapse()
 syn.login()
 
 # Define your unique organization name
-organization_name = "SageCoreModels"
+organization_name = "sagedm"
 
 # Create the request body with the organization name
 organization_request_body = {
