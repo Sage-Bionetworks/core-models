@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bind Schema to Entity</title>
+
+  <style>
+    :root{
+      --bg: #0f1115;
+      --panel: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+
+      --text: rgba(244, 242, 236, 0.92);
+      --muted: rgba(244, 242, 236, 0.66);
+      --muted2: rgba(244, 242, 236, 0.50);
+
+      --accent: #a78bfa;
+      --link: #7dd3c7;
+      --linkHover: #b8fff2;
+
+      --shadow: 0 18px 55px rgba(0,0,0,0.32);
+      --radius: 18px;
+
+      --good: #86efac;
+      --bad: #fb7185;
+      --warn: #fbbf24;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: linear-gradient(180deg, #0e1014 0%, var(--bg) 55%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    a{
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover{
+      color: var(--linkHover);
+      text-decoration: underline;
+    }
+
+    .container{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 18px 70px;
+    }
+
+    .topNav{
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .navLink{
+      color: rgba(244, 242, 236, 0.72);
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .navLink:hover{
+      color: rgba(244, 242, 236, 0.92);
+      text-decoration: none;
+    }
+
+    h1{
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    p{
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 980px;
+    }
+
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.03);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panelHeader{
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .panelHeader h2{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .panelBody{
+      padding: 16px 16px 18px;
+    }
+
+    .row{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .input, .select{
+      flex: 1;
+      min-width: 260px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: rgba(244, 242, 236, 0.92);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input:focus, .select:focus{
+      border-color: rgba(167,139,250,0.50);
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.14);
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(167,139,250,0.10);
+      color: rgba(244, 242, 236, 0.90);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 140ms ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover{
+      background: rgba(167,139,250,0.16);
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary{
+      background: rgba(255,255,255,0.02);
+      color: rgba(244, 242, 236, 0.80);
+    }
+
+    .btn.secondary:hover{
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-1px);
+    }
+
+    .status{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .error{
+      color: rgba(251, 113, 133, 0.95);
+      font-weight: 700;
+    }
+
+    .ok{
+      color: rgba(134, 239, 172, 0.95);
+      font-weight: 700;
+    }
+
+    .warn{
+      color: rgba(251, 191, 36, 0.95);
+      font-weight: 700;
+    }
+
+    .tiny{
+      color: var(--muted2);
+      font-size: 12px;
+    }
+
+    .fieldGrid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 900px){
+      .fieldGrid{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.015);
+      padding: 12px;
+    }
+
+    .label{
+      font-size: 12px;
+      color: var(--muted2);
+      margin-bottom: 6px;
+    }
+
+    .value{
+      font-size: 14px;
+      color: rgba(244, 242, 236, 0.90);
+      word-break: break-word;
+      line-height: 1.45;
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      font-size: 12px;
+      color: var(--muted);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* Toggle */
+    .toggleRow{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .toggle{
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle input{
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Modal */
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 999;
+    }
+
+    .modal{
+      width: 100%;
+      max-width: 560px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #12141a;
+      box-shadow: 0 24px 90px rgba(0,0,0,0.55);
+      overflow: hidden;
+    }
+
+    .modalHeader{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .modalHeader h3{
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .modalBody{
+      padding: 14px 16px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .modalFooter{
+      padding: 14px 16px 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    code{
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: rgba(244, 242, 236, 0.85);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="topNav">
+      <a class="navLink" href="./index.html">Schema Index</a>
+      <a class="navLink" href="./schema-bind.html">Bind Schema</a>
+    </div>
+
+    <h1>Bind Schema to Synapse Entity</h1>
+    <p>
+      Select a schema version from <code>data.json</code>, enter a Synapse ID, and bind.
+      Your token is stored only in <b>sessionStorage</b> (cleared when the tab closes).
+    </p>
+
+    <div class="panel">
+      <div class="panelHeader">
+        <h2>Binding Tool</h2>
+      </div>
+
+      <div class="panelBody">
+
+        <!-- Token -->
+        <div class="row">
+          <input id="tokenInput" class="input" placeholder="Paste Synapse token (Bearer token)" type="password" />
+          <button id="saveTokenBtn" class="btn secondary">Save Token</button>
+          <button id="clearTokenBtn" class="btn secondary">Clear</button>
+        </div>
+        <div class="tiny" style="margin-top:8px;">
+          Tip: this token never leaves your browser except as the Authorization header sent to Synapse.
+        </div>
+
+        <div class="fieldGrid">
+          <!-- Schema -->
+          <div class="field">
+            <div class="label">Schema Version</div>
+            <input id="schemaSearch" class="input" placeholder="Search schemas (org, schema, version)..." />
+            <select id="schemaSelect" class="select" style="margin-top:10px;">
+              <option value="">Loading schemas…</option>
+            </select>
+            <div id="schemaMeta" class="tiny" style="margin-top:10px;"></div>
+          </div>
+
+          <!-- Entity -->
+          <div class="field">
+            <div class="label">Synapse Entity</div>
+            <input id="synIdInput" class="input" placeholder="syn12345678" />
+            <div class="toggleRow">
+              <label class="toggle">
+                <input id="derivedToggle" type="checkbox" checked />
+                Enable derived annotations
+              </label>
+              <div class="pill" id="readyPill">Not ready</div>
+            </div>
+            <div class="tiny" style="margin-top:10px;">
+              Binding requires permissions on the entity.
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:14px;">
+          <button id="bindBtn" class="btn">Bind Schema</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Confirm Modal -->
+  <div id="modalBackdrop" class="modalBackdrop">
+    <div class="modal">
+      <div class="modalHeader">
+        <h3>Confirm schema binding</h3>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+      <div class="modalFooter">
+        <button id="cancelBtn" class="btn secondary">Cancel</button>
+        <button id="confirmBtn" class="btn">Yes, bind it</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SYNAPSE_REPO = "https://repo-prod.prod.sagebase.org/repo/v1";
+    const TOKEN_KEY = "synapse_token_session";
+
+    const tokenInput = document.getElementById("tokenInput");
+    const saveTokenBtn = document.getElementById("saveTokenBtn");
+    const clearTokenBtn = document.getElementById("clearTokenBtn");
+
+    const schemaSearch = document.getElementById("schemaSearch");
+    const schemaSelect = document.getElementById("schemaSelect");
+    const schemaMeta = document.getElementById("schemaMeta");
+
+    const synIdInput = document.getElementById("synIdInput");
+    const derivedToggle = document.getElementById("derivedToggle");
+    const readyPill = document.getElementById("readyPill");
+
+    const bindBtn = document.getElementById("bindBtn");
+    const statusEl = document.getElementById("status");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalBody = document.getElementById("modalBody");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const confirmBtn = document.getElementById("confirmBtn");
+
+    let allSchemas = [];
+    let filteredSchemas = [];
+
+    function setStatus(text, kind="") {
+      statusEl.className = "status " + kind;
+      statusEl.textContent = text;
+    }
+
+    function getToken() {
+      return sessionStorage.getItem(TOKEN_KEY) || "";
+    }
+
+    function setToken(token) {
+      sessionStorage.setItem(TOKEN_KEY, token);
+    }
+
+    function clearToken() {
+      sessionStorage.removeItem(TOKEN_KEY);
+    }
+
+    function normalize(str) {
+      return String(str || "").trim();
+    }
+
+    function isValidSynId(v) {
+      return /^syn\d+$/.test(v);
+    }
+
+    function schemaDisplayName(s) {
+      return `${s.organization_name} / ${s.schema_name}  •  v${s.semantic_version}`;
+    }
+
+    function schemaIdForBinding(s) {
+      // We bind a specific version, as requested:
+      // ORGNAME-SCHEMANAME-SEMVER
+      return `${s.organization_name}-${s.schema_name}-${s.semantic_version}`;
+    }
+
+    function schemaUrlForRegistered(s) {
+      return `https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/${s.organization_name}-${s.schema_name}`;
+    }
+
+    function entityUrl(synId) {
+      return `https://www.synapse.org/#!Synapse:${synId}`;
+    }
+
+    function updateReadyPill() {
+      const tokenOk = !!getToken();
+      const schemaOk = !!schemaSelect.value;
+      const synOk = isValidSynId(synIdInput.value.trim());
+
+      if (tokenOk && schemaOk && synOk) {
+        readyPill.textContent = "Ready";
+        readyPill.style.borderColor = "rgba(134,239,172,0.25)";
+        readyPill.style.background = "rgba(134,239,172,0.08)";
+        readyPill.style.color = "rgba(134,239,172,0.95)";
+      } else {
+        readyPill.textContent = "Not ready";
+        readyPill.style.borderColor = "rgba(255,255,255,0.06)";
+        readyPill.style.background = "rgba(255,255,255,0.02)";
+        readyPill.style.color = "rgba(244,242,236,0.66)";
+      }
+    }
+
+    function renderSchemaDropdown(list) {
+      schemaSelect.innerHTML = "";
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Select a schema version…";
+      schemaSelect.appendChild(placeholder);
+
+      for (const s of list) {
+        const opt = document.createElement("option");
+        opt.value = schemaIdForBinding(s);
+        opt.textContent = schemaDisplayName(s);
+        schemaSelect.appendChild(opt);
+      }
+    }
+
+    function getSelectedSchemaObj() {
+      const val = schemaSelect.value;
+      if (!val) return null;
+      return allSchemas.find(s => schemaIdForBinding(s) === val) || null;
+    }
+
+    function updateSchemaMeta() {
+      const s = getSelectedSchemaObj();
+      if (!s) {
+        schemaMeta.textContent = "";
+        return;
+      }
+
+      const schemaUrl = schemaUrlForRegistered(s);
+      schemaMeta.innerHTML = `
+        <div>Binding ID: <code>${schemaIdForBinding(s)}</code></div>
+        <div style="margin-top:6px;">
+          Registered schema: <a href="${schemaUrl}" target="_blank">${schemaUrl}</a>
+        </div>
+      `;
+    }
+
+    function applySchemaFilter() {
+      const q = normalize(schemaSearch.value).toLowerCase();
+
+      if (!q) {
+        filteredSchemas = allSchemas.slice(0, 500);
+        renderSchemaDropdown(filteredSchemas);
+        return;
+      }
+
+      const hits = allSchemas.filter(s => {
+        const hay = `${s.organization_name} ${s.schema_name} ${s.semantic_version}`.toLowerCase();
+        return hay.includes(q);
+      });
+
+      filteredSchemas = hits.slice(0, 500);
+      renderSchemaDropdown(filteredSchemas);
+    }
+
+    function dedupeLatestPerVersion(rows) {
+      // data.json may include duplicates (multiple version entries across orgs/schemas)
+      // We want unique by org+schema+semantic_version
+      const seen = new Set();
+      const out = [];
+
+      for (const r of rows) {
+        const key = `${r.organization_name}||${r.schema_name}||${r.semantic_version}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(r);
+      }
+
+      // Sort by org, schema, then version (string compare)
+      out.sort((a, b) => {
+        const A = `${a.organization_name} ${a.schema_name} ${a.semantic_version}`;
+        const B = `${b.organization_name} ${b.schema_name} ${b.semantic_version}`;
+        return A.localeCompare(B, undefined, { numeric: true, sensitivity: "base" });
+      });
+
+      return out;
+    }
+
+    async function loadSchemasFromDataJson() {
+      setStatus("Loading schemas from data.json…");
+
+      const resp = await fetch("./data.json");
+      if (!resp.ok) {
+        setStatus("Could not load ./data.json. Did you generate it?", "error");
+        schemaSelect.innerHTML = `<option value="">No data.json found</option>`;
+        return;
+      }
+
+      const rows = await resp.json();
+      allSchemas = dedupeLatestPerVersion(rows);
+
+      setStatus(`Loaded ${allSchemas.length.toLocaleString()} schema versions from data.json`, "ok");
+
+      // Show only first 500 until search narrows it
+      filteredSchemas = allSchemas.slice(0, 500);
+      renderSchemaDropdown(filteredSchemas);
+    }
+
+    function openModal(html) {
+      modalBody.innerHTML = html;
+      modalBackdrop.style.display = "flex";
+    }
+
+    function closeModal() {
+      modalBackdrop.style.display = "none";
+    }
+
+    async function bindSchema() {
+      const token = getToken();
+      const synId = synIdInput.value.trim();
+      const schemaObj = getSelectedSchemaObj();
+      const enableDerivedAnnotations = !!derivedToggle.checked;
+
+      if (!token) {
+        setStatus("Missing token. Paste it and click Save Token.", "error");
+        return;
+      }
+
+      if (!schemaObj) {
+        setStatus("Select a schema version first.", "error");
+        return;
+      }
+
+      if (!isValidSynId(synId)) {
+        setStatus("Enter a valid Synapse ID like syn12345678.", "error");
+        return;
+      }
+
+      const bindingId = schemaIdForBinding(schemaObj);
+
+      const confirmHtml = `
+        You are about to bind:
+        <div style="margin-top:10px;">
+          <div><b>Entity:</b> <code>${synId}</code></div>
+          <div style="margin-top:6px;"><b>Schema version:</b> <code>${bindingId}</code></div>
+          <div style="margin-top:6px;"><b>Derived annotations:</b> <code>${enableDerivedAnnotations}</code></div>
+        </div>
+        <div style="margin-top:12px;" class="warn">
+          This will modify the entity in Synapse.
+        </div>
+      `;
+
+      openModal(confirmHtml);
+
+      // Wait for confirm click
+      return new Promise((resolve) => {
+        const onCancel = () => {
+          cancelBtn.removeEventListener("click", onCancel);
+          confirmBtn.removeEventListener("click", onConfirm);
+          closeModal();
+          resolve();
+        };
+
+        const onConfirm = async () => {
+          cancelBtn.removeEventListener("click", onCancel);
+          confirmBtn.removeEventListener("click", onConfirm);
+          closeModal();
+
+          setStatus("Binding schema…");
+
+          try {
+            // BindSchemaToEntityRequest
+            // According to the OpenAPI spec, this includes:
+            // - schemaId
+            // - enableDerivedAnnotations
+            const payload = {
+              schemaId: bindingId,
+              enableDerivedAnnotations: enableDerivedAnnotations
+            };
+
+            const resp = await fetch(`${SYNAPSE_REPO}/entity/${synId}/schema/binding`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (!resp.ok) {
+              const text = await resp.text();
+              setStatus(`Bind failed (${resp.status}). ${text}`, "error");
+              resolve();
+              return;
+            }
+
+            const result = await resp.json();
+
+            setStatus(
+              `Success! Schema bound to ${synId}.`,
+              "ok"
+            );
+
+            // Extra details in status
+            const schemaUrl = schemaUrlForRegistered(schemaObj);
+            const entityLink = entityUrl(synId);
+
+            statusEl.innerHTML = `
+              <div class="ok">Success! Schema bound.</div>
+              <div style="margin-top:8px;">
+                Entity: <a href="${entityLink}" target="_blank">${synId}</a>
+              </div>
+              <div style="margin-top:6px;">
+                Schema: <a href="${schemaUrl}" target="_blank">${schemaUrl}</a>
+              </div>
+              <div style="margin-top:10px;" class="tiny">
+                Response: <code>${escapeHtml(JSON.stringify(result))}</code>
+              </div>
+            `;
+
+            resolve();
+
+          } catch (e) {
+            setStatus("Bind failed (network or CORS issue).", "error");
+            resolve();
+          }
+        };
+
+        cancelBtn.addEventListener("click", onCancel);
+        confirmBtn.addEventListener("click", onConfirm);
+      });
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // --------------------
+    // Event handlers
+    // --------------------
+    saveTokenBtn.addEventListener("click", () => {
+      const raw = tokenInput.value.trim();
+
+      if (!raw) {
+        setStatus("Paste a token first.", "error");
+        return;
+      }
+
+      // Allow either:
+      // - raw token
+      // - "Bearer <token>"
+      const token = raw.startsWith("Bearer ") ? raw.replace(/^Bearer\s+/i, "") : raw;
+
+      setToken(token);
+      tokenInput.value = "";
+      setStatus("Token saved for this session.", "ok");
+      updateReadyPill();
+    });
+
+    clearTokenBtn.addEventListener("click", () => {
+      clearToken();
+      setStatus("Token cleared.", "warn");
+      updateReadyPill();
+    });
+
+    schemaSearch.addEventListener("input", () => {
+      applySchemaFilter();
+      updateSchemaMeta();
+      updateReadyPill();
+    });
+
+    schemaSelect.addEventListener("change", () => {
+      updateSchemaMeta();
+      updateReadyPill();
+    });
+
+    synIdInput.addEventListener("input", () => {
+      updateReadyPill();
+    });
+
+    bindBtn.addEventListener("click", bindSchema);
+
+    // Close modal if user clicks backdrop
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+
+    // --------------------
+    // Init
+    // --------------------
+    (function init() {
+      // If token already saved in sessionStorage, show status
+      if (getToken()) {
+        setStatus("Token found in session storage.", "ok");
+      }
+
+      loadSchemasFromDataJson().then(() => {
+        updateSchemaMeta();
+        updateReadyPill();
+      });
+    })();
+  </script>
+</body>
+</html>
