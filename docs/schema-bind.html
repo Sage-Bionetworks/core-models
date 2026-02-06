@@ -6,374 +6,386 @@
   <title>Bind Schema to Entity</title>
 
   <style>
-    :root {
-      --bg: #0f1115;
-      --panel: rgba(255, 255, 255, 0.03);
+    :root{
+      --bg:#0f1115;
+      --panel:rgba(255,255,255,0.03);
 
-      --text: rgba(244, 242, 236, 0.92);
-      --muted: rgba(244, 242, 236, 0.66);
-      --muted2: rgba(244, 242, 236, 0.50);
+      --text:rgba(244,242,236,0.92);
+      --muted:rgba(244,242,236,0.66);
+      --muted2:rgba(244,242,236,0.50);
 
-      --accent: #a78bfa;
-      --link: #7dd3c7;
-      --linkHover: #b8fff2;
+      --accent:#a78bfa;
+      --link:#7dd3c7;
+      --linkHover:#b8fff2;
 
-      --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
-      --radius: 18px;
+      --shadow:0 18px 55px rgba(0,0,0,0.32);
+      --radius:18px;
 
-      --good: #86efac;
-      --bad: #fb7185;
-      --warn: #fbbf24;
+      --good:#86efac;
+      --bad:#fb7185;
+      --warn:#fbbf24;
 
       /* Light dropdown palette (always readable) */
-      --ddBg: #ffffff;
-      --ddText: #111827;
-      --ddMuted: rgba(17, 24, 39, 0.62);
-      --ddBorder: rgba(17, 24, 39, 0.16);
-      --ddHover: rgba(167, 139, 250, 0.14);
-      --ddActive: rgba(167, 139, 250, 0.22);
+      --ddBg:#ffffff;
+      --ddText:#111827;
+      --ddMuted:rgba(17,24,39,0.62);
+      --ddBorder:rgba(17,24,39,0.16);
+      --ddHover:rgba(167,139,250,0.14);
+      --ddActive:rgba(167,139,250,0.22);
     }
 
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box;}
 
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: linear-gradient(180deg, #0e1014 0%, var(--bg) 55%, var(--bg) 100%);
-      color: var(--text);
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:linear-gradient(180deg,#0e1014 0%,var(--bg) 55%,var(--bg) 100%);
+      color:var(--text);
     }
 
-    a { color: var(--link); text-decoration: none; }
-    a:hover { color: var(--linkHover); text-decoration: underline; }
+    a{color:var(--link);text-decoration:none;}
+    a:hover{color:var(--linkHover);text-decoration:underline;}
 
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 34px 18px 70px;
+    .container{
+      max-width:1180px;
+      margin:0 auto;
+      padding:34px 18px 70px;
     }
 
-    .topNav {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 12px;
-      flex-wrap: wrap;
+    .topNav{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:18px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      padding-bottom:12px;
+      flex-wrap:wrap;
     }
 
-    .navLink {
-      color: rgba(244, 242, 236, 0.72);
-      font-weight: 650;
-      font-size: 14px;
+    .navLink{
+      color:rgba(244,242,236,0.72);
+      font-weight:650;
+      font-size:14px;
     }
-    .navLink:hover { color: rgba(244, 242, 236, 0.92); text-decoration: none; }
+    .navLink:hover{color:rgba(244,242,236,0.92);text-decoration:none;}
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-    }
-
-    p {
-      margin: 0 0 18px;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 980px;
+    h1{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-0.03em;
     }
 
-    .panel {
-      border-radius: var(--radius);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+    p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.5;
+      max-width:980px;
     }
 
-    .panelHeader {
-      padding: 18px 18px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .panelHeader h2 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
-
-    .panelBody { padding: 16px 16px 18px; }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
+    .panel{
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,0.05);
+      background:rgba(255,255,255,0.03);
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
-    .input {
-      flex: 1;
-      min-width: 260px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.02);
-      color: rgba(244, 242, 236, 0.92);
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
-      outline: none;
+    .panelHeader{
+      padding:18px 18px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    .panelHeader h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:-0.01em;
     }
 
-    .input:focus {
-      border-color: rgba(167, 139, 250, 0.50);
-      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+    .panelBody{padding:16px 16px 18px;}
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
 
-    .btn {
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(167, 139, 250, 0.10);
-      color: rgba(244, 242, 236, 0.90);
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 140ms ease;
-      white-space: nowrap;
-    }
-    .btn:hover { background: rgba(167, 139, 250, 0.16); transform: translateY(-1px); }
-
-    .btn.secondary {
-      background: rgba(255, 255, 255, 0.02);
-      color: rgba(244, 242, 236, 0.80);
-    }
-    .btn.secondary:hover { background: rgba(255, 255, 255, 0.04); transform: translateY(-1px); }
-
-    .status {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      word-break: break-word;
+    .input{
+      flex:1;
+      min-width:260px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.02);
+      color:rgba(244,242,236,0.92);
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:14px;
+      outline:none;
     }
 
-    .error { color: rgba(251, 113, 133, 0.95); font-weight: 700; }
-    .ok { color: rgba(134, 239, 172, 0.95); font-weight: 700; }
-    .warn { color: rgba(251, 191, 36, 0.95); font-weight: 700; }
-
-    .tiny { color: var(--muted2); font-size: 12px; }
-
-    .fieldGrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    @media (max-width: 900px) {
-      .fieldGrid { grid-template-columns: 1fr; }
+    .input:focus{
+      border-color:rgba(167,139,250,0.50);
+      box-shadow:0 0 0 4px rgba(167,139,250,0.14);
     }
 
-    .field {
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.015);
-      padding: 12px;
+    .btn{
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(167,139,250,0.10);
+      color:rgba(244,242,236,0.90);
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:all 140ms ease;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(167,139,250,0.16);transform:translateY(-1px);}
+
+    .btn.secondary{
+      background:rgba(255,255,255,0.02);
+      color:rgba(244,242,236,0.80);
+    }
+    .btn.secondary:hover{background:rgba(255,255,255,0.04);transform:translateY(-1px);}
+
+    .status{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      word-break:break-word;
     }
 
-    .label { font-size: 12px; color: var(--muted2); margin-bottom: 6px; }
+    .error{color:rgba(251,113,133,0.95);font-weight:700;}
+    .ok{color:rgba(134,239,172,0.95);font-weight:700;}
+    .warn{color:rgba(251,191,36,0.95);font-weight:700;}
+    .tiny{color:var(--muted2);font-size:12px;}
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.02);
-      font-size: 12px;
-      color: var(--muted);
-      user-select: none;
-      white-space: nowrap;
+    .fieldGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width:900px){
+      .fieldGrid{grid-template-columns:1fr;}
     }
 
-    /* Toggle */
-    .toggleRow {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 12px;
+    .field{
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.05);
+      background:rgba(255,255,255,0.015);
+      padding:12px;
     }
 
-    .toggle {
-      display: inline-flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.02);
-      cursor: pointer;
-      user-select: none;
-      max-width: 520px;
+    .label{font-size:12px;color:var(--muted2);margin-bottom:6px;}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.02);
+      font-size:12px;
+      color:var(--muted);
+      user-select:none;
+      white-space:nowrap;
     }
 
-    .toggle input { width: 18px; height: 18px; margin-top: 2px; }
-
-    /* Modal */
-    .modalBackdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 999;
+    .toggleRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:12px;
     }
 
-    .modal {
-      width: 100%;
-      max-width: 560px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: #12141a;
-      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.55);
-      overflow: hidden;
+    .toggle{
+      display:inline-flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.02);
+      cursor:pointer;
+      user-select:none;
+      max-width:520px;
     }
 
-    .modalHeader {
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .modalHeader h3 { margin: 0; font-size: 15px; letter-spacing: -0.01em; }
-
-    .modalBody {
-      padding: 14px 16px;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 13px;
-      word-break: break-word;
+    .toggle input{
+      width:18px;
+      height:18px;
+      margin-top:2px;
     }
 
-    .modalFooter {
-      padding: 14px 16px 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
+    .modalBackdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:999;
     }
 
-    code {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 2px 6px;
-      border-radius: 8px;
-      color: rgba(244, 242, 236, 0.85);
+    .modal{
+      width:100%;
+      max-width:560px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:#12141a;
+      box-shadow:0 24px 90px rgba(0,0,0,0.55);
+      overflow:hidden;
+    }
+
+    .modalHeader{
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+
+    .modalHeader h3{
+      margin:0;
+      font-size:15px;
+      letter-spacing:-0.01em;
+    }
+
+    .modalBody{
+      padding:14px 16px;
+      color:var(--muted);
+      line-height:1.45;
+      font-size:13px;
+      word-break:break-word;
+    }
+
+    .modalFooter{
+      padding:14px 16px 16px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    code{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      padding:2px 6px;
+      border-radius:8px;
+      color:rgba(244,242,236,0.85);
     }
 
     /* -------------------------
        Custom dropdown (readable)
        ------------------------- */
-    .ddWrap {
-      position: relative;
-      width: 100%;
-      margin-top: 10px;
+    .ddWrap{
+      position:relative;
+      width:100%;
+      margin-top:10px;
     }
 
-    .ddTopRow {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
+    .ddTopRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
     }
 
-    .ddInput {
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid var(--ddBorder);
-      background: var(--ddBg);
-      color: var(--ddText);
-      padding: 12px 14px;
-      font-size: 14px;
-      outline: none;
+    .ddInput{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--ddBorder);
+      background:var(--ddBg);
+      color:var(--ddText);
+      padding:12px 14px;
+      font-size:14px;
+      outline:none;
     }
 
-    .ddInput:focus {
-      border-color: rgba(167, 139, 250, 0.75);
-      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18);
+    .ddInput:focus{
+      border-color:rgba(167,139,250,0.75);
+      box-shadow:0 0 0 4px rgba(167,139,250,0.18);
     }
 
-    .ddClear {
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.02);
-      color: rgba(244,242,236,0.78);
-      border-radius: 14px;
-      padding: 12px 12px;
-      cursor: pointer;
-      font-weight: 900;
-      line-height: 1;
-      transition: all 140ms ease;
-    }
-    .ddClear:hover {
-      background: rgba(255,255,255,0.04);
-      transform: translateY(-1px);
+    .ddClear{
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.02);
+      color:rgba(244,242,236,0.78);
+      border-radius:14px;
+      padding:12px 12px;
+      cursor:pointer;
+      font-weight:900;
+      line-height:1;
+      transition:all 140ms ease;
     }
 
-    .ddList {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      max-height: 340px;
-      overflow: auto;
-      border-radius: 16px;
-      border: 1px solid var(--ddBorder);
-      background: var(--ddBg);
-      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
-      display: none;
-      z-index: 50;
-      padding: 6px;
+    .ddClear:hover{
+      background:rgba(255,255,255,0.04);
+      transform:translateY(-1px);
     }
 
-    .ddItem {
-      padding: 10px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      outline: none;
+    .ddList{
+      position:absolute;
+      top:calc(100% + 8px);
+      left:0;
+      right:0;
+      max-height:340px;
+      overflow:auto;
+      border-radius:16px;
+      border:1px solid var(--ddBorder);
+      background:var(--ddBg);
+      box-shadow:0 20px 70px rgba(0,0,0,0.35);
+      display:none;
+      z-index:50;
+      padding:6px;
     }
 
-    .ddItem:hover { background: var(--ddHover); }
-    .ddItem.active { background: var(--ddActive); }
-
-    .ddItemTitle {
-      font-weight: 850;
-      color: var(--ddText);
-      line-height: 1.25;
-      font-size: 13px;
+    .ddItem{
+      padding:10px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      outline:none;
     }
 
-    .ddItemMeta {
-      color: var(--ddMuted);
-      font-size: 12px;
-      line-height: 1.25;
+    .ddItem:hover{background:var(--ddHover);}
+    .ddItem.active{background:var(--ddActive);}
+
+    .ddItemTitle{
+      font-weight:850;
+      color:var(--ddText);
+      line-height:1.25;
+      font-size:13px;
     }
 
-    .ddHintRow {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-top: 8px;
-      flex-wrap: wrap;
+    .ddItemMeta{
+      color:var(--ddMuted);
+      font-size:12px;
+      line-height:1.25;
+      word-break:break-word;
     }
 
-    .ddHint {
-      font-size: 12px;
-      color: rgba(244, 242, 236, 0.52);
+    .ddHintRow{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-top:8px;
+      flex-wrap:wrap;
     }
 
-    .ddCount {
-      font-size: 12px;
-      color: rgba(244, 242, 236, 0.52);
+    .ddHint{
+      font-size:12px;
+      color:rgba(244,242,236,0.52);
+    }
+
+    .ddCount{
+      font-size:12px;
+      color:rgba(244,242,236,0.52);
     }
   </style>
 </head>
@@ -407,7 +419,8 @@
         </div>
 
         <div class="tiny" style="margin-top:8px;">
-          Tip: you can paste either the raw token or "Bearer &lt;token&gt;" — the page strips Bearer automatically.
+          Tip: paste either the raw token or "Bearer &lt;token&gt;" — the page strips Bearer automatically.
+          If the page seems unchanged after updating, do a hard refresh (Cmd+Shift+R / Ctrl+Shift+R).
         </div>
 
         <div class="fieldGrid">
@@ -490,6 +503,7 @@
   <script>
     const SYNAPSE_REPO = "https://repo-prod.prod.sagebase.org/repo/v1";
     const TOKEN_KEY = "synapse_token_session";
+    const REGISTERED_SCHEMA_BASE = `${SYNAPSE_REPO}/schema/type/registered`;
 
     const tokenInput = document.getElementById("tokenInput");
     const saveTokenBtn = document.getElementById("saveTokenBtn");
@@ -545,19 +559,20 @@
     }
 
     function isValidSynId(v) {
-      return /^syn\d+$/.test(v);
+      return /^syn\\d+$/.test(v);
     }
 
     function schemaDisplayName(s) {
       return `${s.organization_name} / ${s.schema_name}  •  v${s.semantic_version}`;
     }
 
+    // FULL URL schema$id (this is what we bind with)
     function schemaIdForBinding(s) {
-      return `${s.organization_name}-${s.schema_name}-${s.semantic_version}`;
+      return `${REGISTERED_SCHEMA_BASE}/${s.organization_name}-${s.schema_name}-${s.semantic_version}`;
     }
 
     function schemaUrlForRegistered(s) {
-      return `https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/${s.organization_name}-${s.schema_name}`;
+      return schemaIdForBinding(s);
     }
 
     function entityUrl(synId) {
@@ -595,10 +610,12 @@
       }
 
       const schemaUrl = schemaUrlForRegistered(s);
+
       schemaMeta.innerHTML = `
-        <div>Binding ID: <code>${schemaIdForBinding(s)}</code></div>
+        <div><b>Selected:</b> ${escapeHtml(schemaDisplayName(s))}</div>
+        <div style="margin-top:6px;">schema$id: <code>${escapeHtml(schemaUrl)}</code></div>
         <div style="margin-top:6px;">
-          Registered schema: <a href="${schemaUrl}" target="_blank">${schemaUrl}</a>
+          Open: <a href="${schemaUrl}" target="_blank">${schemaUrl}</a>
         </div>
       `;
     }
@@ -795,12 +812,13 @@
         return;
       }
 
-      const bindingId = schemaIdForBinding(schemaObj);
+      const schemaIdUrl = schemaIdForBinding(schemaObj);
 
-      // IMPORTANT FIX:
+      // IMPORTANT:
       // Synapse requires the request field to be literally "schema$id"
+      // and the value should be the full schema $id URL.
       const payload = {
-        "schema$id": bindingId,
+        "schema$id": schemaIdUrl,
         enableDerivedAnnotations: enableDerivedAnnotations
       };
 
@@ -808,7 +826,7 @@
         You are about to bind:
         <div style="margin-top:10px;">
           <div><b>Entity:</b> <code>${synId}</code></div>
-          <div style="margin-top:6px;"><b>Schema version:</b> <code>${bindingId}</code></div>
+          <div style="margin-top:6px;"><b>schema$id:</b> <code>${escapeHtml(schemaIdUrl)}</code></div>
           <div style="margin-top:6px;"><b>Derived annotations:</b> <code>${enableDerivedAnnotations}</code></div>
         </div>
         <div style="margin-top:12px;" class="warn">
@@ -856,7 +874,6 @@
 
             const result = await resp.json();
 
-            const schemaUrl = schemaUrlForRegistered(schemaObj);
             const entityLink = entityUrl(synId);
 
             statusEl.innerHTML = `
@@ -865,7 +882,7 @@
                 Entity: <a href="${entityLink}" target="_blank">${synId}</a>
               </div>
               <div style="margin-top:6px;">
-                Schema: <a href="${schemaUrl}" target="_blank">${schemaUrl}</a>
+                schema$id: <a href="${schemaIdUrl}" target="_blank">${schemaIdUrl}</a>
               </div>
               <div style="margin-top:10px;" class="tiny">
                 Response: <code>${escapeHtml(JSON.stringify(result))}</code>
@@ -905,7 +922,7 @@
         return;
       }
 
-      const token = raw.startsWith("Bearer ") ? raw.replace(/^Bearer\s+/i, "") : raw;
+      const token = raw.startsWith("Bearer ") ? raw.replace(/^Bearer\\s+/i, "") : raw;
       setToken(token);
       tokenInput.value = "";
       setStatus("Token saved for this session.", "ok");
@@ -999,9 +1016,8 @@
     // --------------------
     // Init
     // --------------------
-    (function init() {
+    (function init(){
       if (getToken()) setStatus("Token found in session storage.", "ok");
-
       loadSchemasFromDataJson().then(() => {
         updateSchemaMeta();
         updateReadyPill();
