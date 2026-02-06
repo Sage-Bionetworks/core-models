@@ -1,0 +1,1440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register Schema</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#111a33;
+      --panel2:#0f1730;
+      --text:#e8ecff;
+      --muted:#aab3d6;
+      --border:rgba(255,255,255,.12);
+      --ok:#2bd576;
+      --warn:#ffbf4a;
+      --bad:#ff5a7a;
+      --btn:#2a3cff;
+      --btn2:#1b2550;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:linear-gradient(180deg, #060a16, #0b1020 30%, #070b18);
+      color:var(--text);
+    }
+    a{color:#9db2ff; text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      max-width:1050px;
+      margin:28px auto 80px;
+      padding:0 18px;
+    }
+
+    /* Nav tabs */
+    .tabs{
+      display:flex;
+      gap:10px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      padding:10px;
+      border-radius:999px;
+      width:fit-content;
+      box-shadow: var(--shadow);
+      margin-bottom:18px;
+    }
+    .tab{
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:650;
+      color:var(--muted);
+      border:1px solid transparent;
+    }
+    .tab.active{
+      background:rgba(42,60,255,.22);
+      color:var(--text);
+      border-color:rgba(157,178,255,.35);
+    }
+
+    .headerRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin:14px 0 14px;
+    }
+    h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-weight:650;
+      white-space:nowrap;
+    }
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.ok{background:var(--ok)}
+    .dot.bad{background:var(--bad)}
+    .dot.warn{background:var(--warn)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .cardHeader h2{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    .cardBody{padding:14px}
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin:0 0 6px;
+      font-weight:650;
+    }
+    input[type="text"], input[type="password"], textarea{
+      width:100%;
+      border:1px solid var(--border);
+      background:rgba(15,23,48,.7);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:none;
+    }
+    input:focus, textarea:focus{
+      border-color:rgba(157,178,255,.6);
+      box-shadow:0 0 0 3px rgba(42,60,255,.18);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:1px solid rgba(157,178,255,.25);
+      background:rgba(42,60,255,.22);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{
+      background:rgba(255,255,255,.04);
+      border-color:var(--border);
+      color:var(--muted);
+    }
+    .btn.danger{
+      background:rgba(255,90,122,.12);
+      border-color:rgba(255,90,122,.35);
+    }
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+    .help{
+      font-size:12px;
+      color:rgba(232,236,255,.65);
+      margin-top:6px;
+      line-height:1.35;
+    }
+    .errorText{
+      color:var(--bad);
+      font-size:12px;
+      margin-top:6px;
+      line-height:1.35;
+    }
+    .okText{
+      color:var(--ok);
+      font-size:12px;
+      margin-top:6px;
+      line-height:1.35;
+    }
+    .warnText{
+      color:var(--warn);
+      font-size:12px;
+      margin-top:6px;
+      line-height:1.35;
+    }
+
+    /* Segmented control */
+    .seg{
+      display:flex;
+      gap:0;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      width:fit-content;
+      background:rgba(255,255,255,.03);
+    }
+    .seg button{
+      border:0;
+      background:transparent;
+      color:var(--muted);
+      padding:10px 12px;
+      font-weight:750;
+      cursor:pointer;
+      border-right:1px solid var(--border);
+    }
+    .seg button:last-child{border-right:0}
+    .seg button.active{
+      background:rgba(42,60,255,.22);
+      color:var(--text);
+    }
+
+    /* Custom dropdown */
+    .dropdown{
+      position:relative;
+    }
+    .dropBtn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(15,23,48,.7);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .chev{opacity:.75}
+    .menu{
+      position:absolute;
+      top:calc(100% + 8px);
+      left:0;
+      right:0;
+      background:rgba(8,12,24,.98);
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      z-index:20;
+      overflow:hidden;
+      display:none;
+    }
+    .menu.open{display:block}
+    .menuTop{
+      padding:10px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+    }
+    .menuList{
+      max-height:280px;
+      overflow:auto;
+    }
+    .opt{
+      padding:10px 12px;
+      cursor:pointer;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .opt:last-child{border-bottom:0}
+    .opt:hover{background:rgba(42,60,255,.16)}
+    .optName{font-weight:800}
+    .optId{font-size:12px;color:rgba(232,236,255,.6); margin-top:2px}
+
+    /* Editor */
+    textarea#schemaJson{
+      min-height: 420px;
+      font-family:var(--mono);
+      line-height:1.5;
+      padding:14px;
+      background:#070a14;
+      border-color:rgba(255,255,255,.14);
+      border-radius:14px;
+    }
+
+    /* Status + output */
+    .statusRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:var(--muted);
+      font-weight:650;
+      margin-top:6px;
+    }
+    .spinner{
+      width:16px;height:16px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.25);
+      border-top-color:rgba(157,178,255,.95);
+      animation:spin .8s linear infinite;
+      display:none;
+    }
+    .spinner.on{display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .pre{
+      font-family:var(--mono);
+      font-size:12px;
+      background:#070a14;
+      border:1px solid rgba(255,255,255,.12);
+      padding:12px;
+      border-radius:14px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    /* Modal */
+    .modalBackdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modalBackdrop.open{display:flex}
+    .modal{
+      width:min(720px, 100%);
+      background:rgba(10,14,28,.98);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .modalHead h3{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .modalBody{padding:14px 16px}
+    .kv{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap:8px 12px;
+      margin:10px 0 4px;
+      font-size:13px;
+    }
+    .k{color:rgba(232,236,255,.65); font-weight:750}
+    .v{color:var(--text); font-weight:650}
+    .modalFoot{
+      padding:14px 16px;
+      border-top:1px solid var(--border);
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .inlineCheck{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+      color:rgba(232,236,255,.75);
+      font-size:13px;
+      font-weight:650;
+    }
+    input[type="checkbox"]{transform:scale(1.05)}
+    .mutedSmall{font-size:12px;color:rgba(232,236,255,.6);line-height:1.35}
+    .divider{height:1px;background:rgba(255,255,255,.10); margin:12px 0}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- NAV TABS: keep consistent across all schema docs pages -->
+    <div class="tabs" role="navigation" aria-label="Schema tools">
+      <a class="tab" href="./schema-index.html">Schema Index</a>
+      <a class="tab" href="./schema-bind.html">Bind Schema</a>
+      <a class="tab active" href="./schema-register.html" aria-current="page">Register Schema</a>
+    </div>
+
+    <div class="headerRow">
+      <h1>Register Schema</h1>
+      <div class="pill" id="readyPill" title="Not ready until token saved, org selected or new org entered, schema name valid, and JSON parses.">
+        <span class="dot bad" id="readyDot"></span>
+        <span id="readyText">Not ready</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left column -->
+      <div class="card">
+        <div class="cardHeader">
+          <h2>Token + Organization</h2>
+        </div>
+        <div class="cardBody">
+
+          <!-- Token -->
+          <label for="tokenInput">Synapse Personal Access Token</label>
+          <input id="tokenInput" type="password" placeholder="Paste raw token or 'Bearer &lt;token&gt;'" autocomplete="off" />
+          <div class="row" style="margin-top:10px">
+            <button class="btn" id="saveTokenBtn">Save Token</button>
+            <button class="btn secondary" id="clearTokenBtn">Clear Token</button>
+          </div>
+          <div class="help">
+            Stored in <b>sessionStorage</b>. Authorization header will be sent as:
+            <span class="pre" style="display:inline-block; padding:6px 8px; border-radius:10px; margin-left:6px;">Authorization: Bearer &lt;token&gt;</span>
+          </div>
+          <div id="tokenMsg" class="help"></div>
+
+          <div class="divider"></div>
+
+          <!-- Load Orgs -->
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <label>Organizations</label>
+              <div class="help">Automatically fetches all pages from <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;">POST /schema/organization/list</span></div>
+            </div>
+            <button class="btn secondary" id="reloadOrgsBtn" title="Reload organizations">Reload</button>
+          </div>
+
+          <div class="statusRow">
+            <span class="spinner" id="orgSpinner"></span>
+            <span id="orgStatus">Waiting for token…</span>
+          </div>
+
+          <!-- Org Mode toggle -->
+          <div style="margin-top:14px">
+            <label>Organization selection</label>
+            <div class="seg" role="tablist" aria-label="Organization mode">
+              <button id="modeExistingBtn" class="active" type="button" role="tab" aria-selected="true">Use existing organization</button>
+              <button id="modeNewBtn" type="button" role="tab" aria-selected="false">Create new organization</button>
+            </div>
+          </div>
+
+          <!-- Existing org dropdown -->
+          <div id="existingOrgBox" style="margin-top:12px">
+            <label>Select organization</label>
+            <div class="dropdown">
+              <button class="dropBtn" id="orgDropBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span id="orgDropLabel">Choose an organization…</span>
+                <span class="chev">▾</span>
+              </button>
+              <div class="menu" id="orgMenu" role="listbox" aria-label="Organizations">
+                <div class="menuTop">
+                  <input id="orgSearch" type="text" placeholder="Search organizations…" />
+                  <div class="mutedSmall" id="orgCount" style="margin-top:6px"></div>
+                </div>
+                <div class="menuList" id="orgList"></div>
+              </div>
+            </div>
+            <div id="orgPickMsg" class="help"></div>
+          </div>
+
+          <!-- New org input -->
+          <div id="newOrgBox" style="margin-top:12px; display:none">
+            <label for="newOrgName">New organization name</label>
+            <input id="newOrgName" type="text" placeholder="My New Org" />
+            <div class="help">
+              Will call <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;">POST /schema/organization</span>
+              on Register (only if needed).
+            </div>
+            <div id="newOrgMsg" class="help"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Schema name -->
+          <label for="schemaName">Schema name</label>
+          <input id="schemaName" type="text" placeholder="my.schema" />
+          <div class="help">
+            Required. No spaces. Dots + dashes allowed.
+          </div>
+          <div id="schemaNameMsg" class="help"></div>
+
+          <div class="inlineCheck">
+            <input id="compileAfter" type="checkbox" />
+            <label for="compileAfter" style="margin:0">Compile validation schema after registering</label>
+          </div>
+          <div class="mutedSmall" style="margin-top:6px">
+            Optional: <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;">POST /schema/type/validation/async/start</span> (polled until complete).
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Register button -->
+          <div class="row" style="justify-content:space-between">
+            <div class="statusRow" style="margin:0">
+              <span class="spinner" id="jobSpinner"></span>
+              <span id="jobStatus">Idle</span>
+            </div>
+            <button class="btn" id="registerBtn" disabled>Register</button>
+          </div>
+          <div id="registerMsg" class="help"></div>
+        </div>
+      </div>
+
+      <!-- Right column: JSON Editor -->
+      <div class="card">
+        <div class="cardHeader">
+          <h2>JSON Schema Editor</h2>
+          <div class="row">
+            <button class="btn secondary" id="formatBtn" type="button">Format JSON</button>
+            <button class="btn secondary" id="validateBtn" type="button">Validate JSON</button>
+          </div>
+        </div>
+        <div class="cardBody">
+          <label for="schemaJson">JSON Schema</label>
+          <textarea id="schemaJson" spellcheck="false" placeholder='{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {}
+}'></textarea>
+          <div id="jsonMsg" class="help"></div>
+          <div id="idWarnMsg" class="warnText" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div style="margin-top:14px" id="outputArea"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modalBackdrop" id="confirmBackdrop" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="modal">
+        <div class="modalHead">
+          <h3 id="confirmTitle">Confirm schema registration</h3>
+          <button class="btn secondary" id="closeModalBtn" type="button">✕</button>
+        </div>
+        <div class="modalBody">
+          <div class="kv">
+            <div class="k">Organization</div><div class="v" id="confOrg"></div>
+            <div class="k">Schema name</div><div class="v" id="confSchemaName"></div>
+            <div class="k">$id to use</div><div class="v" id="confId"></div>
+            <div class="k">JSON size</div><div class="v" id="confSize"></div>
+          </div>
+          <div id="confIdWarning" class="warnText" style="display:none"></div>
+          <div class="divider"></div>
+          <div class="mutedSmall">
+            This will call:
+            <div class="pre" style="margin-top:8px">POST /repo/v1/schema/type/create/async/start</div>
+            and poll:
+            <div class="pre" style="margin-top:8px">GET /repo/v1/schema/type/create/async/get/{asyncToken}</div>
+          </div>
+        </div>
+        <div class="modalFoot">
+          <button class="btn secondary" id="cancelModalBtn" type="button">Cancel</button>
+          <button class="btn" id="confirmRegisterBtn" type="button">Yes, register schema</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+(() => {
+  // ====== Config ======
+  const REPO_ORIGIN = "https://repo-prod.prod.sagebase.org";
+  const API_BASE = REPO_ORIGIN + "/repo/v1";
+  const TOKEN_KEY = "synapse_pat_token_session";
+
+  // ====== State ======
+  let token = null;              // normalized raw token (no "Bearer ")
+  let allOrgs = [];              // loaded orgs
+  let selectedOrg = null;        // {id, name}
+  let orgMode = "existing";      // "existing" | "new"
+  let createdOrgId = null;       // when orgMode = new and created
+  let createdOrgName = null;
+
+  // ====== Elements ======
+  const el = (id) => document.getElementById(id);
+
+  const tokenInput = el("tokenInput");
+  const saveTokenBtn = el("saveTokenBtn");
+  const clearTokenBtn = el("clearTokenBtn");
+  const tokenMsg = el("tokenMsg");
+
+  const orgSpinner = el("orgSpinner");
+  const orgStatus = el("orgStatus");
+  const reloadOrgsBtn = el("reloadOrgsBtn");
+
+  const modeExistingBtn = el("modeExistingBtn");
+  const modeNewBtn = el("modeNewBtn");
+  const existingOrgBox = el("existingOrgBox");
+  const newOrgBox = el("newOrgBox");
+
+  const orgDropBtn = el("orgDropBtn");
+  const orgDropLabel = el("orgDropLabel");
+  const orgMenu = el("orgMenu");
+  const orgSearch = el("orgSearch");
+  const orgList = el("orgList");
+  const orgCount = el("orgCount");
+  const orgPickMsg = el("orgPickMsg");
+
+  const newOrgName = el("newOrgName");
+  const newOrgMsg = el("newOrgMsg");
+
+  const schemaName = el("schemaName");
+  const schemaNameMsg = el("schemaNameMsg");
+
+  const schemaJson = el("schemaJson");
+  const formatBtn = el("formatBtn");
+  const validateBtn = el("validateBtn");
+  const jsonMsg = el("jsonMsg");
+  const idWarnMsg = el("idWarnMsg");
+
+  const compileAfter = el("compileAfter");
+
+  const registerBtn = el("registerBtn");
+  const registerMsg = el("registerMsg");
+
+  const readyPill = el("readyPill");
+  const readyDot = el("readyDot");
+  const readyText = el("readyText");
+
+  const jobSpinner = el("jobSpinner");
+  const jobStatus = el("jobStatus");
+
+  const outputArea = el("outputArea");
+
+  // Modal
+  const confirmBackdrop = el("confirmBackdrop");
+  const closeModalBtn = el("closeModalBtn");
+  const cancelModalBtn = el("cancelModalBtn");
+  const confirmRegisterBtn = el("confirmRegisterBtn");
+  const confOrg = el("confOrg");
+  const confSchemaName = el("confSchemaName");
+  const confId = el("confId");
+  const confSize = el("confSize");
+  const confIdWarning = el("confIdWarning");
+
+  // ====== Helpers ======
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function normalizeToken(input){
+    if (!input) return "";
+    let t = input.trim();
+    if (/^bearer\s+/i.test(t)) t = t.replace(/^bearer\s+/i, "").trim();
+    return t;
+  }
+
+  function authHeaders(){
+    if (!token) throw new Error("Missing token");
+    return {
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    };
+  }
+
+  async function apiFetch(path, options = {}){
+    const url = API_BASE + path;
+    const opts = { ...options };
+    opts.headers = { ...(opts.headers || {}), ...authHeaders() };
+    const res = await fetch(url, opts);
+    const text = await res.text();
+    let json = null;
+    try { json = text ? JSON.parse(text) : null; } catch(e){}
+    if (!res.ok){
+      const err = new Error(`HTTP ${res.status} ${res.statusText}`);
+      err.status = res.status;
+      err.statusText = res.statusText;
+      err.bodyText = text;
+      err.bodyJson = json;
+      throw err;
+    }
+    return json ?? text;
+  }
+
+  function setSpinner(spinEl, on){
+    spinEl.classList.toggle("on", !!on);
+  }
+
+  function setJobStatus(text, spinning=false){
+    jobStatus.textContent = text;
+    setSpinner(jobSpinner, spinning);
+  }
+
+  function setOrgStatus(text, spinning=false){
+    orgStatus.textContent = text;
+    setSpinner(orgSpinner, spinning);
+  }
+
+  function setReadyState(isReady, why){
+    if (isReady){
+      readyDot.className = "dot ok";
+      readyText.textContent = "Ready";
+      readyPill.title = "Ready to register.";
+    } else {
+      readyDot.className = "dot bad";
+      readyText.textContent = "Not ready";
+      readyPill.title = why || "Not ready yet.";
+    }
+  }
+
+  function currentOrgDisplay(){
+    if (orgMode === "existing"){
+      return selectedOrg ? `${selectedOrg.name} (${selectedOrg.id})` : "—";
+    }
+    const name = newOrgName.value.trim();
+    return name ? `${name} (new)` : "—";
+  }
+
+  function normalizeOrgNameForId(name){
+    // make a safe-ish relative $id component (no spaces)
+    return name
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9.-]/g, "");
+  }
+
+  function validateSchemaName(name){
+    if (!name || !name.trim()) return "Schema name is required.";
+    if (/\s/.test(name)) return "Schema name must not contain spaces.";
+    if (!/^[A-Za-z0-9.-]+$/.test(name)) return "Only letters, numbers, dots, and dashes are allowed.";
+    return null;
+  }
+
+  function tryParseJson(){
+    const raw = schemaJson.value;
+    try {
+      const obj = JSON.parse(raw);
+      return { ok:true, obj };
+    } catch (e){
+      return { ok:false, err:e };
+    }
+  }
+
+  function computeId(orgName, schemaNameValue){
+    const orgPart = normalizeOrgNameForId(orgName || "");
+    const schPart = (schemaNameValue || "").trim();
+    return `${orgPart}-${schPart}`;
+  }
+
+  function renderCard({title, tone="neutral", html}){
+    const borderColor = tone === "success" ? "rgba(43,213,118,.35)"
+                    : tone === "error"   ? "rgba(255,90,122,.35)"
+                    : tone === "warn"    ? "rgba(255,191,74,.35)"
+                    : "var(--border)";
+    const bg = tone === "success" ? "rgba(43,213,118,.08)"
+            : tone === "error"   ? "rgba(255,90,122,.08)"
+            : tone === "warn"    ? "rgba(255,191,74,.08)"
+            : "rgba(255,255,255,.04)";
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.marginTop = "14px";
+    card.style.borderColor = borderColor;
+    card.style.background = bg;
+
+    card.innerHTML = `
+      <div class="cardHeader">
+        <h2>${escapeHtml(title)}</h2>
+      </div>
+      <div class="cardBody">${html}</div>
+    `;
+    return card;
+  }
+
+  function updateReady(){
+    // Conditions:
+    // - token saved
+    // - org selected OR (new org name entered)
+    // - schema name entered & valid
+    // - JSON parses
+    const tOk = !!token;
+    const orgOk = (orgMode === "existing") ? !!selectedOrg : !!newOrgName.value.trim();
+    const sn = schemaName.value.trim();
+    const snErr = validateSchemaName(sn);
+    const snOk = !snErr;
+    const jsonParsed = tryParseJson().ok;
+
+    let why = "";
+    if (!tOk) why = "Not ready until token is saved.";
+    else if (!orgOk) why = "Not ready until organization is selected (or new org name entered).";
+    else if (!snOk) why = snErr;
+    else if (!jsonParsed) why = "Not ready until JSON schema parses.";
+    const ready = tOk && orgOk && snOk && jsonParsed;
+
+    setReadyState(ready, why);
+    registerBtn.disabled = !ready;
+  }
+
+  // ====== Dropdown ======
+  function closeOrgMenu(){
+    orgMenu.classList.remove("open");
+    orgDropBtn.setAttribute("aria-expanded", "false");
+  }
+  function openOrgMenu(){
+    orgMenu.classList.add("open");
+    orgDropBtn.setAttribute("aria-expanded", "true");
+    orgSearch.focus();
+  }
+  function toggleOrgMenu(){
+    if (orgMenu.classList.contains("open")) closeOrgMenu();
+    else openOrgMenu();
+  }
+
+  function renderOrgList(filterText=""){
+    const ft = filterText.trim().toLowerCase();
+    const filtered = !ft ? allOrgs : allOrgs.filter(o =>
+      (o.name || "").toLowerCase().includes(ft) || String(o.id || "").toLowerCase().includes(ft)
+    );
+
+    orgCount.textContent = `${filtered.length} of ${allOrgs.length} organizations`;
+    orgList.innerHTML = "";
+
+    if (!filtered.length){
+      const empty = document.createElement("div");
+      empty.className = "opt";
+      empty.style.cursor = "default";
+      empty.innerHTML = `<div class="optName">No matches</div><div class="optId">Try a different search</div>`;
+      orgList.appendChild(empty);
+      return;
+    }
+
+    for (const org of filtered){
+      const row = document.createElement("div");
+      row.className = "opt";
+      row.innerHTML = `
+        <div class="optName">${escapeHtml(org.name ?? "(no name)")}</div>
+        <div class="optId">${escapeHtml(org.id ?? "")}</div>
+      `;
+      row.addEventListener("click", () => {
+        selectedOrg = { id: org.id, name: org.name };
+        createdOrgId = null;
+        createdOrgName = null;
+        orgDropLabel.innerHTML = `<b>${escapeHtml(org.name)}</b> <span style="color:rgba(232,236,255,.6);font-weight:650">(${escapeHtml(org.id)})</span>`;
+        orgPickMsg.innerHTML = `<span class="okText">Selected organization.</span>`;
+        closeOrgMenu();
+        updateReady();
+        updateIdWarning();
+      });
+      orgList.appendChild(row);
+    }
+  }
+
+  // ====== Load Orgs (pagination) ======
+  async function loadAllOrganizations(){
+    if (!token){
+      setOrgStatus("Waiting for token…", false);
+      return;
+    }
+    setOrgStatus("Loading organizations…", true);
+    allOrgs = [];
+    selectedOrg = null;
+    orgDropLabel.textContent = "Choose an organization…";
+    orgPickMsg.textContent = "";
+    renderOrgList("");
+
+    try{
+      let nextPageToken = null;
+      let pages = 0;
+
+      do {
+        const body = nextPageToken ? { nextPageToken } : {};
+        const resp = await apiFetch("/schema/organization/list", {
+          method: "POST",
+          body: JSON.stringify(body)
+        });
+
+        // We don’t assume exact response shape beyond "results/list + nextPageToken".
+        const items =
+          resp?.results ||
+          resp?.organizations ||
+          resp?.page ||
+          resp?.items ||
+          resp?.list ||
+          [];
+
+        if (Array.isArray(items)){
+          for (const it of items){
+            // Normalize expected properties to {id,name}
+            const id = it.id ?? it.organizationId ?? it.orgId ?? it.schemaOrganizationId;
+            const name = it.name ?? it.organizationName ?? it.orgName;
+            if (id != null && name != null) allOrgs.push({ id, name });
+            else if (it && typeof it === "object" && ("id" in it || "name" in it)){
+              allOrgs.push({ id: it.id, name: it.name });
+            }
+          }
+        }
+
+        nextPageToken = resp?.nextPageToken ?? resp?.nextToken ?? null;
+        pages++;
+        if (pages > 200) break; // safety
+      } while (nextPageToken);
+
+      // Sort by name
+      allOrgs.sort((a,b) => (a.name||"").localeCompare(b.name||""));
+
+      setOrgStatus(`Loaded ${allOrgs.length} orgs`, false);
+      renderOrgList(orgSearch.value);
+      updateReady();
+      updateIdWarning();
+    } catch (err){
+      setOrgStatus("Failed to load organizations", false);
+      outputArea.innerHTML = "";
+      outputArea.appendChild(renderCard({
+        title: "Organization load failed",
+        tone: "error",
+        html: renderHttpError(err)
+      }));
+    }
+  }
+
+  // ====== $id warning ======
+  function updateIdWarning(){
+    idWarnMsg.style.display = "none";
+    idWarnMsg.textContent = "";
+
+    const parsed = tryParseJson();
+    if (!parsed.ok) return;
+
+    const sn = schemaName.value.trim();
+    const snErr = validateSchemaName(sn);
+    if (snErr) return;
+
+    let orgNameForId = null;
+    if (orgMode === "existing"){
+      if (!selectedOrg) return;
+      orgNameForId = selectedOrg.name;
+    } else {
+      const n = newOrgName.value.trim();
+      if (!n) return;
+      orgNameForId = n;
+    }
+
+    const expectedId = computeId(orgNameForId, sn);
+    const existingId = parsed.obj?.["$id"];
+
+    if (existingId && String(existingId) !== expectedId){
+      idWarnMsg.style.display = "block";
+      idWarnMsg.innerHTML =
+        `Warning: existing <b>$id</b> does not match computed value.<br>` +
+        `Existing: <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;margin-top:6px;">${escapeHtml(existingId)}</span><br>` +
+        `Computed: <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;margin-top:6px;">${escapeHtml(expectedId)}</span>`;
+    }
+  }
+
+  // ====== Errors ======
+  function renderHttpError(err){
+    const status = err?.status != null ? `HTTP ${err.status} ${escapeHtml(err.statusText || "")}` : escapeHtml(err?.message || String(err));
+    const body = err?.bodyText != null ? escapeHtml(err.bodyText) : "(no body)";
+    return `
+      <div class="errorText" style="font-size:13px;font-weight:800;margin-bottom:8px">${status}</div>
+      <div class="mutedSmall" style="margin-bottom:8px">Response body (escaped):</div>
+      <div class="pre">${body}</div>
+      <div class="divider"></div>
+      <div class="mutedSmall" style="font-weight:800;margin-bottom:6px">Common reasons</div>
+      <ul class="mutedSmall" style="margin:0;padding-left:18px;line-height:1.5">
+        <li>Missing permission / not authorized for this organization</li>
+        <li>Organization already exists (when creating a new org)</li>
+        <li>Invalid schema JSON (parse or required fields)</li>
+        <li>Invalid <b>$id</b> (must be a relative URL; avoid spaces; keep it short)</li>
+      </ul>
+    `;
+  }
+
+  // ====== Async polling ======
+  async function pollAsync({ getPath, timeoutMs=60000, intervalMs=2000, onTick }){
+    const start = Date.now();
+    while (true){
+      const elapsed = Date.now() - start;
+      if (elapsed > timeoutMs){
+        const e = new Error("Timeout waiting for async job (~60s).");
+        e.isTimeout = true;
+        throw e;
+      }
+      const resp = await apiFetch(getPath, { method: "GET" });
+      onTick && onTick(resp);
+
+      // Try a few common completion patterns
+      const completed =
+        resp?.completed === true ||
+        resp?.complete === true ||
+        resp?.done === true ||
+        resp?.jobState?.toUpperCase?.() === "COMPLETE" ||
+        resp?.jobState?.toUpperCase?.() === "COMPLETED" ||
+        resp?.jobState?.toUpperCase?.() === "FAILED" ||
+        resp?.jobState?.toUpperCase?.() === "ERROR";
+
+      const failed =
+        resp?.failed === true ||
+        resp?.failure === true ||
+        resp?.error != null ||
+        resp?.jobState?.toUpperCase?.() === "FAILED" ||
+        resp?.jobState?.toUpperCase?.() === "ERROR";
+
+      if (completed){
+        if (failed){
+          const e = new Error("Async job failed.");
+          e.asyncResponse = resp;
+          throw e;
+        }
+        return resp;
+      }
+
+      await new Promise(r => setTimeout(r, intervalMs));
+    }
+  }
+
+  // ====== Modal ======
+  function openConfirmModal({ orgLabel, schemaNameValue, idToUse, jsonSize, idMismatchWarning }){
+    confOrg.textContent = orgLabel;
+    confSchemaName.textContent = schemaNameValue;
+    confId.textContent = idToUse;
+    confSize.textContent = `${jsonSize} characters`;
+    if (idMismatchWarning){
+      confIdWarning.style.display = "block";
+      confIdWarning.innerHTML = idMismatchWarning;
+    } else {
+      confIdWarning.style.display = "none";
+      confIdWarning.textContent = "";
+    }
+    confirmBackdrop.classList.add("open");
+  }
+  function closeConfirmModal(){
+    confirmBackdrop.classList.remove("open");
+  }
+
+  // ====== Register flow ======
+  async function registerSchema(){
+    outputArea.innerHTML = "";
+
+    const sn = schemaName.value.trim();
+    const snErr = validateSchemaName(sn);
+    if (snErr){
+      schemaNameMsg.innerHTML = `<span class="errorText">${escapeHtml(snErr)}</span>`;
+      updateReady();
+      return;
+    }
+
+    const parsed = tryParseJson();
+    if (!parsed.ok){
+      jsonMsg.innerHTML = `<span class="errorText">Invalid JSON: ${escapeHtml(parsed.err.message)}</span>`;
+      updateReady();
+      return;
+    }
+
+    const jsonObj = parsed.obj;
+    const jsonText = schemaJson.value;
+    const jsonSize = jsonText.length;
+
+    let orgNameForId, orgLabel;
+    if (orgMode === "existing"){
+      if (!selectedOrg){
+        orgPickMsg.innerHTML = `<span class="errorText">Please select an organization.</span>`;
+        updateReady();
+        return;
+      }
+      orgNameForId = selectedOrg.name;
+      orgLabel = `${selectedOrg.name} (${selectedOrg.id})`;
+    } else {
+      const name = newOrgName.value.trim();
+      if (!name){
+        newOrgMsg.innerHTML = `<span class="errorText">New organization name is required.</span>`;
+        updateReady();
+        return;
+      }
+      orgNameForId = name;
+      orgLabel = `${name} (new)`;
+    }
+
+    const expectedId = computeId(orgNameForId, sn);
+    const existingId = jsonObj["$id"];
+    const willUseId = existingId ? String(existingId) : expectedId;
+
+    let mismatchWarning = "";
+    if (existingId && String(existingId) !== expectedId){
+      mismatchWarning =
+        `Existing <b>$id</b> will be used (not overwritten).<br>` +
+        `Computed: <span class="pre" style="display:inline-block;padding:6px 8px;border-radius:10px;margin-top:6px;">${escapeHtml(expectedId)}</span>`;
+    }
+
+    // Open modal; actual submission happens on confirm
+    openConfirmModal({
+      orgLabel,
+      schemaNameValue: sn,
+      idToUse: willUseId,
+      jsonSize,
+      idMismatchWarning: mismatchWarning
+    });
+  }
+
+  async function doSubmitAfterConfirm(){
+    closeConfirmModal();
+    registerBtn.disabled = true;
+    setJobStatus("Submitting…", true);
+    registerMsg.textContent = "";
+
+    // Parse schema, inject $id if missing
+    const parsed = tryParseJson();
+    const sn = schemaName.value.trim();
+
+    let orgNameForId = null;
+    let orgIdForLater = null;
+
+    try{
+      // Create org if needed
+      if (orgMode === "new"){
+        const name = newOrgName.value.trim();
+
+        // Create only if we haven't already created this exact org name in this session
+        if (!createdOrgId || createdOrgName !== name){
+          setJobStatus("Creating organization…", true);
+          const orgResp = await apiFetch("/schema/organization", {
+            method: "POST",
+            body: JSON.stringify({ name })
+          });
+
+          // Normalize returned org id
+          const newId =
+            orgResp?.id ?? orgResp?.organizationId ?? orgResp?.orgId ?? orgResp?.schemaOrganizationId;
+
+          if (!newId){
+            throw new Error("Organization created but no organization id returned (unexpected response shape).");
+          }
+          createdOrgId = newId;
+          createdOrgName = name;
+        }
+
+        orgIdForLater = createdOrgId;
+        orgNameForId = createdOrgName;
+      } else {
+        orgIdForLater = selectedOrg.id;
+        orgNameForId = selectedOrg.name;
+      }
+
+      const jsonObj = parsed.obj;
+      const expectedId = computeId(orgNameForId, sn);
+
+      if (!jsonObj["$id"]){
+        jsonObj["$id"] = expectedId; // critical: ensure relative $id exists
+      }
+
+      // Submit async create
+      setJobStatus("Submitting…", true);
+      const startResp = await apiFetch("/schema/type/create/async/start", {
+        method: "POST",
+        body: JSON.stringify(jsonObj)
+      });
+
+      const asyncToken = startResp?.asyncToken ?? startResp?.token ?? startResp?.id ?? null;
+      if (!asyncToken){
+        throw new Error("No asyncToken returned from create/async/start (unexpected response shape).");
+      }
+
+      setJobStatus("Waiting for Synapse…", true);
+
+      const createResult = await pollAsync({
+        getPath: `/schema/type/create/async/get/${encodeURIComponent(asyncToken)}`,
+        timeoutMs: 60000,
+        intervalMs: 2000,
+        onTick: () => {}
+      });
+
+      setJobStatus("Completed", false);
+
+      // Render success card
+      const usedId = jsonObj["$id"];
+      const returnedId =
+        createResult?.id ??
+        createResult?.schemaId ??
+        createResult?.registeredSchemaId ??
+        createResult?.result?.id ??
+        usedId;
+
+      const getUrl = `${REPO_ORIGIN}/repo/v1/schema/type/registered/${encodeURIComponent(returnedId)}`;
+
+      const successHtml = `
+        <div class="okText" style="font-size:13px;font-weight:900;margin-bottom:10px">Schema registered successfully.</div>
+        <div class="kv" style="grid-template-columns:140px 1fr">
+          <div class="k">Organization</div><div class="v">${escapeHtml(orgNameForId)} (${escapeHtml(orgIdForLater)})</div>
+          <div class="k">Schema name</div><div class="v">${escapeHtml(sn)}</div>
+          <div class="k">$id</div><div class="v"><span class="pre" style="display:inline-block">${escapeHtml(usedId)}</span></div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="mutedSmall" style="font-weight:900;margin-bottom:8px">Returned schema info</div>
+        <div class="pre">${escapeHtml(JSON.stringify(createResult, null, 2))}</div>
+
+        <div class="divider"></div>
+        <div class="mutedSmall" style="font-weight:900;margin-bottom:8px">Links</div>
+        <div class="row" style="margin-bottom:10px">
+          <div class="mutedSmall">GET schema:</div>
+          <a href="${escapeHtml(getUrl)}" target="_blank" rel="noopener">
+            ${escapeHtml(getUrl)}
+          </a>
+        </div>
+        <div class="row">
+          <button class="btn" type="button" id="openSchemaBtn">Open schema in browser</button>
+        </div>
+      `;
+
+      outputArea.innerHTML = "";
+      outputArea.appendChild(renderCard({ title:"Success", tone:"success", html: successHtml }));
+      setTimeout(() => {
+        const btn = document.getElementById("openSchemaBtn");
+        if (btn) btn.addEventListener("click", () => window.open(getUrl, "_blank", "noopener"));
+      }, 0);
+
+      // Optional compile validation schema
+      if (compileAfter.checked){
+        setJobStatus("Compiling validation schema…", true);
+
+        const vStart = await apiFetch("/schema/type/validation/async/start", {
+          method: "POST",
+          body: JSON.stringify({ schemaId: returnedId })
+        });
+
+        const vToken = vStart?.asyncToken ?? vStart?.token ?? vStart?.id ?? null;
+        if (!vToken){
+          throw new Error("No asyncToken returned from validation/async/start (unexpected response shape).");
+        }
+
+        const vResult = await pollAsync({
+          getPath: `/schema/type/validation/async/get/${encodeURIComponent(vToken)}`,
+          timeoutMs: 60000,
+          intervalMs: 2000
+        });
+
+        setJobStatus("Completed (validation compiled)", false);
+
+        outputArea.appendChild(renderCard({
+          title: "Validation compile result",
+          tone: "success",
+          html: `<div class="pre">${escapeHtml(JSON.stringify(vResult, null, 2))}</div>`
+        }));
+      }
+
+    } catch (err){
+      setJobStatus(err?.isTimeout ? "Timed out" : "Failed", false);
+
+      outputArea.innerHTML = "";
+      outputArea.appendChild(renderCard({
+        title: "Error",
+        tone: "error",
+        html: err?.asyncResponse
+          ? `<div class="errorText" style="font-size:13px;font-weight:900;margin-bottom:8px">${escapeHtml(err.message)}</div>
+             <div class="mutedSmall" style="margin-bottom:8px">Async response (escaped):</div>
+             <div class="pre">${escapeHtml(JSON.stringify(err.asyncResponse, null, 2))}</div>
+             <div class="divider"></div>
+             <div class="mutedSmall" style="font-weight:800;margin-bottom:6px">Common reasons</div>
+             <ul class="mutedSmall" style="margin:0;padding-left:18px;line-height:1.5">
+               <li>Missing permission / not authorized for this organization</li>
+               <li>Invalid schema JSON or missing required schema fields</li>
+               <li>Invalid <b>$id</b> (must be relative; avoid spaces)</li>
+             </ul>`
+          : renderHttpError(err)
+      }));
+    } finally {
+      updateReady();
+      setSpinner(jobSpinner, false);
+    }
+  }
+
+  // ====== Events ======
+  saveTokenBtn.addEventListener("click", async () => {
+    const raw = normalizeToken(tokenInput.value);
+    if (!raw){
+      token = null;
+      sessionStorage.removeItem(TOKEN_KEY);
+      tokenMsg.innerHTML = `<span class="errorText">Token is blank.</span>`;
+      setOrgStatus("Waiting for token…", false);
+      updateReady();
+      return;
+    }
+    token = raw;
+    sessionStorage.setItem(TOKEN_KEY, token);
+    tokenInput.value = ""; // don’t keep token visible in the input
+    tokenMsg.innerHTML = `<span class="okText">Token saved to sessionStorage.</span>`;
+    await loadAllOrganizations();
+    updateReady();
+  });
+
+  clearTokenBtn.addEventListener("click", () => {
+    token = null;
+    sessionStorage.removeItem(TOKEN_KEY);
+    tokenMsg.innerHTML = `<span class="warnText">Token cleared.</span>`;
+    allOrgs = [];
+    selectedOrg = null;
+    orgDropLabel.textContent = "Choose an organization…";
+    orgPickMsg.textContent = "";
+    setOrgStatus("Waiting for token…", false);
+    renderOrgList("");
+    updateReady();
+    updateIdWarning();
+  });
+
+  reloadOrgsBtn.addEventListener("click", loadAllOrganizations);
+
+  modeExistingBtn.addEventListener("click", () => {
+    orgMode = "existing";
+    modeExistingBtn.classList.add("active");
+    modeNewBtn.classList.remove("active");
+    modeExistingBtn.setAttribute("aria-selected", "true");
+    modeNewBtn.setAttribute("aria-selected", "false");
+    existingOrgBox.style.display = "";
+    newOrgBox.style.display = "none";
+    newOrgMsg.textContent = "";
+    updateReady();
+    updateIdWarning();
+  });
+
+  modeNewBtn.addEventListener("click", () => {
+    orgMode = "new";
+    modeNewBtn.classList.add("active");
+    modeExistingBtn.classList.remove("active");
+    modeNewBtn.setAttribute("aria-selected", "true");
+    modeExistingBtn.setAttribute("aria-selected", "false");
+    existingOrgBox.style.display = "none";
+    newOrgBox.style.display = "";
+    orgPickMsg.textContent = "";
+    updateReady();
+    updateIdWarning();
+  });
+
+  orgDropBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleOrgMenu();
+  });
+
+  orgSearch.addEventListener("input", () => renderOrgList(orgSearch.value));
+
+  document.addEventListener("click", (e) => {
+    if (!orgMenu.contains(e.target) && !orgDropBtn.contains(e.target)){
+      closeOrgMenu();
+    }
+  });
+
+  newOrgName.addEventListener("input", () => {
+    newOrgMsg.textContent = "";
+    updateReady();
+    updateIdWarning();
+  });
+
+  schemaName.addEventListener("input", () => {
+    const sn = schemaName.value.trim();
+    const err = validateSchemaName(sn);
+    schemaNameMsg.innerHTML = err
+      ? `<span class="errorText">${escapeHtml(err)}</span>`
+      : (sn ? `<span class="okText">Looks good.</span>` : "");
+    updateReady();
+    updateIdWarning();
+  });
+
+  schemaJson.addEventListener("input", () => {
+    jsonMsg.textContent = "";
+    updateReady();
+    updateIdWarning();
+  });
+
+  formatBtn.addEventListener("click", () => {
+    const parsed = tryParseJson();
+    if (!parsed.ok){
+      jsonMsg.innerHTML = `<span class="errorText">Invalid JSON: ${escapeHtml(parsed.err.message)}</span>`;
+      updateReady();
+      return;
+    }
+    schemaJson.value = JSON.stringify(parsed.obj, null, 2);
+    jsonMsg.innerHTML = `<span class="okText">Formatted.</span>`;
+    updateReady();
+    updateIdWarning();
+  });
+
+  validateBtn.addEventListener("click", () => {
+    const parsed = tryParseJson();
+    if (!parsed.ok){
+      jsonMsg.innerHTML = `<span class="errorText">Invalid JSON: ${escapeHtml(parsed.err.message)}</span>`;
+    } else {
+      jsonMsg.innerHTML = `<span class="okText">Valid JSON.</span>`;
+    }
+    updateReady();
+    updateIdWarning();
+  });
+
+  registerBtn.addEventListener("click", registerSchema);
+
+  closeModalBtn.addEventListener("click", closeConfirmModal);
+  cancelModalBtn.addEventListener("click", closeConfirmModal);
+  confirmRegisterBtn.addEventListener("click", doSubmitAfterConfirm);
+
+  // ESC closes modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeConfirmModal();
+  });
+
+  // ====== Init ======
+  function init(){
+    // Load token from sessionStorage if present
+    const saved = sessionStorage.getItem(TOKEN_KEY);
+    if (saved){
+      token = saved;
+      tokenMsg.innerHTML = `<span class="okText">Token loaded from sessionStorage.</span>`;
+      setOrgStatus("Loading organizations…", true);
+      loadAllOrganizations();
+    } else {
+      setOrgStatus("Waiting for token…", false);
+    }
+
+    // Default JSON stub if empty
+    if (!schemaJson.value.trim()){
+      schemaJson.value = JSON.stringify({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {}
+      }, null, 2);
+    }
+
+    renderOrgList("");
+    updateReady();
+    updateIdWarning();
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>
