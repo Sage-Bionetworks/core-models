@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,7 +9,6 @@
     :root {
       --bg: #0f1115;
       --panel: rgba(255, 255, 255, 0.03);
-      --border: rgba(255, 255, 255, 0.06);
 
       --text: rgba(244, 242, 236, 0.92);
       --muted: rgba(244, 242, 236, 0.66);
@@ -26,11 +24,17 @@
       --good: #86efac;
       --bad: #fb7185;
       --warn: #fbbf24;
+
+      /* Light dropdown palette (always readable) */
+      --ddBg: #ffffff;
+      --ddText: #111827;
+      --ddMuted: rgba(17, 24, 39, 0.62);
+      --ddBorder: rgba(17, 24, 39, 0.16);
+      --ddHover: rgba(167, 139, 250, 0.14);
+      --ddActive: rgba(167, 139, 250, 0.22);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -39,15 +43,8 @@
       color: var(--text);
     }
 
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: var(--linkHover);
-      text-decoration: underline;
-    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { color: var(--linkHover); text-decoration: underline; }
 
     .container {
       max-width: 1180px;
@@ -70,11 +67,7 @@
       font-weight: 650;
       font-size: 14px;
     }
-
-    .navLink:hover {
-      color: rgba(244, 242, 236, 0.92);
-      text-decoration: none;
-    }
+    .navLink:hover { color: rgba(244, 242, 236, 0.92); text-decoration: none; }
 
     h1 {
       margin: 0 0 8px;
@@ -101,16 +94,9 @@
       padding: 18px 18px 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+    .panelHeader h2 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
 
-    .panelHeader h2 {
-      margin: 0;
-      font-size: 16px;
-      letter-spacing: -0.01em;
-    }
-
-    .panelBody {
-      padding: 16px 16px 18px;
-    }
+    .panelBody { padding: 16px 16px 18px; }
 
     .row {
       display: flex;
@@ -131,37 +117,10 @@
       outline: none;
     }
 
-    .select {
-      flex: 1;
-      min-width: 260px;
-
-      /* Force readable dropdown */
-      background: #ffffff;
-      color: #111111;
-
-      border: 1px solid rgba(0, 0, 0, 0.18);
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .select option {
-      background: #ffffff;
-      color: #111111;
-    }
-
-
     .input:focus {
       border-color: rgba(167, 139, 250, 0.50);
       box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
     }
-
-    .select:focus {
-      border-color: rgba(167, 139, 250, 0.65);
-      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
-    }
-
 
     .btn {
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -175,48 +134,27 @@
       transition: all 140ms ease;
       white-space: nowrap;
     }
-
-    .btn:hover {
-      background: rgba(167, 139, 250, 0.16);
-      transform: translateY(-1px);
-    }
+    .btn:hover { background: rgba(167, 139, 250, 0.16); transform: translateY(-1px); }
 
     .btn.secondary {
       background: rgba(255, 255, 255, 0.02);
       color: rgba(244, 242, 236, 0.80);
     }
-
-    .btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.04);
-      transform: translateY(-1px);
-    }
+    .btn.secondary:hover { background: rgba(255, 255, 255, 0.04); transform: translateY(-1px); }
 
     .status {
       margin-top: 14px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
+      word-break: break-word;
     }
 
-    .error {
-      color: rgba(251, 113, 133, 0.95);
-      font-weight: 700;
-    }
+    .error { color: rgba(251, 113, 133, 0.95); font-weight: 700; }
+    .ok { color: rgba(134, 239, 172, 0.95); font-weight: 700; }
+    .warn { color: rgba(251, 191, 36, 0.95); font-weight: 700; }
 
-    .ok {
-      color: rgba(134, 239, 172, 0.95);
-      font-weight: 700;
-    }
-
-    .warn {
-      color: rgba(251, 191, 36, 0.95);
-      font-weight: 700;
-    }
-
-    .tiny {
-      color: var(--muted2);
-      font-size: 12px;
-    }
+    .tiny { color: var(--muted2); font-size: 12px; }
 
     .fieldGrid {
       display: grid;
@@ -224,11 +162,8 @@
       gap: 12px;
       margin-top: 12px;
     }
-
     @media (max-width: 900px) {
-      .fieldGrid {
-        grid-template-columns: 1fr;
-      }
+      .fieldGrid { grid-template-columns: 1fr; }
     }
 
     .field {
@@ -238,18 +173,7 @@
       padding: 12px;
     }
 
-    .label {
-      font-size: 12px;
-      color: var(--muted2);
-      margin-bottom: 6px;
-    }
-
-    .value {
-      font-size: 14px;
-      color: rgba(244, 242, 236, 0.90);
-      word-break: break-word;
-      line-height: 1.45;
-    }
+    .label { font-size: 12px; color: var(--muted2); margin-bottom: 6px; }
 
     .pill {
       display: inline-flex;
@@ -277,19 +201,17 @@
     .toggle {
       display: inline-flex;
       gap: 10px;
-      align-items: center;
+      align-items: flex-start;
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(255, 255, 255, 0.02);
       cursor: pointer;
       user-select: none;
+      max-width: 520px;
     }
 
-    .toggle input {
-      width: 18px;
-      height: 18px;
-    }
+    .toggle input { width: 18px; height: 18px; margin-top: 2px; }
 
     /* Modal */
     .modalBackdrop {
@@ -317,18 +239,14 @@
       padding: 16px 16px 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
-
-    .modalHeader h3 {
-      margin: 0;
-      font-size: 15px;
-      letter-spacing: -0.01em;
-    }
+    .modalHeader h3 { margin: 0; font-size: 15px; letter-spacing: -0.01em; }
 
     .modalBody {
       padding: 14px 16px;
       color: var(--muted);
       line-height: 1.45;
       font-size: 13px;
+      word-break: break-word;
     }
 
     .modalFooter {
@@ -346,6 +264,116 @@
       padding: 2px 6px;
       border-radius: 8px;
       color: rgba(244, 242, 236, 0.85);
+    }
+
+    /* -------------------------
+       Custom dropdown (readable)
+       ------------------------- */
+    .ddWrap {
+      position: relative;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .ddTopRow {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .ddInput {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--ddBorder);
+      background: var(--ddBg);
+      color: var(--ddText);
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .ddInput:focus {
+      border-color: rgba(167, 139, 250, 0.75);
+      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18);
+    }
+
+    .ddClear {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      color: rgba(244,242,236,0.78);
+      border-radius: 14px;
+      padding: 12px 12px;
+      cursor: pointer;
+      font-weight: 900;
+      line-height: 1;
+      transition: all 140ms ease;
+    }
+    .ddClear:hover {
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-1px);
+    }
+
+    .ddList {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      max-height: 340px;
+      overflow: auto;
+      border-radius: 16px;
+      border: 1px solid var(--ddBorder);
+      background: var(--ddBg);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+      display: none;
+      z-index: 50;
+      padding: 6px;
+    }
+
+    .ddItem {
+      padding: 10px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      outline: none;
+    }
+
+    .ddItem:hover { background: var(--ddHover); }
+    .ddItem.active { background: var(--ddActive); }
+
+    .ddItemTitle {
+      font-weight: 850;
+      color: var(--ddText);
+      line-height: 1.25;
+      font-size: 13px;
+    }
+
+    .ddItemMeta {
+      color: var(--ddMuted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .ddHintRow {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ddHint {
+      font-size: 12px;
+      color: rgba(244, 242, 236, 0.52);
+    }
+
+    .ddCount {
+      font-size: 12px;
+      color: rgba(244, 242, 236, 0.52);
     }
   </style>
 </head>
@@ -377,18 +405,33 @@
           <button id="saveTokenBtn" class="btn secondary">Save Token</button>
           <button id="clearTokenBtn" class="btn secondary">Clear</button>
         </div>
+
         <div class="tiny" style="margin-top:8px;">
-          Tip: this token never leaves your browser except as the Authorization header sent to Synapse.
+          Tip: you can paste either the raw token or "Bearer &lt;token&gt;" — the page strips Bearer automatically.
         </div>
 
         <div class="fieldGrid">
           <!-- Schema -->
           <div class="field">
             <div class="label">Schema Version</div>
-            <input id="schemaSearch" class="input" placeholder="Search schemas (org, schema, version)..." />
-            <select id="schemaSelect" class="select" style="margin-top:10px;">
-              <option value="">Loading schemas…</option>
-            </select>
+
+            <input id="schemaSearch" class="input"
+              placeholder="Search schemas (org, schema, version)… (press / to jump here)" />
+
+            <div class="ddWrap">
+              <div class="ddTopRow">
+                <input id="schemaPicker" class="ddInput" placeholder="Click to pick a schema version…" />
+                <button id="schemaClearBtn" class="ddClear" title="Clear selection">×</button>
+              </div>
+
+              <div id="schemaList" class="ddList"></div>
+
+              <div class="ddHintRow">
+                <div class="ddHint">Keyboard: ↑ ↓ Enter • Esc closes</div>
+                <div id="schemaCount" class="ddCount"></div>
+              </div>
+            </div>
+
             <div id="schemaMeta" class="tiny" style="margin-top:10px;"></div>
           </div>
 
@@ -396,15 +439,25 @@
           <div class="field">
             <div class="label">Synapse Entity</div>
             <input id="synIdInput" class="input" placeholder="syn12345678" />
+
             <div class="toggleRow">
               <label class="toggle">
                 <input id="derivedToggle" type="checkbox" checked />
-                Enable derived annotations
+                <div>
+                  <div style="font-weight:850; color: rgba(244,242,236,0.90);">
+                    Enable derived annotations
+                  </div>
+                  <div style="font-size:12px; color: rgba(244,242,236,0.55); line-height:1.35; margin-top:2px;">
+                    Creates searchable Synapse annotations from schema metadata (recommended for views + filtering).
+                  </div>
+                </div>
               </label>
+
               <div class="pill" id="readyPill">Not ready</div>
             </div>
+
             <div class="tiny" style="margin-top:10px;">
-              Binding requires permissions on the entity.
+              Binding requires edit permissions on the entity.
             </div>
           </div>
         </div>
@@ -443,7 +496,10 @@
     const clearTokenBtn = document.getElementById("clearTokenBtn");
 
     const schemaSearch = document.getElementById("schemaSearch");
-    const schemaSelect = document.getElementById("schemaSelect");
+    const schemaPicker = document.getElementById("schemaPicker");
+    const schemaClearBtn = document.getElementById("schemaClearBtn");
+    const schemaList = document.getElementById("schemaList");
+    const schemaCount = document.getElementById("schemaCount");
     const schemaMeta = document.getElementById("schemaMeta");
 
     const synIdInput = document.getElementById("synIdInput");
@@ -460,6 +516,12 @@
 
     let allSchemas = [];
     let filteredSchemas = [];
+    let selectedSchemaId = "";
+
+    const MAX_RESULTS = 300;
+
+    // Keyboard nav
+    let activeIndex = -1;
 
     function setStatus(text, kind = "") {
       statusEl.className = "status " + kind;
@@ -491,8 +553,6 @@
     }
 
     function schemaIdForBinding(s) {
-      // We bind a specific version, as requested:
-      // ORGNAME-SCHEMANAME-SEMVER
       return `${s.organization_name}-${s.schema_name}-${s.semantic_version}`;
     }
 
@@ -506,7 +566,7 @@
 
     function updateReadyPill() {
       const tokenOk = !!getToken();
-      const schemaOk = !!schemaSelect.value;
+      const schemaOk = !!selectedSchemaId;
       const synOk = isValidSynId(synIdInput.value.trim());
 
       if (tokenOk && schemaOk && synOk) {
@@ -522,32 +582,15 @@
       }
     }
 
-    function renderSchemaDropdown(list) {
-      schemaSelect.innerHTML = "";
-
-      const placeholder = document.createElement("option");
-      placeholder.value = "";
-      placeholder.textContent = "Select a schema version…";
-      schemaSelect.appendChild(placeholder);
-
-      for (const s of list) {
-        const opt = document.createElement("option");
-        opt.value = schemaIdForBinding(s);
-        opt.textContent = schemaDisplayName(s);
-        schemaSelect.appendChild(opt);
-      }
-    }
-
     function getSelectedSchemaObj() {
-      const val = schemaSelect.value;
-      if (!val) return null;
-      return allSchemas.find(s => schemaIdForBinding(s) === val) || null;
+      if (!selectedSchemaId) return null;
+      return allSchemas.find(s => schemaIdForBinding(s) === selectedSchemaId) || null;
     }
 
     function updateSchemaMeta() {
       const s = getSelectedSchemaObj();
       if (!s) {
-        schemaMeta.textContent = "";
+        schemaMeta.innerHTML = `<span class="tiny">No schema selected.</span>`;
         return;
       }
 
@@ -560,12 +603,113 @@
       `;
     }
 
+    function closeSchemaList() {
+      schemaList.style.display = "none";
+      activeIndex = -1;
+      rerenderActiveHighlight();
+    }
+
+    function openSchemaList() {
+      schemaList.style.display = "block";
+    }
+
+    function rerenderActiveHighlight() {
+      const items = schemaList.querySelectorAll(".ddItem");
+      items.forEach((el, idx) => {
+        if (idx === activeIndex) el.classList.add("active");
+        else el.classList.remove("active");
+      });
+    }
+
+    function scrollActiveIntoView() {
+      const items = schemaList.querySelectorAll(".ddItem");
+      if (activeIndex < 0 || activeIndex >= items.length) return;
+      items[activeIndex].scrollIntoView({ block: "nearest" });
+    }
+
+    function setSchemaCount(totalHits) {
+      if (!allSchemas.length) {
+        schemaCount.textContent = "";
+        return;
+      }
+
+      const shown = Math.min(filteredSchemas.length, MAX_RESULTS);
+      const total = allSchemas.length.toLocaleString();
+      const hits = totalHits.toLocaleString();
+
+      if (schemaSearch.value.trim()) {
+        schemaCount.textContent = `Showing ${shown} of ${hits} matches (of ${total})`;
+      } else {
+        schemaCount.textContent = `Showing ${shown} of ${total}`;
+      }
+    }
+
+    function renderSchemaList(list) {
+      schemaList.innerHTML = "";
+      activeIndex = -1;
+
+      if (!list.length) {
+        const empty = document.createElement("div");
+        empty.className = "ddItem";
+        empty.innerHTML = `
+          <div class="ddItemTitle">No matches</div>
+          <div class="ddItemMeta">Try a different search</div>
+        `;
+        schemaList.appendChild(empty);
+        return;
+      }
+
+      for (const s of list.slice(0, MAX_RESULTS)) {
+        const id = schemaIdForBinding(s);
+
+        const item = document.createElement("div");
+        item.className = "ddItem";
+        item.dataset.schemaId = id;
+
+        item.innerHTML = `
+          <div class="ddItemTitle">${escapeHtml(schemaDisplayName(s))}</div>
+          <div class="ddItemMeta">${escapeHtml(id)}</div>
+        `;
+
+        item.addEventListener("mouseenter", () => {
+          const idx = [...schemaList.querySelectorAll(".ddItem")].indexOf(item);
+          activeIndex = idx;
+          rerenderActiveHighlight();
+        });
+
+        item.addEventListener("click", () => {
+          selectSchemaById(id);
+        });
+
+        schemaList.appendChild(item);
+      }
+    }
+
+    function selectSchemaById(id) {
+      const s = allSchemas.find(x => schemaIdForBinding(x) === id);
+      if (!s) return;
+
+      selectedSchemaId = id;
+      schemaPicker.value = schemaDisplayName(s);
+      closeSchemaList();
+      updateSchemaMeta();
+      updateReadyPill();
+    }
+
+    function clearSchemaSelection() {
+      selectedSchemaId = "";
+      schemaPicker.value = "";
+      updateSchemaMeta();
+      updateReadyPill();
+    }
+
     function applySchemaFilter() {
       const q = normalize(schemaSearch.value).toLowerCase();
 
       if (!q) {
-        filteredSchemas = allSchemas.slice(0, 500);
-        renderSchemaDropdown(filteredSchemas);
+        filteredSchemas = allSchemas.slice(0, MAX_RESULTS);
+        renderSchemaList(filteredSchemas);
+        setSchemaCount(allSchemas.length);
         return;
       }
 
@@ -574,13 +718,12 @@
         return hay.includes(q);
       });
 
-      filteredSchemas = hits.slice(0, 500);
-      renderSchemaDropdown(filteredSchemas);
+      filteredSchemas = hits.slice(0, MAX_RESULTS);
+      renderSchemaList(filteredSchemas);
+      setSchemaCount(hits.length);
     }
 
     function dedupeLatestPerVersion(rows) {
-      // data.json may include duplicates (multiple version entries across orgs/schemas)
-      // We want unique by org+schema+semantic_version
       const seen = new Set();
       const out = [];
 
@@ -591,7 +734,6 @@
         out.push(r);
       }
 
-      // Sort by org, schema, then version (string compare)
       out.sort((a, b) => {
         const A = `${a.organization_name} ${a.schema_name} ${a.semantic_version}`;
         const B = `${b.organization_name} ${b.schema_name} ${b.semantic_version}`;
@@ -607,7 +749,6 @@
       const resp = await fetch("./data.json");
       if (!resp.ok) {
         setStatus("Could not load ./data.json. Did you generate it?", "error");
-        schemaSelect.innerHTML = `<option value="">No data.json found</option>`;
         return;
       }
 
@@ -616,9 +757,12 @@
 
       setStatus(`Loaded ${allSchemas.length.toLocaleString()} schema versions from data.json`, "ok");
 
-      // Show only first 500 until search narrows it
-      filteredSchemas = allSchemas.slice(0, 500);
-      renderSchemaDropdown(filteredSchemas);
+      filteredSchemas = allSchemas.slice(0, MAX_RESULTS);
+      renderSchemaList(filteredSchemas);
+      setSchemaCount(allSchemas.length);
+
+      updateSchemaMeta();
+      updateReadyPill();
     }
 
     function openModal(html) {
@@ -653,6 +797,13 @@
 
       const bindingId = schemaIdForBinding(schemaObj);
 
+      // IMPORTANT FIX:
+      // Synapse requires the request field to be literally "schema$id"
+      const payload = {
+        "schema$id": bindingId,
+        enableDerivedAnnotations: enableDerivedAnnotations
+      };
+
       const confirmHtml = `
         You are about to bind:
         <div style="margin-top:10px;">
@@ -663,11 +814,14 @@
         <div style="margin-top:12px;" class="warn">
           This will modify the entity in Synapse.
         </div>
+        <div style="margin-top:12px;" class="tiny">
+          Payload:
+          <div style="margin-top:6px;"><code>${escapeHtml(JSON.stringify(payload))}</code></div>
+        </div>
       `;
 
       openModal(confirmHtml);
 
-      // Wait for confirm click
       return new Promise((resolve) => {
         const onCancel = () => {
           cancelBtn.removeEventListener("click", onCancel);
@@ -684,15 +838,6 @@
           setStatus("Binding schema…");
 
           try {
-            // BindSchemaToEntityRequest
-            // According to the OpenAPI spec, this includes:
-            // - schemaId
-            // - enableDerivedAnnotations
-            const payload = {
-              schemaId: bindingId,
-              enableDerivedAnnotations: enableDerivedAnnotations
-            };
-
             const resp = await fetch(`${SYNAPSE_REPO}/entity/${synId}/schema/binding`, {
               method: "PUT",
               headers: {
@@ -711,12 +856,6 @@
 
             const result = await resp.json();
 
-            setStatus(
-              `Success! Schema bound to ${synId}.`,
-              "ok"
-            );
-
-            // Extra details in status
             const schemaUrl = schemaUrlForRegistered(schemaObj);
             const entityLink = entityUrl(synId);
 
@@ -757,21 +896,16 @@
     }
 
     // --------------------
-    // Event handlers
+    // Events
     // --------------------
     saveTokenBtn.addEventListener("click", () => {
       const raw = tokenInput.value.trim();
-
       if (!raw) {
         setStatus("Paste a token first.", "error");
         return;
       }
 
-      // Allow either:
-      // - raw token
-      // - "Bearer <token>"
       const token = raw.startsWith("Bearer ") ? raw.replace(/^Bearer\s+/i, "") : raw;
-
       setToken(token);
       tokenInput.value = "";
       setStatus("Token saved for this session.", "ok");
@@ -784,24 +918,80 @@
       updateReadyPill();
     });
 
+    schemaClearBtn.addEventListener("click", () => {
+      clearSchemaSelection();
+      schemaSearch.focus();
+    });
+
     schemaSearch.addEventListener("input", () => {
       applySchemaFilter();
-      updateSchemaMeta();
-      updateReadyPill();
+      openSchemaList();
     });
 
-    schemaSelect.addEventListener("change", () => {
-      updateSchemaMeta();
-      updateReadyPill();
+    schemaPicker.addEventListener("focus", () => {
+      applySchemaFilter();
+      openSchemaList();
     });
 
-    synIdInput.addEventListener("input", () => {
-      updateReadyPill();
+    schemaPicker.addEventListener("click", () => {
+      applySchemaFilter();
+      openSchemaList();
     });
 
+    schemaPicker.addEventListener("keydown", (e) => {
+      if (schemaList.style.display !== "block") openSchemaList();
+
+      const items = schemaList.querySelectorAll(".ddItem");
+      if (!items.length) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+        rerenderActiveHighlight();
+        scrollActiveIntoView();
+      }
+
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        rerenderActiveHighlight();
+        scrollActiveIntoView();
+      }
+
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (activeIndex >= 0 && activeIndex < items.length) {
+          const id = items[activeIndex].dataset.schemaId;
+          if (id) selectSchemaById(id);
+        }
+      }
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeSchemaList();
+      }
+    });
+
+    // Global hotkey: "/" jumps to schema search
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement !== schemaSearch) {
+        e.preventDefault();
+        schemaSearch.focus();
+      }
+    });
+
+    // Close dropdown if click outside
+    document.addEventListener("click", (e) => {
+      if (!schemaList.contains(e.target) &&
+          e.target !== schemaPicker &&
+          e.target !== schemaSearch) {
+        closeSchemaList();
+      }
+    });
+
+    synIdInput.addEventListener("input", updateReadyPill);
     bindBtn.addEventListener("click", bindSchema);
 
-    // Close modal if user clicks backdrop
     modalBackdrop.addEventListener("click", (e) => {
       if (e.target === modalBackdrop) closeModal();
     });
@@ -810,10 +1000,7 @@
     // Init
     // --------------------
     (function init() {
-      // If token already saved in sessionStorage, show status
-      if (getToken()) {
-        setStatus("Token found in session storage.", "ok");
-      }
+      if (getToken()) setStatus("Token found in session storage.", "ok");
 
       loadSchemasFromDataJson().then(() => {
         updateSchemaMeta();
@@ -822,5 +1009,4 @@
     })();
   </script>
 </body>
-
 </html>
