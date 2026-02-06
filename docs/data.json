@@ -1,0 +1,112 @@
+[
+  {
+    "organization_id": "284",
+    "organization_name": "a07785549739745f0b713ed942c5286a5",
+    "schema_id": "2014",
+    "schema_name": "my.schema",
+    "version_id": "36401",
+    "semantic_version": "0.4227.1",
+    "created_on": "2023-04-11T06:46:16.539Z",
+    "created_by": "3324230",
+    "json_sha256_hex": "fb3606532449ee8621587517894a0415eae07e5cdb765bcd1138c8ac0fc4b2dc"
+  },
+  {
+    "organization_id": "274",
+    "organization_name": "a812ee66cde474f218853608f3906af2b",
+    "schema_id": "2006",
+    "schema_name": "my.schema",
+    "version_id": "36393",
+    "semantic_version": "0.59265.1",
+    "created_on": "2023-04-11T06:41:54.636Z",
+    "created_by": "3324230",
+    "json_sha256_hex": "7fdee0ad7b5dd5df738a680c9ba71034c8a5596f20848072edb1d89409fc6f9d"
+  },
+  {
+    "organization_id": "289",
+    "organization_name": "aca23eafbfad3404d8f80affaeef9d04c",
+    "schema_id": "2018",
+    "schema_name": "my.schema",
+    "version_id": "36405",
+    "semantic_version": "0.27815.1",
+    "created_on": "2023-04-11T06:48:20.196Z",
+    "created_by": "3324230",
+    "json_sha256_hex": "7ab5b48af20c6d04576fb8db71d80496e66637fe5f6830ca515aefe5a0c3224c"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "8561",
+    "schema_name": "Study",
+    "version_id": "47398",
+    "semantic_version": "4.1.0",
+    "created_on": "2025-11-20T19:26:13.017Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "e389a21e7d0a46c69a970df48657152a42ef82790ac5872801298de40abe5aaa"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "9113",
+    "schema_name": "CorrectedCuratorSchema",
+    "version_id": "51968",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-01-29T18:43:07.361Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "568b0638b8fe6b0af0c3e6f1c89f8ec35e89fae8c596eec22890c6875a4a207a"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "9114",
+    "schema_name": "CurrentCuratorSchema",
+    "version_id": "51969",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-01-29T19:09:43.338Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "dcca5732f1a4d3bb093c3aae5f3e8af7652e7637bbaaeedd69d034af7fbc054d"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "9119",
+    "schema_name": "CurrentCuratorSchema2",
+    "version_id": "51987",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-01-29T19:25:24.480Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "215799634545d15e174195cb097f99a38a6cdf72ff8aa17b739c3150c834d1ed"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "9129",
+    "schema_name": "ProposedCuratorSchema2",
+    "version_id": "52072",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-01-29T19:32:58.826Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "3f18fffd06509b3d48a7802d5600d9b94d9e132fc0d46239d392f57465c48c09"
+  },
+  {
+    "organization_id": "1288",
+    "organization_name": "ADA.PSI",
+    "schema_id": "9129",
+    "schema_name": "ProposedCuratorSchema2",
+    "version_id": "52105",
+    "semantic_version": "2.0.0",
+    "created_on": "2026-01-29T19:40:07.277Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "a9ec2ec5944b45ff16eb1dc3cd7b13435903937c801389b17a38a24b1d9a81fb"
+  },
+  {
+    "organization_id": "988",
+    "organization_name": "AdamJTaylorCuratorTesting",
+    "schema_id": "8058",
+    "schema_name": "cancerScRNAseq",
+    "version_id": "44343",
+    "semantic_version": "0.0.1",
+    "created_on": "2025-10-13T09:16:47.021Z",
+    "created_by": "3421936",
+    "json_sha256_hex": "2e8edcb7369557c34dd1aa67797952617365a8cb8a071b9cf9e112386f9e4a25"
+  }
+]

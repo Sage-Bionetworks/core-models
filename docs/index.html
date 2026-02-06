@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Models – Index</title>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" />
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      line-height: 1.35;
+    }
+
+    h1 { margin-bottom: 6px; }
+    p { margin-top: 0; color: #444; }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 18px 0 18px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    .tab-btn {
+      border: 1px solid #ddd;
+      background: #f7f7f7;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .tab-btn.active {
+      background: #fff;
+      border-color: #bbb;
+      font-weight: 600;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* DCC links table */
+    .dcc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .dcc-table th, .dcc-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .dcc-table th {
+      background: #f7f7f7;
+    }
+
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Index of Data Models Across Sage</h1>
+  <p>
+    Browse Synapse JSON schema versions and quick links to DCC data model documentation.
+  </p>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="schemas">Schema Versions</button>
+    <button class="tab-btn" data-tab="dcc">Data Coordinating Center Links</button>
+  </div>
+
+  <!-- Panel 1: Schema Versions -->
+  <div id="tab-schemas" class="tab-panel active">
+    <h2>Schema Versions</h2>
+    <p>
+      This table is generated from <code>docs/data.json</code>.
+      Use the search box to filter across all columns.
+    </p>
+
+    <table id="orgTable" class="display">
+      <thead>
+        <tr>
+          <th>Org ID</th>
+          <th>Org Name</th>
+          <th>Schema ID</th>
+          <th>Schema Name</th>
+          <th>Version ID</th>
+          <th>Semantic Version</th>
+          <th>Created On</th>
+          <th>Created By</th>
+          <th>SHA256</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Panel 2: DCC Links -->
+  <div id="tab-dcc" class="tab-panel">
+    <h2>Data Coordinating Center Links</h2>
+    <p>
+      Quick links to DCC GitHub repositories and documentation.
+    </p>
+
+    <table class="dcc-table">
+      <thead>
+        <tr>
+          <th>DCC</th>
+          <th>GitHub Repository</th>
+          <th>Docs Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ARK</td>
+          <td><a href="https://github.com/ARK-Portal/data_model/tree/main" target="_blank">ARK-Portal/data_model</a></td>
+          <td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td>
+        </tr>
+        <tr>
+          <td>ADKP</td>
+          <td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td>
+          <td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td>
+        </tr>
+        <tr>
+          <td>ALS</td>
+          <td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td>
+          <td>Docs Link</td>
+        </tr>
+        <tr>
+          <td>Classic</td>
+          <td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td>
+          <td>Docs Link</td>
+        </tr>
+        <tr>
+          <td>ELITE</td>
+          <td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td>
+          <td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td>
+        </tr>
+        <tr>
+          <td>HTAN2</td>
+          <td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td>
+          <td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td>
+        </tr>
+        <tr>
+          <td>MC2</td>
+          <td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td>
+          <td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td>
+        </tr>
+        <tr>
+          <td>NF</td>
+          <td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">nf-osi/nf-metadata-dictionary</a></td>
+          <td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- jQuery + DataTables -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    // --------------------
+    // Tabs
+    // --------------------
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const panels = {
+      schemas: document.getElementById("tab-schemas"),
+      dcc: document.getElementById("tab-dcc")
+    };
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        Object.values(panels).forEach(p => p.classList.remove("active"));
+        panels[btn.dataset.tab].classList.add("active");
+      });
+    });
+
+    // --------------------
+    // Load schema data
+    // --------------------
+    async function loadSchemaTable() {
+      const resp = await fetch("./data.json");
+
+      if (!resp.ok) {
+        console.warn("No data.json found. Did you run export_orgs.py?");
+        return;
+      }
+
+      const data = await resp.json();
+      const tbody = document.querySelector("#orgTable tbody");
+
+      for (const row of data) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.organization_id}</td>
+          <td>${row.organization_name}</td>
+          <td>${row.schema_id}</td>
+          <td>${row.schema_name}</td>
+          <td>${row.version_id}</td>
+          <td>${row.semantic_version}</td>
+          <td>${row.created_on}</td>
+          <td>${row.created_by}</td>
+          <td style="font-family: monospace;">${row.json_sha256_hex}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      $("#orgTable").DataTable({
+        pageLength: 25,
+        order: [[6, "desc"]]
+      });
+    }
+
+    loadSchemaTable();
+  </script>
+</body>
+</html>
