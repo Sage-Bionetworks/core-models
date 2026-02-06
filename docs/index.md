@@ -1,8 +1,6 @@
 # Index of Data Models Across Sage
 
-A cross-portal index of metadata dictionaries and schemas.
-
-| DCC | GitHub Repository | Docs |
+| DCC | Github Repository | Docs Link |
 |---|---|---|
 | ARK | https://github.com/ARK-Portal/data_model/tree/main | https://ark-portal.github.io/data_model/ |
 | ADKP | https://github.com/adknowledgeportal/data-models | https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/ |
