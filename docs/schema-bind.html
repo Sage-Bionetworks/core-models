@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bind Schema to Entity</title>
 
   <style>
-    :root{
+    :root {
       --bg: #0f1115;
-      --panel: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.06);
+      --panel: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.06);
 
       --text: rgba(244, 242, 236, 0.92);
       --muted: rgba(244, 242, 236, 0.66);
@@ -19,7 +20,7 @@
       --link: #7dd3c7;
       --linkHover: #b8fff2;
 
-      --shadow: 0 18px 55px rgba(0,0,0,0.32);
+      --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
       --radius: 18px;
 
       --good: #86efac;
@@ -27,98 +28,102 @@
       --warn: #fbbf24;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    body{
+    body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background: linear-gradient(180deg, #0e1014 0%, var(--bg) 55%, var(--bg) 100%);
       color: var(--text);
     }
 
-    a{
+    a {
       color: var(--link);
       text-decoration: none;
     }
-    a:hover{
+
+    a:hover {
       color: var(--linkHover);
       text-decoration: underline;
     }
 
-    .container{
+    .container {
       max-width: 1180px;
       margin: 0 auto;
       padding: 34px 18px 70px;
     }
 
-    .topNav{
+    .topNav {
       display: flex;
       gap: 14px;
       align-items: center;
       margin-bottom: 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding-bottom: 12px;
       flex-wrap: wrap;
     }
 
-    .navLink{
+    .navLink {
       color: rgba(244, 242, 236, 0.72);
       font-weight: 650;
       font-size: 14px;
     }
-    .navLink:hover{
+
+    .navLink:hover {
       color: rgba(244, 242, 236, 0.92);
       text-decoration: none;
     }
 
-    h1{
+    h1 {
       margin: 0 0 8px;
       font-size: 28px;
       letter-spacing: -0.03em;
     }
 
-    p{
+    p {
       margin: 0 0 18px;
       color: var(--muted);
       line-height: 1.5;
       max-width: 980px;
     }
 
-    .panel{
+    .panel {
       border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.05);
-      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    .panelHeader{
+    .panelHeader {
       padding: 18px 18px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .panelHeader h2{
+    .panelHeader h2 {
       margin: 0;
       font-size: 16px;
       letter-spacing: -0.01em;
     }
 
-    .panelBody{
+    .panelBody {
       padding: 16px 16px 18px;
     }
 
-    .row{
+    .row {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
 
-    .input, .select{
+    .input {
       flex: 1;
       min-width: 260px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
       color: rgba(244, 242, 236, 0.92);
       border-radius: 14px;
       padding: 12px 14px;
@@ -126,14 +131,41 @@
       outline: none;
     }
 
-    .input:focus, .select:focus{
-      border-color: rgba(167,139,250,0.50);
-      box-shadow: 0 0 0 4px rgba(167,139,250,0.14);
+    .select {
+      flex: 1;
+      min-width: 260px;
+
+      /* Force readable dropdown */
+      background: #ffffff;
+      color: #111111;
+
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
     }
 
-    .btn{
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(167,139,250,0.10);
+    .select option {
+      background: #ffffff;
+      color: #111111;
+    }
+
+
+    .input:focus {
+      border-color: rgba(167, 139, 250, 0.50);
+      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+    }
+
+    .select:focus {
+      border-color: rgba(167, 139, 250, 0.65);
+      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+    }
+
+
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(167, 139, 250, 0.10);
       color: rgba(244, 242, 236, 0.90);
       border-radius: 14px;
       padding: 12px 14px;
@@ -144,89 +176,89 @@
       white-space: nowrap;
     }
 
-    .btn:hover{
-      background: rgba(167,139,250,0.16);
+    .btn:hover {
+      background: rgba(167, 139, 250, 0.16);
       transform: translateY(-1px);
     }
 
-    .btn.secondary{
-      background: rgba(255,255,255,0.02);
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.02);
       color: rgba(244, 242, 236, 0.80);
     }
 
-    .btn.secondary:hover{
-      background: rgba(255,255,255,0.04);
+    .btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.04);
       transform: translateY(-1px);
     }
 
-    .status{
+    .status {
       margin-top: 14px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
     }
 
-    .error{
+    .error {
       color: rgba(251, 113, 133, 0.95);
       font-weight: 700;
     }
 
-    .ok{
+    .ok {
       color: rgba(134, 239, 172, 0.95);
       font-weight: 700;
     }
 
-    .warn{
+    .warn {
       color: rgba(251, 191, 36, 0.95);
       font-weight: 700;
     }
 
-    .tiny{
+    .tiny {
       color: var(--muted2);
       font-size: 12px;
     }
 
-    .fieldGrid{
+    .fieldGrid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-top: 12px;
     }
 
-    @media (max-width: 900px){
-      .fieldGrid{
+    @media (max-width: 900px) {
+      .fieldGrid {
         grid-template-columns: 1fr;
       }
     }
 
-    .field{
+    .field {
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.05);
-      background: rgba(255,255,255,0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.015);
       padding: 12px;
     }
 
-    .label{
+    .label {
       font-size: 12px;
       color: var(--muted2);
       margin-bottom: 6px;
     }
 
-    .value{
+    .value {
       font-size: 14px;
       color: rgba(244, 242, 236, 0.90);
       word-break: break-word;
       line-height: 1.45;
     }
 
-    .pill{
+    .pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
       font-size: 12px;
       color: var(--muted);
       user-select: none;
@@ -234,7 +266,7 @@
     }
 
     /* Toggle */
-    .toggleRow{
+    .toggleRow {
       display: flex;
       gap: 10px;
       align-items: center;
@@ -242,28 +274,28 @@
       margin-top: 12px;
     }
 
-    .toggle{
+    .toggle {
       display: inline-flex;
       gap: 10px;
       align-items: center;
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
       cursor: pointer;
       user-select: none;
     }
 
-    .toggle input{
+    .toggle input {
       width: 18px;
       height: 18px;
     }
 
     /* Modal */
-    .modalBackdrop{
+    .modalBackdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.55);
+      background: rgba(0, 0, 0, 0.55);
       display: none;
       align-items: center;
       justify-content: center;
@@ -271,46 +303,46 @@
       z-index: 999;
     }
 
-    .modal{
+    .modal {
       width: 100%;
       max-width: 560px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       background: #12141a;
-      box-shadow: 0 24px 90px rgba(0,0,0,0.55);
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.55);
       overflow: hidden;
     }
 
-    .modalHeader{
+    .modalHeader {
       padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .modalHeader h3{
+    .modalHeader h3 {
       margin: 0;
       font-size: 15px;
       letter-spacing: -0.01em;
     }
 
-    .modalBody{
+    .modalBody {
       padding: 14px 16px;
       color: var(--muted);
       line-height: 1.45;
       font-size: 13px;
     }
 
-    .modalFooter{
+    .modalFooter {
       padding: 14px 16px 16px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       gap: 10px;
       justify-content: flex-end;
       flex-wrap: wrap;
     }
 
-    code{
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+    code {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 2px 6px;
       border-radius: 8px;
       color: rgba(244, 242, 236, 0.85);
@@ -429,7 +461,7 @@
     let allSchemas = [];
     let filteredSchemas = [];
 
-    function setStatus(text, kind="") {
+    function setStatus(text, kind = "") {
       statusEl.className = "status " + kind;
       statusEl.textContent = text;
     }
@@ -790,4 +822,5 @@
     })();
   </script>
 </body>
+
 </html>
