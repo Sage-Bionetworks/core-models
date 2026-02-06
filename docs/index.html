@@ -1,182 +1,578 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Core Models – Index</title>
 
   <!-- DataTables CSS -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"
+  />
 
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      line-height: 1.35;
+    :root{
+      /* Eye-friendly dark mode palette */
+      --bg: #0f1115;                 /* warm charcoal */
+      --panel: rgba(255,255,255,0.04);
+      --panel2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.06);
+      --text: rgba(244, 242, 236, 0.92);   /* warm off-white */
+      --muted: rgba(244, 242, 236, 0.68);
+      --muted2: rgba(244, 242, 236, 0.50);
+
+      --accent: #a78bfa;             /* muted violet */
+      --accent2: #7dd3fc;            /* soft sky */
+      --link: #7dd3c7;               /* soft teal */
+      --linkHover: #b8fff2;
+
+      --shadow: 0 18px 55px rgba(0,0,0,0.32);
+      --radius: 18px;
     }
 
-    h1 { margin-bottom: 6px; }
-    p { margin-top: 0; color: #444; }
+    * { box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: linear-gradient(180deg, #0e1014 0%, var(--bg) 55%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .container{
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 34px 18px 70px;
+    }
+
+    /* Top header */
+    .top{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .title h1{
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .title p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 980px;
+      line-height: 1.5;
+    }
+
+    .meta{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 12px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .dot{
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #86efac; /* soft green */
+      box-shadow: 0 0 0 3px rgba(134,239,172,0.12);
+    }
+
+    .badgeCount{
+      border-color: rgba(167,139,250,0.25);
+      background: rgba(167,139,250,0.10);
+      color: rgba(244, 242, 236, 0.90);
+      font-weight: 650;
+    }
 
     /* Tabs */
-    .tabs {
+    .tabs{
       display: flex;
-      gap: 8px;
-      margin: 18px 0 18px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 8px;
+      gap: 18px;
+      margin: 18px 0 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 10px;
     }
 
-    .tab-btn {
-      border: 1px solid #ddd;
-      background: #f7f7f7;
-      padding: 8px 12px;
-      border-radius: 10px;
+    .tab-btn{
+      border: none;
+      background: transparent;
+      color: rgba(244, 242, 236, 0.58);
+      padding: 10px 4px;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      transition: all 140ms ease;
+      position: relative;
     }
 
-    .tab-btn.active {
-      background: #fff;
-      border-color: #bbb;
-      font-weight: 600;
+    .tab-btn:hover{
+      color: rgba(244, 242, 236, 0.85);
     }
 
-    .tab-panel {
-      display: none;
+    .tab-btn.active{
+      color: rgba(244, 242, 236, 0.92);
     }
 
-    .tab-panel.active {
-      display: block;
+    .tab-btn.active::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -11px;
+      height: 2px;
+      background: rgba(167,139,250,0.9);
+      border-radius: 99px;
     }
 
-    /* DCC links table */
-    .dcc-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
+    .tab-panel{ display: none; }
+    .tab-panel.active{ display: block; }
+
+    /* Panel */
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.03);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .dcc-table th, .dcc-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
+    .panelHeader{
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .panelHeaderTop{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .panelHeader h2{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .panelHeader p{
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 980px;
+    }
+
+    .panelBody{
+      padding: 16px 16px 18px;
+    }
+
+    /* Filter toggle button */
+    .filtersToggle{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: rgba(244, 242, 236, 0.72);
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+      user-select: none;
+      transition: all 140ms ease;
+      white-space: nowrap;
+    }
+
+    .filtersToggle:hover{
+      background: rgba(255,255,255,0.04);
+      color: rgba(244, 242, 236, 0.90);
+      transform: translateY(-1px);
+    }
+
+    .filtersToggle .chev{
+      display: inline-block;
+      transition: transform 160ms ease;
+      opacity: 0.85;
+    }
+
+    .filtersToggle.open .chev{
+      transform: rotate(180deg);
+    }
+
+    /* Links */
+    a{
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover{
+      color: var(--linkHover);
+      text-decoration: underline;
+    }
+
+    /* DataTables */
+    table.dataTable{
+      border-collapse: collapse !important;
+      width: 100% !important;
+      color: var(--text);
+    }
+
+    table.dataTable thead th{
+      background: rgba(255,255,255,0.015);
+      border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+      color: rgba(244, 242, 236, 0.70);
+      font-weight: 650;
+      font-size: 12px;
+      padding: 12px 10px !important;
+      white-space: nowrap;
+    }
+
+    table.dataTable tbody td{
+      border-top: 1px solid rgba(255,255,255,0.045) !important;
+      padding: 12px 10px !important;
+      font-size: 13px;
+      color: rgba(244, 242, 236, 0.88);
       vertical-align: top;
     }
 
-    .dcc-table th {
-      background: #f7f7f7;
+    table.dataTable tbody tr:hover{
+      background: rgba(255,255,255,0.025) !important;
     }
 
-    a { color: #0b5fff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Controls (length, search, info) */
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select{
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      background: rgba(255,255,255,0.02) !important;
+      color: rgba(244, 242, 236, 0.90) !important;
+      border-radius: 12px !important;
+      padding: 9px 10px !important;
+      outline: none !important;
+    }
 
-    code {
-      background: #f4f4f4;
-      padding: 2px 6px;
-      border-radius: 6px;
+    .dataTables_wrapper .dataTables_filter input:focus,
+    .colFilter:focus{
+      border-color: rgba(167,139,250,0.50) !important;
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.14);
+    }
+
+    .dataTables_wrapper .dataTables_filter label,
+    .dataTables_wrapper .dataTables_length label,
+    .dataTables_wrapper .dataTables_info{
+      color: rgba(244, 242, 236, 0.55) !important;
+      font-size: 13px !important;
+    }
+
+    /* Pagination chips */
+    .dataTables_wrapper .dataTables_paginate{
+      margin-top: 14px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button{
+      border-radius: 12px !important;
+      border: 1px solid transparent !important;
+      background: transparent !important;
+      color: rgba(244, 242, 236, 0.55) !important;
+      padding: 8px 10px !important;
+      margin: 0 2px !important;
+      transition: all 120ms ease;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+      background: rgba(255,255,255,0.04) !important;
+      border-color: rgba(255,255,255,0.06) !important;
+      color: rgba(244, 242, 236, 0.85) !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current{
+      background: rgba(167,139,250,0.14) !important;
+      border-color: rgba(167,139,250,0.20) !important;
+      color: rgba(244, 242, 236, 0.92) !important;
+    }
+
+    /* Schema URL link */
+    .pillLink{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 12px;
+      border: 1px solid rgba(167,139,250,0.18);
+      background: rgba(167,139,250,0.09);
+      color: rgba(244, 242, 236, 0.88);
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .pillLink:hover{
+      background: rgba(167,139,250,0.13);
+      text-decoration: none;
+      color: rgba(244, 242, 236, 0.92);
+    }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: rgba(244, 242, 236, 0.65);
+      word-break: break-all;
+    }
+
+    /* Per-column filters row */
+    .filtersRow th{
+      padding: 10px 10px 12px !important;
+      background: rgba(255,255,255,0.012) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+    }
+
+    .filtersRow.hidden{
+      display: none;
+    }
+
+    .colFilter{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: rgba(244, 242, 236, 0.90);
+      border-radius: 12px;
+      padding: 9px 10px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .colFilter option{
+      background: var(--bg);
+      color: rgba(244, 242, 236, 0.92);
+    }
+
+    /* DCC table */
+    .dcc-table{
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .dcc-table th, .dcc-table td{
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    .dcc-table th{
+      background: rgba(255,255,255,0.015);
+      color: rgba(244, 242, 236, 0.70);
+      font-weight: 700;
+      border-top: none;
+    }
+
+    .dcc-table tr:hover td{
+      background: rgba(255,255,255,0.025);
+    }
+
+    .muted{
+      color: rgba(244, 242, 236, 0.50);
+      font-size: 13px;
+    }
+
+    .footer{
+      margin-top: 12px;
+      color: rgba(244, 242, 236, 0.50);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px){
+      .top{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .meta{
+        justify-content: flex-start;
+      }
+      .panelHeaderTop{
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
-  <h1>Index of Data Models Across Sage</h1>
-  <p>
-    Browse Synapse JSON schema versions and quick links to DCC data model documentation.
-  </p>
+  <div class="container">
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="schemas">Schema Versions</button>
-    <button class="tab-btn" data-tab="dcc">Data Coordinating Center Links</button>
-  </div>
+    <div class="top">
+      <div class="title">
+        <h1>Index of Data Models Across Sage</h1>
+        <p>
+          Browse Synapse JSON schema versions and quick links to DCC data model documentation.
+          The schema table is generated from <span class="mono">docs/data.json</span>.
+        </p>
+      </div>
 
-  <!-- Panel 1: Schema Versions -->
-  <div id="tab-schemas" class="tab-panel active">
-    <h2>Schema Versions</h2>
-    <p>
-      This table is generated from <code>docs/data.json</code>.
-      Use the search box to filter across all columns.
-    </p>
+      <div class="meta">
+        <div class="badge">
+          <span class="dot"></span>
+          GitHub Pages • /docs • main
+        </div>
+        <div id="rowCountBadge" class="badge badgeCount">
+          Loading…
+        </div>
+      </div>
+    </div>
 
-    <table id="orgTable" class="display">
-      <thead>
-        <tr>
-          <th>Org ID</th>
-          <th>Org Name</th>
-          <th>Schema ID</th>
-          <th>Schema Name</th>
-          <th>Version ID</th>
-          <th>Semantic Version</th>
-          <th>Created On</th>
-          <th>Created By</th>
-          <th>SHA256</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="schemas">Schema Versions</button>
+      <button class="tab-btn" data-tab="dcc">DCC Links</button>
+    </div>
 
-  <!-- Panel 2: DCC Links -->
-  <div id="tab-dcc" class="tab-panel">
-    <h2>Data Coordinating Center Links</h2>
-    <p>
-      Quick links to DCC GitHub repositories and documentation.
-    </p>
+    <!-- Panel 1: Schema Versions -->
+    <div id="tab-schemas" class="tab-panel active">
+      <div class="panel">
+        <div class="panelHeader">
+          <div class="panelHeaderTop">
+            <div>
+              <h2>Schema Versions</h2>
+              <p>
+                Use global search for quick filtering, or open filters for per-column dropdowns.
+                The row count badge updates as filters are applied.
+              </p>
+            </div>
 
-    <table class="dcc-table">
-      <thead>
-        <tr>
-          <th>DCC</th>
-          <th>GitHub Repository</th>
-          <th>Docs Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ARK</td>
-          <td><a href="https://github.com/ARK-Portal/data_model/tree/main" target="_blank">ARK-Portal/data_model</a></td>
-          <td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td>
-        </tr>
-        <tr>
-          <td>ADKP</td>
-          <td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td>
-          <td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td>
-        </tr>
-        <tr>
-          <td>ALS</td>
-          <td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td>
-          <td>Docs Link</td>
-        </tr>
-        <tr>
-          <td>Classic</td>
-          <td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td>
-          <td>Docs Link</td>
-        </tr>
-        <tr>
-          <td>ELITE</td>
-          <td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td>
-          <td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td>
-        </tr>
-        <tr>
-          <td>HTAN2</td>
-          <td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td>
-          <td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td>
-        </tr>
-        <tr>
-          <td>MC2</td>
-          <td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td>
-          <td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td>
-        </tr>
-        <tr>
-          <td>NF</td>
-          <td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">nf-osi/nf-metadata-dictionary</a></td>
-          <td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td>
-        </tr>
-      </tbody>
-    </table>
+            <button id="filtersToggle" class="filtersToggle" type="button">
+              Filters
+              <span class="chev">▾</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="panelBody">
+          <table id="orgTable" class="display">
+            <thead>
+              <tr>
+                <th>Org ID</th>
+                <th>Org Name</th>
+                <th>Schema ID</th>
+                <th>Schema Name</th>
+                <th>Schema URL</th>
+                <th>Version ID</th>
+                <th>Semantic Version</th>
+                <th>Created On</th>
+                <th>Created By</th>
+                <th>SHA256</th>
+              </tr>
+              <!-- Filter row injected here -->
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="footer">
+            Tip: If a column has too many unique values, its dropdown is disabled and you can use global search instead.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: DCC Links -->
+    <div id="tab-dcc" class="tab-panel">
+      <div class="panel">
+        <div class="panelHeader">
+          <h2>Data Coordinating Center Links</h2>
+          <p>
+            Quick links to DCC GitHub repositories and documentation sites.
+          </p>
+        </div>
+
+        <div class="panelBody">
+          <table class="dcc-table">
+            <thead>
+              <tr>
+                <th style="width: 120px;">DCC</th>
+                <th>GitHub Repository</th>
+                <th>Docs Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>ARK</b></td>
+                <td><a href="https://github.com/ARK-Portal/data_model/tree/main" target="_blank">ARK-Portal/data_model</a></td>
+                <td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td>
+              </tr>
+              <tr>
+                <td><b>ADKP</b></td>
+                <td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td>
+                <td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td>
+              </tr>
+              <tr>
+                <td><b>ALS</b></td>
+                <td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td>
+                <td><span class="muted">Docs link TBD</span></td>
+              </tr>
+              <tr>
+                <td><b>Classic</b></td>
+                <td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td>
+                <td><span class="muted">Docs link TBD</span></td>
+              </tr>
+              <tr>
+                <td><b>ELITE</b></td>
+                <td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td>
+                <td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td>
+              </tr>
+              <tr>
+                <td><b>HTAN2</b></td>
+                <td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td>
+                <td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td>
+              </tr>
+              <tr>
+                <td><b>MC2</b></td>
+                <td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td>
+                <td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td>
+              </tr>
+              <tr>
+                <td><b>NF</b></td>
+                <td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">nf-osi/nf-metadata-dictionary</a></td>
+                <td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="footer">
+            Want this table filterable too? Easy add with DataTables.
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- jQuery + DataTables -->
@@ -204,6 +600,85 @@
     });
 
     // --------------------
+    // Helpers
+    // --------------------
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function setBadge(text) {
+      document.getElementById("rowCountBadge").textContent = text;
+    }
+
+    function addFilterRow(hiddenByDefault = true) {
+      const thead = document.querySelector("#orgTable thead");
+      const headerCells = thead.querySelectorAll("tr:first-child th");
+
+      const filterRow = document.createElement("tr");
+      filterRow.className = "filtersRow";
+
+      if (hiddenByDefault) {
+        filterRow.classList.add("hidden");
+      }
+
+      headerCells.forEach((th, idx) => {
+        const filterTh = document.createElement("th");
+
+        // Useful dropdowns only
+        const filterableColumns = new Set([0, 1, 2, 3, 5, 6, 7, 8]);
+
+        if (filterableColumns.has(idx)) {
+          filterTh.innerHTML = `<select class="colFilter" data-col="${idx}">
+            <option value="">All</option>
+          </select>`;
+        } else {
+          filterTh.innerHTML = `<span class="muted">—</span>`;
+        }
+
+        filterRow.appendChild(filterTh);
+      });
+
+      thead.appendChild(filterRow);
+    }
+
+    function populateDropdown(selectEl, values) {
+      for (const v of values) {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        selectEl.appendChild(opt);
+      }
+    }
+
+    // --------------------
+    // Filters toggle
+    // --------------------
+    function setupFiltersToggle() {
+      const btn = document.getElementById("filtersToggle");
+
+      btn.addEventListener("click", () => {
+        const row = document.querySelector("#orgTable thead tr.filtersRow");
+        if (!row) return;
+
+        const isHidden = row.classList.contains("hidden");
+
+        if (isHidden) {
+          row.classList.remove("hidden");
+          btn.classList.add("open");
+        } else {
+          row.classList.add("hidden");
+          btn.classList.remove("open");
+        }
+      });
+    }
+
+    // --------------------
     // Load schema data
     // --------------------
     async function loadSchemaTable() {
@@ -211,32 +686,108 @@
 
       if (!resp.ok) {
         console.warn("No data.json found. Did you run export_orgs.py?");
+        setBadge("No data.json found");
         return;
       }
 
       const data = await resp.json();
+
+      // Initial badge
+      setBadge(`${data.length.toLocaleString()} rows loaded`);
+
+      // Add filter row before DataTables initializes (hidden by default)
+      addFilterRow(true);
+
+      // Setup toggle now that row exists
+      setupFiltersToggle();
+
+      // Render rows
       const tbody = document.querySelector("#orgTable tbody");
 
       for (const row of data) {
+        const schemaUrl =
+          `https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/` +
+          `${row.organization_name}-${row.schema_name}`;
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${row.organization_id}</td>
-          <td>${row.organization_name}</td>
-          <td>${row.schema_id}</td>
-          <td>${row.schema_name}</td>
-          <td>${row.version_id}</td>
-          <td>${row.semantic_version}</td>
-          <td>${row.created_on}</td>
-          <td>${row.created_by}</td>
-          <td style="font-family: monospace;">${row.json_sha256_hex}</td>
+          <td>${escapeHtml(row.organization_id)}</td>
+          <td>${escapeHtml(row.organization_name)}</td>
+          <td>${escapeHtml(row.schema_id)}</td>
+          <td>${escapeHtml(row.schema_name)}</td>
+          <td>
+            <a class="pillLink" href="${escapeHtml(schemaUrl)}" target="_blank" rel="noopener noreferrer">
+              Open Schema ↗
+            </a>
+          </td>
+          <td>${escapeHtml(row.version_id)}</td>
+          <td>${escapeHtml(row.semantic_version)}</td>
+          <td>${escapeHtml(row.created_on)}</td>
+          <td>${escapeHtml(row.created_by)}</td>
+          <td class="mono">${escapeHtml(row.json_sha256_hex)}</td>
         `;
         tbody.appendChild(tr);
       }
 
-      $("#orgTable").DataTable({
+      // Init DataTables
+      const table = $("#orgTable").DataTable({
         pageLength: 25,
-        order: [[6, "desc"]]
+        order: [[7, "desc"]],
+        dom: "lfrtip"
       });
+
+      // Keep badge synced with all filtering
+      table.on("draw", function () {
+        const visible = table.rows({ filter: "applied" }).count();
+        setBadge(`${visible.toLocaleString()} rows shown`);
+      });
+
+      // --------------------
+      // Per-column dropdown filters
+      // --------------------
+      const filterableColumns = [0, 1, 2, 3, 5, 6, 7, 8];
+
+      for (const colIdx of filterableColumns) {
+        const selectEl = document.querySelector(`.colFilter[data-col="${colIdx}"]`);
+        if (!selectEl) continue;
+
+        const valuesSet = new Set();
+
+        table.column(colIdx).data().each(function (value) {
+          const tmp = document.createElement("div");
+          tmp.innerHTML = value;
+          const text = tmp.textContent.trim();
+          if (text) valuesSet.add(text);
+        });
+
+        const values = Array.from(valuesSet).sort((a, b) =>
+          a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+        );
+
+        // Prevent unusable dropdowns
+        const MAX_OPTIONS = 300;
+        if (values.length > MAX_OPTIONS) {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.textContent = `Too many values (${values.length})`;
+          selectEl.appendChild(opt);
+          selectEl.disabled = true;
+          continue;
+        }
+
+        populateDropdown(selectEl, values);
+
+        selectEl.addEventListener("change", function () {
+          const val = this.value;
+
+          if (val) {
+            const escaped = val.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            table.column(colIdx).search("^" + escaped + "$", true, false).draw();
+          } else {
+            table.column(colIdx).search("", true, false).draw();
+          }
+        });
+      }
     }
 
     loadSchemaTable();
