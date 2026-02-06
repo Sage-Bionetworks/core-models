@@ -14,17 +14,16 @@
   <style>
     :root{
       /* Eye-friendly dark mode palette */
-      --bg: #0f1115;                 /* warm charcoal */
+      --bg: #0f1115;
       --panel: rgba(255,255,255,0.04);
-      --panel2: rgba(255,255,255,0.06);
       --border: rgba(255,255,255,0.06);
-      --text: rgba(244, 242, 236, 0.92);   /* warm off-white */
-      --muted: rgba(244, 242, 236, 0.68);
+
+      --text: rgba(244, 242, 236, 0.92);
+      --muted: rgba(244, 242, 236, 0.66);
       --muted2: rgba(244, 242, 236, 0.50);
 
-      --accent: #a78bfa;             /* muted violet */
-      --accent2: #7dd3fc;            /* soft sky */
-      --link: #7dd3c7;               /* soft teal */
+      --accent: #a78bfa;     /* muted violet */
+      --link: #7dd3c7;       /* soft teal */
       --linkHover: #b8fff2;
 
       --shadow: 0 18px 55px rgba(0,0,0,0.32);
@@ -97,7 +96,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #86efac; /* soft green */
+      background: #86efac;
       box-shadow: 0 0 0 3px rgba(134,239,172,0.12);
     }
 
@@ -170,7 +169,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .panelHeader h2{
@@ -191,8 +191,15 @@
       padding: 16px 16px 18px;
     }
 
-    /* Filter toggle button */
-    .filtersToggle{
+    /* Buttons */
+    .btnRow{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn{
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -209,19 +216,19 @@
       white-space: nowrap;
     }
 
-    .filtersToggle:hover{
+    .btn:hover{
       background: rgba(255,255,255,0.04);
       color: rgba(244, 242, 236, 0.90);
       transform: translateY(-1px);
     }
 
-    .filtersToggle .chev{
+    .btn .chev{
       display: inline-block;
       transition: transform 160ms ease;
       opacity: 0.85;
     }
 
-    .filtersToggle.open .chev{
+    .btn.open .chev{
       transform: rotate(180deg);
     }
 
@@ -274,6 +281,12 @@
       border-radius: 12px !important;
       padding: 9px 10px !important;
       outline: none !important;
+    }
+
+    /* IMPORTANT: make the dropdown menu readable */
+    .dataTables_wrapper .dataTables_length select option{
+      background: #12141a !important;
+      color: rgba(244, 242, 236, 0.92) !important;
     }
 
     .dataTables_wrapper .dataTables_filter input:focus,
@@ -368,7 +381,7 @@
     }
 
     .colFilter option{
-      background: var(--bg);
+      background: #12141a;
       color: rgba(244, 242, 236, 0.92);
     }
 
@@ -419,10 +432,6 @@
       .meta{
         justify-content: flex-start;
       }
-      .panelHeaderTop{
-        flex-direction: column;
-        align-items: flex-start;
-      }
     }
   </style>
 </head>
@@ -469,10 +478,15 @@
               </p>
             </div>
 
-            <button id="filtersToggle" class="filtersToggle" type="button">
-              Filters
-              <span class="chev">▾</span>
-            </button>
+            <div class="btnRow">
+              <button id="filtersToggle" class="btn" type="button">
+                Filters <span class="chev">▾</span>
+              </button>
+
+              <button id="clearFilters" class="btn" type="button">
+                Clear Filters
+              </button>
+            </div>
           </div>
         </div>
 
@@ -612,6 +626,16 @@
         .replaceAll("'", "&#039;");
     }
 
+    function stripHtmlToText(value) {
+      const tmp = document.createElement("div");
+      tmp.innerHTML = value;
+      return tmp.textContent.trim();
+    }
+
+    function normalizeText(value) {
+      return stripHtmlToText(value).replace(/\s+/g, " ").trim();
+    }
+
     function setBadge(text) {
       document.getElementById("rowCountBadge").textContent = text;
     }
@@ -656,6 +680,10 @@
       }
     }
 
+    function escapeRegex(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
     // --------------------
     // Filters toggle
     // --------------------
@@ -691,14 +719,10 @@
       }
 
       const data = await resp.json();
-
-      // Initial badge
       setBadge(`${data.length.toLocaleString()} rows loaded`);
 
       // Add filter row before DataTables initializes (hidden by default)
       addFilterRow(true);
-
-      // Setup toggle now that row exists
       setupFiltersToggle();
 
       // Render rows
@@ -736,14 +760,14 @@
         dom: "lfrtip"
       });
 
-      // Keep badge synced with all filtering
+      // Badge updates whenever table redraws
       table.on("draw", function () {
         const visible = table.rows({ filter: "applied" }).count();
         setBadge(`${visible.toLocaleString()} rows shown`);
       });
 
       // --------------------
-      // Per-column dropdown filters
+      // Per-column dropdown filters (FIXED)
       // --------------------
       const filterableColumns = [0, 1, 2, 3, 5, 6, 7, 8];
 
@@ -753,10 +777,9 @@
 
         const valuesSet = new Set();
 
+        // Use DataTables internal data, but normalize it
         table.column(colIdx).data().each(function (value) {
-          const tmp = document.createElement("div");
-          tmp.innerHTML = value;
-          const text = tmp.textContent.trim();
+          const text = normalizeText(value);
           if (text) valuesSet.add(text);
         });
 
@@ -777,17 +800,39 @@
 
         populateDropdown(selectEl, values);
 
+        // FIX: use "contains" search (not strict exact regex)
+        // because DataTables sometimes normalizes whitespace or has hidden chars
         selectEl.addEventListener("change", function () {
           const val = this.value;
 
-          if (val) {
-            const escaped = val.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            table.column(colIdx).search("^" + escaped + "$", true, false).draw();
-          } else {
-            table.column(colIdx).search("", true, false).draw();
+          if (!val) {
+            table.column(colIdx).search("").draw();
+            return;
           }
+
+          // We do a regex "contains" match safely
+          const escaped = escapeRegex(val);
+          table.column(colIdx).search(escaped, true, false).draw();
         });
       }
+
+      // --------------------
+      // Clear Filters button
+      // --------------------
+      document.getElementById("clearFilters").addEventListener("click", () => {
+        // Clear global search
+        table.search("");
+
+        // Clear column searches
+        table.columns().search("");
+
+        // Reset dropdowns
+        document.querySelectorAll(".colFilter").forEach(sel => {
+          sel.value = "";
+        });
+
+        table.draw();
+      });
     }
 
     loadSchemaTable();
