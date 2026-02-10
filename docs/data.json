@@ -638,6 +638,28 @@
     "json_sha256_hex": "aff60a9ea2d35dd2bd5e1078bddbb31dd4f1cdf4000209218ef952097e9fba9d"
   },
   {
+    "organization_id": "1415",
+    "organization_name": "ampals.schemas",
+    "schema_id": "9261",
+    "schema_name": "OmicDataset",
+    "version_id": "52793",
+    "semantic_version": "0.0.1",
+    "created_on": "2026-02-10T05:25:09.029Z",
+    "created_by": "3436666",
+    "json_sha256_hex": "5988b353458b205995264ef556ee98ef6ddfc1da2b635c5d307b3f787f265358"
+  },
+  {
+    "organization_id": "1415",
+    "organization_name": "ampals.schemas",
+    "schema_id": "9262",
+    "schema_name": "OmicFile",
+    "version_id": "52794",
+    "semantic_version": "0.0.1",
+    "created_on": "2026-02-10T05:32:11.885Z",
+    "created_by": "3436666",
+    "json_sha256_hex": "e2eda85d5bac2faab6ed71c002727307367719300e8c0731fc9784ccc9fe0a0e"
+  },
+  {
     "organization_id": "1256",
     "organization_name": "andrew.test.org",
     "schema_id": "8388",
@@ -8472,6 +8494,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "7345",
+    "schema_name": "VitalStatus",
+    "version_id": "52814",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:39.760Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "57252eab9f9119dd893568f51dc3161aea0399b7a1476edecfc7b178afd41504"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "7478",
     "schema_name": "BulkWESLevel1",
     "version_id": "43323",
@@ -8527,6 +8560,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "7478",
+    "schema_name": "BulkWESLevel1",
+    "version_id": "52796",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:16:45.957Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "c3ef53e7e85298f5dda171d1bf2e30864f1586f16456bbae7bdb3304a2ef0755"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "7481",
     "schema_name": "WESLevel1flatschema",
     "version_id": "43334",
@@ -8571,6 +8615,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8430",
+    "schema_name": "Demographics",
+    "version_id": "52799",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:04.267Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "4c90990e01b71b8e6ea084b324a4fb6357c644dffacf6bf9010b46eaa51303cc"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8431",
     "schema_name": "Diagnosis",
     "version_id": "45607",
@@ -8600,6 +8655,17 @@
     "created_on": "2026-01-23T16:03:35.296Z",
     "created_by": "3474475",
     "json_sha256_hex": "466f6048ff29d421706fee46d5ed8c2f779a0624476d3205758bb10ecc975494"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8431",
+    "schema_name": "Diagnosis",
+    "version_id": "52800",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:07.039Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "fd04b224722f166ce5190ba7366984612a70debe218980fbe05e8637ff8fdf69"
   },
   {
     "organization_id": "617",
@@ -8637,6 +8703,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8432",
+    "schema_name": "Exposure",
+    "version_id": "52802",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:12.563Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "1ccd5b71cbc5fd53dce09b6aa040587e5c52ced60431d9819a16d53d0912d6ed"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8433",
     "schema_name": "FamilyHistory",
     "version_id": "45609",
@@ -8666,6 +8743,17 @@
     "created_on": "2026-01-23T16:03:41.845Z",
     "created_by": "3474475",
     "json_sha256_hex": "bc2d8713c3ada7ee21bc9a306d70a443fedeb8e149e373e6995303ef6517a538"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8433",
+    "schema_name": "FamilyHistory",
+    "version_id": "52803",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:14.798Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "4bdaffb0de24187f1ef117da33f4a32d08e95c4128401d448847e8e77dbb6229"
   },
   {
     "organization_id": "617",
@@ -8703,6 +8791,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8434",
+    "schema_name": "FollowUp",
+    "version_id": "52804",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:16.940Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "9b7dcfff4851ee602a54f82adaf3cf87fad536617b1e67949462bad3d55e1547"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8435",
     "schema_name": "MolecularTest",
     "version_id": "45611",
@@ -8732,6 +8831,17 @@
     "created_on": "2026-01-23T16:05:00.484Z",
     "created_by": "3474475",
     "json_sha256_hex": "290a8df554d1adcba8ed6bf5d9d70edaff0b61e2128d23bb94ce768eb408efb9"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8435",
+    "schema_name": "MolecularTest",
+    "version_id": "52805",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:19.192Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "2dd5d206717f0ba116fe965f93c3e27c5db8f04d8ad5f2386b5ca1d38bb8bb2f"
   },
   {
     "organization_id": "617",
@@ -8769,6 +8879,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8436",
+    "schema_name": "Therapy",
+    "version_id": "52813",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:37.351Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "4cd9448843a3bfe2b754826d3cf1b72f5f9fe71cfe65e171aca4195144e78543"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8787",
     "schema_name": "BiospecimenData",
     "version_id": "49149",
@@ -8787,6 +8908,17 @@
     "created_on": "2026-01-23T16:03:23.404Z",
     "created_by": "3474475",
     "json_sha256_hex": "1af796f1c00c8a044e59736e41d10592599e6ea9126f48d7e52731768cdeef5a"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8787",
+    "schema_name": "BiospecimenData",
+    "version_id": "52795",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:16:43.090Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "42fbbbd346ccb67b27ebdd848f2c24317c4edfcbd6097403df764f611b975e96"
   },
   {
     "organization_id": "617",
@@ -8813,6 +8945,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8788",
+    "schema_name": "BulkWESLevel2",
+    "version_id": "52797",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:17:59.844Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "81fb98e97f61520dc2fbdcf30821bc73d03cda11dca83563652132a41aa62c4d"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8789",
     "schema_name": "BulkWESLevel3",
     "version_id": "49152",
@@ -8831,6 +8974,17 @@
     "created_on": "2026-01-23T16:03:30.957Z",
     "created_by": "3474475",
     "json_sha256_hex": "45b399a2192c354a86911f2447694459cc5e098e6b590d8135a3dd6041776994"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8789",
+    "schema_name": "BulkWESLevel3",
+    "version_id": "52798",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:02.071Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "00e261ed06f708c728eeb15cc74f374a9a78ef5244feaf3a75f20371a1548403"
   },
   {
     "organization_id": "617",
@@ -8857,6 +9011,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8790",
+    "schema_name": "DigitalPathologyData",
+    "version_id": "52801",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:09.640Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "f36d667af9bce1e472c6009f91a822bb9ab61681462e75bb5d92265cfafb5eba"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8791",
     "schema_name": "MultiplexMicroscopyLevel2",
     "version_id": "49160",
@@ -8875,6 +9040,17 @@
     "created_on": "2026-01-23T16:05:03.008Z",
     "created_by": "3474475",
     "json_sha256_hex": "d7582f0a231fd3d8f0cc9911db0d846348fe567a7d7003a56960d5425c914e05"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8791",
+    "schema_name": "MultiplexMicroscopyLevel2",
+    "version_id": "52806",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:22.233Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "6958ec2cacc28e7e59c85d8595097964d7609fed2a211c97a2117b23ffffba36"
   },
   {
     "organization_id": "617",
@@ -8901,6 +9077,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8792",
+    "schema_name": "MultiplexMicroscopyLevel3",
+    "version_id": "52807",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:24.487Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "d35d0d266c82d5da500d941aa312856855b5b0da198ae61d04661b50ba5e585f"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8793",
     "schema_name": "MultiplexMicroscopyLevel4",
     "version_id": "49162",
@@ -8919,6 +9106,17 @@
     "created_on": "2026-01-23T16:05:07.272Z",
     "created_by": "3474475",
     "json_sha256_hex": "d7e5c71fd4e921df569e6adace96b68d8b183a9a93e89411a8ab4a011bcf26cf"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8793",
+    "schema_name": "MultiplexMicroscopyLevel4",
+    "version_id": "52808",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:26.521Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "bc9c071dc423e9eb80734aa351723bce23953c9890cc86252e33a3868dc12c96"
   },
   {
     "organization_id": "617",
@@ -8945,6 +9143,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8794",
+    "schema_name": "SpatialLevel1",
+    "version_id": "52809",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:28.728Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "8ea270013a3dc87aec1d00e4cfd51f8f9dacc7e1a8302af19fb4c92837b1117f"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8795",
     "schema_name": "SpatialLevel3",
     "version_id": "49164",
@@ -8963,6 +9172,17 @@
     "created_on": "2026-01-23T16:05:11.696Z",
     "created_by": "3474475",
     "json_sha256_hex": "d479ace6cf1eaf7653a52ba98f2b30e88b86f1c4726bed092bc4ede0312ed436"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8795",
+    "schema_name": "SpatialLevel3",
+    "version_id": "52810",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:30.855Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "ae1084b8fa2c2c1984806ed9a3d40a99bff9a88a29f44eaa959d8fbec278c2a8"
   },
   {
     "organization_id": "617",
@@ -8989,6 +9209,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8796",
+    "schema_name": "SpatialLevel4",
+    "version_id": "52811",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:32.932Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "183c42ae3631a15ba18573aa33fb54d71a246247baf07b5e5f017686bd36e8e3"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8797",
     "schema_name": "SpatialPanel",
     "version_id": "49166",
@@ -9007,6 +9238,17 @@
     "created_on": "2026-01-23T16:05:15.953Z",
     "created_by": "3474475",
     "json_sha256_hex": "e1c5d8d2dcf5d530372d57ecad3fee08ebc1a1a60251f478c4148e295e0c9327"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "8797",
+    "schema_name": "SpatialPanel",
+    "version_id": "52812",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:35.118Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "07a584978e82cb1b68fd28110463458a87fe6aba8df7f57d3419d221e12f9581"
   },
   {
     "organization_id": "617",
@@ -9033,6 +9275,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8798",
+    "schema_name": "scRNALevel1",
+    "version_id": "52815",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:42.503Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "de6ce9359051f543c1dc48dcbe099fe557ef4ada570fbb047e81f0dc2098a482"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "8799",
     "schema_name": "scRNALevel2",
     "version_id": "49170",
@@ -9055,6 +9308,17 @@
   {
     "organization_id": "617",
     "organization_name": "HTAN2Organization",
+    "schema_id": "8799",
+    "schema_name": "scRNALevel2",
+    "version_id": "52816",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:44.693Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "5e42ab327c1f6eac91a8aa2a648af254dda0ed914f5d63da10b89317422a055e"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
     "schema_id": "9023",
     "schema_name": "scRNALevel34",
     "version_id": "51433",
@@ -9073,6 +9337,17 @@
     "created_on": "2026-01-23T16:05:26.608Z",
     "created_by": "3474475",
     "json_sha256_hex": "dd8314b7fea656e3d675b8e37ab10d80bacd3a32420771800f5038db2d847f74"
+  },
+  {
+    "organization_id": "617",
+    "organization_name": "HTAN2Organization",
+    "schema_id": "9066",
+    "schema_name": "scRNALevel3and4",
+    "version_id": "52817",
+    "semantic_version": "1.2.0",
+    "created_on": "2026-02-10T14:18:46.669Z",
+    "created_by": "3474475",
+    "json_sha256_hex": "1db6950dcc8c071fd31d048af6534acd11f82189a78b4a32565bea37c80cb8bc"
   },
   {
     "organization_id": "1285",
