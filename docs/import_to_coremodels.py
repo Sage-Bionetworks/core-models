@@ -137,38 +137,35 @@ def verify_schema_url(url):
 def import_schema_to_coremodels(schema_url, schema_key):
     """
     Import a single schema into CoreModels using the Merge JSON Schema API.
-    Uses FileUrl to point to the Synapse registry URL.
+    Uses fileUrl to point to the Synapse schema registry URL.
     """
-    endpoint = f"{API_URL}/v1/{PROJECT_ID}/mergeJsonSchema"
+    endpoint = f"{API_URL}/v1/{PROJECT_ID}/mergeJSONSchema"
 
     headers = {
         "Authorization": f"Bearer {API_TOKEN}",
         "Content-Type": "application/json",
+        "Accept": "application/json",
     }
 
-    params = {
-        "SpaceId": SPACE_ID,
-        "ConfigTypeId": CONFIG_TYPE_ID,
-        "OverrideNewPropertiesWarning": str(OVERRIDE_NEW_PROPS).lower(),
-        "OverrideDifferentSourceWarning": str(OVERRIDE_DIFF_SRC).lower(),
-        "OverrideOverwriteWarning": str(OVERRIDE_OVERWRITE).lower(),
-        "OnlyAddAndUpdate": str(ONLY_ADD_UPDATE).lower(),
-    }
-
-    # SourceDtos with the FileUrl pointing to the Synapse schema registry
+    # EVERYTHING CoreModels needs goes in the JSON body
     body = {
-        "SourceDtos": [
+        "spaceId": SPACE_ID,
+        "configTypeId": CONFIG_TYPE_ID,
+        "sourceDtos": [
             {
-                "FileUrl": schema_url
+                "fileUrl": schema_url
             }
-        ]
+        ],
+        "overrideNewPropertiesWarning": OVERRIDE_NEW_PROPS,
+        "overrideDifferentSourceWarning": OVERRIDE_DIFF_SRC,
+        "overrideOverwriteWarning": OVERRIDE_OVERWRITE,
+        "onlyAddAndUpdate": ONLY_ADD_UPDATE,
     }
 
     try:
         resp = requests.post(
             endpoint,
             headers=headers,
-            params=params,
             json=body,
             timeout=120,
         )
@@ -185,7 +182,7 @@ def import_schema_to_coremodels(schema_url, schema_key):
                 print(f"  ❌ Import failed: {msg} (fatal={fatal})")
                 return False
         else:
-            print(f"  ❌ HTTP {resp.status_code}: {resp.text[:200]}")
+            print(f"  ❌ HTTP {resp.status_code}: {resp.text[:300]}")
             return False
 
     except requests.exceptions.Timeout:
