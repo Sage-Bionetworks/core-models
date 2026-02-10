@@ -53,7 +53,7 @@ jobs:
           # synapseclient reads this env var automatically for auth
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
         run: |
-          python export_orgs.py
+          python docs/export_orgs.py
 
       - name: Check for changes
         id: diff
