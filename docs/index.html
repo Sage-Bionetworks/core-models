@@ -1,998 +1,430 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Core Models – Index</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Core Models – Index</title>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"/>
+<style>
+:root{
+--bg:#0f1115;--panel:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.06);
+--text:rgba(244,242,236,0.92);--muted:rgba(244,242,236,0.66);--muted2:rgba(244,242,236,0.50);
+--accent:#a78bfa;--link:#7dd3c7;--linkHover:#b8fff2;
+--shadow:0 18px 55px rgba(0,0,0,0.32);--radius:18px;
+--danger:#f87171;--dangerBg:rgba(248,113,113,0.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#0e1014 0%,var(--bg) 55%,var(--bg) 100%);color:var(--text)}
+.container{max-width:1400px;margin:0 auto;padding:34px 18px 70px}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.title h1{margin:0 0 8px;font-size:28px;letter-spacing:-0.03em;line-height:1.1}
+.title p{margin:0;color:var(--muted);font-size:14px;max-width:980px;line-height:1.5}
+.meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;align-items:center;margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--muted);font-size:12px;user-select:none;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#86efac;box-shadow:0 0 0 3px rgba(134,239,172,0.12)}
+.badgeCount{border-color:rgba(167,139,250,0.25);background:rgba(167,139,250,0.10);color:rgba(244,242,236,0.90);font-weight:650}
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" />
+/* Tabs with ARIA */
+.tabs{display:flex;gap:6px;margin:18px 0 16px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px}
+.tab-btn{border:none;background:transparent;color:rgba(244,242,236,0.58);padding:10px 12px;cursor:pointer;font-size:14px;font-weight:650;letter-spacing:-0.01em;transition:all 140ms ease;position:relative;border-radius:10px;display:inline-flex;align-items:center;gap:8px;outline:none}
+.tab-btn:hover{color:rgba(244,242,236,0.85);background:rgba(255,255,255,0.03)}
+.tab-btn:focus-visible{box-shadow:0 0 0 2px rgba(167,139,250,0.5)}
+.tab-btn.active{color:rgba(244,242,236,0.92);background:rgba(167,139,250,0.10)}
+.tab-btn.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-11px;height:2px;background:rgba(167,139,250,0.9);border-radius:99px}
+.tab-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,0.06);color:rgba(244,242,236,0.55);font-weight:700}
+.tab-btn.active .tab-badge{background:rgba(167,139,250,0.18);color:rgba(244,242,236,0.85)}
+.tab-panel{display:none}.tab-panel.active{display:block}
 
-    <style>
-        :root {
-            /* Eye-friendly dark mode palette */
-            --bg: #0f1115;
-            --panel: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.06);
+/* Panel */
+.panel{border-radius:var(--radius);border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.03);box-shadow:var(--shadow);overflow:hidden}
+.panelHeader{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.panelHeaderTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panelHeader h2{margin:0;font-size:16px;letter-spacing:-0.01em}
+.panelHeader p{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.5;max-width:980px}
+.panelBody{padding:16px 16px 18px;position:relative;min-height:120px}
 
-            --text: rgba(244, 242, 236, 0.92);
-            --muted: rgba(244, 242, 236, 0.66);
-            --muted2: rgba(244, 242, 236, 0.50);
+/* Buttons */
+.btnRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.72);font-size:13px;font-weight:650;cursor:pointer;user-select:none;transition:all 140ms ease;white-space:nowrap;outline:none}
+.btn:hover{background:rgba(255,255,255,0.04);color:rgba(244,242,236,0.90);transform:translateY(-1px)}
+.btn:focus-visible{box-shadow:0 0 0 2px rgba(167,139,250,0.5)}
+.btn .chev{display:inline-block;transition:transform 160ms ease;opacity:0.85}
+.btn.open .chev{transform:rotate(180deg)}
+.btn.active{border-color:rgba(167,139,250,0.35);background:rgba(167,139,250,0.14);color:rgba(244,242,236,0.92)}
+.btn.disabled{opacity:0.35;pointer-events:none}
 
-            --accent: #a78bfa;
-            /* muted violet */
-            --link: #7dd3c7;
-            /* soft teal */
-            --linkHover: #b8fff2;
+/* Links */
+a{color:var(--link);text-decoration:none}a:hover{color:var(--linkHover);text-decoration:underline}
 
-            --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
-            --radius: 18px;
-        }
+/* DataTables overrides */
+table.dataTable{border-collapse:collapse!important;width:100%!important;color:var(--text)}
+table.dataTable thead th{background:rgba(255,255,255,0.015);border-bottom:1px solid rgba(255,255,255,0.05)!important;color:rgba(244,242,236,0.70);font-weight:650;font-size:12px;padding:12px 10px!important;white-space:nowrap}
+table.dataTable tbody td{border-top:none!important;padding:12px 10px!important;font-size:13px;color:rgba(244,242,236,0.88);vertical-align:top}
+table.dataTable tbody tr{border-bottom:1px solid rgba(255,255,255,0.045)}
+table.dataTable tbody tr:hover{background:rgba(255,255,255,0.025)!important}
 
-        * {
-            box-sizing: border-box;
-        }
+/* Custom sort icons */
+table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,table.dataTable thead .sorting_desc::after{opacity:0!important}
+table.dataTable thead .sorting::before,table.dataTable thead .sorting_asc::before,table.dataTable thead .sorting_desc::before{opacity:0!important}
+th.sorting{cursor:pointer}
+th.sorting .sort-icon{display:inline-block;margin-left:4px;opacity:0.3;font-size:10px}
+th.sorting_asc .sort-icon{opacity:0.9}
+th.sorting_desc .sort-icon{opacity:0.9}
 
-        body {
-            margin: 0;
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-            background: linear-gradient(180deg, #0e1014 0%, var(--bg) 55%, var(--bg) 100%);
-            color: var(--text);
-        }
+.dataTables_wrapper .dataTables_filter input,.dataTables_wrapper .dataTables_length select{border:1px solid rgba(255,255,255,0.08)!important;background:rgba(255,255,255,0.02)!important;color:rgba(244,242,236,0.90)!important;border-radius:12px!important;padding:9px 10px!important;outline:none!important}
+.dataTables_wrapper .dataTables_length select option{background:#12141a!important;color:rgba(244,242,236,0.92)!important}
+.dataTables_wrapper .dataTables_filter input:focus,.colFilter:focus{border-color:rgba(167,139,250,0.50)!important;box-shadow:0 0 0 4px rgba(167,139,250,0.14)}
+.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_info{color:rgba(244,242,236,0.55)!important;font-size:13px!important}
+.dataTables_wrapper .dataTables_paginate{margin-top:14px!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:12px!important;border:1px solid transparent!important;background:transparent!important;color:rgba(244,242,236,0.55)!important;padding:8px 10px!important;margin:0 2px!important;transition:all 120ms ease}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.06)!important;color:rgba(244,242,236,0.85)!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{background:rgba(167,139,250,0.14)!important;border-color:rgba(167,139,250,0.20)!important;color:rgba(244,242,236,0.92)!important}
+.dataTables_scrollHeadInner{width:100%!important}
+.dataTables_scrollHeadInner table{width:100%!important}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 34px 18px 70px;
-        }
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px;color:rgba(244,242,236,0.65);word-break:break-all}
 
-        /* Top header */
-        .top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 18px;
-            margin-bottom: 16px;
-        }
+/* Filter row */
+.filtersRow th{padding:10px 10px 12px!important;background:rgba(255,255,255,0.012)!important;border-bottom:1px solid rgba(255,255,255,0.04)!important}
+.filtersRow.hidden{display:none}
+.colFilter{width:100%;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.90);border-radius:12px;padding:9px 10px;font-size:12px;outline:none}
+.colFilter option{background:#12141a;color:rgba(244,242,236,0.92)}
 
-        .title h1 {
-            margin: 0 0 8px;
-            font-size: 28px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
+/* Schema open icon button */
+.schema-link{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;border:1px solid rgba(167,139,250,0.18);background:rgba(167,139,250,0.09);color:rgba(244,242,236,0.80);font-size:14px;text-decoration:none!important;transition:all 120ms ease}
+.schema-link:hover{background:rgba(167,139,250,0.18);color:#fff;transform:translateY(-1px);text-decoration:none!important}
+.schema-link::after{display:none!important}
 
-        .title p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 14px;
-            max-width: 980px;
-            line-height: 1.5;
-        }
+/* SHA copy button */
+.sha-wrap{display:flex;align-items:center;gap:6px}
+.sha-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:11px;color:rgba(244,242,236,0.55)}
+.sha-copy{background:none;border:1px solid rgba(255,255,255,0.06);color:rgba(244,242,236,0.45);border-radius:8px;padding:3px 6px;cursor:pointer;font-size:11px;transition:all 120ms ease;white-space:nowrap}
+.sha-copy:hover{background:rgba(255,255,255,0.04);color:rgba(244,242,236,0.80)}
+.sha-copy.copied{color:#86efac;border-color:rgba(134,239,172,0.3)}
 
-        .meta {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: 2px;
-        }
+/* Relative date tooltip */
+.date-cell{position:relative;cursor:default}
+.date-cell .date-abs{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e1f26;color:var(--text);padding:6px 10px;border-radius:10px;font-size:11px;white-space:nowrap;border:1px solid rgba(255,255,255,0.08);box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:10;pointer-events:none}
+.date-cell:hover .date-abs{display:block}
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--muted);
-            font-size: 12px;
-            user-select: none;
-            white-space: nowrap;
-        }
+/* Loading / Error / Empty states */
+.state-overlay{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px;text-align:center;gap:14px}
+.state-overlay svg{opacity:0.35}
+.state-overlay p{margin:0;color:var(--muted);font-size:14px;max-width:400px;line-height:1.5}
+.state-overlay .btn{margin-top:4px}
 
-        .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #86efac;
-            box-shadow: 0 0 0 3px rgba(134, 239, 172, 0.12);
-        }
+/* Spinner */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:36px;height:36px;border:3px solid rgba(167,139,250,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
 
-        .badgeCount {
-            border-color: rgba(167, 139, 250, 0.25);
-            background: rgba(167, 139, 250, 0.10);
-            color: rgba(244, 242, 236, 0.90);
-            font-weight: 650;
-        }
+/* Skeleton rows */
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.skeleton-row td{height:18px}
+.skeleton-bar{height:14px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.03) 0%,rgba(255,255,255,0.06) 50%,rgba(255,255,255,0.03) 100%);background-size:400px 100%;animation:shimmer 1.8s infinite linear;width:80%}
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 18px;
-            margin: 18px 0 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 10px;
-        }
+/* Error banner */
+.error-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid rgba(248,113,113,0.2);background:var(--dangerBg);color:rgba(244,242,236,0.88);font-size:13px;margin-bottom:16px}
+.error-banner svg{flex-shrink:0}
 
-        .tab-btn {
-            border: none;
-            background: transparent;
-            color: rgba(244, 242, 236, 0.58);
-            padding: 10px 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 650;
-            letter-spacing: -0.01em;
-            transition: all 140ms ease;
-            position: relative;
-        }
+/* DCC table */
+.dcc-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+.dcc-table th,.dcc-table td{border-top:1px solid rgba(255,255,255,0.05);padding:14px 12px;text-align:left;vertical-align:top;font-size:13px}
+.dcc-table th{background:rgba(255,255,255,0.015);color:rgba(244,242,236,0.70);font-weight:700;border-top:none}
+.dcc-table tr:hover td{background:rgba(255,255,255,0.025)}
+.dcc-table td:first-child{font-size:14px;font-weight:750}
 
-        .tab-btn:hover {
-            color: rgba(244, 242, 236, 0.85);
-        }
+/* DCC search */
+.dcc-search-wrap{margin-bottom:14px}
+.dcc-search{border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.90);border-radius:12px;padding:9px 12px;font-size:13px;outline:none;width:100%;max-width:320px}
+.dcc-search:focus{border-color:rgba(167,139,250,0.50);box-shadow:0 0 0 4px rgba(167,139,250,0.14)}
+.dcc-table tr.dcc-hidden{display:none}
 
-        .tab-btn.active {
-            color: rgba(244, 242, 236, 0.92);
-        }
+.muted{color:rgba(244,242,236,0.50);font-size:13px}
+.footer{margin-top:12px;color:rgba(244,242,236,0.50);font-size:12px}
 
-        .tab-btn.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -11px;
-            height: 2px;
-            background: rgba(167, 139, 250, 0.9);
-            border-radius: 99px;
-        }
+/* External link icon (only non-schema) */
+a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-size:0.85em}
 
-        .tab-panel {
-            display: none;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
-
-        /* Panel */
-        .panel {
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .panelHeader {
-            padding: 18px 18px 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .panelHeaderTop {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .panelHeader h2 {
-            margin: 0;
-            font-size: 16px;
-            letter-spacing: -0.01em;
-        }
-
-        .panelHeader p {
-            margin: 7px 0 0;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.5;
-            max-width: 980px;
-        }
-
-        .panelBody {
-            padding: 16px 16px 18px;
-        }
-
-        /* Buttons */
-        .btnRow {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(244, 242, 236, 0.72);
-            font-size: 13px;
-            font-weight: 650;
-            cursor: pointer;
-            user-select: none;
-            transition: all 140ms ease;
-            white-space: nowrap;
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: rgba(244, 242, 236, 0.90);
-            transform: translateY(-1px);
-        }
-
-        .btn .chev {
-            display: inline-block;
-            transition: transform 160ms ease;
-            opacity: 0.85;
-        }
-
-        .btn.open .chev {
-            transform: rotate(180deg);
-        }
-
-        /* Links */
-        a {
-            color: var(--link);
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: var(--linkHover);
-            text-decoration: underline;
-        }
-
-        /* DataTables */
-        table.dataTable {
-            border-collapse: collapse !important;
-            width: 100% !important;
-            color: var(--text);
-        }
-
-        table.dataTable thead th {
-            background: rgba(255, 255, 255, 0.015);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-            color: rgba(244, 242, 236, 0.70);
-            font-weight: 650;
-            font-size: 12px;
-            padding: 12px 10px !important;
-            white-space: nowrap;
-        }
-
-        table.dataTable tbody td {
-            border-top: 1px solid rgba(255, 255, 255, 0.045) !important;
-            padding: 12px 10px !important;
-            font-size: 13px;
-            color: rgba(244, 242, 236, 0.88);
-            vertical-align: top;
-        }
-
-        table.dataTable tbody tr:hover {
-            background: rgba(255, 255, 255, 0.025) !important;
-        }
-
-        /* Controls (length, search, info) */
-        .dataTables_wrapper .dataTables_filter input,
-        .dataTables_wrapper .dataTables_length select {
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            background: rgba(255, 255, 255, 0.02) !important;
-            color: rgba(244, 242, 236, 0.90) !important;
-            border-radius: 12px !important;
-            padding: 9px 10px !important;
-            outline: none !important;
-        }
-
-        /* IMPORTANT: make the dropdown menu readable */
-        .dataTables_wrapper .dataTables_length select option {
-            background: #12141a !important;
-            color: rgba(244, 242, 236, 0.92) !important;
-        }
-
-        .dataTables_wrapper .dataTables_filter input:focus,
-        .colFilter:focus {
-            border-color: rgba(167, 139, 250, 0.50) !important;
-            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
-        }
-
-        .dataTables_wrapper .dataTables_filter label,
-        .dataTables_wrapper .dataTables_length label,
-        .dataTables_wrapper .dataTables_info {
-            color: rgba(244, 242, 236, 0.55) !important;
-            font-size: 13px !important;
-        }
-
-        /* Pagination chips */
-        .dataTables_wrapper .dataTables_paginate {
-            margin-top: 14px !important;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            border-radius: 12px !important;
-            border: 1px solid transparent !important;
-            background: transparent !important;
-            color: rgba(244, 242, 236, 0.55) !important;
-            padding: 8px 10px !important;
-            margin: 0 2px !important;
-            transition: all 120ms ease;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: rgba(255, 255, 255, 0.04) !important;
-            border-color: rgba(255, 255, 255, 0.06) !important;
-            color: rgba(244, 242, 236, 0.85) !important;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: rgba(167, 139, 250, 0.14) !important;
-            border-color: rgba(167, 139, 250, 0.20) !important;
-            color: rgba(244, 242, 236, 0.92) !important;
-        }
-
-        /* Schema URL link */
-        .pillLink {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 11px;
-            border-radius: 12px;
-            border: 1px solid rgba(167, 139, 250, 0.18);
-            background: rgba(167, 139, 250, 0.09);
-            color: rgba(244, 242, 236, 0.88);
-            font-size: 12px;
-            font-weight: 650;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .pillLink:hover {
-            background: rgba(167, 139, 250, 0.13);
-            text-decoration: none;
-            color: rgba(244, 242, 236, 0.92);
-        }
-
-        .mono {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 12px;
-            color: rgba(244, 242, 236, 0.65);
-            word-break: break-all;
-        }
-
-        /* Per-column filters row */
-        .filtersRow th {
-            padding: 10px 10px 12px !important;
-            background: rgba(255, 255, 255, 0.012) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-        }
-
-        .filtersRow.hidden {
-            display: none;
-        }
-
-        .colFilter {
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(244, 242, 236, 0.90);
-            border-radius: 12px;
-            padding: 9px 10px;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .colFilter option {
-            background: #12141a;
-            color: rgba(244, 242, 236, 0.92);
-        }
-
-        /* DCC table */
-        .dcc-table {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .dcc-table th,
-        .dcc-table td {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 14px 12px;
-            text-align: left;
-            vertical-align: top;
-            font-size: 13px;
-        }
-
-        .dcc-table th {
-            background: rgba(255, 255, 255, 0.015);
-            color: rgba(244, 242, 236, 0.70);
-            font-weight: 700;
-            border-top: none;
-        }
-
-        .dcc-table tr:hover td {
-            background: rgba(255, 255, 255, 0.025);
-        }
-
-        .muted {
-            color: rgba(244, 242, 236, 0.50);
-            font-size: 13px;
-        }
-
-        .footer {
-            margin-top: 12px;
-            color: rgba(244, 242, 236, 0.50);
-            font-size: 12px;
-        }
-
-        @media (max-width: 900px) {
-            .top {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .meta {
-                justify-content: flex-start;
-            }
-        }
-    </style>
+@media(max-width:900px){
+.top{flex-direction:column;align-items:flex-start}
+.meta{justify-content:flex-start}
+}
+</style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="top">
-            <div class="title">
-                <h1>Index of Data Models Across Sage</h1>
-                <p>
-                    Browse Synapse JSON schema versions and quick links to DCC data model documentation.
-                    The schema table is generated from <span class="mono">docs/data.json</span>.
-                </p>
-            </div>
+<div class="container">
+<div class="top">
+<div class="title">
+<h1>Index of Data Models Across Sage</h1>
+<p>Browse registered Synapse JSON schemas across Sage and jump directly to DCC data models, documentation, and portals.<br/><span class="muted">Tip: Start with search or filter by organization, schema name, or version.</span></p>
+</div>
+<div class="meta">
+<div class="badge"><span class="dot"></span>GitHub Pages · /docs · main</div>
+<div id="rowCountBadge" class="badge badgeCount">Loading…</div>
+</div>
+</div>
 
-            <div class="meta">
-                <div class="badge">
-                    <span class="dot"></span>
-                    GitHub Pages • /docs • main
-                </div>
-                <div id="rowCountBadge" class="badge badgeCount">
-                    Loading…
-                </div>
-            </div>
-        </div>
+<!-- Tabs with ARIA -->
+<div class="tabs" role="tablist" aria-label="Dashboard sections">
+<button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-schemas" id="tabBtn-schemas" tabindex="0" data-tab="schemas">Schema Versions <span class="tab-badge" id="schemaCountTab">—</span></button>
+<button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-dcc" id="tabBtn-dcc" tabindex="-1" data-tab="dcc">DCC Links <span class="tab-badge" id="dccCountTab">8</span></button>
+</div>
 
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="schemas">Schema Versions</button>
-            <button class="tab-btn" data-tab="dcc">DCC Links</button>
-        </div>
+<!-- Panel 1: Schema Versions -->
+<div id="tab-schemas" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtn-schemas">
+<div class="panel">
+<div class="panelHeader">
+<div class="panelHeaderTop">
+<div>
+<h2>Schema Versions</h2>
+<p>Use global search for quick filtering, or open filters for per-column dropdowns. The row count badge updates as filters are applied.</p>
+</div>
+<div class="btnRow">
+<button id="filtersToggle" class="btn" type="button" aria-expanded="false">Filters <span class="chev">▾</span></button>
+<button id="clearFilters" class="btn disabled" type="button">Clear Filters</button>
+</div>
+</div>
+</div>
+<div class="panelBody">
+<!-- Loading state -->
+<div id="loadingState" class="state-overlay">
+<div class="spinner"></div>
+<p>Loading schema data…</p>
+</div>
+<!-- Error state (hidden) -->
+<div id="errorState" class="state-overlay" style="display:none">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+<p id="errorMsg">Could not load data.json. Did you run export_orgs.py?</p>
+<button class="btn" id="retryBtn" type="button">↻ Retry</button>
+</div>
+<!-- Empty state (hidden) -->
+<div id="emptyState" class="state-overlay" style="display:none">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+<p>No schema versions found. The data file is empty.</p>
+</div>
+<!-- Table (hidden until loaded) -->
+<div id="tableWrap" style="display:none">
+<table id="orgTable" class="display" style="width:100%">
+<thead>
+<tr>
+<th>Org ID</th>
+<th>Org Name</th>
+<th>Schema ID</th>
+<th>Schema Name</th>
+<th style="width:52px">Schema</th>
+<th>Version ID</th>
+<th>Semantic Ver</th>
+<th>Created</th>
+<th>Created By</th>
+<th>SHA256</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<div class="footer">Tip: If a column has too many unique values, its dropdown is disabled and you can use global search instead.</div>
+</div>
+</div>
+</div>
+</div>
 
-        <!-- Panel 1: Schema Versions -->
-        <div id="tab-schemas" class="tab-panel active">
-            <div class="panel">
-                <div class="panelHeader">
-                    <div class="panelHeaderTop">
-                        <div>
-                            <h2>Schema Versions</h2>
-                            <p>
-                                Use global search for quick filtering, or open filters for per-column dropdowns.
-                                The row count badge updates as filters are applied.
-                            </p>
-                        </div>
+<!-- Panel 2: DCC Links -->
+<div id="tab-dcc" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn-dcc">
+<div class="panel">
+<div class="panelHeader">
+<h2>Data Coordinating Center Links</h2>
+<p>Quick links to DCC GitHub repositories and documentation sites.</p>
+</div>
+<div class="panelBody">
+<div class="dcc-search-wrap">
+<input type="text" class="dcc-search" id="dccSearch" placeholder="Filter DCCs…" aria-label="Filter DCC table"/>
+</div>
+<table class="dcc-table" id="dccTable">
+<thead><tr><th style="width:120px">DCC</th><th>GitHub Repository</th><th>JSON Schema Links</th><th>Docs Link</th><th>Portal Link</th></tr></thead>
+<tbody>
+<tr><td><b>ARK</b></td><td><a href="https://github.com/ARK-Portal/data_model" target="_blank">ARK-Portal/data_model</a></td><td><a href="https://github.com/ARK-Portal/data_model/tree/main/model_json_schema" target="_blank">model_json_schema</a></td><td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td><td><a href="https://arkportal.synapse.org/" target="_blank">arkportal.synapse.org</a></td></tr>
+<tr><td><b>ADKP</b></td><td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td><td><a href="https://github.com/adknowledgeportal/data-models/tree/main/current-manifest-schemas/AD.model" target="_blank">current-manifest-schemas/AD.model</a></td><td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td><td><a href="https://adknowledgeportal.synapse.org/" target="_blank">adknowledgeportal.synapse.org</a></td></tr>
+<tr><td><b>ALS</b></td><td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td><td><a href="https://github.com/amp-als/data-model/tree/main/json-schemas" target="_blank">json-schemas</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://ampals.synapse.org/" target="_blank">ampals.synapse.org</a></td></tr>
+<tr><td><b>Classic</b></td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC/tree/main/model" target="_blank">model</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://classicportal.synapse.org/" target="_blank">classicportal.synapse.org</a></td></tr>
+<tr><td><b>ELITE</b></td><td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td><td><span class="muted">—</span></td><td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td><td><a href="https://eliteportal.synapse.org/" target="_blank">eliteportal.synapse.org</a></td></tr>
+<tr><td><b>HTAN2</b></td><td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td><td><a href="https://github.com/ncihtan/htan2-data-model/tree/main/JSON_Schemas" target="_blank">JSON_Schemas</a></td><td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td><td><a href="https://humantumoratlas.org/" target="_blank">humantumoratlas.org</a></td></tr>
+<tr><td><b>MC2</b></td><td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td><td><a href="https://github.com/mc2-center/data-models/tree/main/json_schemas" target="_blank">json_schemas</a></td><td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td><td><a href="https://cancercomplexity.synapse.org/" target="_blank">cancercomplexity.synapse.org</a></td></tr>
+<tr><td><b>NF</b></td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary" target="_blank">nf-osi/nf-metadata-dictionary</a></td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">registered-json-schemas</a></td><td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td><td><a href="https://nf.synapse.org/" target="_blank">nf.synapse.org</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 
-                        <div class="btnRow">
-                            <button id="filtersToggle" class="btn" type="button">
-                                Filters <span class="chev">▾</span>
-                            </button>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script>
+/* === Tabs with keyboard nav === */
+const tabBtns=document.querySelectorAll('.tab-btn'),
+      panels={schemas:document.getElementById('tab-schemas'),dcc:document.getElementById('tab-dcc')};
+function activateTab(btn){
+  tabBtns.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');b.tabIndex=-1});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');btn.tabIndex=0;btn.focus();
+  Object.values(panels).forEach(p=>p.classList.remove('active'));
+  panels[btn.dataset.tab].classList.add('active');
+  history.replaceState(null,null,'#'+btn.dataset.tab);
+}
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>activateTab(btn));
+  btn.addEventListener('keydown',e=>{
+    const btns=[...tabBtns];const i=btns.indexOf(btn);
+    if(e.key==='ArrowRight'){e.preventDefault();activateTab(btns[(i+1)%btns.length])}
+    if(e.key==='ArrowLeft'){e.preventDefault();activateTab(btns[(i-1+btns.length)%btns.length])}
+  });
+});
+// Deep linking
+if(location.hash){const t=location.hash.slice(1);const b=[...tabBtns].find(x=>x.dataset.tab===t);if(b)activateTab(b)}
 
-                            <button id="clearFilters" class="btn" type="button">
-                                Clear Filters
-                            </button>
-                        </div>
-                    </div>
-                </div>
+/* === Helpers === */
+function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function stripHtml(v){const d=document.createElement('div');d.innerHTML=v;return d.textContent.trim()}
+function norm(v){return stripHtml(v).replace(/\s+/g,' ').trim()}
+function setBadge(t){document.getElementById('rowCountBadge').textContent=t}
+function escRx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 
-                <div class="panelBody">
-                    <table id="orgTable" class="display">
-                        <thead>
-                            <tr>
-                                <th>Org ID</th>
-                                <th>Org Name</th>
-                                <th>Schema ID</th>
-                                <th>Schema Name</th>
-                                <th>Schema URL</th>
-                                <th>Version ID</th>
-                                <th>Semantic Version</th>
-                                <th>Created On</th>
-                                <th>Created By</th>
-                                <th>SHA256</th>
-                            </tr>
-                            <!-- Filter row injected here -->
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+/* === Relative dates === */
+function relDate(iso){
+  if(!iso)return'—';
+  const d=new Date(iso),now=new Date(),diff=now-d,s=Math.floor(diff/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24),mo=Math.floor(dy/30),yr=Math.floor(dy/365);
+  if(yr>0)return yr===1?'1 year ago':yr+' years ago';
+  if(mo>0)return mo===1?'1 month ago':mo+' months ago';
+  if(dy>0)return dy===1?'1 day ago':dy+' days ago';
+  if(h>0)return h===1?'1 hour ago':h+' hours ago';
+  if(m>0)return m===1?'1 min ago':m+' mins ago';
+  return'just now';
+}
+function fmtDate(iso){
+  if(!iso)return'';
+  try{return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return iso}
+}
 
-                    <div class="footer">
-                        Tip: If a column has too many unique values, its dropdown is disabled and you can use global
-                        search instead.
-                    </div>
-                </div>
-            </div>
-        </div>
+/* === SHA truncation === */
+function shaCell(hex){
+  if(!hex)return'<span class="muted">—</span>';
+  const short=hex.substring(0,10);
+  return`<div class="sha-wrap"><span class="sha-text" title="${esc(hex)}">${esc(short)}…</span><button class="sha-copy" data-sha="${esc(hex)}" title="Copy full SHA256">Copy</button></div>`;
+}
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.sha-copy');if(!btn)return;
+  navigator.clipboard.writeText(btn.dataset.sha).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1500)}).catch(()=>{});
+});
 
-        <!-- Panel 2: DCC Links -->
-        <div id="tab-dcc" class="tab-panel">
-            <div class="panel">
-                <div class="panelHeader">
-                    <h2>Data Coordinating Center Links</h2>
-                    <p>
-                        Quick links to DCC GitHub repositories and documentation sites.
-                    </p>
-                </div>
+/* === Filter row === */
+function addFilterRow(hidden){
+  const thead=document.querySelector('#orgTable thead');
+  const cols=thead.querySelectorAll('tr:first-child th');
+  const tr=document.createElement('tr');tr.className='filtersRow';if(hidden)tr.classList.add('hidden');
+  const filterable=new Set([0,1,2,3,5,6,7,8]);
+  cols.forEach((_,i)=>{
+    const th=document.createElement('th');
+    if(filterable.has(i)){th.innerHTML=`<select class="colFilter" data-col="${i}" aria-label="Filter column ${i}"><option value="">All</option></select>`}
+    else{th.innerHTML='<span class="muted">—</span>'}
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+}
 
-                <div class="panelBody">
-                    <table class="dcc-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 120px;">DCC</th>
-                                <th>GitHub Repository</th>
-                                <th>JSON Schema Links</th>
-                                <th>Docs Link</th>
-                                <th>Portal Link</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><b>ARK</b></td>
-                                <td>
-                                    <a href="https://github.com/ARK-Portal/data_model" target="_blank">
-                                        ARK-Portal/data_model
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/ARK-Portal/data_model/tree/main/model_json_schema"
-                                        target="_blank">
-                                        model_json_schema
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://ark-portal.github.io/data_model/" target="_blank">
-                                        ark-portal.github.io/data_model
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://arkportal.synapse.org/" target="_blank">
-                                        arkportal.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+/* === Clear filter state === */
+function updateClearBtn(table){
+  const hasG=!!table.search(),hasC=table.columns().search().toArray().some(Boolean);
+  const btn=document.getElementById('clearFilters');
+  btn.classList.toggle('disabled',!hasG&&!hasC);
+  document.getElementById('filtersToggle').classList.toggle('active',hasG||hasC);
+}
 
-                            <tr>
-                                <td><b>ADKP</b></td>
-                                <td>
-                                    <a href="https://github.com/adknowledgeportal/data-models" target="_blank">
-                                        adknowledgeportal/data-models
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/adknowledgeportal/data-models/tree/main/current-manifest-schemas/AD.model"
-                                        target="_blank">
-                                        current-manifest-schemas/AD.model
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">
-                                        amp-ad-metadata-dictionary
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://adknowledgeportal.synapse.org/" target="_blank">
-                                        adknowledgeportal.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+/* === Load data === */
+async function loadSchemaTable(){
+  const loading=document.getElementById('loadingState'),errorEl=document.getElementById('errorState'),emptyEl=document.getElementById('emptyState'),tableWrap=document.getElementById('tableWrap');
+  loading.style.display='flex';errorEl.style.display='none';emptyEl.style.display='none';tableWrap.style.display='none';
+  let data;
+  try{
+    const r=await fetch('./data.json');
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    data=await r.json();
+  }catch(err){
+    loading.style.display='none';errorEl.style.display='flex';
+    document.getElementById('errorMsg').textContent=`Could not load data.json: ${err.message}`;
+    setBadge('Error loading data');return;
+  }
+  loading.style.display='none';
+  if(!data||data.length===0){emptyEl.style.display='flex';setBadge('0 rows');document.getElementById('schemaCountTab').textContent='0';return}
+  setBadge(`${data.length.toLocaleString()} rows loaded`);
+  document.getElementById('schemaCountTab').textContent=data.length.toLocaleString();
+  tableWrap.style.display='block';
 
-                            <tr>
-                                <td><b>ALS</b></td>
-                                <td>
-                                    <a href="https://github.com/amp-als/data-model" target="_blank">
-                                        amp-als/data-model
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/amp-als/data-model/tree/main/json-schemas"
-                                        target="_blank">
-                                        json-schemas
-                                    </a>
-                                </td>
-                                <td><span class="muted">Docs link TBD</span></td>
-                                <td>
-                                    <a href="https://ampals.synapse.org/" target="_blank">
-                                        ampals.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+  addFilterRow(true);
+  // Toggle
+  const togBtn=document.getElementById('filtersToggle');
+  togBtn.addEventListener('click',()=>{
+    const row=document.querySelector('#orgTable thead tr.filtersRow');if(!row)return;
+    const h=row.classList.toggle('hidden');togBtn.classList.toggle('open',!h);
+    togBtn.setAttribute('aria-expanded',String(!h));
+  });
 
-                            <tr>
-                                <td><b>Classic</b></td>
-                                <td>
-                                    <a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">
-                                        Sage-Bionetworks/CLASSIC
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/Sage-Bionetworks/CLASSIC/tree/main/model"
-                                        target="_blank">
-                                        model
-                                    </a>
-                                </td>
-                                <td><span class="muted">Docs link TBD</span></td>
-                                <td>
-                                    <a href="https://classicportal.synapse.org/" target="_blank">
-                                        classicportal.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+  const tbody=document.querySelector('#orgTable tbody');
+  for(const row of data){
+    const url=`https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/${row.organization_name}-${row.schema_name}`;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+<td>${esc(row.organization_id)}</td>
+<td>${esc(row.organization_name)}</td>
+<td>${esc(row.schema_id)}</td>
+<td>${esc(row.schema_name)}</td>
+<td><a class="schema-link" href="${esc(url)}" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>
+<td>${esc(row.version_id)}</td>
+<td>${esc(row.semantic_version)}</td>
+<td><span class="date-cell">${relDate(row.created_on)}<span class="date-abs">${fmtDate(row.created_on)}</span></span></td>
+<td>${esc(row.created_by)}</td>
+<td>${shaCell(row.json_sha256_hex)}</td>`;
+    tbody.appendChild(tr);
+  }
 
-                            <tr>
-                                <td><b>ELITE</b></td>
-                                <td>
-                                    <a href="https://github.com/eliteportal/data-models" target="_blank">
-                                        eliteportal/data-models
-                                    </a>
-                                </td>
-                                <td><span class="muted">—</span></td>
-                                <td>
-                                    <a href="https://eliteportal.github.io/data-dictionary/" target="_blank">
-                                        eliteportal.github.io/data-dictionary
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://eliteportal.synapse.org/" target="_blank">
-                                        eliteportal.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+  const table=$('#orgTable').DataTable({pageLength:25,order:[[7,'desc']],dom:'lfrtip',scrollX:true});
 
-                            <tr>
-                                <td><b>HTAN2</b></td>
-                                <td>
-                                    <a href="https://github.com/ncihtan/htan2-data-model" target="_blank">
-                                        ncihtan/htan2-data-model
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/ncihtan/htan2-data-model/tree/main/JSON_Schemas"
-                                        target="_blank">
-                                        JSON_Schemas
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">
-                                        docs.humantumoratlas.org
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://humantumoratlas.org/" target="_blank">
-                                        humantumoratlas.org
-                                    </a>
-                                </td>
-                            </tr>
+  table.on('draw',function(){
+    const v=table.rows({filter:'applied'}).count();
+    setBadge(`${v.toLocaleString()} rows shown`);
+    updateClearBtn(table);
+  });
 
-                            <tr>
-                                <td><b>MC2</b></td>
-                                <td>
-                                    <a href="https://github.com/mc2-center/data-models" target="_blank">
-                                        mc2-center/data-models
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/mc2-center/data-models/tree/main/json_schemas"
-                                        target="_blank">
-                                        json_schemas
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://mc2-center.github.io/data-models/" target="_blank">
-                                        mc2-center.github.io/data-models
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://cancercomplexity.synapse.org/" target="_blank">
-                                        cancercomplexity.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
+  // Per-column filters
+  const fCols=[0,1,2,3,5,6,7,8];
+  for(const ci of fCols){
+    const sel=document.querySelector(`.colFilter[data-col="${ci}"]`);if(!sel)continue;
+    const vals=new Set();
+    table.column(ci).data().each(v=>{const t=norm(v);if(t)vals.add(t)});
+    const arr=[...vals].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'}));
+    if(arr.length>300){sel.innerHTML='<option value="">Too many ('+arr.length+')</option>';sel.disabled=true;continue}
+    for(const v of arr){const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)}
+    sel.addEventListener('change',function(){const v=this.value;if(!v)table.column(ci).search('').draw();else table.column(ci).search(escRx(v),true,false).draw()});
+  }
 
-                            <tr>
-                                <td><b>NF</b></td>
-                                <td>
-                                    <a href="https://github.com/nf-osi/nf-metadata-dictionary" target="_blank">
-                                        nf-osi/nf-metadata-dictionary
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas"
-                                        target="_blank">
-                                        registered-json-schemas
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">
-                                        nf-osi.github.io/nf-metadata-dictionary
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="https://nf.synapse.org/" target="_blank">
-                                        nf.synapse.org
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="footer">
-                        Want this table filterable too? Easy add with DataTables.
-                    </div>
-                </div>
-            </div>
-        </div>
+  // Clear
+  document.getElementById('clearFilters').addEventListener('click',()=>{
+    table.search('');table.columns().search('');
+    document.querySelectorAll('.colFilter').forEach(s=>s.value='');
+    table.draw();
+  });
+  updateClearBtn(table);
+}
 
-    </div>
+// Retry
+document.getElementById('retryBtn').addEventListener('click',loadSchemaTable);
 
-    <!-- jQuery + DataTables -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+/* === DCC filter === */
+document.getElementById('dccSearch').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll('#dccTable tbody tr').forEach(tr=>{
+    tr.classList.toggle('dcc-hidden',!tr.textContent.toLowerCase().includes(q));
+  });
+});
 
-    <script>
-        // --------------------
-        // Tabs
-        // --------------------
-        const tabButtons = document.querySelectorAll(".tab-btn");
-        const panels = {
-            schemas: document.getElementById("tab-schemas"),
-            dcc: document.getElementById("tab-dcc")
-        };
-
-        tabButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                tabButtons.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-
-                Object.values(panels).forEach(p => p.classList.remove("active"));
-                panels[btn.dataset.tab].classList.add("active");
-            });
-        });
-
-        // --------------------
-        // Helpers
-        // --------------------
-        function escapeHtml(str) {
-            if (str === null || str === undefined) return "";
-            return String(str)
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;")
-                .replaceAll("'", "&#039;");
-        }
-
-        function stripHtmlToText(value) {
-            const tmp = document.createElement("div");
-            tmp.innerHTML = value;
-            return tmp.textContent.trim();
-        }
-
-        function normalizeText(value) {
-            return stripHtmlToText(value).replace(/\s+/g, " ").trim();
-        }
-
-        function setBadge(text) {
-            document.getElementById("rowCountBadge").textContent = text;
-        }
-
-        function addFilterRow(hiddenByDefault = true) {
-            const thead = document.querySelector("#orgTable thead");
-            const headerCells = thead.querySelectorAll("tr:first-child th");
-
-            const filterRow = document.createElement("tr");
-            filterRow.className = "filtersRow";
-
-            if (hiddenByDefault) {
-                filterRow.classList.add("hidden");
-            }
-
-            headerCells.forEach((th, idx) => {
-                const filterTh = document.createElement("th");
-
-                // Useful dropdowns only
-                const filterableColumns = new Set([0, 1, 2, 3, 5, 6, 7, 8]);
-
-                if (filterableColumns.has(idx)) {
-                    filterTh.innerHTML = `<select class="colFilter" data-col="${idx}">
-            <option value="">All</option>
-          </select>`;
-                } else {
-                    filterTh.innerHTML = `<span class="muted">—</span>`;
-                }
-
-                filterRow.appendChild(filterTh);
-            });
-
-            thead.appendChild(filterRow);
-        }
-
-        function populateDropdown(selectEl, values) {
-            for (const v of values) {
-                const opt = document.createElement("option");
-                opt.value = v;
-                opt.textContent = v;
-                selectEl.appendChild(opt);
-            }
-        }
-
-        function escapeRegex(str) {
-            return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        }
-
-        // --------------------
-        // Filters toggle
-        // --------------------
-        function setupFiltersToggle() {
-            const btn = document.getElementById("filtersToggle");
-
-            btn.addEventListener("click", () => {
-                const row = document.querySelector("#orgTable thead tr.filtersRow");
-                if (!row) return;
-
-                const isHidden = row.classList.contains("hidden");
-
-                if (isHidden) {
-                    row.classList.remove("hidden");
-                    btn.classList.add("open");
-                } else {
-                    row.classList.add("hidden");
-                    btn.classList.remove("open");
-                }
-            });
-        }
-
-        // --------------------
-        // Load schema data
-        // --------------------
-        async function loadSchemaTable() {
-            const resp = await fetch("./data.json");
-
-            if (!resp.ok) {
-                console.warn("No data.json found. Did you run export_orgs.py?");
-                setBadge("No data.json found");
-                return;
-            }
-
-            const data = await resp.json();
-            setBadge(`${data.length.toLocaleString()} rows loaded`);
-
-            // Add filter row before DataTables initializes (hidden by default)
-            addFilterRow(true);
-            setupFiltersToggle();
-
-            // Render rows
-            const tbody = document.querySelector("#orgTable tbody");
-
-            for (const row of data) {
-                const schemaUrl =
-                    `https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/` +
-                    `${row.organization_name}-${row.schema_name}`;
-
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-          <td>${escapeHtml(row.organization_id)}</td>
-          <td>${escapeHtml(row.organization_name)}</td>
-          <td>${escapeHtml(row.schema_id)}</td>
-          <td>${escapeHtml(row.schema_name)}</td>
-          <td>
-            <a class="pillLink" href="${escapeHtml(schemaUrl)}" target="_blank" rel="noopener noreferrer">
-              Open Schema ↗
-            </a>
-          </td>
-          <td>${escapeHtml(row.version_id)}</td>
-          <td>${escapeHtml(row.semantic_version)}</td>
-          <td>${escapeHtml(row.created_on)}</td>
-          <td>${escapeHtml(row.created_by)}</td>
-          <td class="mono">${escapeHtml(row.json_sha256_hex)}</td>
-        `;
-                tbody.appendChild(tr);
-            }
-
-            // Init DataTables
-            const table = $("#orgTable").DataTable({
-                pageLength: 25,
-                order: [[7, "desc"]],
-                dom: "lfrtip"
-            });
-
-            // Badge updates whenever table redraws
-            table.on("draw", function () {
-                const visible = table.rows({ filter: "applied" }).count();
-                setBadge(`${visible.toLocaleString()} rows shown`);
-            });
-
-            // --------------------
-            // Per-column dropdown filters (FIXED)
-            // --------------------
-            const filterableColumns = [0, 1, 2, 3, 5, 6, 7, 8];
-
-            for (const colIdx of filterableColumns) {
-                const selectEl = document.querySelector(`.colFilter[data-col="${colIdx}"]`);
-                if (!selectEl) continue;
-
-                const valuesSet = new Set();
-
-                // Use DataTables internal data, but normalize it
-                table.column(colIdx).data().each(function (value) {
-                    const text = normalizeText(value);
-                    if (text) valuesSet.add(text);
-                });
-
-                const values = Array.from(valuesSet).sort((a, b) =>
-                    a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
-                );
-
-                // Prevent unusable dropdowns
-                const MAX_OPTIONS = 300;
-                if (values.length > MAX_OPTIONS) {
-                    const opt = document.createElement("option");
-                    opt.value = "";
-                    opt.textContent = `Too many values (${values.length})`;
-                    selectEl.appendChild(opt);
-                    selectEl.disabled = true;
-                    continue;
-                }
-
-                populateDropdown(selectEl, values);
-
-                // FIX: use "contains" search (not strict exact regex)
-                // because DataTables sometimes normalizes whitespace or has hidden chars
-                selectEl.addEventListener("change", function () {
-                    const val = this.value;
-
-                    if (!val) {
-                        table.column(colIdx).search("").draw();
-                        return;
-                    }
-
-                    // We do a regex "contains" match safely
-                    const escaped = escapeRegex(val);
-                    table.column(colIdx).search(escaped, true, false).draw();
-                });
-            }
-
-            // --------------------
-            // Clear Filters button
-            // --------------------
-            document.getElementById("clearFilters").addEventListener("click", () => {
-                // Clear global search
-                table.search("");
-
-                // Clear column searches
-                table.columns().search("");
-
-                // Reset dropdowns
-                document.querySelectorAll(".colFilter").forEach(sel => {
-                    sel.value = "";
-                });
-
-                table.draw();
-            });
-        }
-
-        loadSchemaTable();
-    </script>
+loadSchemaTable();
+</script>
 </body>
-
 </html>
