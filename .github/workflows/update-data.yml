@@ -1,9 +1,7 @@
-# .github/workflows/update-data.yml
-#
-# Runs the Synapse export script daily, commits the updated data.json,
-# and deploys the docs/ folder to GitHub Pages.
+# Runs the Synapse export script, publishes schemas to CoreModels,
+# commits updated schema data, and deploys docs/ to GitHub Pages.
 
-name: Update Schema Data & Deploy
+name: Update Schema Data, Publish to CoreModels & Deploy
 
 on:
   # ─── Scheduled: every day at 6:00 AM UTC ───
@@ -13,27 +11,28 @@ on:
   # ─── Manual trigger from the Actions tab ───
   workflow_dispatch:
 
-  # ─── Also run on pushes to main (so Pages deploys on code changes too) ───
+  # ─── Also run on pushes to main ───
   push:
     branches: [main]
 
-# Required for GitHub Pages deployment via actions
+# Required for GitHub Pages deployment
 permissions:
-  contents: write        # needed to push the data.json commit
-  pages: write           # needed to deploy to GitHub Pages
-  id-token: write        # needed for Pages OIDC auth
+  contents: write
+  pages: write
+  id-token: write
 
 # Prevent overlapping runs
 concurrency:
-  group: "update-and-deploy"
+  group: update-and-deploy
   cancel-in-progress: true
 
 jobs:
   # ════════════════════════════════════════════
-  # Job 1: Run the Python script, commit changes
+  # Job 1: Update data + publish to CoreModels
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,23 +42,38 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install synapseclient
+          pip install synapseclient requests
 
-      - name: Run export script
+      # ─── Export schema / org data from Synapse ───
+      - name: Run Synapse export
         env:
-          # synapseclient reads this env var automatically for auth
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
         run: |
           python docs/export_orgs.py
 
+      # ─── Publish schemas to CoreModels ───
+      - name: Import schemas to CoreModels
+        env:
+          COREMODELS_API_URL: ${{ secrets.COREMODELS_API_URL }}
+          COREMODELS_API_TOKEN: ${{ secrets.COREMODELS_API_TOKEN }}
+          COREMODELS_PROJECT_ID: ${{ secrets.COREMODELS_PROJECT_ID }}
+          COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
+          COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
+        run: |
+          python docs/import_to_coremodels.py
+
+      # ─── Check if export produced changes ───
       - name: Check for changes
         id: diff
         run: |
-          git diff --quiet docs/data.json && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+          git diff --quiet docs/data.json \
+            && echo "changed=false" >> "$GITHUB_OUTPUT" \
+            || echo "changed=true" >> "$GITHUB_OUTPUT"
 
+      # ─── Commit updated data if needed ───
       - name: Commit and push updated data.json
         if: steps.diff.outputs.changed == 'true'
         run: |
@@ -76,7 +90,7 @@ jobs:
     needs: update-data
     runs-on: ubuntu-latest
 
-    # Only deploy from main branch
+    # Only deploy from main
     if: github.ref == 'refs/heads/main'
 
     environment:
@@ -87,10 +101,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Fetch the latest commit (including the one we just pushed)
           ref: main
 
-      - name: Setup GitHub Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
 
       - name: Upload docs/ as Pages artifact
