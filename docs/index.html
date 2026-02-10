@@ -4,150 +4,151 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Core Models – Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"/>
 <style>
 :root{
---bg:#0f1115;--panel:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.06);
---text:rgba(244,242,236,0.92);--muted:rgba(244,242,236,0.66);--muted2:rgba(244,242,236,0.50);
---accent:#a78bfa;--link:#7dd3c7;--linkHover:#b8fff2;
---shadow:0 18px 55px rgba(0,0,0,0.32);--radius:18px;
---danger:#f87171;--dangerBg:rgba(248,113,113,0.08);
+  --bg:#f8f9fc;--bg2:#ffffff;--panel:#ffffff;
+  --border:rgba(0,0,0,0.07);--borderLight:rgba(0,0,0,0.04);
+  --text:rgba(15,23,42,0.90);--muted:rgba(15,23,42,0.45);--muted2:rgba(15,23,42,0.30);
+  --accent:#3b82f6;--accentBg:rgba(59,130,246,0.07);--accentBorder:rgba(59,130,246,0.18);
+  --link:#2563eb;--linkHover:#1d4ed8;
+  --green:#22c55e;--greenBg:rgba(34,197,94,0.08);
+  --shadow:0 1px 3px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.06);
+  --radius:16px;
+  --danger:#ef4444;--dangerBg:rgba(239,68,68,0.06);--dangerBorder:rgba(239,68,68,0.15);
+  --font:'Manrope',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#0e1014 0%,var(--bg) 55%,var(--bg) 100%);color:var(--text)}
-.container{max-width:1400px;margin:0 auto;padding:34px 18px 70px}
-.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
-.title h1{margin:0 0 8px;font-size:28px;letter-spacing:-0.03em;line-height:1.1}
-.title p{margin:0;color:var(--muted);font-size:14px;max-width:980px;line-height:1.5}
-.meta{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;align-items:center;margin-top:2px}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--muted);font-size:12px;user-select:none;white-space:nowrap}
-.dot{width:7px;height:7px;border-radius:50%;background:#86efac;box-shadow:0 0 0 3px rgba(134,239,172,0.12)}
-.badgeCount{border-color:rgba(167,139,250,0.25);background:rgba(167,139,250,0.10);color:rgba(244,242,236,0.90);font-weight:650}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--font);background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);color:var(--text);min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:32px 20px 70px}
 
-/* Tabs with ARIA */
-.tabs{display:flex;gap:6px;margin:18px 0 16px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px}
-.tab-btn{border:none;background:transparent;color:rgba(244,242,236,0.58);padding:10px 12px;cursor:pointer;font-size:14px;font-weight:650;letter-spacing:-0.01em;transition:all 140ms ease;position:relative;border-radius:10px;display:inline-flex;align-items:center;gap:8px;outline:none}
-.tab-btn:hover{color:rgba(244,242,236,0.85);background:rgba(255,255,255,0.03)}
-.tab-btn:focus-visible{box-shadow:0 0 0 2px rgba(167,139,250,0.5)}
-.tab-btn.active{color:rgba(244,242,236,0.92);background:rgba(167,139,250,0.10)}
-.tab-btn.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-11px;height:2px;background:rgba(167,139,250,0.9);border-radius:99px}
-.tab-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,0.06);color:rgba(244,242,236,0.55);font-weight:700}
-.tab-btn.active .tab-badge{background:rgba(167,139,250,0.18);color:rgba(244,242,236,0.85)}
+/* Top */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.title h1{font-size:26px;font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-bottom:6px;color:rgba(15,23,42,0.95)}
+.title p{color:var(--muted);font-size:13.5px;max-width:960px;line-height:1.55}
+.meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center;margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12px;font-weight:600;user-select:none;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--greenBg)}
+.badgeCount{border-color:var(--accentBorder);background:var(--accentBg);color:var(--accent);font-weight:700}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin:18px 0 16px;border-bottom:1px solid var(--borderLight);padding-bottom:10px}
+.tab-btn{border:none;background:transparent;color:var(--muted);padding:9px 14px;cursor:pointer;font-size:13.5px;font-weight:700;font-family:var(--font);letter-spacing:-0.01em;transition:all 140ms ease;position:relative;border-radius:10px;display:inline-flex;align-items:center;gap:8px;outline:none}
+.tab-btn:hover{color:var(--text);background:rgba(0,0,0,0.025)}
+.tab-btn:focus-visible{box-shadow:0 0 0 2px var(--accentBorder)}
+.tab-btn.active{color:var(--text);background:var(--accentBg)}
+.tab-btn.active::after{content:"";position:absolute;left:12px;right:12px;bottom:-11px;height:2px;background:var(--accent);border-radius:99px}
+.tab-badge{font-size:10.5px;padding:2px 7px;border-radius:99px;background:rgba(0,0,0,0.05);color:var(--muted);font-weight:700}
+.tab-btn.active .tab-badge{background:var(--accentBorder);color:var(--accent)}
 .tab-panel{display:none}.tab-panel.active{display:block}
 
 /* Panel */
-.panel{border-radius:var(--radius);border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.03);box-shadow:var(--shadow);overflow:hidden}
-.panelHeader{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.panel{border-radius:var(--radius);border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
+.panelHeader{padding:18px 20px 14px;border-bottom:1px solid var(--borderLight)}
 .panelHeaderTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.panelHeader h2{margin:0;font-size:16px;letter-spacing:-0.01em}
-.panelHeader p{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.5;max-width:980px}
+.panelHeader h2{font-size:15.5px;font-weight:800;letter-spacing:-0.02em;color:rgba(15,23,42,0.92)}
+.panelHeader p{margin:6px 0 0;color:var(--muted);font-size:12.5px;line-height:1.55;max-width:960px}
 .panelBody{padding:16px 16px 18px;position:relative;min-height:120px}
 
 /* Buttons */
-.btnRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.72);font-size:13px;font-weight:650;cursor:pointer;user-select:none;transition:all 140ms ease;white-space:nowrap;outline:none}
-.btn:hover{background:rgba(255,255,255,0.04);color:rgba(244,242,236,0.90);transform:translateY(-1px)}
-.btn:focus-visible{box-shadow:0 0 0 2px rgba(167,139,250,0.5)}
-.btn .chev{display:inline-block;transition:transform 160ms ease;opacity:0.85}
+.btnRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12.5px;font-weight:700;font-family:var(--font);cursor:pointer;user-select:none;transition:all 140ms ease;white-space:nowrap;outline:none}
+.btn:hover{background:rgba(0,0,0,0.02);color:var(--text);border-color:rgba(0,0,0,0.10);transform:translateY(-0.5px)}
+.btn:focus-visible{box-shadow:0 0 0 2px var(--accentBorder)}
+.btn .chev{display:inline-block;transition:transform 160ms ease;font-size:11px}
 .btn.open .chev{transform:rotate(180deg)}
-.btn.active{border-color:rgba(167,139,250,0.35);background:rgba(167,139,250,0.14);color:rgba(244,242,236,0.92)}
-.btn.disabled{opacity:0.35;pointer-events:none}
+.btn.active{border-color:var(--accentBorder);background:var(--accentBg);color:var(--accent)}
+.btn.disabled{opacity:0.32;pointer-events:none}
 
 /* Links */
-a{color:var(--link);text-decoration:none}a:hover{color:var(--linkHover);text-decoration:underline}
+a{color:var(--link);text-decoration:none;font-weight:600}
+a:hover{color:var(--linkHover);text-decoration:underline}
+a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.4;font-size:0.82em}
 
 /* DataTables overrides */
-table.dataTable{border-collapse:collapse!important;width:100%!important;color:var(--text)}
-table.dataTable thead th{background:rgba(255,255,255,0.015);border-bottom:1px solid rgba(255,255,255,0.05)!important;color:rgba(244,242,236,0.70);font-weight:650;font-size:12px;padding:12px 10px!important;white-space:nowrap}
-table.dataTable tbody td{border-top:none!important;padding:12px 10px!important;font-size:13px;color:rgba(244,242,236,0.88);vertical-align:top}
-table.dataTable tbody tr{border-bottom:1px solid rgba(255,255,255,0.045)}
-table.dataTable tbody tr:hover{background:rgba(255,255,255,0.025)!important}
+table.dataTable{border-collapse:collapse!important;width:100%!important;color:var(--text);font-family:var(--font)}
+table.dataTable thead th{background:rgba(0,0,0,0.018);border-bottom:1px solid var(--border)!important;color:var(--muted);font-weight:700;font-size:11.5px;padding:11px 10px!important;white-space:nowrap;text-transform:uppercase;letter-spacing:0.03em}
+table.dataTable tbody td{border-top:none!important;padding:11px 10px!important;font-size:13px;color:var(--text);vertical-align:top}
+table.dataTable tbody tr{border-bottom:1px solid var(--borderLight)}
+table.dataTable tbody tr:hover{background:rgba(59,130,246,0.025)!important}
 
-/* Custom sort icons */
-table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,table.dataTable thead .sorting_desc::after{opacity:0!important}
+/* Hide default sort icons, use custom CSS */
+table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,table.dataTable thead .sorting_desc::after,
 table.dataTable thead .sorting::before,table.dataTable thead .sorting_asc::before,table.dataTable thead .sorting_desc::before{opacity:0!important}
-th.sorting{cursor:pointer}
-th.sorting .sort-icon{display:inline-block;margin-left:4px;opacity:0.3;font-size:10px}
-th.sorting_asc .sort-icon{opacity:0.9}
-th.sorting_desc .sort-icon{opacity:0.9}
+table.dataTable thead th.sorting_asc{color:var(--accent)!important}
+table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 
-.dataTables_wrapper .dataTables_filter input,.dataTables_wrapper .dataTables_length select{border:1px solid rgba(255,255,255,0.08)!important;background:rgba(255,255,255,0.02)!important;color:rgba(244,242,236,0.90)!important;border-radius:12px!important;padding:9px 10px!important;outline:none!important}
-.dataTables_wrapper .dataTables_length select option{background:#12141a!important;color:rgba(244,242,236,0.92)!important}
-.dataTables_wrapper .dataTables_filter input:focus,.colFilter:focus{border-color:rgba(167,139,250,0.50)!important;box-shadow:0 0 0 4px rgba(167,139,250,0.14)}
-.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_info{color:rgba(244,242,236,0.55)!important;font-size:13px!important}
-.dataTables_wrapper .dataTables_paginate{margin-top:14px!important}
-.dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:12px!important;border:1px solid transparent!important;background:transparent!important;color:rgba(244,242,236,0.55)!important;padding:8px 10px!important;margin:0 2px!important;transition:all 120ms ease}
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.06)!important;color:rgba(244,242,236,0.85)!important}
-.dataTables_wrapper .dataTables_paginate .paginate_button.current{background:rgba(167,139,250,0.14)!important;border-color:rgba(167,139,250,0.20)!important;color:rgba(244,242,236,0.92)!important}
+.dataTables_wrapper .dataTables_filter input,.dataTables_wrapper .dataTables_length select{
+  border:1px solid var(--border)!important;background:var(--panel)!important;color:var(--text)!important;
+  border-radius:10px!important;padding:8px 10px!important;outline:none!important;font-family:var(--font)!important;font-size:13px!important}
+.dataTables_wrapper .dataTables_length select option{background:#fff!important;color:var(--text)!important}
+.dataTables_wrapper .dataTables_filter input:focus,.colFilter:focus{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accentBg)!important}
+.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_info{color:var(--muted)!important;font-size:12.5px!important;font-family:var(--font)!important}
+.dataTables_wrapper .dataTables_paginate{margin-top:12px!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:10px!important;border:1px solid transparent!important;background:transparent!important;color:var(--muted)!important;padding:7px 11px!important;margin:0 2px!important;transition:all 120ms ease;font-family:var(--font)!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:rgba(0,0,0,0.03)!important;border-color:var(--border)!important;color:var(--text)!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{background:var(--accentBg)!important;border-color:var(--accentBorder)!important;color:var(--accent)!important;font-weight:700!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled{opacity:0.3!important}
 .dataTables_scrollHeadInner{width:100%!important}
 .dataTables_scrollHeadInner table{width:100%!important}
-
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px;color:rgba(244,242,236,0.65);word-break:break-all}
+/* Fix: ensure the scroll wrapper doesn't clip content */
+.dataTables_scrollBody{overflow-x:auto!important}
 
 /* Filter row */
-.filtersRow th{padding:10px 10px 12px!important;background:rgba(255,255,255,0.012)!important;border-bottom:1px solid rgba(255,255,255,0.04)!important}
+.filtersRow th{padding:8px 10px 10px!important;background:rgba(59,130,246,0.015)!important;border-bottom:1px solid var(--borderLight)!important}
 .filtersRow.hidden{display:none}
-.colFilter{width:100%;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.90);border-radius:12px;padding:9px 10px;font-size:12px;outline:none}
-.colFilter option{background:#12141a;color:rgba(244,242,236,0.92)}
+.colFilter{width:100%;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:9px;padding:7px 9px;font-size:12px;font-family:var(--font);outline:none}
+.colFilter:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentBg)}
+.colFilter option{background:#fff;color:var(--text)}
 
-/* Schema open icon button */
-.schema-link{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;border:1px solid rgba(167,139,250,0.18);background:rgba(167,139,250,0.09);color:rgba(244,242,236,0.80);font-size:14px;text-decoration:none!important;transition:all 120ms ease}
-.schema-link:hover{background:rgba(167,139,250,0.18);color:#fff;transform:translateY(-1px);text-decoration:none!important}
+/* Schema icon button */
+.schema-link{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease}
+.schema-link:hover{background:rgba(59,130,246,0.14);color:var(--linkHover);transform:translateY(-0.5px);text-decoration:none!important}
 .schema-link::after{display:none!important}
 
-/* SHA copy button */
-.sha-wrap{display:flex;align-items:center;gap:6px}
-.sha-text{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:11px;color:rgba(244,242,236,0.55)}
-.sha-copy{background:none;border:1px solid rgba(255,255,255,0.06);color:rgba(244,242,236,0.45);border-radius:8px;padding:3px 6px;cursor:pointer;font-size:11px;transition:all 120ms ease;white-space:nowrap}
-.sha-copy:hover{background:rgba(255,255,255,0.04);color:rgba(244,242,236,0.80)}
-.sha-copy.copied{color:#86efac;border-color:rgba(134,239,172,0.3)}
+/* SHA */
+.sha-wrap{display:flex;align-items:center;gap:5px}
+.sha-text{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sha-copy{background:none;border:1px solid var(--borderLight);color:var(--muted);border-radius:7px;padding:2px 6px;cursor:pointer;font-size:10.5px;font-family:var(--font);font-weight:600;transition:all 120ms ease;white-space:nowrap}
+.sha-copy:hover{background:rgba(0,0,0,0.03);color:var(--text);border-color:var(--border)}
+.sha-copy.copied{color:var(--green);border-color:rgba(34,197,94,0.25)}
 
-/* Relative date tooltip */
+/* Date tooltip */
 .date-cell{position:relative;cursor:default}
-.date-cell .date-abs{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e1f26;color:var(--text);padding:6px 10px;border-radius:10px;font-size:11px;white-space:nowrap;border:1px solid rgba(255,255,255,0.08);box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:10;pointer-events:none}
+.date-cell .date-abs{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel);color:var(--text);padding:5px 10px;border-radius:9px;font-size:11px;white-space:nowrap;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.10);z-index:10;pointer-events:none}
 .date-cell:hover .date-abs{display:block}
 
-/* Loading / Error / Empty states */
+/* States */
 .state-overlay{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px;text-align:center;gap:14px}
-.state-overlay svg{opacity:0.35}
-.state-overlay p{margin:0;color:var(--muted);font-size:14px;max-width:400px;line-height:1.5}
+.state-overlay svg{color:var(--muted2)}
+.state-overlay p{margin:0;color:var(--muted);font-size:13.5px;max-width:400px;line-height:1.55}
 .state-overlay .btn{margin-top:4px}
-
-/* Spinner */
 @keyframes spin{to{transform:rotate(360deg)}}
-.spinner{width:36px;height:36px;border:3px solid rgba(167,139,250,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
-
-/* Skeleton rows */
-@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-.skeleton-row td{height:18px}
-.skeleton-bar{height:14px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.03) 0%,rgba(255,255,255,0.06) 50%,rgba(255,255,255,0.03) 100%);background-size:400px 100%;animation:shimmer 1.8s infinite linear;width:80%}
-
-/* Error banner */
-.error-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid rgba(248,113,113,0.2);background:var(--dangerBg);color:rgba(244,242,236,0.88);font-size:13px;margin-bottom:16px}
-.error-banner svg{flex-shrink:0}
+.spinner{width:34px;height:34px;border:3px solid var(--borderLight);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 
 /* DCC table */
-.dcc-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
-.dcc-table th,.dcc-table td{border-top:1px solid rgba(255,255,255,0.05);padding:14px 12px;text-align:left;vertical-align:top;font-size:13px}
-.dcc-table th{background:rgba(255,255,255,0.015);color:rgba(244,242,236,0.70);font-weight:700;border-top:none}
-.dcc-table tr:hover td{background:rgba(255,255,255,0.025)}
-.dcc-table td:first-child{font-size:14px;font-weight:750}
+.dcc-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.dcc-table th,.dcc-table td{border-top:1px solid var(--borderLight);padding:12px;text-align:left;vertical-align:top;font-size:13px}
+.dcc-table th{background:rgba(0,0,0,0.018);color:var(--muted);font-weight:700;border-top:none;font-size:11.5px;text-transform:uppercase;letter-spacing:0.03em}
+.dcc-table tr:hover td{background:rgba(59,130,246,0.02)}
+.dcc-table td:first-child{font-size:14px;font-weight:800}
 
 /* DCC search */
-.dcc-search-wrap{margin-bottom:14px}
-.dcc-search{border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(244,242,236,0.90);border-radius:12px;padding:9px 12px;font-size:13px;outline:none;width:100%;max-width:320px}
-.dcc-search:focus{border-color:rgba(167,139,250,0.50);box-shadow:0 0 0 4px rgba(167,139,250,0.14)}
+.dcc-search-wrap{margin-bottom:12px}
+.dcc-search{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;font-family:var(--font);outline:none;width:100%;max-width:300px}
+.dcc-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentBg)}
 .dcc-table tr.dcc-hidden{display:none}
 
-.muted{color:rgba(244,242,236,0.50);font-size:13px}
-.footer{margin-top:12px;color:rgba(244,242,236,0.50);font-size:12px}
-
-/* External link icon (only non-schema) */
-a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-size:0.85em}
+.muted{color:var(--muted);font-size:13px}
+.footer{margin-top:10px;color:var(--muted2);font-size:11.5px}
 
 @media(max-width:900px){
-.top{flex-direction:column;align-items:flex-start}
-.meta{justify-content:flex-start}
+  .top{flex-direction:column;align-items:flex-start}
+  .meta{justify-content:flex-start}
 }
 </style>
 </head>
@@ -156,7 +157,7 @@ a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-siz
 <div class="top">
 <div class="title">
 <h1>Index of Data Models Across Sage</h1>
-<p>Browse registered Synapse JSON schemas across Sage and jump directly to DCC data models, documentation, and portals.<br/><span class="muted">Tip: Start with search or filter by organization, schema name, or version.</span></p>
+<p>Browse registered Synapse JSON schemas across Sage and jump directly to DCC data models, documentation, and portals.<br/><span class="muted" style="font-size:12px">Tip: Start with search or filter by organization, schema name, or version.</span></p>
 </div>
 <div class="meta">
 <div class="badge"><span class="dot"></span>GitHub Pages · /docs · main</div>
@@ -164,20 +165,18 @@ a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-siz
 </div>
 </div>
 
-<!-- Tabs with ARIA -->
 <div class="tabs" role="tablist" aria-label="Dashboard sections">
 <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-schemas" id="tabBtn-schemas" tabindex="0" data-tab="schemas">Schema Versions <span class="tab-badge" id="schemaCountTab">—</span></button>
 <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-dcc" id="tabBtn-dcc" tabindex="-1" data-tab="dcc">DCC Links <span class="tab-badge" id="dccCountTab">8</span></button>
 </div>
 
-<!-- Panel 1: Schema Versions -->
 <div id="tab-schemas" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtn-schemas">
 <div class="panel">
 <div class="panelHeader">
 <div class="panelHeaderTop">
 <div>
 <h2>Schema Versions</h2>
-<p>Use global search for quick filtering, or open filters for per-column dropdowns. The row count badge updates as filters are applied.</p>
+<p>Use global search for quick filtering, or open column filters for per-column dropdowns. The row count badge updates live.</p>
 </div>
 <div class="btnRow">
 <button id="filtersToggle" class="btn" type="button" aria-expanded="false">Filters <span class="chev">▾</span></button>
@@ -186,48 +185,34 @@ a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-siz
 </div>
 </div>
 <div class="panelBody">
-<!-- Loading state -->
-<div id="loadingState" class="state-overlay">
-<div class="spinner"></div>
-<p>Loading schema data…</p>
-</div>
-<!-- Error state (hidden) -->
+<div id="loadingState" class="state-overlay"><div class="spinner"></div><p>Loading schema data…</p></div>
 <div id="errorState" class="state-overlay" style="display:none">
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-<p id="errorMsg">Could not load data.json. Did you run export_orgs.py?</p>
+<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+<p id="errorMsg">Could not load data.json.</p>
 <button class="btn" id="retryBtn" type="button">↻ Retry</button>
 </div>
-<!-- Empty state (hidden) -->
 <div id="emptyState" class="state-overlay" style="display:none">
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
 <p>No schema versions found. The data file is empty.</p>
 </div>
-<!-- Table (hidden until loaded) -->
 <div id="tableWrap" style="display:none">
 <table id="orgTable" class="display" style="width:100%">
 <thead>
-<tr>
-<th>Org ID</th>
-<th>Org Name</th>
-<th>Schema ID</th>
-<th>Schema Name</th>
-<th style="width:52px">Schema</th>
-<th>Version ID</th>
-<th>Semantic Ver</th>
-<th>Created</th>
-<th>Created By</th>
-<th>SHA256</th>
+<tr id="headerRow">
+<th>Org ID</th><th>Org Name</th><th>Schema ID</th><th>Schema Name</th>
+<th style="width:48px">Schema</th><th>Version ID</th><th>Semantic Ver</th>
+<th>Created</th><th>Created By</th><th>SHA256</th>
 </tr>
+<tr id="filterRow" class="filtersRow hidden"></tr>
 </thead>
 <tbody></tbody>
 </table>
-<div class="footer">Tip: If a column has too many unique values, its dropdown is disabled and you can use global search instead.</div>
+<div class="footer">Tip: If a column has too many unique values, its dropdown is disabled — use global search instead.</div>
 </div>
 </div>
 </div>
 </div>
 
-<!-- Panel 2: DCC Links -->
 <div id="tab-dcc" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn-dcc">
 <div class="panel">
 <div class="panelHeader">
@@ -235,20 +220,18 @@ a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-siz
 <p>Quick links to DCC GitHub repositories and documentation sites.</p>
 </div>
 <div class="panelBody">
-<div class="dcc-search-wrap">
-<input type="text" class="dcc-search" id="dccSearch" placeholder="Filter DCCs…" aria-label="Filter DCC table"/>
-</div>
+<div class="dcc-search-wrap"><input type="text" class="dcc-search" id="dccSearch" placeholder="Filter DCCs…" aria-label="Filter DCC table"/></div>
 <table class="dcc-table" id="dccTable">
-<thead><tr><th style="width:120px">DCC</th><th>GitHub Repository</th><th>JSON Schema Links</th><th>Docs Link</th><th>Portal Link</th></tr></thead>
+<thead><tr><th style="width:110px">DCC</th><th>GitHub Repository</th><th>JSON Schema Links</th><th>Docs Link</th><th>Portal Link</th></tr></thead>
 <tbody>
-<tr><td><b>ARK</b></td><td><a href="https://github.com/ARK-Portal/data_model" target="_blank">ARK-Portal/data_model</a></td><td><a href="https://github.com/ARK-Portal/data_model/tree/main/model_json_schema" target="_blank">model_json_schema</a></td><td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td><td><a href="https://arkportal.synapse.org/" target="_blank">arkportal.synapse.org</a></td></tr>
-<tr><td><b>ADKP</b></td><td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td><td><a href="https://github.com/adknowledgeportal/data-models/tree/main/current-manifest-schemas/AD.model" target="_blank">current-manifest-schemas/AD.model</a></td><td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td><td><a href="https://adknowledgeportal.synapse.org/" target="_blank">adknowledgeportal.synapse.org</a></td></tr>
-<tr><td><b>ALS</b></td><td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td><td><a href="https://github.com/amp-als/data-model/tree/main/json-schemas" target="_blank">json-schemas</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://ampals.synapse.org/" target="_blank">ampals.synapse.org</a></td></tr>
-<tr><td><b>Classic</b></td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC/tree/main/model" target="_blank">model</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://classicportal.synapse.org/" target="_blank">classicportal.synapse.org</a></td></tr>
-<tr><td><b>ELITE</b></td><td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td><td><span class="muted">—</span></td><td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td><td><a href="https://eliteportal.synapse.org/" target="_blank">eliteportal.synapse.org</a></td></tr>
-<tr><td><b>HTAN2</b></td><td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td><td><a href="https://github.com/ncihtan/htan2-data-model/tree/main/JSON_Schemas" target="_blank">JSON_Schemas</a></td><td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td><td><a href="https://humantumoratlas.org/" target="_blank">humantumoratlas.org</a></td></tr>
-<tr><td><b>MC2</b></td><td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td><td><a href="https://github.com/mc2-center/data-models/tree/main/json_schemas" target="_blank">json_schemas</a></td><td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td><td><a href="https://cancercomplexity.synapse.org/" target="_blank">cancercomplexity.synapse.org</a></td></tr>
-<tr><td><b>NF</b></td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary" target="_blank">nf-osi/nf-metadata-dictionary</a></td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">registered-json-schemas</a></td><td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td><td><a href="https://nf.synapse.org/" target="_blank">nf.synapse.org</a></td></tr>
+<tr><td>ARK</td><td><a href="https://github.com/ARK-Portal/data_model" target="_blank">ARK-Portal/data_model</a></td><td><a href="https://github.com/ARK-Portal/data_model/tree/main/model_json_schema" target="_blank">model_json_schema</a></td><td><a href="https://ark-portal.github.io/data_model/" target="_blank">ark-portal.github.io/data_model</a></td><td><a href="https://arkportal.synapse.org/" target="_blank">arkportal.synapse.org</a></td></tr>
+<tr><td>ADKP</td><td><a href="https://github.com/adknowledgeportal/data-models" target="_blank">adknowledgeportal/data-models</a></td><td><a href="https://github.com/adknowledgeportal/data-models/tree/main/current-manifest-schemas/AD.model" target="_blank">current-manifest-schemas/AD.model</a></td><td><a href="https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/" target="_blank">amp-ad-metadata-dictionary</a></td><td><a href="https://adknowledgeportal.synapse.org/" target="_blank">adknowledgeportal.synapse.org</a></td></tr>
+<tr><td>ALS</td><td><a href="https://github.com/amp-als/data-model" target="_blank">amp-als/data-model</a></td><td><a href="https://github.com/amp-als/data-model/tree/main/json-schemas" target="_blank">json-schemas</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://ampals.synapse.org/" target="_blank">ampals.synapse.org</a></td></tr>
+<tr><td>Classic</td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC" target="_blank">Sage-Bionetworks/CLASSIC</a></td><td><a href="https://github.com/Sage-Bionetworks/CLASSIC/tree/main/model" target="_blank">model</a></td><td><span class="muted">Docs link TBD</span></td><td><a href="https://classicportal.synapse.org/" target="_blank">classicportal.synapse.org</a></td></tr>
+<tr><td>ELITE</td><td><a href="https://github.com/eliteportal/data-models" target="_blank">eliteportal/data-models</a></td><td><span class="muted">—</span></td><td><a href="https://eliteportal.github.io/data-dictionary/" target="_blank">eliteportal.github.io/data-dictionary</a></td><td><a href="https://eliteportal.synapse.org/" target="_blank">eliteportal.synapse.org</a></td></tr>
+<tr><td>HTAN2</td><td><a href="https://github.com/ncihtan/htan2-data-model" target="_blank">ncihtan/htan2-data-model</a></td><td><a href="https://github.com/ncihtan/htan2-data-model/tree/main/JSON_Schemas" target="_blank">JSON_Schemas</a></td><td><a href="https://docs.humantumoratlas.org/data_model/overview/" target="_blank">docs.humantumoratlas.org</a></td><td><a href="https://humantumoratlas.org/" target="_blank">humantumoratlas.org</a></td></tr>
+<tr><td>MC2</td><td><a href="https://github.com/mc2-center/data-models" target="_blank">mc2-center/data-models</a></td><td><a href="https://github.com/mc2-center/data-models/tree/main/json_schemas" target="_blank">json_schemas</a></td><td><a href="https://mc2-center.github.io/data-models/" target="_blank">mc2-center.github.io/data-models</a></td><td><a href="https://cancercomplexity.synapse.org/" target="_blank">cancercomplexity.synapse.org</a></td></tr>
+<tr><td>NF</td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary" target="_blank">nf-osi/nf-metadata-dictionary</a></td><td><a href="https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas" target="_blank">registered-json-schemas</a></td><td><a href="https://nf-osi.github.io/nf-metadata-dictionary/" target="_blank">nf-osi.github.io/nf-metadata-dictionary</a></td><td><a href="https://nf.synapse.org/" target="_blank">nf.synapse.org</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -259,171 +242,273 @@ a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.45;font-siz
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 <script>
-/* === Tabs with keyboard nav === */
-const tabBtns=document.querySelectorAll('.tab-btn'),
-      panels={schemas:document.getElementById('tab-schemas'),dcc:document.getElementById('tab-dcc')};
-function activateTab(btn){
-  tabBtns.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');b.tabIndex=-1});
-  btn.classList.add('active');btn.setAttribute('aria-selected','true');btn.tabIndex=0;btn.focus();
-  Object.values(panels).forEach(p=>p.classList.remove('active'));
-  panels[btn.dataset.tab].classList.add('active');
-  history.replaceState(null,null,'#'+btn.dataset.tab);
+/* ======= Tabs with keyboard nav ======= */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = { schemas: document.getElementById('tab-schemas'), dcc: document.getElementById('tab-dcc') };
+
+function activateTab(btn) {
+  tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); b.tabIndex = -1; });
+  btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); btn.tabIndex = 0; btn.focus();
+  Object.values(tabPanels).forEach(p => p.classList.remove('active'));
+  tabPanels[btn.dataset.tab].classList.add('active');
+  try { history.replaceState(null, null, '#' + btn.dataset.tab); } catch(e) {}
 }
-tabBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>activateTab(btn));
-  btn.addEventListener('keydown',e=>{
-    const btns=[...tabBtns];const i=btns.indexOf(btn);
-    if(e.key==='ArrowRight'){e.preventDefault();activateTab(btns[(i+1)%btns.length])}
-    if(e.key==='ArrowLeft'){e.preventDefault();activateTab(btns[(i-1+btns.length)%btns.length])}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => activateTab(btn));
+  btn.addEventListener('keydown', e => {
+    const arr = [...tabBtns], i = arr.indexOf(btn);
+    if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(arr[(i + 1) % arr.length]); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); activateTab(arr[(i - 1 + arr.length) % arr.length]); }
   });
 });
-// Deep linking
-if(location.hash){const t=location.hash.slice(1);const b=[...tabBtns].find(x=>x.dataset.tab===t);if(b)activateTab(b)}
 
-/* === Helpers === */
-function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function stripHtml(v){const d=document.createElement('div');d.innerHTML=v;return d.textContent.trim()}
-function norm(v){return stripHtml(v).replace(/\s+/g,' ').trim()}
-function setBadge(t){document.getElementById('rowCountBadge').textContent=t}
-function escRx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
-
-/* === Relative dates === */
-function relDate(iso){
-  if(!iso)return'—';
-  const d=new Date(iso),now=new Date(),diff=now-d,s=Math.floor(diff/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24),mo=Math.floor(dy/30),yr=Math.floor(dy/365);
-  if(yr>0)return yr===1?'1 year ago':yr+' years ago';
-  if(mo>0)return mo===1?'1 month ago':mo+' months ago';
-  if(dy>0)return dy===1?'1 day ago':dy+' days ago';
-  if(h>0)return h===1?'1 hour ago':h+' hours ago';
-  if(m>0)return m===1?'1 min ago':m+' mins ago';
-  return'just now';
-}
-function fmtDate(iso){
-  if(!iso)return'';
-  try{return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return iso}
+if (location.hash) {
+  const t = location.hash.slice(1);
+  const b = [...tabBtns].find(x => x.dataset.tab === t);
+  if (b) activateTab(b);
 }
 
-/* === SHA truncation === */
-function shaCell(hex){
-  if(!hex)return'<span class="muted">—</span>';
-  const short=hex.substring(0,10);
-  return`<div class="sha-wrap"><span class="sha-text" title="${esc(hex)}">${esc(short)}…</span><button class="sha-copy" data-sha="${esc(hex)}" title="Copy full SHA256">Copy</button></div>`;
+/* ======= Helpers ======= */
+function esc(s) { if (s == null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function stripHtml(v) { const d = document.createElement('div'); d.innerHTML = v; return d.textContent.trim(); }
+function norm(v) { return stripHtml(v).replace(/\s+/g, ' ').trim(); }
+function setBadge(t) { document.getElementById('rowCountBadge').textContent = t; }
+function escRx(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+/* ======= Relative dates ======= */
+function relDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso), now = new Date(), diff = now - d;
+  const s = Math.floor(diff/1000), m = Math.floor(s/60), h = Math.floor(m/60);
+  const dy = Math.floor(h/24), mo = Math.floor(dy/30), yr = Math.floor(dy/365);
+  if (yr > 0) return yr === 1 ? '1 year ago' : yr + ' years ago';
+  if (mo > 0) return mo === 1 ? '1 month ago' : mo + ' months ago';
+  if (dy > 0) return dy === 1 ? '1 day ago' : dy + ' days ago';
+  if (h > 0) return h === 1 ? '1 hour ago' : h + ' hours ago';
+  if (m > 0) return m === 1 ? '1 min ago' : m + ' mins ago';
+  return 'just now';
 }
-document.addEventListener('click',e=>{
-  const btn=e.target.closest('.sha-copy');if(!btn)return;
-  navigator.clipboard.writeText(btn.dataset.sha).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},1500)}).catch(()=>{});
+function fmtDate(iso) {
+  if (!iso) return '';
+  try { return new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }); }
+  catch(e) { return iso; }
+}
+
+/* ======= SHA ======= */
+function shaCell(hex) {
+  if (!hex) return '<span class="muted">—</span>';
+  const short = hex.substring(0, 10);
+  return '<div class="sha-wrap"><span class="sha-text" title="' + esc(hex) + '">' + esc(short) + '…</span><button class="sha-copy" data-sha="' + esc(hex) + '" title="Copy full SHA256">Copy</button></div>';
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.sha-copy');
+  if (!btn) return;
+  navigator.clipboard.writeText(btn.dataset.sha).then(() => {
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+  }).catch(() => {});
 });
 
-/* === Filter row === */
-function addFilterRow(hidden){
-  const thead=document.querySelector('#orgTable thead');
-  const cols=thead.querySelectorAll('tr:first-child th');
-  const tr=document.createElement('tr');tr.className='filtersRow';if(hidden)tr.classList.add('hidden');
-  const filterable=new Set([0,1,2,3,5,6,7,8]);
-  cols.forEach((_,i)=>{
-    const th=document.createElement('th');
-    if(filterable.has(i)){th.innerHTML=`<select class="colFilter" data-col="${i}" aria-label="Filter column ${i}"><option value="">All</option></select>`}
-    else{th.innerHTML='<span class="muted">—</span>'}
-    tr.appendChild(th);
-  });
-  thead.appendChild(tr);
-}
+/* ======= Build filter row cells (before DT init) ======= */
+const FILTERABLE = new Set([0, 1, 2, 3, 5, 6, 7, 8]);
 
-/* === Clear filter state === */
-function updateClearBtn(table){
-  const hasG=!!table.search(),hasC=table.columns().search().toArray().some(Boolean);
-  const btn=document.getElementById('clearFilters');
-  btn.classList.toggle('disabled',!hasG&&!hasC);
-  document.getElementById('filtersToggle').classList.toggle('active',hasG||hasC);
-}
-
-/* === Load data === */
-async function loadSchemaTable(){
-  const loading=document.getElementById('loadingState'),errorEl=document.getElementById('errorState'),emptyEl=document.getElementById('emptyState'),tableWrap=document.getElementById('tableWrap');
-  loading.style.display='flex';errorEl.style.display='none';emptyEl.style.display='none';tableWrap.style.display='none';
-  let data;
-  try{
-    const r=await fetch('./data.json');
-    if(!r.ok)throw new Error(`HTTP ${r.status}`);
-    data=await r.json();
-  }catch(err){
-    loading.style.display='none';errorEl.style.display='flex';
-    document.getElementById('errorMsg').textContent=`Could not load data.json: ${err.message}`;
-    setBadge('Error loading data');return;
+function buildFilterCells() {
+  const filterRow = document.getElementById('filterRow');
+  const headerCells = document.getElementById('headerRow').children;
+  for (let i = 0; i < headerCells.length; i++) {
+    const th = document.createElement('th');
+    if (FILTERABLE.has(i)) {
+      th.innerHTML = '<select class="colFilter" data-col="' + i + '" aria-label="Filter column ' + i + '"><option value="">All</option></select>';
+    } else {
+      th.innerHTML = '<span class="muted">—</span>';
+    }
+    filterRow.appendChild(th);
   }
-  loading.style.display='none';
-  if(!data||data.length===0){emptyEl.style.display='flex';setBadge('0 rows');document.getElementById('schemaCountTab').textContent='0';return}
-  setBadge(`${data.length.toLocaleString()} rows loaded`);
-  document.getElementById('schemaCountTab').textContent=data.length.toLocaleString();
-  tableWrap.style.display='block';
+}
 
-  addFilterRow(true);
-  // Toggle
-  const togBtn=document.getElementById('filtersToggle');
-  togBtn.addEventListener('click',()=>{
-    const row=document.querySelector('#orgTable thead tr.filtersRow');if(!row)return;
-    const h=row.classList.toggle('hidden');togBtn.classList.toggle('open',!h);
-    togBtn.setAttribute('aria-expanded',String(!h));
-  });
+/* ======= Update clear button state ======= */
+function updateClearBtn(table) {
+  const hasG = !!table.search();
+  const hasC = table.columns().search().toArray().some(Boolean);
+  document.getElementById('clearFilters').classList.toggle('disabled', !hasG && !hasC);
+  document.getElementById('filtersToggle').classList.toggle('active', hasG || hasC);
+}
 
-  const tbody=document.querySelector('#orgTable tbody');
-  for(const row of data){
-    const url=`https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/${row.organization_name}-${row.schema_name}`;
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
-<td>${esc(row.organization_id)}</td>
-<td>${esc(row.organization_name)}</td>
-<td>${esc(row.schema_id)}</td>
-<td>${esc(row.schema_name)}</td>
-<td><a class="schema-link" href="${esc(url)}" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>
-<td>${esc(row.version_id)}</td>
-<td>${esc(row.semantic_version)}</td>
-<td><span class="date-cell">${relDate(row.created_on)}<span class="date-abs">${fmtDate(row.created_on)}</span></span></td>
-<td>${esc(row.created_by)}</td>
-<td>${shaCell(row.json_sha256_hex)}</td>`;
+/* ======= Main load ======= */
+async function loadSchemaTable() {
+  const loading = document.getElementById('loadingState');
+  const errorEl = document.getElementById('errorState');
+  const emptyEl = document.getElementById('emptyState');
+  const tableWrap = document.getElementById('tableWrap');
+
+  loading.style.display = 'flex';
+  errorEl.style.display = 'none';
+  emptyEl.style.display = 'none';
+  tableWrap.style.display = 'none';
+
+  // Destroy previous DT instance if retrying
+  if ($.fn.DataTable.isDataTable('#orgTable')) {
+    $('#orgTable').DataTable().destroy();
+    document.querySelector('#orgTable tbody').innerHTML = '';
+    // Reset filter row
+    document.getElementById('filterRow').innerHTML = '';
+  }
+
+  let data;
+  try {
+    const r = await fetch('./data.json');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    data = await r.json();
+  } catch (err) {
+    loading.style.display = 'none';
+    errorEl.style.display = 'flex';
+    document.getElementById('errorMsg').textContent = 'Could not load data.json: ' + err.message;
+    setBadge('Error loading data');
+    return;
+  }
+
+  loading.style.display = 'none';
+
+  if (!data || data.length === 0) {
+    emptyEl.style.display = 'flex';
+    setBadge('0 rows');
+    document.getElementById('schemaCountTab').textContent = '0';
+    return;
+  }
+
+  setBadge(data.length.toLocaleString() + ' rows loaded');
+  document.getElementById('schemaCountTab').textContent = data.length.toLocaleString();
+  tableWrap.style.display = 'block';
+
+  // Build filter cells
+  buildFilterCells();
+
+  // Populate table body
+  const tbody = document.querySelector('#orgTable tbody');
+  for (const row of data) {
+    const url = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/' +
+      row.organization_name + '-' + row.schema_name;
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + esc(row.organization_id) + '</td>' +
+      '<td>' + esc(row.organization_name) + '</td>' +
+      '<td>' + esc(row.schema_id) + '</td>' +
+      '<td>' + esc(row.schema_name) + '</td>' +
+      '<td><a class="schema-link" href="' + esc(url) + '" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>' +
+      '<td>' + esc(row.version_id) + '</td>' +
+      '<td>' + esc(row.semantic_version) + '</td>' +
+      '<td><span class="date-cell">' + relDate(row.created_on) + '<span class="date-abs">' + fmtDate(row.created_on) + '</span></span></td>' +
+      '<td>' + esc(row.created_by) + '</td>' +
+      '<td>' + shaCell(row.json_sha256_hex) + '</td>';
     tbody.appendChild(tr);
   }
 
-  const table=$('#orgTable').DataTable({pageLength:25,order:[[7,'desc']],dom:'lfrtip',scrollX:true});
+  /* ====== Init DataTables ======
+     KEY FIX: Do NOT use scrollX here. Instead we put overflow-x:auto
+     on the panelBody wrapper. scrollX causes DT to clone the thead
+     into a separate <table>, which breaks our filter <select> elements
+     because the cloned selects get the events, not the originals.
+  */
+  const table = $('#orgTable').DataTable({
+    pageLength: 25,
+    order: [[7, 'desc']],
+    dom: 'lfrtip',
+    scrollX: false,
+    autoWidth: false
+  });
 
-  table.on('draw',function(){
-    const v=table.rows({filter:'applied'}).count();
-    setBadge(`${v.toLocaleString()} rows shown`);
+  // Badge updates on draw
+  table.on('draw', function () {
+    const v = table.rows({ filter: 'applied' }).count();
+    setBadge(v.toLocaleString() + ' rows shown');
     updateClearBtn(table);
   });
 
-  // Per-column filters
-  const fCols=[0,1,2,3,5,6,7,8];
-  for(const ci of fCols){
-    const sel=document.querySelector(`.colFilter[data-col="${ci}"]`);if(!sel)continue;
-    const vals=new Set();
-    table.column(ci).data().each(v=>{const t=norm(v);if(t)vals.add(t)});
-    const arr=[...vals].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'}));
-    if(arr.length>300){sel.innerHTML='<option value="">Too many ('+arr.length+')</option>';sel.disabled=true;continue}
-    for(const v of arr){const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)}
-    sel.addEventListener('change',function(){const v=this.value;if(!v)table.column(ci).search('').draw();else table.column(ci).search(escRx(v),true,false).draw()});
+  /* ====== Populate filter dropdowns ====== */
+  for (const colIdx of FILTERABLE) {
+    const sel = document.querySelector('#filterRow .colFilter[data-col="' + colIdx + '"]');
+    if (!sel) continue;
+
+    const vals = new Set();
+    table.column(colIdx).data().each(function (v) {
+      const t = norm(v);
+      if (t) vals.add(t);
+    });
+
+    const sorted = Array.from(vals).sort(function (a, b) {
+      return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+    });
+
+    if (sorted.length > 300) {
+      sel.innerHTML = '<option value="">Too many (' + sorted.length + ')</option>';
+      sel.disabled = true;
+      continue;
+    }
+
+    for (const v of sorted) {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      sel.appendChild(opt);
+    }
+
+    /* FIX: Use exact match via regex with ^ and $ anchors.
+       We also normalize the cell text via a custom search to
+       ensure whitespace differences don't cause mismatches. */
+    sel.addEventListener('change', function () {
+      const val = this.value;
+      if (!val) {
+        table.column(colIdx).search('').draw();
+      } else {
+        // Exact match: ^escaped_value$
+        table.column(colIdx).search('^' + escRx(val) + '$', true, false).draw();
+      }
+    });
   }
 
-  // Clear
-  document.getElementById('clearFilters').addEventListener('click',()=>{
-    table.search('');table.columns().search('');
-    document.querySelectorAll('.colFilter').forEach(s=>s.value='');
+  /* ====== Filter toggle ====== */
+  const togBtn = document.getElementById('filtersToggle');
+  // Remove old listeners by cloning
+  const newTog = togBtn.cloneNode(true);
+  togBtn.parentNode.replaceChild(newTog, togBtn);
+  newTog.addEventListener('click', function () {
+    const row = document.getElementById('filterRow');
+    if (!row) return;
+    const isHidden = row.classList.toggle('hidden');
+    newTog.classList.toggle('open', !isHidden);
+    newTog.setAttribute('aria-expanded', String(!isHidden));
+  });
+
+  /* ====== Clear filters ====== */
+  const clearBtn = document.getElementById('clearFilters');
+  const newClear = clearBtn.cloneNode(true);
+  clearBtn.parentNode.replaceChild(newClear, clearBtn);
+  newClear.addEventListener('click', function () {
+    table.search('');
+    table.columns().search('');
+    document.querySelectorAll('#filterRow .colFilter').forEach(function (s) { s.value = ''; });
+    // Also clear the DT search input
+    var searchInput = document.querySelector('.dataTables_filter input');
+    if (searchInput) searchInput.value = '';
     table.draw();
   });
+
   updateClearBtn(table);
 }
 
-// Retry
-document.getElementById('retryBtn').addEventListener('click',loadSchemaTable);
+/* Retry */
+document.getElementById('retryBtn').addEventListener('click', loadSchemaTable);
 
-/* === DCC filter === */
-document.getElementById('dccSearch').addEventListener('input',function(){
-  const q=this.value.toLowerCase();
-  document.querySelectorAll('#dccTable tbody tr').forEach(tr=>{
-    tr.classList.toggle('dcc-hidden',!tr.textContent.toLowerCase().includes(q));
+/* ======= DCC filter ======= */
+document.getElementById('dccSearch').addEventListener('input', function () {
+  var q = this.value.toLowerCase();
+  document.querySelectorAll('#dccTable tbody tr').forEach(function (tr) {
+    tr.classList.toggle('dcc-hidden', !tr.textContent.toLowerCase().includes(q));
   });
 });
 
+/* ======= Go ======= */
 loadSchemaTable();
 </script>
 </body>
