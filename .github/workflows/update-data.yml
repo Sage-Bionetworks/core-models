@@ -10,6 +10,11 @@ on:
 
   # ─── Manual trigger from the Actions tab ───
   workflow_dispatch:
+    inputs:
+      org_name:
+        description: "Optional organization_name filter (e.g. ADA.PSI). Leave blank to import all."
+        required: false
+        default: ""
 
   # ─── Also run on pushes to main ───
   push:
@@ -62,7 +67,12 @@ jobs:
           COREMODELS_PROJECT_ID: ${{ secrets.COREMODELS_PROJECT_ID }}
           COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
           COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
+
+          # 👇 New org filter (blank = import all)
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
+
         run: |
+          echo "Running import with ORG_NAME_FILTER='${ORG_NAME_FILTER}'"
           python docs/import_to_coremodels.py
 
       # ─── Check if export produced changes ───

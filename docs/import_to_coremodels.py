@@ -12,11 +12,15 @@ Required environment variables:
   COREMODELS_CONFIG_TYPE_ID - JSON Schema import profile ID
 
 Optional:
+  ORG_NAME_FILTER           - Organization name to filter imports (e.g. "ADA.PSI")
+                              If blank or unset, imports all organizations.
   OVERRIDE_NEW_PROPERTIES   - "true" to skip unmapped properties warning (default: "true")
   OVERRIDE_DIFFERENT_SOURCE - "true" to skip different source warning (default: "true")
   OVERRIDE_OVERWRITE        - "true" to skip overwrite warning (default: "true")
   ONLY_ADD_AND_UPDATE       - "true" to only add/update, never remove (default: "true")
   DRY_RUN                   - "true" to only list schemas without importing (default: "false")
+  DATA_JSON_PATH            - Path to docs/data.json (default: "docs/data.json")
+  RATE_LIMIT_SECONDS        - Seconds to wait between API calls (default: "1.0")
 """
 
 import json
@@ -34,6 +38,9 @@ API_TOKEN = os.environ.get("COREMODELS_API_TOKEN", "")
 PROJECT_ID = os.environ.get("COREMODELS_PROJECT_ID", "")
 SPACE_ID = os.environ.get("COREMODELS_SPACE_ID", "")
 CONFIG_TYPE_ID = os.environ.get("COREMODELS_CONFIG_TYPE_ID", "")
+
+# Optional: only import schemas from this org name
+ORG_NAME_FILTER = os.environ.get("ORG_NAME_FILTER", "").strip()
 
 # Override flags — default to true so imports don't fail on warnings
 OVERRIDE_NEW_PROPS = os.environ.get("OVERRIDE_NEW_PROPERTIES", "true").lower() == "true"
@@ -82,6 +89,31 @@ def load_data_json(path):
 
     print(f"Loaded {len(data)} total schema version rows from {path}")
     return data
+
+
+def filter_data_by_org_name(data):
+    """
+    If ORG_NAME_FILTER is set, only keep rows whose organization_name matches.
+    If blank, return data unchanged.
+    """
+    if not ORG_NAME_FILTER:
+        print("ORG_NAME_FILTER not set — importing schemas from ALL organizations")
+        return data
+
+    filtered = [row for row in data if row.get("organization_name") == ORG_NAME_FILTER]
+
+    print(
+        f"ORG_NAME_FILTER='{ORG_NAME_FILTER}' — "
+        f"kept {len(filtered)} of {len(data)} rows"
+    )
+
+    if not filtered:
+        print(
+            f"WARNING: No rows matched organization_name='{ORG_NAME_FILTER}'. "
+            f"Nothing will be imported."
+        )
+
+    return filtered
 
 
 def get_unique_schemas(data):
@@ -151,11 +183,7 @@ def import_schema_to_coremodels(schema_url, schema_key):
     body = {
         "spaceId": SPACE_ID,
         "configTypeId": CONFIG_TYPE_ID,
-        "sourceDtos": [
-            {
-                "fileUrl": schema_url
-            }
-        ],
+        "sourceDtos": [{"fileUrl": schema_url}],
         "overrideNewPropertiesWarning": OVERRIDE_NEW_PROPS,
         "overrideDifferentSourceWarning": OVERRIDE_DIFF_SRC,
         "overrideOverwriteWarning": OVERRIDE_OVERWRITE,
@@ -209,13 +237,21 @@ def main():
     print(f"Project ID:     {PROJECT_ID}")
     print(f"Space ID:       {SPACE_ID}")
     print(f"Config Type ID: {CONFIG_TYPE_ID}")
-    print(f"Override flags: new_props={OVERRIDE_NEW_PROPS}, "
-          f"diff_src={OVERRIDE_DIFF_SRC}, overwrite={OVERRIDE_OVERWRITE}, "
-          f"add_update_only={ONLY_ADD_UPDATE}")
+    print(f"Org filter:     {ORG_NAME_FILTER if ORG_NAME_FILTER else '(none)'}")
+    print(
+        f"Override flags: new_props={OVERRIDE_NEW_PROPS}, "
+        f"diff_src={OVERRIDE_DIFF_SRC}, overwrite={OVERRIDE_OVERWRITE}, "
+        f"add_update_only={ONLY_ADD_UPDATE}"
+    )
     print()
 
     # Load data
     data = load_data_json(DATA_JSON_PATH)
+
+    # Filter data.json rows by org name (optional)
+    data = filter_data_by_org_name(data)
+
+    # Deduplicate to unique schemas
     schemas = get_unique_schemas(data)
 
     if not schemas:
