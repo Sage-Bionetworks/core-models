@@ -29,7 +29,7 @@ from synapseclient.models.schema_organization import list_json_schema_organizati
 # ──────────────────────────────────────────────
 # Config
 # ──────────────────────────────────────────────
-MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "12"))
+MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "4"))
 ORG_NAME_FILTER = os.environ.get("ORG_NAME_FILTER", "").strip()
 OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "docs/data.json")
 

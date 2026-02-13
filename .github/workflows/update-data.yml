@@ -52,7 +52,7 @@ jobs:
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
           SKIP_TEST_SCHEMAS: "true"
-          MAX_WORKERS: "12"
+          MAX_WORKERS: "4"
         run: |
           python docs/export_orgs.py
 
