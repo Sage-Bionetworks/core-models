@@ -136,7 +136,7 @@ jobs:
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
 
           # Speed controls
-          MAX_WORKERS: "4"
+          MAX_WORKERS: "1"
           RATE_LIMIT_SECONDS: "0.0"
           VERIFY_URLS: "false"
 

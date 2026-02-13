@@ -54,7 +54,7 @@ DRY_RUN = os.environ.get("DRY_RUN", "false").lower() == "true"
 DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
 
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
-MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "4"))
+MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
 
 SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
