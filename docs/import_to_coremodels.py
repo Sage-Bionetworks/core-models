@@ -4,6 +4,9 @@ import_to_coremodels.py
 Reads docs/data.json, fetches each unique schema from the Synapse registry,
 and imports it into CoreModels via the Merge JSON Schema API.
 
+NEW:
+  - Only imports schemas where status == "published"
+
 Required environment variables:
   COREMODELS_API_URL        - Base URL for CoreModels API (e.g. https://api.coremodels.io)
   COREMODELS_API_TOKEN      - Bearer token for CoreModels
@@ -114,6 +117,21 @@ def filter_data_by_org_name(data):
     return filtered
 
 
+def filter_data_by_status_published(data):
+    """
+    Keep only rows where status == "published".
+    If status is missing, treat it as draft.
+    """
+    published = []
+    for row in data:
+        status = (row.get("status") or "").strip().lower()
+        if status == "published":
+            published.append(row)
+
+    print(f"Status filter: kept {len(published)} published rows out of {len(data)} total")
+    return published
+
+
 def get_unique_schemas(data):
     """
     Extract unique (organization_name, schema_name) pairs.
@@ -222,6 +240,7 @@ def main():
     print(f"Space ID:       {SPACE_ID}")
     print(f"Config Type ID: {CONFIG_TYPE_ID}")
     print(f"Org filter:     {ORG_NAME_FILTER if ORG_NAME_FILTER else '(none)'}")
+    print("Status filter:  published only")
     print(f"Max workers:    {MAX_WORKERS}")
     print(f"Verify URLs:    {VERIFY_URLS}")
     print(f"Rate limit:     {RATE_LIMIT_SECONDS} seconds/worker")
@@ -234,10 +253,11 @@ def main():
 
     data = load_data_json(DATA_JSON_PATH)
     data = filter_data_by_org_name(data)
+    data = filter_data_by_status_published(data)   # ← NEW FILTER
     schemas = get_unique_schemas(data)
 
     if not schemas:
-        print("No schemas found to import. Exiting.")
+        print("No published schemas found to import. Exiting.")
         sys.exit(0)
 
     print(f"\nStarting parallel import with {MAX_WORKERS} workers...\n")
@@ -320,7 +340,7 @@ def main():
         print(f"\n⚠️  {fail_count} schema(s) failed to import.")
         sys.exit(1)
 
-    print("\n🎉 All schemas processed successfully!")
+    print("\n🎉 All published schemas processed successfully!")
     sys.exit(0)
 
 

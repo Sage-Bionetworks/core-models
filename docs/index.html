@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"/>
+
 <style>
 :root{
   --bg:#f8f9fc;--bg2:#ffffff;--panel:#ffffff;
@@ -87,7 +88,7 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
   border-radius:10px!important;padding:8px 10px!important;outline:none!important;font-family:var(--font)!important;font-size:13px!important}
 .dataTables_wrapper .dataTables_length select option{background:#fff!important;color:var(--text)!important}
 .dataTables_wrapper .dataTables_filter input:focus,.colFilter:focus{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accentBg)!important}
-.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_info{color:var(--muted)!important;font-size:12.5px!important;font-family:var(--font)!important}
+.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_info{color:var(--muted)!important;font-size:12.5px!important;font-family:var(--font)!important}
 .dataTables_wrapper .dataTables_paginate{margin-top:12px!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:10px!important;border:1px solid transparent!important;background:transparent!important;color:var(--muted)!important;padding:7px 11px!important;margin:0 2px!important;transition:all 120ms ease;font-family:var(--font)!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:rgba(0,0,0,0.03)!important;border-color:var(--border)!important;color:var(--text)!important}
@@ -144,6 +145,32 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 
 .muted{color:var(--muted);font-size:13px}
 .footer{margin-top:10px;color:var(--muted2);font-size:11.5px}
+
+/* NEW: status pill */
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:-0.01em;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,0.02);
+  color:var(--muted);
+  text-transform:capitalize;
+}
+.status-pill.published{
+  background:rgba(34,197,94,0.08);
+  border-color:rgba(34,197,94,0.22);
+  color:rgba(22,163,74,0.95);
+}
+.status-pill.draft{
+  background:rgba(239,68,68,0.06);
+  border-color:rgba(239,68,68,0.18);
+  color:rgba(185,28,28,0.92);
+}
+
 @media(max-width:900px){
   .top{flex-direction:column;align-items:flex-start}
   .meta{justify-content:flex-start}
@@ -165,7 +192,7 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 </div>
 
 <div class="tabs" role="tablist" aria-label="Dashboard sections">
-<button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-schemas" id="tabBtn-schemas" tabindex="0" data-tab="schemas">Schema Versions <span class="tab-badge" id="schemaCountTab">—</span></button>
+<button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-schemas" id="tabBtn-schemas" tabindex="0" data-tab="schemas">Registered Schemas<span class="tab-badge" id="schemaCountTab">—</span></button>
 <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-dcc" id="tabBtn-dcc" tabindex="-1" data-tab="dcc">DCC Links <span class="tab-badge" id="dccCountTab">8</span></button>
 </div>
 
@@ -183,8 +210,8 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
   Filters <span class="chev">▾</span>
 </button>
 
-<button id="hideTestToggle" class="btn active" type="button" aria-pressed="true">
-  Hide “test” schemas
+<button id="hideDraftToggle" class="btn active" type="button" aria-pressed="true">
+  Hide draft schemas
 </button>
 
 <button id="clearFilters" class="btn disabled" type="button">
@@ -213,9 +240,17 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <table id="orgTable" class="display" style="width:100%">
 <thead>
 <tr id="headerRow">
-<th>Org ID</th><th>Org Name</th><th>Schema ID</th><th>Schema Name</th>
-<th style="width:48px">Schema</th><th>Version ID</th><th>Semantic Ver</th>
-<th>Created</th><th>Created By</th><th>SHA256</th>
+<th>Org ID</th>
+<th>Org Name</th>
+<th>Status</th>
+<th>Schema ID</th>
+<th>Schema Name</th>
+<th style="width:48px">Schema</th>
+<th>Version ID</th>
+<th>Semantic Ver</th>
+<th>Created</th>
+<th>Created By</th>
+<th>SHA256</th>
 </tr>
 <tr id="filterRow" class="filtersRow hidden"></tr>
 </thead>
@@ -256,6 +291,7 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
 <script>
 /* ======= Tabs with keyboard nav ======= */
 const tabBtns = document.querySelectorAll('.tab-btn');
@@ -325,8 +361,16 @@ document.addEventListener('click', e => {
   }).catch(() => {});
 });
 
+/* ======= Status pill ======= */
+function statusPill(status) {
+  const s = (status || '').toLowerCase();
+  if (!s) return '<span class="muted">—</span>';
+  const safe = esc(s);
+  return '<span class="status-pill ' + safe + '">' + safe + '</span>';
+}
+
 /* ======= Build filter row cells (before DT init) ======= */
-const FILTERABLE = new Set([0, 1, 2, 3, 5, 6, 7, 8]);
+const FILTERABLE = new Set([0, 1, 2, 3, 4, 6, 7, 8, 9]);
 
 function buildFilterCells() {
   const filterRow = document.getElementById('filterRow');
@@ -351,16 +395,16 @@ function updateClearBtn(table) {
 }
 
 /* ============================================================
-   NEW: Hide "test" schemas filter (DataTables global filter)
+   Hide "draft" schemas filter (matches Status column)
    ============================================================ */
-let hideTestSchemas = true;
+let hideDraftSchemas = true;
 
 $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-  if (!hideTestSchemas) return true;
+  if (!hideDraftSchemas) return true;
 
-  // Schema Name column index = 3
-  const schemaName = (data[3] || '').toLowerCase();
-  return !schemaName.includes('test');
+  // Status column index = 2
+  const status = (data[2] || '').toLowerCase();
+  return status !== 'draft';
 });
 
 /* ======= Main load ======= */
@@ -379,7 +423,6 @@ async function loadSchemaTable() {
   if ($.fn.DataTable.isDataTable('#orgTable')) {
     $('#orgTable').DataTable().destroy();
     document.querySelector('#orgTable tbody').innerHTML = '';
-    // Reset filter row
     document.getElementById('filterRow').innerHTML = '';
   }
 
@@ -422,6 +465,7 @@ async function loadSchemaTable() {
     tr.innerHTML =
       '<td>' + esc(row.organization_id) + '</td>' +
       '<td>' + esc(row.organization_name) + '</td>' +
+      '<td>' + statusPill(row.status) + '</td>' +
       '<td>' + esc(row.schema_id) + '</td>' +
       '<td>' + esc(row.schema_name) + '</td>' +
       '<td><a class="schema-link" href="' + esc(url) + '" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>' +
@@ -437,7 +481,7 @@ async function loadSchemaTable() {
   /* ====== Init DataTables ====== */
   const table = $('#orgTable').DataTable({
     pageLength: 25,
-    order: [[7, 'desc']],
+    order: [[8, 'desc']],  // Created column moved to index 8
     dom: 'lfrtip',
     scrollX: false,
     autoWidth: false
@@ -500,15 +544,15 @@ async function loadSchemaTable() {
     newTog.setAttribute('aria-expanded', String(!isHidden));
   });
 
-  /* ====== Hide test toggle ====== */
-  const hideBtn = document.getElementById('hideTestToggle');
-  hideBtn.classList.toggle('active', hideTestSchemas);
-  hideBtn.setAttribute('aria-pressed', String(hideTestSchemas));
+  /* ====== Hide draft toggle ====== */
+  const hideBtn = document.getElementById('hideDraftToggle');
+  hideBtn.classList.toggle('active', hideDraftSchemas);
+  hideBtn.setAttribute('aria-pressed', String(hideDraftSchemas));
 
   hideBtn.addEventListener('click', function () {
-    hideTestSchemas = !hideTestSchemas;
-    hideBtn.classList.toggle('active', hideTestSchemas);
-    hideBtn.setAttribute('aria-pressed', String(hideTestSchemas));
+    hideDraftSchemas = !hideDraftSchemas;
+    hideBtn.classList.toggle('active', hideDraftSchemas);
+    hideBtn.setAttribute('aria-pressed', String(hideDraftSchemas));
     table.draw();
   });
 
@@ -527,7 +571,7 @@ async function loadSchemaTable() {
 
   updateClearBtn(table);
 
-  // Force draw once so the hide-test filter applies immediately
+  // Force draw once so the hide-draft filter applies immediately
   table.draw();
 }
 
