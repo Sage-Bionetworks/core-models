@@ -1,14 +1,12 @@
-# Runs the Synapse export script, publishes schemas to CoreModels,
-# commits updated schema data, and deploys docs/ to GitHub Pages.
+# Runs the Synapse export script, commits updated schema data,
+# deploys docs/ to GitHub Pages, then publishes schemas to CoreModels.
 
-name: Update Schema Data, Publish to CoreModels & Deploy
+name: Update Schema Data → Deploy Docs → Publish to CoreModels
 
 on:
-  # ─── Scheduled: every day at 6:00 AM UTC ───
   schedule:
     - cron: "0 6 * * *"
 
-  # ─── Manual trigger from the Actions tab ───
   workflow_dispatch:
     inputs:
       org_name:
@@ -16,24 +14,21 @@ on:
         required: false
         default: ""
 
-  # ─── Also run on pushes to main ───
   push:
     branches: [main]
 
-# Required for GitHub Pages deployment
 permissions:
   contents: write
   pages: write
   id-token: write
 
-# Prevent overlapping runs
 concurrency:
   group: update-and-deploy
   cancel-in-progress: true
 
 jobs:
   # ════════════════════════════════════════════
-  # Job 1: Update data + publish to CoreModels
+  # Job 1: Update docs/data.json
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
@@ -52,30 +47,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install synapseclient requests
 
-      # ─── Export schema / org data from Synapse ───
       - name: Run Synapse export
         env:
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
+          SKIP_TEST_SCHEMAS: "true"
+          MAX_WORKERS: "12"
         run: |
           python docs/export_orgs.py
 
-      # ─── Publish schemas to CoreModels ───
-      - name: Import schemas to CoreModels
-        env:
-          COREMODELS_API_URL: ${{ secrets.COREMODELS_API_URL }}
-          COREMODELS_API_TOKEN: ${{ secrets.COREMODELS_API_TOKEN }}
-          COREMODELS_PROJECT_ID: ${{ secrets.COREMODELS_PROJECT_ID }}
-          COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
-          COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
-
-          # 👇 New org filter (blank = import all)
-          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
-
-        run: |
-          echo "Running import with ORG_NAME_FILTER='${ORG_NAME_FILTER}'"
-          python docs/import_to_coremodels.py
-
-      # ─── Check if export produced changes ───
       - name: Check for changes
         id: diff
         run: |
@@ -83,7 +63,6 @@ jobs:
             && echo "changed=false" >> "$GITHUB_OUTPUT" \
             || echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      # ─── Commit updated data if needed ───
       - name: Commit and push updated data.json
         if: steps.diff.outputs.changed == 'true'
         run: |
@@ -99,8 +78,6 @@ jobs:
   deploy-pages:
     needs: update-data
     runs-on: ubuntu-latest
-
-    # Only deploy from main
     if: github.ref == 'refs/heads/main'
 
     environment:
@@ -124,3 +101,44 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # ════════════════════════════════════════════
+  # Job 3: Publish schemas to CoreModels (parallel)
+  # ════════════════════════════════════════════
+  publish-coremodels:
+    needs: deploy-pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Import schemas to CoreModels (parallel)
+        env:
+          COREMODELS_API_URL: ${{ secrets.COREMODELS_API_URL }}
+          COREMODELS_API_TOKEN: ${{ secrets.COREMODELS_API_TOKEN }}
+          COREMODELS_PROJECT_ID: ${{ secrets.COREMODELS_PROJECT_ID }}
+          COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
+          COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
+
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
+
+          # Speed controls
+          MAX_WORKERS: "8"
+          RATE_LIMIT_SECONDS: "0.0"
+          VERIFY_URLS: "false"
+
+        run: |
+          python docs/import_to_coremodels.py

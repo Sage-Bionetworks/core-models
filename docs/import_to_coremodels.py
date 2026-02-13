@@ -20,7 +20,9 @@ Optional:
   ONLY_ADD_AND_UPDATE       - "true" to only add/update, never remove (default: "true")
   DRY_RUN                   - "true" to only list schemas without importing (default: "false")
   DATA_JSON_PATH            - Path to docs/data.json (default: "docs/data.json")
-  RATE_LIMIT_SECONDS        - Seconds to wait between API calls (default: "1.0")
+  RATE_LIMIT_SECONDS        - Seconds to wait between API calls PER WORKER (default: "0.0")
+  MAX_WORKERS               - Thread workers for parallel import (default: "8")
+  VERIFY_URLS               - "true" to pre-check schema URLs (default: "false")
 """
 
 import json
@@ -28,6 +30,8 @@ import os
 import sys
 import time
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 
 
 # ──────────────────────────────────────────────
@@ -39,28 +43,27 @@ PROJECT_ID = os.environ.get("COREMODELS_PROJECT_ID", "")
 SPACE_ID = os.environ.get("COREMODELS_SPACE_ID", "")
 CONFIG_TYPE_ID = os.environ.get("COREMODELS_CONFIG_TYPE_ID", "")
 
-# Optional: only import schemas from this org name
 ORG_NAME_FILTER = os.environ.get("ORG_NAME_FILTER", "").strip()
 
-# Override flags — default to true so imports don't fail on warnings
 OVERRIDE_NEW_PROPS = os.environ.get("OVERRIDE_NEW_PROPERTIES", "true").lower() == "true"
 OVERRIDE_DIFF_SRC = os.environ.get("OVERRIDE_DIFFERENT_SOURCE", "true").lower() == "true"
 OVERRIDE_OVERWRITE = os.environ.get("OVERRIDE_OVERWRITE", "true").lower() == "true"
 ONLY_ADD_UPDATE = os.environ.get("ONLY_ADD_AND_UPDATE", "true").lower() == "true"
 DRY_RUN = os.environ.get("DRY_RUN", "false").lower() == "true"
 
-# Synapse schema registry base URL
-SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
-
-# Path to data.json (relative to repo root)
 DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
 
-# Rate limiting: seconds to wait between API calls
-RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "1.0"))
+RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
+MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "8"))
+VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
+
+SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
 
 
+# ──────────────────────────────────────────────
+# Helpers
+# ──────────────────────────────────────────────
 def validate_config():
-    """Validate that all required env vars are set."""
     missing = []
     if not API_URL:
         missing.append("COREMODELS_API_URL")
@@ -79,7 +82,6 @@ def validate_config():
 
 
 def load_data_json(path):
-    """Load and parse docs/data.json."""
     if not os.path.exists(path):
         print(f"ERROR: {path} not found. Run export_orgs.py first.")
         sys.exit(1)
@@ -87,15 +89,11 @@ def load_data_json(path):
     with open(path, "r") as f:
         data = json.load(f)
 
-    print(f"Loaded {len(data)} total schema version rows from {path}")
+    print(f"Loaded {len(data)} rows from {path}")
     return data
 
 
 def filter_data_by_org_name(data):
-    """
-    If ORG_NAME_FILTER is set, only keep rows whose organization_name matches.
-    If blank, return data unchanged.
-    """
     if not ORG_NAME_FILTER:
         print("ORG_NAME_FILTER not set — importing schemas from ALL organizations")
         return data
@@ -119,9 +117,8 @@ def filter_data_by_org_name(data):
 def get_unique_schemas(data):
     """
     Extract unique (organization_name, schema_name) pairs.
-    Each pair maps to one schema URL in the Synapse registry.
-    We deduplicate because data.json has one row per VERSION,
-    but we only need to import each schema once (latest version).
+    Even though export now writes only latest versions,
+    we still deduplicate for safety.
     """
     seen = set()
     unique = []
@@ -129,48 +126,44 @@ def get_unique_schemas(data):
     for row in data:
         org = row.get("organization_name", "")
         schema = row.get("schema_name", "")
-        key = f"{org}-{schema}"
+        if not org or not schema:
+            continue
 
-        if key not in seen and org and schema:
-            seen.add(key)
-            unique.append({
+        key = f"{org}-{schema}"
+        if key in seen:
+            continue
+
+        seen.add(key)
+        unique.append(
+            {
                 "organization_name": org,
                 "schema_name": schema,
                 "key": key,
-            })
+            }
+        )
 
     print(f"Found {len(unique)} unique schemas to import")
     return unique
 
 
 def build_synapse_schema_url(org_name, schema_name):
-    """Build the Synapse registry URL for a schema."""
     return f"{SYNAPSE_SCHEMA_BASE}/{org_name}-{schema_name}"
 
 
 def verify_schema_url(url):
-    """
-    Verify the schema URL is accessible before sending to CoreModels.
-    Returns True if the URL returns valid JSON.
-    """
     try:
         resp = requests.get(url, timeout=30)
         if resp.status_code == 200:
-            resp.json()  # Verify it's valid JSON
+            resp.json()
             return True
-        else:
-            print(f"  WARNING: Schema URL returned HTTP {resp.status_code}")
-            return False
+        print(f"  WARNING: Schema URL returned HTTP {resp.status_code}")
+        return False
     except Exception as e:
         print(f"  WARNING: Could not verify schema URL: {e}")
         return False
 
 
-def import_schema_to_coremodels(schema_url, schema_key):
-    """
-    Import a single schema into CoreModels using the Merge JSON Schema API.
-    Uses fileUrl to point to the Synapse schema registry URL.
-    """
+def import_schema_to_coremodels(schema_url, schema_key, session: requests.Session):
     endpoint = f"{API_URL}/v1/{PROJECT_ID}/mergeJSONSchema"
 
     headers = {
@@ -179,7 +172,6 @@ def import_schema_to_coremodels(schema_url, schema_key):
         "Accept": "application/json",
     }
 
-    # EVERYTHING CoreModels needs goes in the JSON body
     body = {
         "spaceId": SPACE_ID,
         "configTypeId": CONFIG_TYPE_ID,
@@ -191,36 +183,28 @@ def import_schema_to_coremodels(schema_url, schema_key):
     }
 
     try:
-        resp = requests.post(
-            endpoint,
-            headers=headers,
-            json=body,
-            timeout=120,
-        )
+        resp = session.post(endpoint, headers=headers, json=body, timeout=120)
 
         if resp.status_code == 200:
             result = resp.json()
             if result.get("success"):
-                print(f"  ✅ Successfully imported: {schema_key}")
-                return True
-            else:
-                error = result.get("error", {})
-                msg = error.get("message", "Unknown error")
-                fatal = error.get("isFatal", False)
-                print(f"  ❌ Import failed: {msg} (fatal={fatal})")
-                return False
-        else:
-            print(f"  ❌ HTTP {resp.status_code}: {resp.text[:300]}")
-            return False
+                return True, None
+            error = result.get("error", {})
+            msg = error.get("message", "Unknown error")
+            fatal = error.get("isFatal", False)
+            return False, f"{msg} (fatal={fatal})"
+
+        return False, f"HTTP {resp.status_code}: {resp.text[:300]}"
 
     except requests.exceptions.Timeout:
-        print(f"  ❌ Request timed out for {schema_key}")
-        return False
+        return False, "Request timed out"
     except Exception as e:
-        print(f"  ❌ Exception: {e}")
-        return False
+        return False, f"Exception: {e}"
 
 
+# ──────────────────────────────────────────────
+# Main
+# ──────────────────────────────────────────────
 def main():
     print("=" * 60)
     print("CoreModels Schema Import")
@@ -238,6 +222,9 @@ def main():
     print(f"Space ID:       {SPACE_ID}")
     print(f"Config Type ID: {CONFIG_TYPE_ID}")
     print(f"Org filter:     {ORG_NAME_FILTER if ORG_NAME_FILTER else '(none)'}")
+    print(f"Max workers:    {MAX_WORKERS}")
+    print(f"Verify URLs:    {VERIFY_URLS}")
+    print(f"Rate limit:     {RATE_LIMIT_SECONDS} seconds/worker")
     print(
         f"Override flags: new_props={OVERRIDE_NEW_PROPS}, "
         f"diff_src={OVERRIDE_DIFF_SRC}, overwrite={OVERRIDE_OVERWRITE}, "
@@ -245,26 +232,24 @@ def main():
     )
     print()
 
-    # Load data
     data = load_data_json(DATA_JSON_PATH)
-
-    # Filter data.json rows by org name (optional)
     data = filter_data_by_org_name(data)
-
-    # Deduplicate to unique schemas
     schemas = get_unique_schemas(data)
 
     if not schemas:
         print("No schemas found to import. Exiting.")
         sys.exit(0)
 
-    # Track results
+    print(f"\nStarting parallel import with {MAX_WORKERS} workers...\n")
+
+    lock = Lock()
     success_count = 0
     fail_count = 0
     skip_count = 0
     failed_schemas = []
 
-    for i, schema in enumerate(schemas, start=1):
+    def process_schema(index_schema):
+        i, schema = index_schema
         org = schema["organization_name"]
         name = schema["schema_name"]
         key = schema["key"]
@@ -275,27 +260,45 @@ def main():
 
         if DRY_RUN:
             print("  ⏭️  Skipped (dry run)")
-            skip_count += 1
-            continue
+            return ("skip", key, None)
 
-        # Verify the schema URL is accessible
-        if not verify_schema_url(url):
-            print(f"  ⏭️  Skipping — URL not accessible")
-            skip_count += 1
-            failed_schemas.append({"key": key, "reason": "URL not accessible"})
-            continue
+        if VERIFY_URLS:
+            if not verify_schema_url(url):
+                print("  ⏭️  Skipping — URL not accessible")
+                return ("skip", key, "URL not accessible")
 
-        # Import to CoreModels
-        ok = import_schema_to_coremodels(url, key)
-        if ok:
-            success_count += 1
-        else:
-            fail_count += 1
-            failed_schemas.append({"key": key, "reason": "Import failed"})
+        with requests.Session() as session:
+            ok, reason = import_schema_to_coremodels(url, key, session)
 
-        # Rate limiting
-        if i < len(schemas):
+        if RATE_LIMIT_SECONDS > 0:
             time.sleep(RATE_LIMIT_SECONDS)
+
+        if ok:
+            print(f"  ✅ Successfully imported: {key}")
+            return ("success", key, None)
+
+        print(f"  ❌ Import failed: {reason}")
+        return ("fail", key, reason)
+
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = [
+            executor.submit(process_schema, (i, schema))
+            for i, schema in enumerate(schemas, start=1)
+        ]
+
+        for f in as_completed(futures):
+            result, key, reason = f.result()
+
+            with lock:
+                if result == "success":
+                    success_count += 1
+                elif result == "fail":
+                    fail_count += 1
+                    failed_schemas.append({"key": key, "reason": reason})
+                elif result == "skip":
+                    skip_count += 1
+                    if reason:
+                        failed_schemas.append({"key": key, "reason": reason})
 
     # ──────────────────────────────────────────────
     # Summary
@@ -313,13 +316,12 @@ def main():
         for f in failed_schemas:
             print(f"  - {f['key']}: {f['reason']}")
 
-    # Exit with error code if any failures
     if fail_count > 0:
         print(f"\n⚠️  {fail_count} schema(s) failed to import.")
         sys.exit(1)
-    else:
-        print("\n🎉 All schemas processed successfully!")
-        sys.exit(0)
+
+    print("\n🎉 All schemas processed successfully!")
+    sys.exit(0)
 
 
 if __name__ == "__main__":

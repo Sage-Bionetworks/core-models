@@ -76,7 +76,7 @@ table.dataTable tbody td{border-top:none!important;padding:11px 10px!important;f
 table.dataTable tbody tr{border-bottom:1px solid var(--borderLight)}
 table.dataTable tbody tr:hover{background:rgba(59,130,246,0.025)!important}
 
-/* Hide default sort icons, use custom CSS */
+/* Hide default sort icons */
 table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,table.dataTable thead .sorting_desc::after,
 table.dataTable thead .sorting::before,table.dataTable thead .sorting_asc::before,table.dataTable thead .sorting_desc::before{opacity:0!important}
 table.dataTable thead th.sorting_asc{color:var(--accent)!important}
@@ -95,7 +95,6 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled{opacity:0.3!important}
 .dataTables_scrollHeadInner{width:100%!important}
 .dataTables_scrollHeadInner table{width:100%!important}
-/* Fix: ensure the scroll wrapper doesn't clip content */
 .dataTables_scrollBody{overflow-x:auto!important}
 
 /* Filter row */
@@ -145,13 +144,13 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 
 .muted{color:var(--muted);font-size:13px}
 .footer{margin-top:10px;color:var(--muted2);font-size:11.5px}
-
 @media(max-width:900px){
   .top{flex-direction:column;align-items:flex-start}
   .meta{justify-content:flex-start}
 }
 </style>
 </head>
+
 <body>
 <div class="container">
 <div class="top">
@@ -178,23 +177,38 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <h2>Schema Versions</h2>
 <p>Use global search for quick filtering, or open column filters for per-column dropdowns. The row count badge updates live.</p>
 </div>
+
 <div class="btnRow">
-<button id="filtersToggle" class="btn" type="button" aria-expanded="false">Filters <span class="chev">▾</span></button>
-<button id="clearFilters" class="btn disabled" type="button">Clear Filters</button>
+<button id="filtersToggle" class="btn" type="button" aria-expanded="false">
+  Filters <span class="chev">▾</span>
+</button>
+
+<button id="hideTestToggle" class="btn active" type="button" aria-pressed="true">
+  Hide “test” schemas
+</button>
+
+<button id="clearFilters" class="btn disabled" type="button">
+  Clear Filters
+</button>
+</div>
+
 </div>
 </div>
-</div>
+
 <div class="panelBody">
 <div id="loadingState" class="state-overlay"><div class="spinner"></div><p>Loading schema data…</p></div>
+
 <div id="errorState" class="state-overlay" style="display:none">
 <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
 <p id="errorMsg">Could not load data.json.</p>
 <button class="btn" id="retryBtn" type="button">↻ Retry</button>
 </div>
+
 <div id="emptyState" class="state-overlay" style="display:none">
 <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
 <p>No schema versions found. The data file is empty.</p>
 </div>
+
 <div id="tableWrap" style="display:none">
 <table id="orgTable" class="display" style="width:100%">
 <thead>
@@ -208,6 +222,7 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <tbody></tbody>
 </table>
 <div class="footer">Tip: If a column has too many unique values, its dropdown is disabled — use global search instead.</div>
+</div>
 </div>
 </div>
 </div>
@@ -335,6 +350,19 @@ function updateClearBtn(table) {
   document.getElementById('filtersToggle').classList.toggle('active', hasG || hasC);
 }
 
+/* ============================================================
+   NEW: Hide "test" schemas filter (DataTables global filter)
+   ============================================================ */
+let hideTestSchemas = true;
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+  if (!hideTestSchemas) return true;
+
+  // Schema Name column index = 3
+  const schemaName = (data[3] || '').toLowerCase();
+  return !schemaName.includes('test');
+});
+
 /* ======= Main load ======= */
 async function loadSchemaTable() {
   const loading = document.getElementById('loadingState');
@@ -389,6 +417,7 @@ async function loadSchemaTable() {
   for (const row of data) {
     const url = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/' +
       row.organization_name + '-' + row.schema_name;
+
     const tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + esc(row.organization_id) + '</td>' +
@@ -401,15 +430,11 @@ async function loadSchemaTable() {
       '<td><span class="date-cell">' + relDate(row.created_on) + '<span class="date-abs">' + fmtDate(row.created_on) + '</span></span></td>' +
       '<td>' + esc(row.created_by) + '</td>' +
       '<td>' + shaCell(row.json_sha256_hex) + '</td>';
+
     tbody.appendChild(tr);
   }
 
-  /* ====== Init DataTables ======
-     KEY FIX: Do NOT use scrollX here. Instead we put overflow-x:auto
-     on the panelBody wrapper. scrollX causes DT to clone the thead
-     into a separate <table>, which breaks our filter <select> elements
-     because the cloned selects get the events, not the originals.
-  */
+  /* ====== Init DataTables ====== */
   const table = $('#orgTable').DataTable({
     pageLength: 25,
     order: [[7, 'desc']],
@@ -453,15 +478,11 @@ async function loadSchemaTable() {
       sel.appendChild(opt);
     }
 
-    /* FIX: Use exact match via regex with ^ and $ anchors.
-       We also normalize the cell text via a custom search to
-       ensure whitespace differences don't cause mismatches. */
     sel.addEventListener('change', function () {
       const val = this.value;
       if (!val) {
         table.column(colIdx).search('').draw();
       } else {
-        // Exact match: ^escaped_value$
         table.column(colIdx).search('^' + escRx(val) + '$', true, false).draw();
       }
     });
@@ -469,7 +490,6 @@ async function loadSchemaTable() {
 
   /* ====== Filter toggle ====== */
   const togBtn = document.getElementById('filtersToggle');
-  // Remove old listeners by cloning
   const newTog = togBtn.cloneNode(true);
   togBtn.parentNode.replaceChild(newTog, togBtn);
   newTog.addEventListener('click', function () {
@@ -480,6 +500,18 @@ async function loadSchemaTable() {
     newTog.setAttribute('aria-expanded', String(!isHidden));
   });
 
+  /* ====== Hide test toggle ====== */
+  const hideBtn = document.getElementById('hideTestToggle');
+  hideBtn.classList.toggle('active', hideTestSchemas);
+  hideBtn.setAttribute('aria-pressed', String(hideTestSchemas));
+
+  hideBtn.addEventListener('click', function () {
+    hideTestSchemas = !hideTestSchemas;
+    hideBtn.classList.toggle('active', hideTestSchemas);
+    hideBtn.setAttribute('aria-pressed', String(hideTestSchemas));
+    table.draw();
+  });
+
   /* ====== Clear filters ====== */
   const clearBtn = document.getElementById('clearFilters');
   const newClear = clearBtn.cloneNode(true);
@@ -488,13 +520,15 @@ async function loadSchemaTable() {
     table.search('');
     table.columns().search('');
     document.querySelectorAll('#filterRow .colFilter').forEach(function (s) { s.value = ''; });
-    // Also clear the DT search input
     var searchInput = document.querySelector('.dataTables_filter input');
     if (searchInput) searchInput.value = '';
     table.draw();
   });
 
   updateClearBtn(table);
+
+  // Force draw once so the hide-test filter applies immediately
+  table.draw();
 }
 
 /* Retry */

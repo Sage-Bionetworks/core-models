@@ -6,7 +6,7 @@ Exports Synapse JSON Schema registry metadata into docs/data.json.
 - Lists all schema organizations
 - For each organization, fetches schemas
 - For each schema, fetches ALL versions
-- Writes one row per schema version to docs/data.json
+- Writes ONE row per schema (LATEST version only) to docs/data.json
 
 Environment variables:
   SYNAPSE_AUTH_TOKEN  - Required. Synapse personal access token.
@@ -44,30 +44,29 @@ syn.login(authToken=os.environ.get("SYNAPSE_AUTH_TOKEN"), silent=True)
 # ──────────────────────────────────────────────
 # Helpers
 # ──────────────────────────────────────────────
-def fetch_schema_versions(schema):
+def fetch_latest_schema_version(schema):
     """
-    Fetch all versions for one schema and return rows.
-    NOTE: schema.get_versions() may return a generator.
+    Fetch all versions for one schema, return only the latest version row.
+    Latest is determined by created_on.
     """
-    rows = []
-    versions = schema.get_versions()
+    versions = list(schema.get_versions())
+    if not versions:
+        return None
 
-    for version in versions:
-        rows.append(
-            {
-                "organization_id": version.organization_id,
-                "organization_name": version.organization_name,
-                "schema_id": version.schema_id,
-                "schema_name": version.schema_name,
-                "version_id": version.version_id,
-                "semantic_version": version.semantic_version,
-                "created_on": version.created_on,
-                "created_by": version.created_by,
-                "json_sha256_hex": version.json_sha256_hex,
-            }
-        )
+    # Pick newest by created_on
+    latest = max(versions, key=lambda v: v.created_on or "")
 
-    return rows
+    return {
+        "organization_id": latest.organization_id,
+        "organization_name": latest.organization_name,
+        "schema_id": latest.schema_id,
+        "schema_name": latest.schema_name,
+        "version_id": latest.version_id,
+        "semantic_version": latest.semantic_version,
+        "created_on": latest.created_on,
+        "created_by": latest.created_by,
+        "json_sha256_hex": latest.json_sha256_hex,
+    }
 
 
 # ──────────────────────────────────────────────
@@ -101,11 +100,13 @@ for i, org in enumerate(all_orgs, start=1):
     futures = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         for schema in schemas:
-            futures.append(executor.submit(fetch_schema_versions, schema))
+            futures.append(executor.submit(fetch_latest_schema_version, schema))
 
         for f in as_completed(futures):
             try:
-                rows.extend(f.result())
+                r = f.result()
+                if r:
+                    rows.append(r)
             except Exception as e:
                 print(f"    WARNING: schema version fetch failed: {e}")
 
@@ -118,5 +119,6 @@ with open(OUTPUT_PATH, "w") as f:
 
 print(
     f"\nDone. Processed {processed_orgs} org(s). "
-    f"Wrote {len(rows)} rows to {OUTPUT_PATH}"
+    f"Wrote {len(rows)} rows to {OUTPUT_PATH} "
+    f"(latest schema versions only)"
 )
