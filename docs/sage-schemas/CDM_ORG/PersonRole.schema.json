@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://sage.schema/PersonRole",
+  "title": "PersonRole",
+  "description": "A role that can be assigned to a person in the context of work items",
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "description": "Unique identifier for the role",
+      "type": "integer"
+    },
+    "role_name": {
+      "description": "Name of the role",
+      "type": "string"
+    },
+    "role_category": {
+      "description": "Category or classification of the role",
+      "type": "string"
+    },
+    "description": {
+      "description": "Detailed description of the role",
+      "type": "string"
+    }
+  },
+  "required": ["role_id", "role_name"],
+  "additionalProperties": false
+}

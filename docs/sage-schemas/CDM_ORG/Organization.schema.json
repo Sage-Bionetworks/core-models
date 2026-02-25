@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://sage.schema/Organization",
+  "title": "Organization",
+  "description": "An organization representing a research institution, company, or entity",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "description": "Unique identifier for the organization",
+      "type": "integer"
+    },
+    "organization_name": {
+      "description": "Name of the organization",
+      "type": "string"
+    },
+    "organization_type": {
+      "description": "Type or category of the organization",
+      "type": "string"
+    },
+    "city": {
+      "description": "City where the organization is located",
+      "type": "string"
+    },
+    "state": {
+      "description": "State or province where the organization is located",
+      "type": "string"
+    },
+    "country": {
+      "description": "Country where the organization is located",
+      "type": "string"
+    }
+  },
+  "required": ["organization_id", "organization_name"],
+  "additionalProperties": false
+}

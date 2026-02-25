@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/als.AssayAudioMetadataTemplate.schema",
+  "title": "AssayAudioMetadataTemplate",
+  "description": "Schema for audio recording metadata in ALS research, including speech, respiratory, and swallowing assessments",
+  "type": "object",
+  "definitions": {
+    "ontologyMapping": {
+      "description": "Ontology term mappings for schema values",
+      "recordingType": {
+        "Speech": "NCIT:C25447",
+        "Respiratory": "NCIT:C25448",
+        "Swallowing": "NCIT:C25428",
+        "Cough": "SNOMED:272039006",
+        "Voice": "NCIT:C54188",
+        "Phonation": "MESH:D010700"
+      },
+      "clinicalAssessment": {
+        "Dysarthria": "NCIT:C50567",
+        "SpeechIntelligibility": "MESH:D013067",
+        "RespiratoryFunction": "NCIT:C25448",
+        "SwallowingFunction": "NCIT:C25428"
+      },
+      "voiceDisorders": {
+        "Dysphonia": "SNOMED:267064002",
+        "Hoarseness": "SNOMED:50219008"
+      }
+    }
+  },
+  "properties": {
+    "specimenID": {
+      "description": "Unique identifier for the specimen/participant from whom audio was recorded",
+      "type": "string"
+    },
+    "individualID": {
+      "description": "Unique identifier for the individual participant",
+      "type": "string"
+    },
+    "recordingDate": {
+      "description": "Date when the audio recording was collected",
+      "type": "string",
+      "format": "date"
+    },
+    "recordingType": {
+      "description": "Type of audio recording performed. Ontology mappings: Speech (NCIT:C25447), Respiratory (NCIT:C25448), Swallowing (NCIT:C25428), Cough (SNOMED:272039006)",
+      "type": "string",
+      "enum": [
+        "Speech",
+        "Respiratory",
+        "Swallowing",
+        "Cough",
+        "Voice Quality",
+        "Sustained Phonation",
+        "Diadochokinetic",
+        "Connected Speech",
+        "Reading Task",
+        "Other"
+      ]
+    },
+    "audioFormat": {
+      "description": "Digital audio file format",
+      "type": "string",
+      "enum": [
+        "WAV",
+        "MP3",
+        "FLAC",
+        "AAC",
+        "M4A",
+        "OGG",
+        "Other"
+      ]
+    },
+    "sampleRate": {
+      "description": "Audio sampling rate in Hz",
+      "type": "integer",
+      "minimum": 8000,
+      "maximum": 192000
+    },
+    "bitDepth": {
+      "description": "Bit depth of audio recording",
+      "type": "integer",
+      "enum": [16, 24, 32]
+    },
+    "channels": {
+      "description": "Number of audio channels",
+      "type": "string",
+      "enum": ["Mono", "Stereo", "Multi-channel"]
+    },
+    "recordingDuration": {
+      "description": "Duration of recording in seconds",
+      "type": "number",
+      "minimum": 0
+    },
+    "recordingDevice": {
+      "description": "Device or equipment used for audio capture",
+      "type": "string"
+    },
+    "microphoneType": {
+      "description": "Type of microphone used",
+      "type": "string",
+      "enum": [
+        "Built-in Device Microphone",
+        "External USB Microphone",
+        "Headset Microphone",
+        "Lavalier/Lapel Microphone",
+        "Studio Condenser Microphone",
+        "Dynamic Microphone",
+        "Throat Microphone",
+        "Contact Microphone",
+        "Other",
+        "Unknown"
+      ]
+    },
+    "microphoneDistance": {
+      "description": "Distance from microphone to participant in centimeters",
+      "type": "number",
+      "minimum": 0
+    },
+    "recordingEnvironment": {
+      "description": "Environment where recording took place",
+      "type": "string",
+      "enum": [
+        "Clinical Setting - Sound Booth",
+        "Clinical Setting - Exam Room",
+        "Home Environment - Quiet Room",
+        "Home Environment - Normal Room",
+        "Laboratory",
+        "Other"
+      ]
+    },
+    "backgroundNoise": {
+      "description": "Assessment of background noise level",
+      "type": "string",
+      "enum": [
+        "Silent",
+        "Very Low",
+        "Low",
+        "Moderate",
+        "High",
+        "Not Assessed"
+      ]
+    },
+    "speechTask": {
+      "description": "Specific speech task performed (if recordingType is speech-related)",
+      "type": "string",
+      "enum": [
+        "/a/ Sustained Vowel",
+        "/i/ Sustained Vowel",
+        "/u/ Sustained Vowel",
+        "Diadochokinetic /pa-ta-ka/",
+        "Diadochokinetic /pa/",
+        "Diadochokinetic /ta/",
+        "Diadochokinetic /ka/",
+        "Rainbow Passage Reading",
+        "Grandfather Passage Reading",
+        "Sentence Repetition",
+        "Spontaneous Speech",
+        "Picture Description",
+        "Counting 1-10",
+        "Days of Week",
+        "Months of Year",
+        "Vowel Prolongation",
+        "Maximum Phonation Time",
+        "Other",
+        "Not Applicable"
+      ]
+    },
+    "respiratoryTask": {
+      "description": "Specific respiratory task performed (if recordingType includes respiratory)",
+      "type": "string",
+      "enum": [
+        "Normal Breathing",
+        "Deep Breathing",
+        "Forced Exhalation",
+        "Maximum Inspiratory Pressure",
+        "Maximum Expiratory Pressure",
+        "Cough - Single",
+        "Cough - Sequential",
+        "Sniff",
+        "Other",
+        "Not Applicable"
+      ]
+    },
+    "swallowingTask": {
+      "description": "Specific swallowing task performed (if recordingType includes swallowing)",
+      "type": "string",
+      "enum": [
+        "Dry Swallow",
+        "Water Swallow - 5ml",
+        "Water Swallow - 10ml",
+        "Water Swallow - 20ml",
+        "Water Swallow - Cup Drinking",
+        "Puree Consistency",
+        "Solid Food",
+        "Other",
+        "Not Applicable"
+      ]
+    },
+    "clinicalAssessment": {
+      "description": "Clinical assessment conducted alongside recording. Ontology mappings: Speech Intelligibility (MESH:D013067), Dysarthria (NCIT:C50567), Respiratory Function (NCIT:C25448), Swallowing (NCIT:C25428)",
+      "type": "string",
+      "enum": [
+        "ALSFRS-R Bulbar Subscore",
+        "ALSFRS-R Respiratory Subscore",
+        "Perceptual Speech Rating",
+        "Speaking Rate Analysis",
+        "Intelligibility Assessment",
+        "Respiratory Function Test",
+        "Swallowing Function Test",
+        "None",
+        "Other"
+      ]
+    },
+    "alsfrsBulbarScore": {
+      "description": "ALSFRS-R bulbar subscore at time of recording (sum of speech, salivation, swallowing items, 0-12)",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "alsfrsRespiratoryScore": {
+      "description": "ALSFRS-R respiratory score at time of recording (0-4)",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "speechIntelligibility": {
+      "description": "Clinician-rated speech intelligibility percentage (MESH:D013067 - Speech Intelligibility)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "speakingRate": {
+      "description": "Speaking rate in words per minute (if assessed) - relates to MESH:D013066 (Speech)",
+      "type": "number",
+      "minimum": 0
+    },
+    "participantPosition": {
+      "description": "Position of participant during recording",
+      "type": "string",
+      "enum": [
+        "Seated Upright",
+        "Seated Reclined",
+        "Standing",
+        "Supine",
+        "Other"
+      ]
+    },
+    "assistiveDevice": {
+      "description": "Use of assistive communication device during recording",
+      "type": "string",
+      "enum": [
+        "None",
+        "Voice Amplifier",
+        "AAC Device",
+        "Ventilator",
+        "BiPAP",
+        "Other"
+      ]
+    },
+    "medicationStatus": {
+      "description": "Medication status at time of recording",
+      "type": "string",
+      "enum": [
+        "On Medication",
+        "Off Medication",
+        "Medication Washout",
+        "Unknown",
+        "Not Applicable"
+      ]
+    },
+    "timeOfDay": {
+      "description": "Time of day when recording was made",
+      "type": "string",
+      "enum": [
+        "Morning (6AM-12PM)",
+        "Afternoon (12PM-6PM)",
+        "Evening (6PM-12AM)",
+        "Night (12AM-6AM)",
+        "Unknown"
+      ]
+    },
+    "fatigueLevel": {
+      "description": "Self-reported participant fatigue level",
+      "type": "string",
+      "enum": [
+        "None",
+        "Mild",
+        "Moderate",
+        "Severe",
+        "Not Assessed"
+      ]
+    },
+    "recordingQuality": {
+      "description": "Overall quality assessment of the recording",
+      "type": "string",
+      "enum": [
+        "Excellent",
+        "Good",
+        "Fair",
+        "Poor",
+        "Unusable"
+      ]
+    },
+    "qualityIssues": {
+      "description": "Specific quality issues identified",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Clipping/Distortion",
+          "Background Noise",
+          "Low Volume",
+          "Microphone Artifact",
+          "Incomplete Recording",
+          "Participant Movement",
+          "Technical Error",
+          "None"
+        ]
+      }
+    },
+    "processingApplied": {
+      "description": "Signal processing applied to raw recording",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "None",
+          "Noise Reduction",
+          "Normalization",
+          "Compression",
+          "Filtering - High Pass",
+          "Filtering - Low Pass",
+          "Filtering - Band Pass",
+          "Echo Cancellation",
+          "Other"
+        ]
+      }
+    },
+    "transcriptionAvailable": {
+      "description": "Whether transcription of audio is available",
+      "type": "boolean"
+    },
+    "transcriptionMethod": {
+      "description": "Method used for transcription",
+      "type": "string",
+      "enum": [
+        "Manual Transcription",
+        "Automated Speech Recognition",
+        "Semi-automated (ASR + Manual Correction)",
+        "Not Applicable"
+      ]
+    },
+    "annotationsAvailable": {
+      "description": "Whether acoustic or linguistic annotations are available",
+      "type": "boolean"
+    },
+    "annotationType": {
+      "description": "Types of annotations available",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Phonetic Transcription",
+          "Prosodic Annotation",
+          "Articulatory Features",
+          "Voice Quality Markers",
+          "Dysfluency Tags",
+          "Pause Segmentation",
+          "Pitch Contour",
+          "Intensity Contour",
+          "Formant Frequencies",
+          "None"
+        ]
+      }
+    },
+    "consentForSharing": {
+      "description": "Participant consent level for data sharing",
+      "type": "string",
+      "enum": [
+        "Public Release",
+        "Controlled Access",
+        "Institutional Use Only",
+        "No Sharing"
+      ]
+    },
+    "deidentificationMethod": {
+      "description": "Method used to de-identify audio",
+      "type": "string",
+      "enum": [
+        "Voice Modification Applied",
+        "Personal Information Removed",
+        "Content Redaction",
+        "No De-identification",
+        "Other"
+      ]
+    },
+    "fileFormat": {
+      "description": "Standard NF file format field",
+      "type": "string"
+    },
+    "resourceType": {
+      "description": "Standard NF resource type",
+      "type": "string"
+    },
+    "platform": {
+      "description": "Platform or system used for audio collection",
+      "type": "string"
+    },
+    "notes": {
+      "description": "Additional notes or comments about the recording",
+      "type": "string"
+    }
+  },
+  "required": [
+    "specimenID",
+    "recordingDate",
+    "recordingType",
+    "audioFormat",
+    "recordingQuality"
+  ],
+  "additionalProperties": false
+}

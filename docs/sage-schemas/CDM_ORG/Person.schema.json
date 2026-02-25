@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://sage.schema/Person",
+  "title": "Person",
+  "description": "An individual person affiliated with an organization",
+  "type": "object",
+  "properties": {
+    "person_id": {
+      "description": "Unique identifier for the person",
+      "type": "integer"
+    },
+    "first_name": {
+      "description": "First name of the person",
+      "type": "string"
+    },
+    "last_name": {
+      "description": "Last name of the person",
+      "type": "string"
+    },
+    "email": {
+      "description": "Email address of the person",
+      "type": "string",
+      "format": "email"
+    },
+    "organization_id": {
+      "description": "Foreign key reference to the person's primary organization",
+      "type": "integer"
+    },
+    "status": {
+      "description": "Current status of the person",
+      "type": "string"
+    },
+    "synapse_id": {
+      "description": "Synapse platform identifier for the person",
+      "type": "string"
+    }
+  },
+  "required": ["person_id", "first_name", "last_name"],
+  "additionalProperties": false
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://sage.schema/WorkItem",
+  "title": "WorkItem",
+  "description": "A hierarchical work item representing a Program, Project, or Study",
+  "type": "object",
+  "properties": {
+    "work_item_id": {
+      "description": "Unique identifier for the work item",
+      "type": "integer"
+    },
+    "work_item_type": {
+      "description": "Type of work item in the hierarchy",
+      "type": "string",
+      "enum": ["PROGRAM", "PROJECT", "STUDY"]
+    },
+    "name": {
+      "description": "Name of the work item",
+      "type": "string"
+    },
+    "description": {
+      "description": "Detailed description of the work item",
+      "type": "string"
+    },
+    "status": {
+      "description": "Current status of the work item",
+      "type": "string"
+    },
+    "parent_work_item_id": {
+      "description": "Foreign key reference to parent work item (creates Program > Project > Study hierarchy)",
+      "type": ["integer", "null"]
+    },
+    "primary_org_id": {
+      "description": "Foreign key reference to the primary organization for this work item",
+      "type": "integer"
+    },
+    "synapse_id": {
+      "description": "Synapse platform identifier for the work item",
+      "type": "string"
+    }
+  },
+  "required": ["work_item_id", "work_item_type", "name"],
+  "additionalProperties": false
+}
