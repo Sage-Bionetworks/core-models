@@ -39,9 +39,8 @@ OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "docs/data.json")
 # Organizations that should be marked as "published"
 PUBLISHED_ORGS = {
     "MC2Center",
-    "sage.schemas.v2571",
     "org.synapse.nf",
-    "HTAN2Organization",
+    "HTAN2Organization"
 }
 
 

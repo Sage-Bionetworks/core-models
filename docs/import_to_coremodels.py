@@ -26,6 +26,7 @@ Optional:
   RATE_LIMIT_SECONDS        - Seconds to wait between API calls PER WORKER (default: "0.0")
   MAX_WORKERS               - Thread workers for parallel import (default: "8")
   VERIFY_URLS               - "true" to pre-check schema URLs (default: "false")
+  BATCH_SIZE                - Number of schemas to import in each batch (default: "20")
 """
 
 import json
@@ -59,6 +60,7 @@ DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
+BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "20"))
 
 SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
 
@@ -181,7 +183,7 @@ def verify_schema_url(url):
         return False
 
 
-def import_schema_to_coremodels(schema_url, schema_key, session: requests.Session):
+def batch_import_schema_to_coremodels(schema_urls, session: requests.Session):
     endpoint = f"{API_URL}/v1/{PROJECT_ID}/mergeJSONSchema"
 
     headers = {
@@ -193,7 +195,7 @@ def import_schema_to_coremodels(schema_url, schema_key, session: requests.Sessio
     body = {
         "spaceId": SPACE_ID,
         "configTypeId": CONFIG_TYPE_ID,
-        "sourceDtos": [{"fileUrl": schema_url}],
+        "sourceDtos": [{"fileUrl": url} for url in schema_urls],
         "overrideNewPropertiesWarning": OVERRIDE_NEW_PROPS,
         "overrideDifferentSourceWarning": OVERRIDE_DIFF_SRC,
         "overrideOverwriteWarning": OVERRIDE_OVERWRITE,
@@ -218,7 +220,6 @@ def import_schema_to_coremodels(schema_url, schema_key, session: requests.Sessio
         return False, "Request timed out"
     except Exception as e:
         return False, f"Exception: {e}"
-
 
 # ──────────────────────────────────────────────
 # Main
@@ -268,42 +269,45 @@ def main():
     skip_count = 0
     failed_schemas = []
 
-    def process_schema(index_schema):
-        i, schema = index_schema
-        org = schema["organization_name"]
-        name = schema["schema_name"]
-        key = schema["key"]
-        url = build_synapse_schema_url(org, name)
+    def process_schema_batch(batch):
+        batch_keys = [s["key"] for s in batch]
+        urls = []
+        for i, schema in enumerate(batch):
+            org = schema["organization_name"]
+            name = schema["schema_name"]
+            url = build_synapse_schema_url(org, name)
+            
+            if VERIFY_URLS and not verify_schema_url(url):
+                print(f"    ⏭️  Skipping {schema['key']} — URL not accessible: {url}")
+                continue
 
-        print(f"\n[{i}/{len(schemas)}] {key}")
-        print(f"  URL: {url}")
+            urls.append(url)
 
         if DRY_RUN:
-            print("  ⏭️  Skipped (dry run)")
-            return ("skip", key, None)
+            print(f"  ⏭️  Skipped batch {batch_keys} (dry run)")
+            return ("skip", batch_keys, None)
 
-        if VERIFY_URLS:
-            if not verify_schema_url(url):
-                print("  ⏭️  Skipping — URL not accessible")
-                return ("skip", key, "URL not accessible")
-
+        if not urls:
+            print(f"  ⏭️  Skipped batch {batch_keys} — no valid URLs")
+            return ("skip", batch_keys, "All URLs failed verification")
+        
         with requests.Session() as session:
-            ok, reason = import_schema_to_coremodels(url, key, session)
+            ok, reason = batch_import_schema_to_coremodels(urls, session)
 
         if RATE_LIMIT_SECONDS > 0:
             time.sleep(RATE_LIMIT_SECONDS)
 
         if ok:
-            print(f"  ✅ Successfully imported: {key}")
-            return ("success", key, None)
+            print(f"  ✅ Successfully imported batch")
+            return ("success", batch_keys, None)
 
         print(f"  ❌ Import failed: {reason}")
-        return ("fail", key, reason)
-
+        return ("fail", batch_keys, reason)
+            
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = [
-            executor.submit(process_schema, (i, schema))
-            for i, schema in enumerate(schemas, start=1)
+            executor.submit(process_schema_batch, schemas[i:i+BATCH_SIZE])
+            for i in range(0, len(schemas), BATCH_SIZE)
         ]
 
         for f in as_completed(futures):
@@ -326,21 +330,21 @@ def main():
     print("\n" + "=" * 60)
     print("IMPORT SUMMARY")
     print("=" * 60)
-    print(f"  Total schemas:  {len(schemas)}")
+    print(f"  Total batches:  {len(schemas)}")
     print(f"  ✅ Succeeded:   {success_count}")
     print(f"  ❌ Failed:      {fail_count}")
     print(f"  ⏭️  Skipped:    {skip_count}")
 
     if failed_schemas:
-        print("\nFailed/skipped schemas:")
+        print("\nFailed/skipped batches:")
         for f in failed_schemas:
             print(f"  - {f['key']}: {f['reason']}")
 
     if fail_count > 0:
-        print(f"\n⚠️  {fail_count} schema(s) failed to import.")
+        print(f"\n⚠️  {fail_count} batch(es) failed to import.")
         sys.exit(1)
 
-    print("\n🎉 All published schemas processed successfully!")
+    print("\n🎉 All published batches processed successfully!")
     sys.exit(0)
 
 
