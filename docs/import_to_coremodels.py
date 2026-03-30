@@ -203,7 +203,7 @@ def batch_import_schema_to_coremodels(schema_urls, session: requests.Session):
     }
 
     try:
-        resp = session.post(endpoint, headers=headers, json=body, timeout=120)
+        resp = session.post(endpoint, headers=headers, json=body, timeout=600)
 
         if resp.status_code == 200:
             result = resp.json()
