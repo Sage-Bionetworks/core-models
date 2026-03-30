@@ -145,9 +145,32 @@ input.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid
 select.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid var(--accent);background:var(--accentBg);color:var(--accent)}
 
 /* Schema icon button */
-.schema-link{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease}
+.schema-link{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease;cursor:pointer}
 .schema-link:hover{background:rgba(59,130,246,0.14);color:var(--linkHover);transform:translateY(-0.5px);text-decoration:none!important}
 .schema-link::after{display:none!important}
+
+/* JSON modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(10,15,30,0.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity 180ms ease}
+.modal-backdrop.open{opacity:1}
+.modal{background:var(--panel);border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 8px 40px rgba(0,0,0,0.18);width:100%;max-width:780px;max-height:88vh;display:flex;flex-direction:column;transform:translateY(10px);transition:transform 180ms ease;overflow:hidden}
+.modal-backdrop.open .modal{transform:translateY(0)}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--borderLight);flex-shrink:0}
+.modal-header-left{display:flex;flex-direction:column;gap:4px;min-width:0}
+.modal-title{font-size:14.5px;font-weight:800;letter-spacing:-0.02em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal-url{display:flex;align-items:center;gap:6px;min-width:0}
+.modal-url-text{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.modal-url a{font-family:var(--mono);font-size:10.5px;color:var(--link);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;font-weight:500}
+.modal-url a::after{display:none!important}
+.modal-actions{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.modal-copy{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all 140ms ease;white-space:nowrap}
+.modal-copy:hover{background:rgba(0,0,0,0.025);color:var(--text);border-color:rgba(0,0,0,0.10)}
+.modal-copy.copied{color:var(--green);border-color:rgba(34,197,94,0.25)}
+.modal-close{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;transition:all 140ms ease;flex-shrink:0;line-height:1}
+.modal-close:hover{background:rgba(0,0,0,0.04);color:var(--text)}
+.modal-body{overflow-y:auto;flex:1;padding:0}
+.modal-loading{display:flex;align-items:center;justify-content:center;padding:48px 20px;gap:12px;color:var(--muted);font-size:13px}
+.modal-error{display:flex;align-items:center;justify-content:center;padding:36px 20px;gap:10px;color:rgba(185,28,28,0.85);font-size:13px;font-weight:600}
+.json-pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:12px;line-height:1.65;color:var(--text);white-space:pre;overflow-x:auto;tab-size:2}
 
 /* SHA */
 .sha-wrap{display:flex;align-items:center;gap:5px}
@@ -352,6 +375,27 @@ select.colFilter.has-value{border-color:var(--accentBorder);border-left:3px soli
 </div>
 </div>
 
+<!-- JSON viewer modal -->
+<div id="jsonModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div id="modalTitle" class="modal-title">Schema JSON</div>
+        <div class="modal-url">
+          <a id="modalUrlLink" href="#" target="_blank" rel="noopener"></a>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-copy" id="modalCopyBtn" type="button">⎘ Copy JSON</button>
+        <button class="modal-close" id="modalCloseBtn" type="button" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="modal-loading"><div class="spinner"></div> Loading…</div>
+    </div>
+  </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
@@ -480,6 +524,67 @@ function exportCSV(table){
   setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 
+/* ======= JSON Modal ======= */
+(function(){
+  const backdrop=document.getElementById('jsonModalBackdrop');
+  const body=document.getElementById('modalBody');
+  const title=document.getElementById('modalTitle');
+  const urlLink=document.getElementById('modalUrlLink');
+  const copyBtn=document.getElementById('modalCopyBtn');
+  const closeBtn=document.getElementById('modalCloseBtn');
+  let currentJson='';
+
+  function openModal(url,name){
+    title.textContent=name||'Schema JSON';
+    urlLink.textContent=url;
+    urlLink.href=url;
+    body.innerHTML='<div class="modal-loading"><div class="spinner"></div> Loading…</div>';
+    copyBtn.textContent='⎘ Copy JSON';copyBtn.classList.remove('copied');
+    currentJson='';
+    backdrop.style.display='flex';
+    requestAnimationFrame(()=>backdrop.classList.add('open'));
+    document.body.style.overflow='hidden';
+
+    fetch(url)
+      .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(data=>{
+        currentJson=JSON.stringify(data,null,2);
+        const pre=document.createElement('pre');
+        pre.className='json-pre';
+        pre.textContent=currentJson;
+        body.innerHTML='';
+        body.appendChild(pre);
+      })
+      .catch(err=>{
+        body.innerHTML='<div class="modal-error">⚠ Could not load JSON: '+esc(err.message)+'</div>';
+      });
+  }
+
+  function closeModal(){
+    backdrop.classList.remove('open');
+    setTimeout(()=>{backdrop.style.display='none';document.body.style.overflow='';},180);
+  }
+
+  closeBtn.addEventListener('click',closeModal);
+  backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&backdrop.classList.contains('open'))closeModal();});
+
+  copyBtn.addEventListener('click',function(){
+    if(!currentJson)return;
+    navigator.clipboard.writeText(currentJson).then(()=>{
+      copyBtn.textContent='✓ Copied!';copyBtn.classList.add('copied');
+      setTimeout(()=>{copyBtn.textContent='⎘ Copy JSON';copyBtn.classList.remove('copied');},1800);
+    }).catch(()=>{});
+  });
+
+  // Delegate clicks on schema-link buttons
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.schema-link');
+    if(!btn||!btn.dataset.url)return;
+    openModal(btn.dataset.url,btn.dataset.name);
+  });
+})();
+
 /* ======= Draft filter ======= */
 let hideDraftSchemas=true;
 $.fn.dataTable.ext.search.push(function(settings,data){
@@ -534,10 +639,10 @@ async function loadSchemaTable(){
       '<td>'+statusPill(row.status)+'</td>'+
       '<td>'+esc(row.schema_id)+'</td>'+
       '<td>'+esc(row.schema_name)+'</td>'+
-      '<td><a class="schema-link" href="'+esc(url)+'" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>'+
+      '<td><button class="schema-link" data-url="'+esc(url)+'" data-name="'+esc(row.schema_name)+'" title="View schema JSON" type="button">{ }</button></td>'+
       '<td>'+esc(row.version_id)+'</td>'+
       '<td>'+esc(row.semantic_version)+'</td>'+
-      '<td><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
+      '<td data-order="'+(row.created_on?new Date(row.created_on).getTime():0)+'"><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
       '<td>'+esc(row.created_by)+'</td>'+
       '<td>'+shaCell(row.json_sha256_hex)+'</td>';
     tbody.appendChild(tr);
