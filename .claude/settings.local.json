@@ -4,7 +4,8 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(npx --version)",
       "Read(//c/Windows/System32/WindowsPowerShell//**)",
-      "Read(//c/Python313/**)"
+      "Read(//c/Python313/**)",
+      "Bash(python -c \":*)"
     ]
   }
 }

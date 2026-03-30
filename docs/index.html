@@ -144,6 +144,11 @@ input.colFilter:focus{border-left-color:var(--accent)}
 input.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid var(--accent);background:var(--accentBg)}
 select.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid var(--accent);background:var(--accentBg);color:var(--accent)}
 
+/* Column resize handle */
+.col-resize-handle{position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:1;user-select:none}
+.col-resize-handle:hover,.col-resize-handle.dragging{background:var(--accent);opacity:0.35}
+table.dataTable thead th{position:relative}
+
 /* Schema icon button */
 .schema-link{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease;cursor:pointer}
 .schema-link:hover{background:rgba(59,130,246,0.14);color:var(--linkHover);transform:translateY(-0.5px);text-decoration:none!important}
@@ -585,6 +590,42 @@ function exportCSV(table){
   });
 })();
 
+/* ======= Column resize ======= */
+function initColResize() {
+  const ths = document.querySelectorAll('#headerRow th');
+  ths.forEach(th => {
+    const handle = document.createElement('div');
+    handle.className = 'col-resize-handle';
+    th.appendChild(handle);
+
+    let startX, startW;
+
+    handle.addEventListener('mousedown', e => {
+      e.stopPropagation(); // prevent sort
+      startX = e.pageX;
+      startW = th.offsetWidth;
+      handle.classList.add('dragging');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+
+      function onMove(e) {
+        const newW = Math.max(40, startW + (e.pageX - startX));
+        th.style.width = newW + 'px';
+        th.style.minWidth = newW + 'px';
+      }
+      function onUp() {
+        handle.classList.remove('dragging');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+}
+
 /* ======= Draft filter ======= */
 let hideDraftSchemas=true;
 $.fn.dataTable.ext.search.push(function(settings,data){
@@ -657,6 +698,9 @@ async function loadSchemaTable(){
     autoWidth:false,
     language:{zeroRecords:''}  // suppress default message; we show our own
   });
+
+  // Init column resize handles
+  initColResize();
 
   // Set filter row sticky top = header row height
   const headerH=document.getElementById('headerRow').getBoundingClientRect().height;
