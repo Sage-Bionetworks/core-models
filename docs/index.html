@@ -19,7 +19,6 @@
   --green:#22c55e;--greenBg:rgba(34,197,94,0.08);
   --shadow:0 1px 3px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.06);
   --radius:16px;
-  --danger:#ef4444;--dangerBg:rgba(239,68,68,0.06);--dangerBorder:rgba(239,68,68,0.15);
   --font:'Manrope',ui-sans-serif,system-ui,-apple-system,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 }
@@ -49,64 +48,104 @@ body{font-family:var(--font);background:linear-gradient(180deg,var(--bg2) 0%,var
 
 /* Panel */
 .panel{border-radius:var(--radius);border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
-.panelHeader{padding:18px 20px 14px;border-bottom:1px solid var(--borderLight)}
-.panelHeaderTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panelHeader{padding:14px 20px 12px;border-bottom:1px solid var(--borderLight)}
+.panelHeaderTop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
 .panelHeader h2{font-size:15.5px;font-weight:800;letter-spacing:-0.02em;color:rgba(15,23,42,0.92)}
-.panelHeader p{margin:6px 0 0;color:var(--muted);font-size:12.5px;line-height:1.55;max-width:960px}
+.panelHeader p{color:var(--muted);font-size:12.5px;line-height:1.55;max-width:960px}
 .panelBody{padding:16px 16px 18px;position:relative;min-height:120px}
 
-/* Buttons */
-.btnRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12.5px;font-weight:700;font-family:var(--font);cursor:pointer;user-select:none;transition:all 140ms ease;white-space:nowrap;outline:none}
+/* Toolbar */
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toolbar-sep{width:1px;height:22px;background:var(--border);flex-shrink:0}
+
+/* Global search */
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-icon{position:absolute;left:10px;color:var(--muted);font-size:15px;pointer-events:none;line-height:1}
+.global-search{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:8px 10px 8px 32px;font-size:13px;font-family:var(--font);outline:none;width:220px;transition:border-color 140ms,box-shadow 140ms}
+.global-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentBg)}
+.global-search::placeholder{color:var(--muted2)}
+
+/* Length + button base */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--muted);font-size:12.5px;font-weight:700;font-family:var(--font);cursor:pointer;user-select:none;transition:all 140ms ease;white-space:nowrap;outline:none}
 .btn:hover{background:rgba(0,0,0,0.02);color:var(--text);border-color:rgba(0,0,0,0.10);transform:translateY(-0.5px)}
 .btn:focus-visible{box-shadow:0 0 0 2px var(--accentBorder)}
 .btn .chev{display:inline-block;transition:transform 160ms ease;font-size:11px}
 .btn.open .chev{transform:rotate(180deg)}
 .btn.active{border-color:var(--accentBorder);background:var(--accentBg);color:var(--accent)}
 .btn.disabled{opacity:0.32;pointer-events:none}
+.length-sel{appearance:none;-webkit-appearance:none;padding-right:26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
+
+/* Filter count badge */
+.filter-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;line-height:1}
 
 /* Links */
 a{color:var(--link);text-decoration:none;font-weight:600}
 a:hover{color:var(--linkHover);text-decoration:underline}
 a[target="_blank"]:not(.schema-link)::after{content:" ↗";opacity:0.4;font-size:0.82em}
 
-/* DataTables overrides */
-table.dataTable{border-collapse:collapse!important;width:100%!important;color:var(--text);font-family:var(--font)}
-table.dataTable thead th{background:rgba(0,0,0,0.018);border-bottom:1px solid var(--border)!important;color:var(--muted);font-weight:700;font-size:11.5px;padding:11px 10px!important;white-space:nowrap;text-transform:uppercase;letter-spacing:0.03em}
-table.dataTable tbody td{border-top:none!important;padding:11px 10px!important;font-size:13px;color:var(--text);vertical-align:top}
-table.dataTable tbody tr{border-bottom:1px solid var(--borderLight)}
-table.dataTable tbody tr:hover{background:rgba(59,130,246,0.025)!important}
+/* DataTables — hide default search/length (we have custom ones) */
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length{display:none!important}
+/* Hide default empty-rows message (we have our own) */
+.dataTables_empty{display:none!important}
 
-/* Hide default sort icons */
-table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,table.dataTable thead .sorting_desc::after,
-table.dataTable thead .sorting::before,table.dataTable thead .sorting_asc::before,table.dataTable thead .sorting_desc::before{opacity:0!important}
+table.dataTable{border-collapse:collapse!important;width:100%!important;color:var(--text);font-family:var(--font);table-layout:fixed}
+table.dataTable thead th{
+  background:rgba(248,249,252,0.98);
+  border-bottom:1px solid var(--border)!important;
+  color:var(--muted);font-weight:700;font-size:11px;
+  padding:10px 10px!important;
+  white-space:nowrap;text-transform:uppercase;letter-spacing:0.04em;
+  overflow:hidden;text-overflow:ellipsis;
+  user-select:none;
+  /* Sticky header row */
+  position:sticky;top:0;z-index:11;
+  box-shadow:0 1px 0 var(--border),0 3px 8px rgba(0,0,0,0.04);
+}
+/* Filter row sticky — top offset set by JS after init */
+.filtersRow th{
+  position:sticky;z-index:10;
+  padding:6px 8px 8px!important;
+  background:rgba(243,246,255,0.98)!important;
+  border-bottom:2px solid var(--accentBorder)!important;
+  box-shadow:0 2px 6px rgba(0,0,0,0.03);
+}
+.filtersRow.hidden{display:none}
+
+table.dataTable tbody td{border-top:none!important;padding:10px 10px!important;font-size:13px;color:var(--text);vertical-align:top;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table.dataTable tbody tr{border-bottom:1px solid var(--borderLight)}
+table.dataTable tbody tr:nth-child(even){background:rgba(0,0,0,0.012)}
+table.dataTable tbody tr:hover{background:rgba(59,130,246,0.03)!important}
+
+/* Custom sort arrows */
+table.dataTable thead .sorting::before,table.dataTable thead .sorting_asc::before,
+table.dataTable thead .sorting_desc::before{display:none!important}
+table.dataTable thead .sorting::after,table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after{display:inline-block!important;opacity:1!important;margin-left:4px;font-size:10px;vertical-align:middle}
+table.dataTable thead .sorting::after{content:'↕';opacity:0.2!important;color:var(--muted)}
+table.dataTable thead .sorting_asc::after{content:'↑';color:var(--accent)!important}
+table.dataTable thead .sorting_desc::after{content:'↓';color:var(--accent)!important}
 table.dataTable thead th.sorting_asc{color:var(--accent)!important}
 table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 
-.dataTables_wrapper .dataTables_filter input,.dataTables_wrapper .dataTables_length select{
-  border:1px solid var(--border)!important;background:var(--panel)!important;color:var(--text)!important;
-  border-radius:10px!important;padding:8px 10px!important;outline:none!important;font-family:var(--font)!important;font-size:13px!important}
-.dataTables_wrapper .dataTables_length select option{background:#fff!important;color:var(--text)!important}
-.dataTables_wrapper .dataTables_filter input:focus,.colFilter:focus{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accentBg)!important}
-.dataTables_wrapper .dataTables_length label,.dataTables_wrapper .dataTables_filter label,.dataTables_wrapper .dataTables_info{color:var(--muted)!important;font-size:12.5px!important;font-family:var(--font)!important}
+.dataTables_wrapper .dataTables_info{color:var(--muted)!important;font-size:12px!important;font-family:var(--font)!important;padding-top:10px!important}
 .dataTables_wrapper .dataTables_paginate{margin-top:12px!important}
-.dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:10px!important;border:1px solid transparent!important;background:transparent!important;color:var(--muted)!important;padding:7px 11px!important;margin:0 2px!important;transition:all 120ms ease;font-family:var(--font)!important}
+.dataTables_wrapper .dataTables_paginate .paginate_button{border-radius:10px!important;border:1px solid transparent!important;background:transparent!important;color:var(--muted)!important;padding:7px 11px!important;margin:0 2px!important;transition:all 120ms ease;font-family:var(--font)!important;font-size:13px!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:rgba(0,0,0,0.03)!important;border-color:var(--border)!important;color:var(--text)!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button.current{background:var(--accentBg)!important;border-color:var(--accentBorder)!important;color:var(--accent)!important;font-weight:700!important}
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled{opacity:0.3!important}
-.dataTables_scrollHeadInner{width:100%!important}
-.dataTables_scrollHeadInner table{width:100%!important}
-.dataTables_scrollBody{overflow-x:auto!important}
 
-/* Filter row */
-.filtersRow th{padding:8px 10px 10px!important;background:rgba(59,130,246,0.015)!important;border-bottom:1px solid var(--borderLight)!important}
-.filtersRow.hidden{display:none}
-.colFilter{width:100%;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:9px;padding:7px 9px;font-size:12px;font-family:var(--font);outline:none}
+/* Column filter inputs */
+.colFilter{width:100%;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:6px 8px;font-size:11.5px;font-family:var(--font);outline:none;transition:border-color 140ms,box-shadow 140ms}
 .colFilter:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentBg)}
 .colFilter option{background:#fff;color:var(--text)}
+input.colFilter{border-left:3px solid var(--borderLight)}
+input.colFilter:focus{border-left-color:var(--accent)}
+input.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid var(--accent);background:var(--accentBg)}
+select.colFilter.has-value{border-color:var(--accentBorder);border-left:3px solid var(--accent);background:var(--accentBg);color:var(--accent)}
 
 /* Schema icon button */
-.schema-link{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease}
+.schema-link{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--accentBorder);background:var(--accentBg);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none!important;transition:all 120ms ease}
 .schema-link:hover{background:rgba(59,130,246,0.14);color:var(--linkHover);transform:translateY(-0.5px);text-decoration:none!important}
 .schema-link::after{display:none!important}
 
@@ -118,8 +157,8 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 .sha-copy.copied{color:var(--green);border-color:rgba(34,197,94,0.25)}
 
 /* Date tooltip */
-.date-cell{position:relative;cursor:default}
-.date-cell .date-abs{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel);color:var(--text);padding:5px 10px;border-radius:9px;font-size:11px;white-space:nowrap;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.10);z-index:10;pointer-events:none}
+.date-cell{position:relative;cursor:default;white-space:nowrap}
+.date-cell .date-abs{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel);color:var(--text);padding:5px 10px;border-radius:9px;font-size:11px;white-space:nowrap;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.10);z-index:20;pointer-events:none}
 .date-cell:hover .date-abs{display:block}
 
 /* States */
@@ -130,11 +169,27 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{width:34px;height:34px;border:3px solid var(--borderLight);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 
+/* No-results overlay inside tableWrap */
+#noResultsState{
+  display:none;
+  position:absolute;left:0;right:0;bottom:0;
+  background:var(--panel);
+  border-top:1px solid var(--borderLight);
+  z-index:5;
+  border-radius:0 0 var(--radius) var(--radius);
+}
+
+/* Status pill */
+.status-pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:-0.01em;border:1px solid var(--border);background:rgba(0,0,0,0.02);color:var(--muted);text-transform:capitalize}
+.status-pill.published{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.22);color:rgba(22,163,74,0.95)}
+.status-pill.draft{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.18);color:rgba(185,28,28,0.92)}
+
 /* DCC table */
 .dcc-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 .dcc-table th,.dcc-table td{border-top:1px solid var(--borderLight);padding:12px;text-align:left;vertical-align:top;font-size:13px}
 .dcc-table th{background:rgba(0,0,0,0.018);color:var(--muted);font-weight:700;border-top:none;font-size:11.5px;text-transform:uppercase;letter-spacing:0.03em}
-.dcc-table tr:hover td{background:rgba(59,130,246,0.02)}
+.dcc-table tr:nth-child(even) td{background:rgba(0,0,0,0.010)}
+.dcc-table tr:hover td{background:rgba(59,130,246,0.025)!important}
 .dcc-table td:first-child{font-size:14px;font-weight:800}
 
 /* DCC search */
@@ -144,36 +199,17 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 .dcc-table tr.dcc-hidden{display:none}
 
 .muted{color:var(--muted);font-size:13px}
-.footer{margin-top:10px;color:var(--muted2);font-size:11.5px}
-
-/* NEW: status pill */
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  padding:3px 10px;
-  border-radius:999px;
-  font-size:11.5px;
-  font-weight:800;
-  letter-spacing:-0.01em;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,0.02);
-  color:var(--muted);
-  text-transform:capitalize;
-}
-.status-pill.published{
-  background:rgba(34,197,94,0.08);
-  border-color:rgba(34,197,94,0.22);
-  color:rgba(22,163,74,0.95);
-}
-.status-pill.draft{
-  background:rgba(239,68,68,0.06);
-  border-color:rgba(239,68,68,0.18);
-  color:rgba(185,28,28,0.92);
-}
+.footer{margin-top:10px;color:var(--muted2);font-size:11px;display:flex;align-items:center;gap:5px}
 
 @media(max-width:900px){
   .top{flex-direction:column;align-items:flex-start}
   .meta{justify-content:flex-start}
+  .global-search{width:160px}
+}
+@media(max-width:600px){
+  .toolbar-sep{display:none}
+  .global-search{width:100%}
+  .toolbar{flex-wrap:wrap}
 }
 </style>
 </head>
@@ -202,24 +238,44 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <div class="panelHeaderTop">
 <div>
 <h2>Schema Versions</h2>
-<p>Use global search for quick filtering, or open column filters for per-column dropdowns. The row count badge updates live.</p>
+<p>Search across all columns, or open column filters for per-column control.</p>
+</div>
 </div>
 
-<div class="btnRow">
-<button id="filtersToggle" class="btn" type="button" aria-expanded="false">
-  Filters <span class="chev">▾</span>
-</button>
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="globalSearch" class="global-search" placeholder="Search all columns…" aria-label="Search schemas"/>
+  </div>
 
-<button id="hideDraftToggle" class="btn active" type="button" aria-pressed="true">
-  Hide draft schemas
-</button>
+  <select id="lengthSelect" class="btn length-sel" aria-label="Rows per page">
+    <option value="10">10 rows</option>
+    <option value="25" selected>25 rows</option>
+    <option value="50">50 rows</option>
+    <option value="100">100 rows</option>
+  </select>
 
-<button id="clearFilters" class="btn disabled" type="button">
-  Clear Filters
-</button>
+  <span class="toolbar-sep"></span>
+
+  <button id="filtersToggle" class="btn" type="button" aria-expanded="false">
+    Filters <span class="chev">▾</span><span id="filterCount" class="filter-count" style="display:none">0</span>
+  </button>
+
+  <button id="hideDraftToggle" class="btn active" type="button" aria-pressed="true">
+    Hide drafts
+  </button>
+
+  <button id="clearFilters" class="btn disabled" type="button">
+    Clear
+  </button>
+
+  <span class="toolbar-sep"></span>
+
+  <button id="exportCsv" class="btn" type="button" title="Export filtered rows as CSV">
+    ↓ CSV
+  </button>
 </div>
 
-</div>
 </div>
 
 <div class="panelBody">
@@ -236,27 +292,35 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <p>No schema versions found. The data file is empty.</p>
 </div>
 
-<div id="tableWrap" style="display:none">
+<div id="tableWrap" style="display:none;position:relative">
 <table id="orgTable" class="display" style="width:100%">
 <thead>
 <tr id="headerRow">
-<th>Org ID</th>
-<th>Org Name</th>
-<th>Status</th>
-<th>Schema ID</th>
+<th style="width:60px">Org ID</th>
+<th style="width:130px">Org Name</th>
+<th style="width:96px">Status</th>
+<th style="width:72px">Schema ID</th>
 <th>Schema Name</th>
-<th style="width:48px">Schema</th>
-<th>Version ID</th>
-<th>Semantic Ver</th>
-<th>Created</th>
-<th>Created By</th>
-<th>SHA256</th>
+<th style="width:48px">JSON</th>
+<th style="width:80px">Version ID</th>
+<th style="width:82px">Sem. Ver</th>
+<th style="width:108px">Created</th>
+<th style="width:120px">Created By</th>
+<th style="width:148px">SHA256</th>
 </tr>
 <tr id="filterRow" class="filtersRow hidden"></tr>
 </thead>
 <tbody></tbody>
 </table>
-<div class="footer">Tip: If a column has too many unique values, its dropdown is disabled — use global search instead.</div>
+
+<!-- No-results overlay shown when filters match 0 rows -->
+<div id="noResultsState" class="state-overlay">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+  <p>No schemas match the current filters.<br/><span style="font-size:12px;color:var(--muted2)">Try adjusting your search or clearing filters.</span></p>
+  <button class="btn" id="clearFromEmpty" type="button">Clear filters</button>
+</div>
+
+<div class="footer"><span style="opacity:0.45;font-size:12px">ⓘ</span> Columns with many unique values show a text search box; others show a dropdown.</div>
 </div>
 </div>
 </div>
@@ -266,8 +330,7 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <div id="tab-dcc" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn-dcc">
 <div class="panel">
 <div class="panelHeader">
-<h2>Data Coordinating Center Links</h2>
-<p>Quick links to DCC GitHub repositories and documentation sites.</p>
+<div class="panelHeaderTop"><div><h2>Data Coordinating Center Links</h2><p>Quick links to DCC GitHub repositories and documentation sites.</p></div></div>
 </div>
 <div class="panelBody">
 <div class="dcc-search-wrap"><input type="text" class="dcc-search" id="dccSearch" placeholder="Filter DCCs…" aria-label="Filter DCC table"/></div>
@@ -293,300 +356,325 @@ table.dataTable thead th.sorting_desc{color:var(--accent)!important}
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
 <script>
-/* ======= Tabs with keyboard nav ======= */
+/* ======= Tabs ======= */
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabPanels = { schemas: document.getElementById('tab-schemas'), dcc: document.getElementById('tab-dcc') };
 
 function activateTab(btn) {
-  tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); b.tabIndex = -1; });
-  btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); btn.tabIndex = 0; btn.focus();
+  tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); b.tabIndex=-1; });
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true'); btn.tabIndex=0; btn.focus();
   Object.values(tabPanels).forEach(p => p.classList.remove('active'));
   tabPanels[btn.dataset.tab].classList.add('active');
   try { history.replaceState(null, null, '#' + btn.dataset.tab); } catch(e) {}
 }
-
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => activateTab(btn));
   btn.addEventListener('keydown', e => {
-    const arr = [...tabBtns], i = arr.indexOf(btn);
-    if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(arr[(i + 1) % arr.length]); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); activateTab(arr[(i - 1 + arr.length) % arr.length]); }
+    const arr=[...tabBtns], i=arr.indexOf(btn);
+    if(e.key==='ArrowRight'){e.preventDefault();activateTab(arr[(i+1)%arr.length]);}
+    if(e.key==='ArrowLeft'){e.preventDefault();activateTab(arr[(i-1+arr.length)%arr.length]);}
   });
 });
-
-if (location.hash) {
-  const t = location.hash.slice(1);
-  const b = [...tabBtns].find(x => x.dataset.tab === t);
-  if (b) activateTab(b);
-}
+if(location.hash){const b=[...tabBtns].find(x=>x.dataset.tab===location.hash.slice(1));if(b)activateTab(b);}
 
 /* ======= Helpers ======= */
-function esc(s) { if (s == null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function stripHtml(v) { const d = document.createElement('div'); d.innerHTML = v; return d.textContent.trim(); }
-function norm(v) { return stripHtml(v).replace(/\s+/g, ' ').trim(); }
-function setBadge(t) { document.getElementById('rowCountBadge').textContent = t; }
-function escRx(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function stripHtml(v){const d=document.createElement('div');d.innerHTML=v;return d.textContent.trim();}
+function norm(v){return stripHtml(v).replace(/\s+/g,' ').trim();}
+function setBadge(t){document.getElementById('rowCountBadge').textContent=t;}
+function escRx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+function debounce(fn,ms){let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),ms);};}
 
-/* ======= Relative dates ======= */
-function relDate(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso), now = new Date(), diff = now - d;
-  const s = Math.floor(diff/1000), m = Math.floor(s/60), h = Math.floor(m/60);
-  const dy = Math.floor(h/24), mo = Math.floor(dy/30), yr = Math.floor(dy/365);
-  if (yr > 0) return yr === 1 ? '1 year ago' : yr + ' years ago';
-  if (mo > 0) return mo === 1 ? '1 month ago' : mo + ' months ago';
-  if (dy > 0) return dy === 1 ? '1 day ago' : dy + ' days ago';
-  if (h > 0) return h === 1 ? '1 hour ago' : h + ' hours ago';
-  if (m > 0) return m === 1 ? '1 min ago' : m + ' mins ago';
-  return 'just now';
+/* ======= Dates ======= */
+function relDate(iso){
+  if(!iso)return'—';
+  const d=new Date(iso),now=new Date(),diff=now-d;
+  const s=Math.floor(diff/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24),mo=Math.floor(dy/30),yr=Math.floor(dy/365);
+  if(yr>0)return yr===1?'1 year ago':yr+' years ago';
+  if(mo>0)return mo===1?'1 month ago':mo+' months ago';
+  if(dy>0)return dy===1?'1 day ago':dy+' days ago';
+  if(h>0)return h===1?'1 hour ago':h+' hours ago';
+  if(m>0)return m===1?'1 min ago':m+' mins ago';
+  return'just now';
 }
-function fmtDate(iso) {
-  if (!iso) return '';
-  try { return new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }); }
-  catch(e) { return iso; }
+function fmtDate(iso){
+  if(!iso)return'';
+  try{return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
+  catch(e){return iso;}
 }
 
 /* ======= SHA ======= */
-function shaCell(hex) {
-  if (!hex) return '<span class="muted">—</span>';
-  const short = hex.substring(0, 10);
-  return '<div class="sha-wrap"><span class="sha-text" title="' + esc(hex) + '">' + esc(short) + '…</span><button class="sha-copy" data-sha="' + esc(hex) + '" title="Copy full SHA256">Copy</button></div>';
+function shaCell(hex){
+  if(!hex)return'<span class="muted">—</span>';
+  const short=hex.substring(0,10);
+  return'<div class="sha-wrap"><span class="sha-text" title="'+esc(hex)+'">'+esc(short)+'…</span><button class="sha-copy" data-sha="'+esc(hex)+'" title="Copy full SHA256">Copy</button></div>';
 }
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.sha-copy');
-  if (!btn) return;
-  navigator.clipboard.writeText(btn.dataset.sha).then(() => {
-    btn.textContent = 'Copied!'; btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
-  }).catch(() => {});
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.sha-copy');
+  if(!btn)return;
+  navigator.clipboard.writeText(btn.dataset.sha).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},1500);
+  }).catch(()=>{});
 });
 
 /* ======= Status pill ======= */
-function statusPill(status) {
-  const s = (status || '').toLowerCase();
-  if (!s) return '<span class="muted">—</span>';
-  const safe = esc(s);
-  return '<span class="status-pill ' + safe + '">' + safe + '</span>';
+function statusPill(status){
+  const s=(status||'').toLowerCase();
+  if(!s)return'<span class="muted">—</span>';
+  return'<span class="status-pill '+esc(s)+'">'+esc(s)+'</span>';
 }
 
-/* ======= Build filter row cells (before DT init) ======= */
-const FILTERABLE = new Set([0, 1, 2, 3, 4, 6, 7, 8, 9]);
+/* ======= Filter cells ======= */
+const FILTERABLE=new Set([0,1,2,3,4,6,7,8,9]);
 
-function buildFilterCells() {
-  const filterRow = document.getElementById('filterRow');
-  const headerCells = document.getElementById('headerRow').children;
-  for (let i = 0; i < headerCells.length; i++) {
-    const th = document.createElement('th');
-    if (FILTERABLE.has(i)) {
-      th.innerHTML = '<select class="colFilter" data-col="' + i + '" aria-label="Filter column ' + i + '"><option value="">All</option></select>';
-    } else {
-      th.innerHTML = '<span class="muted">—</span>';
+function buildFilterCells(){
+  const filterRow=document.getElementById('filterRow');
+  const headerCells=document.getElementById('headerRow').children;
+  for(let i=0;i<headerCells.length;i++){
+    const th=document.createElement('th');
+    if(FILTERABLE.has(i)){
+      th.innerHTML='<select class="colFilter" data-col="'+i+'" aria-label="Filter column '+i+'"><option value="">All</option></select>';
+    }else{
+      th.innerHTML='<span class="muted" style="font-size:11px">—</span>';
     }
     filterRow.appendChild(th);
   }
 }
 
-/* ======= Update clear button state ======= */
-function updateClearBtn(table) {
-  const hasG = !!table.search();
-  const hasC = table.columns().search().toArray().some(Boolean);
-  document.getElementById('clearFilters').classList.toggle('disabled', !hasG && !hasC);
-  document.getElementById('filtersToggle').classList.toggle('active', hasG || hasC);
+/* ======= State helpers ======= */
+function updateFilterCount(table){
+  const n=table.columns().search().toArray().filter(Boolean).length+(table.search()?1:0);
+  const el=document.getElementById('filterCount');
+  el.textContent=n;el.style.display=n>0?'':'none';
+}
+function updateClearBtn(table){
+  const hasG=!!table.search(),hasC=table.columns().search().toArray().some(Boolean);
+  document.getElementById('clearFilters').classList.toggle('disabled',!hasG&&!hasC);
+  document.getElementById('filtersToggle').classList.toggle('active',hasG||hasC);
+  updateFilterCount(table);
+}
+function updateNoResults(table){
+  const count=table.rows({filter:'applied'}).count();
+  document.getElementById('noResultsState').style.display=count===0?'flex':'none';
 }
 
-/* ============================================================
-   Hide "draft" schemas filter (matches Status column)
-   ============================================================ */
-let hideDraftSchemas = true;
+/* ======= CSV export ======= */
+function exportCSV(table){
+  // Column labels (skip JSON link col at index 5)
+  const hdrs=['Org ID','Org Name','Status','Schema ID','Schema Name','Version ID','Sem. Ver','Created','Created By','SHA256'];
+  const lines=[hdrs.map(h=>'"'+h+'"').join(',')];
+  table.rows({filter:'applied'}).data().each(function(row){
+    const cells=[];
+    for(let i=0;i<row.length;i++){
+      if(i===5)continue; // skip JSON link
+      const val=norm(row[i]).replace(/"/g,'""');
+      cells.push('"'+val+'"');
+    }
+    lines.push(cells.join(','));
+  });
+  const blob=new Blob([lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='schemas-export.csv';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
 
-$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-  if (!hideDraftSchemas) return true;
-
-  // Status column index = 2
-  const status = (data[2] || '').toLowerCase();
-  return status !== 'draft';
+/* ======= Draft filter ======= */
+let hideDraftSchemas=true;
+$.fn.dataTable.ext.search.push(function(settings,data){
+  if(!hideDraftSchemas)return true;
+  return(data[2]||'').toLowerCase()!=='draft';
 });
 
 /* ======= Main load ======= */
-async function loadSchemaTable() {
-  const loading = document.getElementById('loadingState');
-  const errorEl = document.getElementById('errorState');
-  const emptyEl = document.getElementById('emptyState');
-  const tableWrap = document.getElementById('tableWrap');
+async function loadSchemaTable(){
+  const loading=document.getElementById('loadingState');
+  const errorEl=document.getElementById('errorState');
+  const emptyEl=document.getElementById('emptyState');
+  const tableWrap=document.getElementById('tableWrap');
 
-  loading.style.display = 'flex';
-  errorEl.style.display = 'none';
-  emptyEl.style.display = 'none';
-  tableWrap.style.display = 'none';
+  loading.style.display='flex';errorEl.style.display='none';emptyEl.style.display='none';tableWrap.style.display='none';
 
-  // Destroy previous DT instance if retrying
-  if ($.fn.DataTable.isDataTable('#orgTable')) {
+  if($.fn.DataTable.isDataTable('#orgTable')){
     $('#orgTable').DataTable().destroy();
-    document.querySelector('#orgTable tbody').innerHTML = '';
-    document.getElementById('filterRow').innerHTML = '';
+    document.querySelector('#orgTable tbody').innerHTML='';
+    document.getElementById('filterRow').innerHTML='';
   }
 
   let data;
-  try {
-    const r = await fetch('./data.json');
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    data = await r.json();
-  } catch (err) {
-    loading.style.display = 'none';
-    errorEl.style.display = 'flex';
-    document.getElementById('errorMsg').textContent = 'Could not load data.json: ' + err.message;
-    setBadge('Error loading data');
-    return;
+  try{
+    const r=await fetch('./data.json');
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    data=await r.json();
+  }catch(err){
+    loading.style.display='none';errorEl.style.display='flex';
+    document.getElementById('errorMsg').textContent='Could not load data.json: '+err.message;
+    setBadge('Error loading data');return;
   }
 
-  loading.style.display = 'none';
-
-  if (!data || data.length === 0) {
-    emptyEl.style.display = 'flex';
-    setBadge('0 rows');
-    document.getElementById('schemaCountTab').textContent = '0';
-    return;
+  loading.style.display='none';
+  if(!data||data.length===0){
+    emptyEl.style.display='flex';setBadge('0 rows');
+    document.getElementById('schemaCountTab').textContent='0';return;
   }
 
-  setBadge(data.length.toLocaleString() + ' rows loaded');
-  document.getElementById('schemaCountTab').textContent = data.length.toLocaleString();
-  tableWrap.style.display = 'block';
-
-  // Build filter cells
+  setBadge(data.length.toLocaleString()+' rows loaded');
+  document.getElementById('schemaCountTab').textContent=data.length.toLocaleString();
+  tableWrap.style.display='block';
   buildFilterCells();
 
-  // Populate table body
-  const tbody = document.querySelector('#orgTable tbody');
-  for (const row of data) {
-    const url = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/' +
-      row.organization_name + '-' + row.schema_name;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td>' + esc(row.organization_id) + '</td>' +
-      '<td>' + esc(row.organization_name) + '</td>' +
-      '<td>' + statusPill(row.status) + '</td>' +
-      '<td>' + esc(row.schema_id) + '</td>' +
-      '<td>' + esc(row.schema_name) + '</td>' +
-      '<td><a class="schema-link" href="' + esc(url) + '" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>' +
-      '<td>' + esc(row.version_id) + '</td>' +
-      '<td>' + esc(row.semantic_version) + '</td>' +
-      '<td><span class="date-cell">' + relDate(row.created_on) + '<span class="date-abs">' + fmtDate(row.created_on) + '</span></span></td>' +
-      '<td>' + esc(row.created_by) + '</td>' +
-      '<td>' + shaCell(row.json_sha256_hex) + '</td>';
-
+  const tbody=document.querySelector('#orgTable tbody');
+  for(const row of data){
+    const url='https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'+row.organization_name+'-'+row.schema_name;
+    const tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td>'+esc(row.organization_id)+'</td>'+
+      '<td>'+esc(row.organization_name)+'</td>'+
+      '<td>'+statusPill(row.status)+'</td>'+
+      '<td>'+esc(row.schema_id)+'</td>'+
+      '<td>'+esc(row.schema_name)+'</td>'+
+      '<td><a class="schema-link" href="'+esc(url)+'" target="_blank" rel="noopener" title="Open schema JSON">↗</a></td>'+
+      '<td>'+esc(row.version_id)+'</td>'+
+      '<td>'+esc(row.semantic_version)+'</td>'+
+      '<td><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
+      '<td>'+esc(row.created_by)+'</td>'+
+      '<td>'+shaCell(row.json_sha256_hex)+'</td>';
     tbody.appendChild(tr);
   }
 
-  /* ====== Init DataTables ====== */
-  const table = $('#orgTable').DataTable({
-    pageLength: 25,
-    order: [[8, 'desc']],  // Created column moved to index 8
-    dom: 'lfrtip',
-    scrollX: false,
-    autoWidth: false
+  /* ====== DataTables init ====== */
+  const table=$('#orgTable').DataTable({
+    pageLength:25,
+    order:[[8,'desc']],
+    dom:'rtip',
+    scrollX:false,
+    autoWidth:false,
+    language:{zeroRecords:''}  // suppress default message; we show our own
   });
 
-  // Badge updates on draw
-  table.on('draw', function () {
-    const v = table.rows({ filter: 'applied' }).count();
-    setBadge(v.toLocaleString() + ' rows shown');
+  // Set filter row sticky top = header row height
+  const headerH=document.getElementById('headerRow').getBoundingClientRect().height;
+  document.querySelectorAll('#filterRow th').forEach(th=>{th.style.top=Math.round(headerH)+'px';});
+
+  // Badge + states on every draw
+  table.on('draw',function(){
+    const v=table.rows({filter:'applied'}).count();
+    setBadge(v.toLocaleString()+' of '+data.length.toLocaleString()+' rows');
     updateClearBtn(table);
+    updateNoResults(table);
   });
 
-  /* ====== Populate filter dropdowns ====== */
-  for (const colIdx of FILTERABLE) {
-    const sel = document.querySelector('#filterRow .colFilter[data-col="' + colIdx + '"]');
-    if (!sel) continue;
+  /* === Global search === */
+  const globalSearchEl=document.getElementById('globalSearch');
+  globalSearchEl.addEventListener('input',debounce(function(){
+    table.search(this.value).draw();
+  },200));
 
-    const vals = new Set();
-    table.column(colIdx).data().each(function (v) {
-      const t = norm(v);
-      if (t) vals.add(t);
-    });
+  // '/' shortcut to focus search
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='SELECT'){
+      e.preventDefault();globalSearchEl.focus();globalSearchEl.select();
+    }
+  });
 
-    const sorted = Array.from(vals).sort(function (a, b) {
-      return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
-    });
+  /* === Length selector === */
+  document.getElementById('lengthSelect').addEventListener('change',function(){
+    table.page.len(parseInt(this.value,10)).draw();
+  });
 
-    if (sorted.length > 300) {
-      sel.innerHTML = '<option value="">Too many (' + sorted.length + ')</option>';
-      sel.disabled = true;
+  /* === CSV export === */
+  document.getElementById('exportCsv').addEventListener('click',function(){
+    exportCSV(table);
+  });
+
+  /* === Column filters === */
+  for(const colIdx of FILTERABLE){
+    const sel=document.querySelector('#filterRow .colFilter[data-col="'+colIdx+'"]');
+    if(!sel)continue;
+
+    const vals=new Set();
+    table.column(colIdx).data().each(function(v){const t=norm(v);if(t)vals.add(t);});
+    const sorted=Array.from(vals).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'}));
+
+    if(sorted.length>300){
+      const input=document.createElement('input');
+      input.type='text';input.className='colFilter';
+      input.placeholder='Search… ('+sorted.length+')';
+      input.setAttribute('data-col',colIdx);
+      input.setAttribute('aria-label','Filter column '+colIdx);
+      sel.parentNode.replaceChild(input,sel);
+      let timer;
+      input.addEventListener('input',function(){
+        clearTimeout(timer);const el=this;
+        timer=setTimeout(function(){
+          const val=el.value.trim();
+          el.classList.toggle('has-value',!!val);
+          table.column(colIdx).search(val?escRx(val):'',true,false).draw();
+        },250);
+      });
       continue;
     }
 
-    for (const v of sorted) {
-      const opt = document.createElement('option');
-      opt.value = v;
-      opt.textContent = v;
-      sel.appendChild(opt);
-    }
-
-    sel.addEventListener('change', function () {
-      const val = this.value;
-      if (!val) {
-        table.column(colIdx).search('').draw();
-      } else {
-        table.column(colIdx).search('^' + escRx(val) + '$', true, false).draw();
-      }
+    for(const v of sorted){const opt=document.createElement('option');opt.value=v;opt.textContent=v;sel.appendChild(opt);}
+    sel.addEventListener('change',function(){
+      const val=this.value;
+      this.classList.toggle('has-value',!!val);
+      table.column(colIdx).search(val?'^'+escRx(val)+'$':'',true,false).draw();
     });
   }
 
-  /* ====== Filter toggle ====== */
-  const togBtn = document.getElementById('filtersToggle');
-  const newTog = togBtn.cloneNode(true);
-  togBtn.parentNode.replaceChild(newTog, togBtn);
-  newTog.addEventListener('click', function () {
-    const row = document.getElementById('filterRow');
-    if (!row) return;
-    const isHidden = row.classList.toggle('hidden');
-    newTog.classList.toggle('open', !isHidden);
-    newTog.setAttribute('aria-expanded', String(!isHidden));
+  /* === Filter row toggle === */
+  const togBtn=document.getElementById('filtersToggle');
+  const newTog=togBtn.cloneNode(true);
+  togBtn.parentNode.replaceChild(newTog,togBtn);
+  newTog.addEventListener('click',function(){
+    const row=document.getElementById('filterRow');if(!row)return;
+    const isHidden=row.classList.toggle('hidden');
+    newTog.classList.toggle('open',!isHidden);
+    newTog.setAttribute('aria-expanded',String(!isHidden));
   });
 
-  /* ====== Hide draft toggle ====== */
-  const hideBtn = document.getElementById('hideDraftToggle');
-  hideBtn.classList.toggle('active', hideDraftSchemas);
-  hideBtn.setAttribute('aria-pressed', String(hideDraftSchemas));
-
-  hideBtn.addEventListener('click', function () {
-    hideDraftSchemas = !hideDraftSchemas;
-    hideBtn.classList.toggle('active', hideDraftSchemas);
-    hideBtn.setAttribute('aria-pressed', String(hideDraftSchemas));
+  /* === Hide drafts toggle === */
+  const hideBtn=document.getElementById('hideDraftToggle');
+  hideBtn.classList.toggle('active',hideDraftSchemas);
+  hideBtn.setAttribute('aria-pressed',String(hideDraftSchemas));
+  hideBtn.addEventListener('click',function(){
+    hideDraftSchemas=!hideDraftSchemas;
+    hideBtn.classList.toggle('active',hideDraftSchemas);
+    hideBtn.setAttribute('aria-pressed',String(hideDraftSchemas));
     table.draw();
   });
 
-  /* ====== Clear filters ====== */
-  const clearBtn = document.getElementById('clearFilters');
-  const newClear = clearBtn.cloneNode(true);
-  clearBtn.parentNode.replaceChild(newClear, clearBtn);
-  newClear.addEventListener('click', function () {
-    table.search('');
-    table.columns().search('');
-    document.querySelectorAll('#filterRow .colFilter').forEach(function (s) { s.value = ''; });
-    var searchInput = document.querySelector('.dataTables_filter input');
-    if (searchInput) searchInput.value = '';
+  /* === Clear filters (shared logic) === */
+  function clearAll(){
+    table.search('');table.columns().search('');
+    document.querySelectorAll('#filterRow .colFilter').forEach(s=>{s.value='';s.classList.remove('has-value');});
+    globalSearchEl.value='';
     table.draw();
-  });
+  }
+
+  const clearBtn=document.getElementById('clearFilters');
+  const newClear=clearBtn.cloneNode(true);
+  clearBtn.parentNode.replaceChild(newClear,clearBtn);
+  newClear.addEventListener('click',clearAll);
+
+  document.getElementById('clearFromEmpty').addEventListener('click',clearAll);
 
   updateClearBtn(table);
-
-  // Force draw once so the hide-draft filter applies immediately
   table.draw();
 }
 
-/* Retry */
-document.getElementById('retryBtn').addEventListener('click', loadSchemaTable);
+document.getElementById('retryBtn').addEventListener('click',loadSchemaTable);
 
 /* ======= DCC filter ======= */
-document.getElementById('dccSearch').addEventListener('input', function () {
-  var q = this.value.toLowerCase();
-  document.querySelectorAll('#dccTable tbody tr').forEach(function (tr) {
-    tr.classList.toggle('dcc-hidden', !tr.textContent.toLowerCase().includes(q));
+document.getElementById('dccSearch').addEventListener('input',function(){
+  var q=this.value.toLowerCase();
+  document.querySelectorAll('#dccTable tbody tr').forEach(tr=>{
+    tr.classList.toggle('dcc-hidden',!tr.textContent.toLowerCase().includes(q));
   });
 });
 
-/* ======= Go ======= */
 loadSchemaTable();
 </script>
 </body>
