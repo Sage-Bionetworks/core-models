@@ -27,6 +27,8 @@ Optional:
   MAX_WORKERS               - Thread workers for parallel import (default: "8")
   VERIFY_URLS               - "true" to pre-check schema URLs (default: "false")
   BATCH_SIZE                - Number of schemas to import in each batch (default: "20")
+  POLL_INTERVAL_SECONDS     - Seconds between job status checks (default: "60")
+  JOB_TIMEOUT_SECONDS       - Max seconds to wait for a job before failing (default: "3600")
 """
 
 import json
@@ -52,7 +54,7 @@ ORG_NAME_FILTER = os.environ.get("ORG_NAME_FILTER", "").strip()
 OVERRIDE_NEW_PROPS = os.environ.get("OVERRIDE_NEW_PROPERTIES", "true").lower() == "true"
 OVERRIDE_DIFF_SRC = os.environ.get("OVERRIDE_DIFFERENT_SOURCE", "true").lower() == "true"
 OVERRIDE_OVERWRITE = os.environ.get("OVERRIDE_OVERWRITE", "true").lower() == "true"
-ONLY_ADD_UPDATE = os.environ.get("ONLY_ADD_AND_UPDATE", "true").lower() == "true"
+ONLY_ADD_UPDATE = os.environ.get("ONLY_ADD_AND_UPDATE", "false").lower() == "true"
 DRY_RUN = os.environ.get("DRY_RUN", "false").lower() == "true"
 
 DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
@@ -60,7 +62,9 @@ DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
-BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "20"))
+BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "500"))
+POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "60"))
+JOB_TIMEOUT_SECONDS = int(os.environ.get("JOB_TIMEOUT_SECONDS", "3600"))
 
 SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
 
@@ -183,8 +187,8 @@ def verify_schema_url(url):
         return False
 
 
-def batch_import_schema_to_coremodels(schema_urls, session: requests.Session):
-    endpoint = f"{API_URL}/v1/{PROJECT_ID}/mergeJSONSchema"
+def queue_merge_batch(schema_urls, session: requests.Session):
+    endpoint = f"{API_URL}/v1/{PROJECT_ID}/queueMergeJSONSchema"
 
     headers = {
         "Authorization": f"Bearer {API_TOKEN}",
@@ -203,16 +207,13 @@ def batch_import_schema_to_coremodels(schema_urls, session: requests.Session):
     }
 
     try:
-        resp = session.post(endpoint, headers=headers, json=body, timeout=600)
+        resp = session.post(endpoint, headers=headers, json=body, timeout=30)
 
         if resp.status_code == 200:
-            result = resp.json()
-            if result.get("success"):
-                return True, None
-            error = result.get("error", {})
-            msg = error.get("message", "Unknown error")
-            fatal = error.get("isFatal", False)
-            return False, f"{msg} (fatal={fatal})"
+            job_id = resp.json().get("data")
+            if not job_id:
+                return None, "Response did not include a jobId"
+            return job_id, None
 
         return False, f"HTTP {resp.status_code}: {resp.text[:300]}"
 
@@ -221,6 +222,48 @@ def batch_import_schema_to_coremodels(schema_urls, session: requests.Session):
     except Exception as e:
         return False, f"Exception: {e}"
 
+def wait_for_job(job_id: str, session: requests.Session):
+    """
+    Poll jobStatus every POLL_INTERVAL_SECONDS until the job completes or times out.
+    Returns (success: bool, error_message: str | None).
+    """
+    endpoint = f"{API_URL}/v1/{PROJECT_ID}/jobStatus/{job_id}"
+
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}",
+        "Accept": "application/json",
+    }
+
+    elapsed = 0
+    while elapsed < JOB_TIMEOUT_SECONDS:
+        try:
+            resp = session.get(
+                endpoint,
+                headers=headers,
+                timeout=30
+            )
+
+            if resp.status_code != 200:
+                return False, f"Status check HTTP {resp.status_code}: {resp.text[:300]}"
+
+            data = resp.json().get("data")
+            status = (data.get("status") or "").strip().lower()
+
+            print(f"    [{elapsed}s] Job {job_id} — status: {status}")
+
+            if status == "success":
+                return True, None
+            elif status == "failed":
+                error = data.get("error", "No error details provided.")
+                return False, f"Job failed: {error}"
+
+        except Exception as e:
+            print(f"    Error: Status check error (will retry): {e}")
+
+        time.sleep(POLL_INTERVAL_SECONDS)
+        elapsed += POLL_INTERVAL_SECONDS
+
+    return False, f"Job {job_id} timed out after {JOB_TIMEOUT_SECONDS}s"
 # ──────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────
@@ -245,6 +288,8 @@ def main():
     print(f"Max workers:    {MAX_WORKERS}")
     print(f"Verify URLs:    {VERIFY_URLS}")
     print(f"Rate limit:     {RATE_LIMIT_SECONDS} seconds/worker")
+    print(f"Poll interval:  {POLL_INTERVAL_SECONDS} seconds")
+    print(f"Job timeout:    {JOB_TIMEOUT_SECONDS} seconds")
     print(
         f"Override flags: new_props={OVERRIDE_NEW_PROPS}, "
         f"diff_src={OVERRIDE_DIFF_SRC}, overwrite={OVERRIDE_OVERWRITE}, "
@@ -292,7 +337,13 @@ def main():
             return ("skip", batch_keys, "All URLs failed verification")
         
         with requests.Session() as session:
-            ok, reason = batch_import_schema_to_coremodels(urls, session)
+            job_id, reason = queue_merge_batch(urls, session)
+            if not job_id:
+                print(f"  ❌ Failed to queue job: {reason}")
+                return ("fail", batch_keys, reason)
+
+            print(f"  ✓ Job queued: {job_id}")
+            ok, reason = wait_for_job(job_id, session)
 
         if RATE_LIMIT_SECONDS > 0:
             time.sleep(RATE_LIMIT_SECONDS)
