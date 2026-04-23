@@ -207,7 +207,7 @@ def queue_merge_batch(schema_urls, session: requests.Session):
     }
 
     try:
-        resp = session.post(endpoint, headers=headers, json=body, timeout=30)
+        resp = session.post(endpoint, headers=headers, json=body, timeout=600)
 
         if resp.status_code == 200:
             job_id = resp.json().get("data")
