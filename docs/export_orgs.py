@@ -40,7 +40,9 @@ OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "docs/data.json")
 PUBLISHED_ORGS = {
     "MC2Center",
     "org.synapse.nf",
-    "HTAN2Organization"
+    "HTAN2Organization",
+    "sage.schemas.ad",
+    "sage.schemas.elite"
 }
 
 
