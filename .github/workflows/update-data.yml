@@ -103,7 +103,37 @@ jobs:
         uses: actions/deploy-pages@v4
 
   # ════════════════════════════════════════════
-  # Job 3: Publish schemas to CoreModels (parallel)
+  # Job 3: Check schema URIs against staging
+  # ════════════════════════════════════════════
+  check-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install synapseclient python-dotenv
+
+      - name: Check schema URIs against staging
+        env:
+          SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
+          STAGING_FOLDER_ID: ${{ secrets.STAGING_FOLDER_ID }}
+          ASSIGNEE_PRINCIPAL_ID: ${{ secrets.ASSIGNEE_PRINCIPAL_ID }}
+          CHECK_TASK_CREATION: "true"
+          MAX_WORKERS: "4"
+        run: |
+          python docs/check_schema_uris_staging.py
+
+  # ════════════════════════════════════════════
+  # Job 4: Publish schemas to CoreModels (parallel)
   # ════════════════════════════════════════════
   publish-coremodels:
     needs: deploy-pages
