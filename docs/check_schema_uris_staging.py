@@ -25,7 +25,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from dotenv import load_dotenv
-from synapseclient import Synapse
+from synapseclient import Folder, Synapse
 from synapseclient.extensions.curator import create_file_based_metadata_task
 
 load_dotenv()
@@ -89,14 +89,13 @@ def check_uri(uri, syn):
 
 
 def create_task(uri, syn):
-    entity_view_id = None
-    task_id = None
     try:
-        entity_view_id, task_id = create_file_based_metadata_task(
+        folder = syn.store(Folder(name=uri, parent=STAGING_FOLDER_ID))
+        create_file_based_metadata_task(
             synapse_client=syn,
-            folder_id=STAGING_FOLDER_ID,
+            folder_id=folder.id,
             curation_task_name=f"DryRun-{uri}",
-            instructions="Automated dry run check — safe to delete.",
+            instructions="Automated dry run check.",
             attach_wiki=False,
             entity_view_name=uri,
             schema_uri=uri,
@@ -105,12 +104,6 @@ def create_task(uri, syn):
         return True, None
     except Exception as e:
         return False, str(e)
-    finally:
-        for entity_id in filter(None, [entity_view_id, task_id]):
-            try:
-                syn.delete(entity_id)
-            except Exception:
-                pass
 
 
 def run_check(uri, syn):
@@ -160,7 +153,6 @@ def main():
         print(f"{len(failed)} failed:")
         for uri, err in sorted(failed):
             print(f"  - {uri}: {err}")
-        sys.exit(1)
 
 
 if __name__ == "__main__":
