@@ -23,6 +23,7 @@ import logging
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date
 
 from dotenv import load_dotenv
 from synapseclient import Folder, Synapse
@@ -90,11 +91,12 @@ def check_uri(uri, syn):
 
 def create_task(uri, syn):
     try:
-        folder = syn.store(Folder(name=uri, parent=STAGING_FOLDER_ID))
+        run_date = date.today().isoformat()  # e.g. 2026-05-27
+        folder = syn.store(Folder(name=f"{uri}-{run_date}", parent=STAGING_FOLDER_ID))
         create_file_based_metadata_task(
             synapse_client=syn,
             folder_id=folder.id,
-            curation_task_name=f"DryRun-{uri}",
+            curation_task_name=f"DryRun-{uri}-{run_date}",
             instructions="Automated dry run check.",
             attach_wiki=False,
             entity_view_name=uri,
