@@ -23,7 +23,7 @@ import logging
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date
+from datetime import datetime, timezone, date
 
 from dotenv import load_dotenv
 from synapseclient import Folder, Synapse
@@ -39,6 +39,8 @@ STAGING_AUTH = "https://repo-staging.prod.sagebase.org/auth/v1"
 STAGING_FILE = "https://repo-staging.prod.sagebase.org/file/v1"
 
 DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
+_data_dir = os.path.dirname(DATA_JSON_PATH) or "."
+CHECKS_JSON_PATH = os.path.join(_data_dir, "staging_checks.json")
 STATUS_FILTER = os.environ.get("STATUS_FILTER", "published").lower()
 CHECK_TASK_CREATION = os.environ.get("CHECK_TASK_CREATION", "true").lower() == "true"
 STAGING_FOLDER_ID = os.environ.get("STAGING_FOLDER_ID", "")
@@ -182,6 +184,16 @@ def main():
             else:
                 failed.append((uri, error))
                 print(f"  FAIL  {uri}  —  {error}")
+
+    # Write staging_checks.json for the HTML UI
+    checks = {
+        "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "passed": sorted(passed),
+        "failed": sorted(f[0] for f in failed),
+    }
+    with open(CHECKS_JSON_PATH, "w") as fh:
+        json.dump(checks, fh, indent=2)
+    print(f"\nWrote results to {CHECKS_JSON_PATH}")
 
     print(f"\n{len(passed)}/{len(uris)} passed")
     if failed:

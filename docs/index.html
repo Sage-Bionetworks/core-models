@@ -212,6 +212,19 @@ table.dataTable thead th{position:relative}
 .status-pill.published{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.22);color:rgba(22,163,74,0.95)}
 .status-pill.draft{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.18);color:rgba(185,28,28,0.92)}
 
+/* Staging valid tag */
+.valid-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:700;background:rgba(34,197,94,0.10);border:1px solid rgba(34,197,94,0.28);color:rgba(22,163,74,0.95);margin-left:6px;vertical-align:middle;white-space:nowrap;letter-spacing:0}
+
+/* More (⠇) button & popover */
+.more-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:17px;cursor:pointer;transition:all 120ms ease;padding:0;line-height:1;font-family:inherit}
+.more-btn:hover{background:rgba(0,0,0,0.04);color:var(--text);border-color:rgba(0,0,0,0.10)}
+.more-btn.active{background:var(--accentBg);border-color:var(--accentBorder);color:var(--accent)}
+.more-popover{position:fixed;z-index:300;background:var(--panel);border:1px solid var(--border);border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.13);padding:11px 14px;min-width:270px;font-size:12.5px}
+.more-popover-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 0}
+.more-popover-row+.more-popover-row{border-top:1px solid var(--borderLight);margin-top:2px;padding-top:6px}
+.more-popover-label{color:var(--muted);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap;flex-shrink:0}
+.more-popover-val{font-family:var(--mono);font-size:11px;color:var(--text);word-break:break-all;text-align:right}
+
 /* DCC table */
 .dcc-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 .dcc-table th,.dcc-table td{border-top:1px solid var(--borderLight);padding:12px;text-align:left;vertical-align:top;font-size:13px}
@@ -330,11 +343,10 @@ table.dataTable thead th{position:relative}
 <th style="width:72px">Schema ID</th>
 <th>Schema Name</th>
 <th style="width:48px">JSON</th>
-<th style="width:80px">Version ID</th>
 <th style="width:82px">Sem. Ver</th>
 <th style="width:108px">Created</th>
 <th style="width:120px">Created By</th>
-<th style="width:148px">SHA256</th>
+<th style="width:36px">⠇</th>
 </tr>
 <tr id="filterRow" class="filtersRow hidden"></tr>
 </thead>
@@ -475,7 +487,7 @@ function statusPill(status){
 }
 
 /* ======= Filter cells ======= */
-const FILTERABLE=new Set([0,1,2,3,4,6,7,8,9]);
+const FILTERABLE=new Set([0,1,2,3,4,6,7,8]); // col 9 is ⠇ (not filterable)
 
 function buildFilterCells(){
   const filterRow=document.getElementById('filterRow');
@@ -510,16 +522,20 @@ function updateNoResults(table){
 
 /* ======= CSV export ======= */
 function exportCSV(table){
-  // Column labels (skip JSON link col at index 5)
-  const hdrs=['Org ID','Org Name','Status','Schema ID','Schema Name','Version ID','Sem. Ver','Created','Created By','SHA256'];
+  // Skip col 5 (JSON link) and col 9 (⠇); append Version ID + SHA256 from data attrs
+  const hdrs=['Org ID','Org Name','Status','Schema ID','Schema Name','Sem. Ver','Created','Created By','Version ID','SHA256'];
   const lines=[hdrs.map(h=>'"'+h+'"').join(',')];
-  table.rows({filter:'applied'}).data().each(function(row){
+  table.rows({filter:'applied'}).nodes().each(function(tr){
+    const row=table.row(tr).data();
+    const btn=tr.querySelector('.more-btn');
     const cells=[];
     for(let i=0;i<row.length;i++){
-      if(i===5)continue; // skip JSON link
+      if(i===5||i===9)continue; // skip JSON link and ⠇
       const val=norm(row[i]).replace(/"/g,'""');
       cells.push('"'+val+'"');
     }
+    cells.push('"'+(btn?btn.dataset.vid||'':'').replace(/"/g,'""')+'"');
+    cells.push('"'+(btn?btn.dataset.sha||'':'').replace(/"/g,'""')+'"');
     lines.push(cells.join(','));
   });
   const blob=new Blob([lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
@@ -626,6 +642,59 @@ function initColResize() {
   });
 }
 
+/* ======= ⠇ popover ======= */
+(function(){
+  let pop=null, activeBtn=null;
+
+  function closePopover(){
+    if(pop){pop.remove();pop=null;}
+    if(activeBtn){activeBtn.classList.remove('active');activeBtn=null;}
+  }
+
+  function positionPopover(btn){
+    const r=btn.getBoundingClientRect();
+    const pw=pop.offsetWidth, ph=pop.offsetHeight;
+    let left=r.right-pw;
+    if(left<8)left=8;
+    let top=r.bottom+6;
+    if(top+ph>window.innerHeight-8)top=r.top-ph-6;
+    pop.style.left=left+'px';
+    pop.style.top=top+'px';
+  }
+
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.more-btn');
+    if(btn){
+      if(activeBtn===btn){closePopover();return;}
+      closePopover();
+      activeBtn=btn;
+      btn.classList.add('active');
+      const vid=btn.dataset.vid||'—';
+      const sha=btn.dataset.sha||'';
+      pop=document.createElement('div');
+      pop.className='more-popover';
+      pop.innerHTML=
+        '<div class="more-popover-row">'+
+          '<span class="more-popover-label">Version ID</span>'+
+          '<span class="more-popover-val">'+esc(vid)+'</span>'+
+        '</div>'+
+        '<div class="more-popover-row">'+
+          '<span class="more-popover-label">SHA256</span>'+
+          '<span class="more-popover-val">'+esc(sha?sha.substring(0,16)+'…':'—')+'</span>'+
+          (sha?'<button class="sha-copy" data-sha="'+esc(sha)+'" style="flex-shrink:0">Copy</button>':'')+
+        '</div>';
+      document.body.appendChild(pop);
+      positionPopover(btn);
+      return;
+    }
+    if(pop&&pop.contains(e.target))return; // click inside popover — keep open
+    closePopover();
+  });
+
+  document.addEventListener('scroll',closePopover,true);
+  window.addEventListener('resize',closePopover);
+})();
+
 /* ======= Draft filter ======= */
 let hideDraftSchemas=true;
 $.fn.dataTable.ext.search.push(function(settings,data){
@@ -648,7 +717,7 @@ async function loadSchemaTable(){
     document.getElementById('filterRow').innerHTML='';
   }
 
-  let data;
+  let data, validUris=new Set(), checksDate='';
   try{
     const r=await fetch('./data.json');
     if(!r.ok)throw new Error('HTTP '+r.status);
@@ -658,6 +727,14 @@ async function loadSchemaTable(){
     document.getElementById('errorMsg').textContent='Could not load data.json: '+err.message;
     setBadge('Error loading data');return;
   }
+  try{
+    const r=await fetch('./staging_checks.json');
+    if(r.ok){
+      const c=await r.json();
+      validUris=new Set(c.passed||[]);
+      checksDate=c.checked_at||'';
+    }
+  }catch(e){}
 
   loading.style.display='none';
   if(!data||data.length===0){
@@ -670,29 +747,36 @@ async function loadSchemaTable(){
   tableWrap.style.display='block';
   buildFilterCells();
 
+  // Show last-checked timestamp in panel subtitle if available
+  if(checksDate){
+    const sub=document.querySelector('#tab-schemas .panelHeader p');
+    if(sub)sub.innerHTML=sub.innerHTML+' <span style="color:var(--muted2);font-size:11.5px">· Staging validated '+relDate(checksDate)+'</span>';
+  }
+
   const tbody=document.querySelector('#orgTable tbody');
   for(const row of data){
     const url='https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'+row.organization_name+'-'+row.schema_name;
+    const uri=row.organization_name+'-'+row.schema_name;
+    const validTag=validUris.has(uri)?'<span class="valid-tag">✓ Valid</span>':'';
     const tr=document.createElement('tr');
     tr.innerHTML=
       '<td>'+esc(row.organization_id)+'</td>'+
       '<td>'+esc(row.organization_name)+'</td>'+
       '<td>'+statusPill(row.status)+'</td>'+
       '<td>'+esc(row.schema_id)+'</td>'+
-      '<td>'+esc(row.schema_name)+'</td>'+
+      '<td>'+esc(row.schema_name)+validTag+'</td>'+
       '<td><button class="schema-link" data-url="'+esc(url)+'" data-name="'+esc(row.schema_name)+'" title="View schema JSON" type="button">{ }</button></td>'+
-      '<td>'+esc(row.version_id)+'</td>'+
       '<td>'+esc(row.semantic_version)+'</td>'+
       '<td data-order="'+(row.created_on?new Date(row.created_on).getTime():0)+'"><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
       '<td>'+esc(row.created_by)+'</td>'+
-      '<td>'+shaCell(row.json_sha256_hex)+'</td>';
+      '<td><button class="more-btn" data-vid="'+esc(row.version_id||'')+'" data-sha="'+esc(row.json_sha256_hex||'')+'" title="Version ID &amp; SHA256" type="button">⠇</button></td>';
     tbody.appendChild(tr);
   }
 
   /* ====== DataTables init ====== */
   const table=$('#orgTable').DataTable({
     pageLength:25,
-    order:[[8,'desc']],
+    order:[[7,'desc']],
     dom:'rtip',
     scrollX:false,
     autoWidth:false,
