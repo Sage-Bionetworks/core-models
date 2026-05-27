@@ -186,10 +186,14 @@ def main():
                 print(f"  FAIL  {uri}  —  {error}")
 
     # Write staging_checks.json for the HTML UI
+    results = {}
+    for uri in passed:
+        results[uri] = {"ok": True}
+    for uri, err in failed:
+        results[uri] = {"ok": False, "error": err}
     checks = {
         "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "passed": sorted(passed),
-        "failed": sorted(f[0] for f in failed),
+        "results": results,
     }
     with open(CHECKS_JSON_PATH, "w") as fh:
         json.dump(checks, fh, indent=2)

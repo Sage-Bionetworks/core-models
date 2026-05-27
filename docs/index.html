@@ -212,8 +212,14 @@ table.dataTable thead th{position:relative}
 .status-pill.published{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.22);color:rgba(22,163,74,0.95)}
 .status-pill.draft{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.18);color:rgba(185,28,28,0.92)}
 
-/* Staging valid tag */
-.valid-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:700;background:rgba(34,197,94,0.10);border:1px solid rgba(34,197,94,0.28);color:rgba(22,163,74,0.95);margin-left:6px;vertical-align:middle;white-space:nowrap;letter-spacing:0}
+/* Staging check badges */
+.staging-ok,.staging-fail{display:inline-flex;align-items:center;padding:2px 7px;border-radius:99px;font-size:11px;font-weight:700;margin-left:6px;vertical-align:middle;white-space:nowrap;cursor:pointer;border:none;font-family:inherit;transition:filter 120ms ease}
+.staging-ok{background:rgba(34,197,94,0.10);color:rgba(22,163,74,0.95);outline:1px solid rgba(34,197,94,0.28)}
+.staging-ok:hover{filter:brightness(0.92)}
+.staging-ok.active{outline:2px solid rgba(22,163,74,0.5)}
+.staging-fail{background:rgba(239,68,68,0.08);color:rgba(185,28,28,0.92);outline:1px solid rgba(239,68,68,0.22)}
+.staging-fail:hover{filter:brightness(0.92)}
+.staging-fail.active{outline:2px solid rgba(185,28,28,0.4)}
 
 /* More (⠇) button & popover */
 .more-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:17px;cursor:pointer;transition:all 120ms ease;padding:0;line-height:1;font-family:inherit}
@@ -663,26 +669,52 @@ function initColResize() {
   }
 
   document.addEventListener('click',e=>{
-    const btn=e.target.closest('.more-btn');
+    const btn=e.target.closest('.more-btn,.staging-ok,.staging-fail');
     if(btn){
       if(activeBtn===btn){closePopover();return;}
       closePopover();
       activeBtn=btn;
       btn.classList.add('active');
-      const vid=btn.dataset.vid||'—';
-      const sha=btn.dataset.sha||'';
       pop=document.createElement('div');
       pop.className='more-popover';
-      pop.innerHTML=
-        '<div class="more-popover-row">'+
-          '<span class="more-popover-label">Version ID</span>'+
-          '<span class="more-popover-val">'+esc(vid)+'</span>'+
-        '</div>'+
-        '<div class="more-popover-row">'+
-          '<span class="more-popover-label">SHA256</span>'+
-          '<span class="more-popover-val">'+esc(sha?sha.substring(0,16)+'…':'—')+'</span>'+
-          (sha?'<button class="sha-copy" data-sha="'+esc(sha)+'" style="flex-shrink:0">Copy</button>':'')+
-        '</div>';
+
+      if(btn.classList.contains('more-btn')){
+        const vid=btn.dataset.vid||'—';
+        const sha=btn.dataset.sha||'';
+        pop.innerHTML=
+          '<div class="more-popover-row">'+
+            '<span class="more-popover-label">Version ID</span>'+
+            '<span class="more-popover-val">'+esc(vid)+'</span>'+
+          '</div>'+
+          '<div class="more-popover-row">'+
+            '<span class="more-popover-label">SHA256</span>'+
+            '<span class="more-popover-val">'+esc(sha?sha.substring(0,16)+'…':'—')+'</span>'+
+            (sha?'<button class="sha-copy" data-sha="'+esc(sha)+'" style="flex-shrink:0">Copy</button>':'')+
+          '</div>';
+      } else {
+        const isOk=btn.classList.contains('staging-ok');
+        const statusHtml=isOk
+          ?'<span style="color:rgba(22,163,74,0.95);font-weight:700">✓ Passed</span>'
+          :'<span style="color:rgba(185,28,28,0.92);font-weight:700">✗ Failed</span>';
+        pop.innerHTML=
+          '<div class="more-popover-row">'+
+            '<span class="more-popover-label">Staging check</span>'+
+            statusHtml+
+          '</div>'+
+          (!isOk?
+            '<div class="more-popover-row">'+
+              '<span class="more-popover-label">Error</span>'+
+              '<span class="more-popover-val" style="max-width:240px;white-space:normal;word-break:break-word;text-align:left">'+esc(btn.dataset.err||'Unknown error')+'</span>'+
+            '</div>'
+          :'')+
+          (checksDate?
+            '<div class="more-popover-row">'+
+              '<span class="more-popover-label">Checked</span>'+
+              '<span class="more-popover-val">'+esc(relDate(checksDate))+'</span>'+
+            '</div>'
+          :'');
+      }
+
       document.body.appendChild(pop);
       positionPopover(btn);
       return;
@@ -694,6 +726,9 @@ function initColResize() {
   document.addEventListener('scroll',closePopover,true);
   window.addEventListener('resize',closePopover);
 })();
+
+/* ======= Staging check state (module-level so popover IIFE can read it) ======= */
+let stagingResults={}, checksDate='';
 
 /* ======= Draft filter ======= */
 let hideDraftSchemas=true;
@@ -717,7 +752,7 @@ async function loadSchemaTable(){
     document.getElementById('filterRow').innerHTML='';
   }
 
-  let data, validUris=new Set(), checksDate='';
+  let data;
   try{
     const r=await fetch('./data.json');
     if(!r.ok)throw new Error('HTTP '+r.status);
@@ -731,7 +766,7 @@ async function loadSchemaTable(){
     const r=await fetch('./staging_checks.json');
     if(r.ok){
       const c=await r.json();
-      validUris=new Set(c.passed||[]);
+      stagingResults=c.results||{};
       checksDate=c.checked_at||'';
     }
   }catch(e){}
@@ -757,14 +792,18 @@ async function loadSchemaTable(){
   for(const row of data){
     const url='https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'+row.organization_name+'-'+row.schema_name;
     const uri=row.organization_name+'-'+row.schema_name;
-    const validTag=validUris.has(uri)?'<span class="valid-tag">✓ Valid</span>':'';
+    const sr=stagingResults[uri];
+    const stagingTag=sr===undefined?'':
+      sr.ok
+        ?'<button class="staging-ok" data-uri="'+esc(uri)+'" type="button" title="Passed staging check">✓</button>'
+        :'<button class="staging-fail" data-uri="'+esc(uri)+'" data-err="'+esc(sr.error||'Unknown error')+'" type="button" title="Failed staging check — click for details">✗</button>';
     const tr=document.createElement('tr');
     tr.innerHTML=
       '<td>'+esc(row.organization_id)+'</td>'+
       '<td>'+esc(row.organization_name)+'</td>'+
       '<td>'+statusPill(row.status)+'</td>'+
       '<td>'+esc(row.schema_id)+'</td>'+
-      '<td>'+esc(row.schema_name)+validTag+'</td>'+
+      '<td>'+esc(row.schema_name)+stagingTag+'</td>'+
       '<td><button class="schema-link" data-url="'+esc(url)+'" data-name="'+esc(row.schema_name)+'" title="View schema JSON" type="button">{ }</button></td>'+
       '<td>'+esc(row.semantic_version)+'</td>'+
       '<td data-order="'+(row.created_on?new Date(row.created_on).getTime():0)+'"><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
