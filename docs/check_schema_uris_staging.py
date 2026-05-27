@@ -81,6 +81,38 @@ def load_unique_uris(path):
     return uris
 
 
+def clear_trash(syn):
+    try:
+        # Collect all entity IDs across paginated results
+        entity_ids = []
+        next_page_token = None
+        while True:
+            url = "/trashcan/view"
+            if next_page_token:
+                url += f"?nextPageToken={next_page_token}"
+            response = syn.restGET(url)
+            results = response.get("results", [])
+            entity_ids.extend(r["entityId"] for r in results)
+            next_page_token = response.get("nextPageToken")
+            if not next_page_token:
+                break
+
+        if not entity_ids:
+            print("Staging trash is empty.")
+            return
+
+        print(f"Found {len(entity_ids)} item(s) in staging trash — purging...")
+        for entity_id in entity_ids:
+            try:
+                syn.restPUT(f"/trashcan/purge/{entity_id}")
+            except Exception as e:
+                print(f"  WARNING: Could not purge {entity_id}: {e}")
+        print(f"Staging trash cleared.\n")
+
+    except Exception as e:
+        print(f"WARNING: Could not clear staging trash: {e}\n")
+
+
 def check_uri(uri, syn):
     try:
         syn.restGET(f"/schema/type/registered/{uri}")
@@ -127,6 +159,7 @@ def main():
             sys.exit(1)
 
     syn = login_staging()
+    clear_trash(syn)
     uris = load_unique_uris(DATA_JSON_PATH)
 
     if not uris:
