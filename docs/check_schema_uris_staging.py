@@ -143,13 +143,16 @@ def create_task(uri, syn):
 
 
 def run_check(uri, syn):
-    ok, err = check_uri(uri, syn)
-    if not ok:
-        return uri, False, f"Schema not found: {err}"
     if CHECK_TASK_CREATION:
+        # create_file_based_metadata_task will fail with a clear error if the
+        # schema doesn't exist, so skip the separate URI check (saves 1 round trip)
         ok, err = create_task(uri, syn)
         if not ok:
-            return uri, False, f"Task creation failed: {err}"
+            return uri, False, err
+    else:
+        ok, err = check_uri(uri, syn)
+        if not ok:
+            return uri, False, f"Schema not found: {err}"
     return uri, True, None
 
 

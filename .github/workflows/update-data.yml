@@ -128,7 +128,7 @@ jobs:
           STAGING_FOLDER_ID: ${{ secrets.STAGING_FOLDER_ID }}
           ASSIGNEE_PRINCIPAL_ID: ${{ secrets.ASSIGNEE_PRINCIPAL_ID }}
           CHECK_TASK_CREATION: "true"
-          MAX_WORKERS: "1"
+          MAX_WORKERS: "4"
         run: |
           python docs/check_schema_uris_staging.py
 
@@ -136,8 +136,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add docs/staging_checks.json
+          git pull --rebase --autostash origin main
           git diff --staged --quiet \
             && echo "No changes to staging_checks.json" \
             || (git commit -m "chore: update staging validation results [automated]" && git push)
