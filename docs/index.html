@@ -343,15 +343,13 @@ table.dataTable thead th{position:relative}
 <table id="orgTable" class="display" style="width:100%">
 <thead>
 <tr id="headerRow">
-<th style="width:60px">Org ID</th>
-<th style="width:130px">Org Name</th>
-<th style="width:96px">Status</th>
-<th style="width:72px">Schema ID</th>
+<th style="width:140px">Org Name</th>
 <th>Schema Name</th>
-<th style="width:48px">JSON</th>
-<th style="width:82px">Sem. Ver</th>
+<th style="width:96px">Status</th>
+<th style="width:80px">Version</th>
 <th style="width:108px">Created</th>
-<th style="width:120px">Created By</th>
+<th style="width:40px"></th>
+<th style="width:48px">JSON</th>
 <th style="width:36px">⠇</th>
 </tr>
 <tr id="filterRow" class="filtersRow hidden"></tr>
@@ -493,7 +491,7 @@ function statusPill(status){
 }
 
 /* ======= Filter cells ======= */
-const FILTERABLE=new Set([0,1,2,3,4,6,7,8]); // col 9 is ⠇ (not filterable)
+const FILTERABLE=new Set([0,1,2,3]); // cols 4=Created,5=staging,6=JSON,7=⠇ not filterable
 
 function buildFilterCells(){
   const filterRow=document.getElementById('filterRow');
@@ -528,19 +526,25 @@ function updateNoResults(table){
 
 /* ======= CSV export ======= */
 function exportCSV(table){
-  // Skip col 5 (JSON link) and col 9 (⠇); append Version ID + SHA256 from data attrs
-  const hdrs=['Org ID','Org Name','Status','Schema ID','Schema Name','Sem. Ver','Created','Created By','Version ID','SHA256'];
+  // Visible cols: 0=OrgName,1=SchemaName,2=Status,3=Version,4=Created,5=Staging,6=JSON(skip),7=⠇(skip)
+  // Hidden fields pulled from ⠇ button data attrs
+  const hdrs=['Org Name','Schema Name','Status','Version','Created','Staging','Org ID','Schema ID','Version ID','Created By','SHA256'];
   const lines=[hdrs.map(h=>'"'+h+'"').join(',')];
   table.rows({filter:'applied'}).nodes().each(function(tr){
     const row=table.row(tr).data();
     const btn=tr.querySelector('.more-btn');
+    const stagingBtn=tr.querySelector('.staging-ok,.staging-fail');
     const cells=[];
     for(let i=0;i<row.length;i++){
-      if(i===5||i===9)continue; // skip JSON link and ⠇
+      if(i===6||i===7)continue; // skip JSON and ⠇
       const val=norm(row[i]).replace(/"/g,'""');
       cells.push('"'+val+'"');
     }
+    // Hidden fields from ⠇
+    cells.push('"'+(btn?btn.dataset.orgId||'':'').replace(/"/g,'""')+'"');
+    cells.push('"'+(btn?btn.dataset.schemaId||'':'').replace(/"/g,'""')+'"');
     cells.push('"'+(btn?btn.dataset.vid||'':'').replace(/"/g,'""')+'"');
+    cells.push('"'+(btn?btn.dataset.createdBy||'':'').replace(/"/g,'""')+'"');
     cells.push('"'+(btn?btn.dataset.sha||'':'').replace(/"/g,'""')+'"');
     lines.push(cells.join(','));
   });
@@ -679,13 +683,16 @@ function initColResize() {
       pop.className='more-popover';
 
       if(btn.classList.contains('more-btn')){
+        const orgId=btn.dataset.orgId||'—';
+        const schemaId=btn.dataset.schemaId||'—';
         const vid=btn.dataset.vid||'—';
+        const createdBy=btn.dataset.createdBy||'—';
         const sha=btn.dataset.sha||'';
         pop.innerHTML=
-          '<div class="more-popover-row">'+
-            '<span class="more-popover-label">Version ID</span>'+
-            '<span class="more-popover-val">'+esc(vid)+'</span>'+
-          '</div>'+
+          '<div class="more-popover-row"><span class="more-popover-label">Org ID</span><span class="more-popover-val">'+esc(orgId)+'</span></div>'+
+          '<div class="more-popover-row"><span class="more-popover-label">Schema ID</span><span class="more-popover-val">'+esc(schemaId)+'</span></div>'+
+          '<div class="more-popover-row"><span class="more-popover-label">Version ID</span><span class="more-popover-val">'+esc(vid)+'</span></div>'+
+          '<div class="more-popover-row"><span class="more-popover-label">Created by</span><span class="more-popover-val">'+esc(createdBy)+'</span></div>'+
           '<div class="more-popover-row">'+
             '<span class="more-popover-label">SHA256</span>'+
             '<span class="more-popover-val">'+esc(sha?sha.substring(0,16)+'…':'—')+'</span>'+
@@ -793,29 +800,33 @@ async function loadSchemaTable(){
     const url='https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'+row.organization_name+'-'+row.schema_name;
     const uri=row.organization_name+'-'+row.schema_name;
     const sr=stagingResults[uri];
-    const stagingTag=sr===undefined?'':
+    const stagingCell=sr===undefined?'<td></td>':
       sr.ok
-        ?'<button class="staging-ok" data-uri="'+esc(uri)+'" type="button" title="Passed staging check">✓</button>'
-        :'<button class="staging-fail" data-uri="'+esc(uri)+'" data-err="'+esc(sr.error||'Unknown error')+'" type="button" title="Failed staging check — click for details">✗</button>';
+        ?'<td><button class="staging-ok" data-uri="'+esc(uri)+'" type="button" title="Passed staging check">✓</button></td>'
+        :'<td><button class="staging-fail" data-uri="'+esc(uri)+'" data-err="'+esc(sr.error||'Unknown error')+'" type="button" title="Failed — click for details">✗</button></td>';
     const tr=document.createElement('tr');
     tr.innerHTML=
-      '<td>'+esc(row.organization_id)+'</td>'+
       '<td>'+esc(row.organization_name)+'</td>'+
+      '<td>'+esc(row.schema_name)+'</td>'+
       '<td>'+statusPill(row.status)+'</td>'+
-      '<td>'+esc(row.schema_id)+'</td>'+
-      '<td>'+esc(row.schema_name)+stagingTag+'</td>'+
-      '<td><button class="schema-link" data-url="'+esc(url)+'" data-name="'+esc(row.schema_name)+'" title="View schema JSON" type="button">{ }</button></td>'+
       '<td>'+esc(row.semantic_version)+'</td>'+
       '<td data-order="'+(row.created_on?new Date(row.created_on).getTime():0)+'"><span class="date-cell">'+relDate(row.created_on)+'<span class="date-abs">'+fmtDate(row.created_on)+'</span></span></td>'+
-      '<td>'+esc(row.created_by)+'</td>'+
-      '<td><button class="more-btn" data-vid="'+esc(row.version_id||'')+'" data-sha="'+esc(row.json_sha256_hex||'')+'" title="Version ID &amp; SHA256" type="button">⠇</button></td>';
+      stagingCell+
+      '<td><button class="schema-link" data-url="'+esc(url)+'" data-name="'+esc(row.schema_name)+'" title="View schema JSON" type="button">{ }</button></td>'+
+      '<td><button class="more-btn"'+
+        ' data-org-id="'+esc(row.organization_id||'')+'"'+
+        ' data-schema-id="'+esc(row.schema_id||'')+'"'+
+        ' data-vid="'+esc(row.version_id||'')+'"'+
+        ' data-created-by="'+esc(row.created_by||'')+'"'+
+        ' data-sha="'+esc(row.json_sha256_hex||'')+'"'+
+        ' title="More details" type="button">⠇</button></td>';
     tbody.appendChild(tr);
   }
 
   /* ====== DataTables init ====== */
   const table=$('#orgTable').DataTable({
     pageLength:25,
-    order:[[7,'desc']],
+    order:[[4,'desc']],
     dom:'rtip',
     scrollX:false,
     autoWidth:false,
