@@ -773,8 +773,15 @@ async function loadSchemaTable(){
     const r=await fetch('./staging_checks.json');
     if(r.ok){
       const c=await r.json();
-      stagingResults=c.results||{};
       checksDate=c.checked_at||'';
+      if(c.results){
+        // New format: {results: {uri: {ok, error}}}
+        stagingResults=c.results;
+      } else {
+        // Old format: {passed: [...], failed: [...]} — convert on the fly
+        for(const uri of (c.passed||[]))stagingResults[uri]={ok:true};
+        for(const uri of (c.failed||[]))stagingResults[uri]={ok:false,error:'Failed (no error details — re-run check to get details)'};
+      }
     }
   }catch(e){}
 
