@@ -76,7 +76,7 @@ jobs:
   # Job 2: Deploy docs/ to GitHub Pages
   # ════════════════════════════════════════════
   deploy-pages:
-    needs: update-data
+    needs: [update-data, check-staging]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
