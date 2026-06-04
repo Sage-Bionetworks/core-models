@@ -1,28 +1,28 @@
 {
-  "checked_at": "2026-06-04T18:39:00Z",
+  "checked_at": "2026-06-04T19:23:14Z",
   "results": {
-    "HTAN2Organization-Diagnosis": {
-      "ok": true
-    },
-    "HTAN2Organization-BulkWESLevel1": {
+    "HTAN2Organization-WESLevel1flatschema": {
       "ok": true
     },
     "HTAN2Organization-VitalStatus": {
       "ok": true
     },
-    "HTAN2Organization-Demographics": {
+    "HTAN2Organization-BulkWESLevel1": {
+      "ok": true
+    },
+    "HTAN2Organization-Diagnosis": {
       "ok": true
     },
     "HTAN2Organization-Exposure": {
       "ok": true
     },
-    "HTAN2Organization-FollowUp": {
-      "ok": true
-    },
     "HTAN2Organization-MolecularTest": {
       "ok": true
     },
-    "HTAN2Organization-BiospecimenData": {
+    "HTAN2Organization-FollowUp": {
+      "ok": true
+    },
+    "HTAN2Organization-Therapy": {
       "ok": true
     },
     "HTAN2Organization-BulkWESLevel2": {
@@ -31,10 +31,10 @@
     "HTAN2Organization-BulkWESLevel3": {
       "ok": true
     },
-    "HTAN2Organization-MultiplexMicroscopyLevel2": {
+    "HTAN2Organization-DigitalPathologyData": {
       "ok": true
     },
-    "HTAN2Organization-FamilyHistory": {
+    "HTAN2Organization-MultiplexMicroscopyLevel2": {
       "ok": true
     },
     "HTAN2Organization-MultiplexMicroscopyLevel3": {
@@ -43,19 +43,25 @@
     "HTAN2Organization-MultiplexMicroscopyLevel4": {
       "ok": true
     },
-    "HTAN2Organization-SpatialLevel4": {
+    "HTAN2Organization-SpatialLevel1": {
+      "ok": true
+    },
+    "HTAN2Organization-SpatialLevel3": {
+      "ok": true
+    },
+    "HTAN2Organization-FamilyHistory": {
       "ok": true
     },
     "HTAN2Organization-SpatialPanel": {
       "ok": true
     },
+    "HTAN2Organization-SpatialLevel4": {
+      "ok": true
+    },
+    "HTAN2Organization-BiospecimenData": {
+      "ok": true
+    },
     "HTAN2Organization-scRNALevel1": {
-      "ok": true
-    },
-    "HTAN2Organization-WESLevel1flatschema": {
-      "ok": true
-    },
-    "HTAN2Organization-scRNALevel2": {
       "ok": true
     },
     "HTAN2Organization-scRNALevel34": {
@@ -70,9 +76,6 @@
     "MC2Center-DataCatalog": {
       "ok": true
     },
-    "HTAN2Organization-Therapy": {
-      "ok": true
-    },
     "MC2Center-Study": {
       "ok": true
     },
@@ -82,10 +85,13 @@
     "MC2Center-PublicationView": {
       "ok": true
     },
-    "MC2Center-SequencingRNALevel1": {
+    "MC2Center-DataDSP": {
       "ok": true
     },
     "MC2Center-FileView": {
+      "ok": true
+    },
+    "MC2Center-SequencingRNALevel1": {
       "ok": true
     },
     "MC2Center-Biospecimen": {
@@ -94,28 +100,31 @@
     "MC2Center-Model": {
       "ok": true
     },
+    "HTAN2Organization-Demographics": {
+      "ok": true
+    },
+    "HTAN2Organization-scRNALevel2": {
+      "ok": true
+    },
+    "org.synapse.nf-portalstudy": {
+      "ok": true
+    },
+    "org.synapse.nf-portaldataset": {
+      "ok": true
+    },
     "MC2Center-DatasetView": {
       "ok": true
     },
     "MC2Center-Resource": {
       "ok": true
     },
-    "org.synapse.nf-portaldataset": {
-      "ok": true
-    },
-    "org.synapse.nf-portalstudy": {
-      "ok": true
-    },
-    "HTAN2Organization-SpatialLevel1": {
-      "ok": true
-    },
-    "org.synapse.nf-workflowreport": {
-      "ok": true
-    },
-    "org.synapse.nf-proteomicsassaytemplate": {
-      "ok": true
-    },
     "org.synapse.nf-mriassaytemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-chipseqtemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-methylationarraytemplate": {
       "ok": true
     },
     "org.synapse.nf-biospecimentemplate": {
@@ -124,31 +133,25 @@
     "org.synapse.nf-processedalignedreadstemplate": {
       "ok": true
     },
-    "org.synapse.nf-chipseqtemplate": {
-      "ok": true
-    },
     "org.synapse.nf-sourcecodetemplate": {
-      "ok": true
-    },
-    "org.synapse.nf-wgstemplate": {
       "ok": true
     },
     "org.synapse.nf-materialscienceassaytemplate": {
       "ok": true
     },
+    "org.synapse.nf-workflowreport": {
+      "ok": true
+    },
     "org.synapse.nf-imagingassaytemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-proteomicsassaytemplate": {
       "ok": true
     },
     "org.synapse.nf-humancohorttemplate": {
       "ok": true
     },
-    "org.synapse.nf-pharmacokineticsassaytemplate": {
-      "ok": true
-    },
     "org.synapse.nf-epigenomicsassaytemplate": {
-      "ok": true
-    },
-    "MC2Center-DataDSP": {
       "ok": true
     },
     "org.synapse.nf-massspecassaytemplate": {
@@ -163,7 +166,7 @@
     "org.synapse.nf-genomicsassaytemplateextended": {
       "ok": true
     },
-    "org.synapse.nf-methylationarraytemplate": {
+    "org.synapse.nf-processedvariantcallstemplate": {
       "ok": true
     },
     "org.synapse.nf-scsequencingassaytemplate": {
@@ -175,7 +178,7 @@
     "org.synapse.nf-flowcytometrytemplate": {
       "ok": true
     },
-    "org.synapse.nf-processedvariantcallstemplate": {
+    "org.synapse.nf-wgstemplate": {
       "ok": true
     },
     "org.synapse.nf-microscopyassaytemplate": {
@@ -184,16 +187,16 @@
     "org.synapse.nf-processedexpressiontemplate": {
       "ok": true
     },
+    "org.synapse.nf-epigeneticsassaytemplate": {
+      "ok": true
+    },
     "org.synapse.nf-lightscatteringassaytemplate": {
       "ok": true
     },
     "org.synapse.nf-animalindividualtemplate": {
       "ok": true
     },
-    "org.synapse.nf-scrnaseqtemplate": {
-      "ok": true
-    },
-    "org.synapse.nf-epidemiologydatatemplate": {
+    "org.synapse.nf-pharmacokineticsassaytemplate": {
       "ok": true
     },
     "org.synapse.nf-westemplate": {
@@ -220,10 +223,10 @@
     "org.synapse.nf-publicationtemplate": {
       "ok": true
     },
-    "org.synapse.nf-protocoltemplate": {
+    "org.synapse.nf-generalmeasuredatatemplate": {
       "ok": true
     },
-    "org.synapse.nf-generalmeasuredatatemplate": {
+    "org.synapse.nf-scrnaseqtemplate": {
       "ok": true
     },
     "org.synapse.nf-bulksequencingassaytemplate": {
@@ -232,16 +235,19 @@
     "org.synapse.nf-rnaseqtemplate": {
       "ok": true
     },
-    "HTAN2Organization-DigitalPathologyData": {
-      "ok": true
-    },
     "org.synapse.nf-processedmergeddatatemplate": {
       "ok": true
     },
-    "HTAN2Organization-SpatialLevel3": {
+    "org.synapse.nf-immunomicroscopytemplate": {
       "ok": true
     },
     "org.synapse.nf-behavioralassaytemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-protocoltemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-plutornaseq": {
       "ok": true
     },
     "org.synapse.nf-affinityproteomicstemplate": {
@@ -250,34 +256,85 @@
     "org.synapse.nf-genericdataresourcetemplate": {
       "ok": true
     },
+    "org.synapse.nf-epidemiologydatatemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-celltissuephenotypingtemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-proteininteractionassaytemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-kinomicsassaytemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-datalandscape": {
+      "ok": true
+    },
+    "org.synapse.nf-spatialtranscriptomicssequencingtemplate": {
+      "ok": true
+    },
+    "org.synapse.nf-spatialtranscriptomicsimagingtemplate": {
+      "ok": true
+    },
     "org.synapse.nf-referencesequencetemplate": {
       "ok": true
     },
     "org.synapse.nf-processedgeneexpressiontemplate": {
       "ok": true
     },
-    "org.synapse.nf-celltissuephenotypingtemplate": {
+    "sage.schemas.elite-AnalysisResultsMetadataTemplate": {
       "ok": true
     },
-    "org.synapse.nf-kinomicsassaytemplate": {
+    "sage.schemas.elite-AssayBsSeqTemplate": {
       "ok": true
     },
-    "org.synapse.nf-proteininteractionassaytemplate": {
+    "sage.schemas.elite-AssayMetabolomicsTemplate": {
       "ok": true
     },
-    "org.synapse.nf-epigeneticsassaytemplate": {
+    "sage.schemas.elite-AssayMicrobiomeTemplate": {
       "ok": true
     },
-    "org.synapse.nf-spatialtranscriptomicssequencingtemplate": {
+    "sage.schemas.elite-AssayPhenotypeHumanTemplate": {
       "ok": true
     },
-    "org.synapse.nf-plutornaseq": {
+    "sage.schemas.elite-AssayProteomicsTemplate": {
       "ok": true
     },
-    "org.synapse.nf-datalandscape": {
+    "sage.schemas.elite-AssayRNAseqTemplate": {
       "ok": true
     },
-    "org.synapse.nf-spatialtranscriptomicsimagingtemplate": {
+    "sage.schemas.elite-AssayScRNAseqTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-AssayWholeGenomeSequencingTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-BiospecimenHumanTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-BiospecimenNonHumanTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-ComputationalToolsTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-FileAnnotationTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-IndividualHumanTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-GenotypingHumanTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-StudyFolderTemplate": {
+      "ok": true
+    },
+    "sage.schemas.elite-DatasetTemplate": {
+      "ok": true
+    },
+    "sage.schemas.ad-Assay16SrRNAseqMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssayATACSeqMetadataTemplate": {
@@ -286,13 +343,16 @@
     "sage.schemas.ad-AssayAutoradMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssayChIPSeqMetadataTemplate": {
+    "sage.schemas.elite-AssayMetagenomicsTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssayBisulfiteSeqMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssayMRIMetadataTemplate": {
+    "sage.schemas.ad-AssayChIPSeqMetadataTemplate": {
+      "ok": true
+    },
+    "sage.schemas.ad-AssayHICMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssayMethylationArrayMetadataTemplate": {
@@ -307,43 +367,40 @@
     "sage.schemas.ad-AssayPETMetadataTemplate": {
       "ok": true
     },
+    "sage.schemas.ad-AssayRnaArrayMetadataTemplate": {
+      "ok": true
+    },
     "sage.schemas.ad-AssayRnaSeqMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssaySTARRSeqMetadataTemplate": {
-      "ok": true
-    },
-    "sage.schemas.ad-AssaySpatialTranscriptomicsMetadataTemplate": {
+    "sage.schemas.elite-IndividualNonHumanTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssaySnpArrayMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssayWholeExomeSeqMetadataTemplate": {
-      "ok": true
-    },
     "sage.schemas.ad-AssayTMTquantitationMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-Assay16SrRNAseqMetadataTemplate": {
+    "sage.schemas.ad-AssaySpatialTranscriptomicsMetadataTemplate": {
+      "ok": true
+    },
+    "sage.schemas.ad-AssayMRIMetadataTemplate": {
+      "ok": true
+    },
+    "sage.schemas.ad-AssayWholeExomeSeqMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssayWholeGenomeSeqMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssayHICMetadataTemplate": {
+    "sage.schemas.ad-AssaySTARRSeqMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-BiospecimenDrosophilaMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-BiospecimenMetadataTemplate": {
-      "ok": true
-    },
     "sage.schemas.ad-BiospecimenInvitroMetadataTemplate": {
-      "ok": true
-    },
-    "sage.schemas.ad-FileAnnotationTemplate": {
       "ok": true
     },
     "sage.schemas.ad-IndividualAnimalMODEL.ADMetadataTemplate": {
@@ -358,76 +415,22 @@
     "sage.schemas.ad-MARMO.ADIndividualMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-ModeladStrainAnimalMetadataTemplate": {
-      "ok": true
-    },
     "sage.schemas.ad-MARMO.ADSupplementalAssayMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.ad-AssayRnaArrayMetadataTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AnalysisResultsMetadataTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayBsSeqTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayMetabolomicsTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayMetagenomicsTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayProteomicsTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayRNAseqTemplate": {
+    "sage.schemas.ad-ModeladStrainAnimalMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-NeuropathMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.elite-AssayWholeGenomeSequencingTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayMicrobiomeTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayPhenotypeHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-BiospecimenHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-BiospecimenNonHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-FileAnnotationTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-GenotypingHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-IndividualHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-IndividualNonHumanTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-StudyFolderTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-DatasetTemplate": {
+    "sage.schemas.ad-BiospecimenMetadataTemplate": {
       "ok": true
     },
     "sage.schemas.ad-AssayScrnaSeqMetadataTemplate": {
       "ok": true
     },
-    "sage.schemas.elite-ComputationalToolsTemplate": {
-      "ok": true
-    },
-    "sage.schemas.elite-AssayScRNAseqTemplate": {
+    "sage.schemas.ad-FileAnnotationTemplate": {
       "ok": true
     },
     "MC2Center-AccessRequirementCA261841": {
@@ -462,10 +465,6 @@
       "ok": false,
       "error": "The JSON Schema is missing a 'properties' field."
     },
-    "org.synapse.nf-immunomicroscopytemplate": {
-      "ok": false,
-      "error": "HTTPSConnectionPool(host='repo-staging.prod.sagebase.org', port=443): Max retries exceeded with url: /repo/v1/entity (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))"
-    },
     "org.synapse.nf-recordbasedtemplate": {
       "ok": false,
       "error": "The JSON Schema is missing a 'properties' field."
@@ -474,13 +473,13 @@
       "ok": false,
       "error": "The JSON Schema is missing a 'properties' field."
     },
-    "org.synapse.nf-analysisresulttemplate": {
-      "ok": false,
-      "error": "404 Client Error: JSON schema not found for organization name 'org.synapse.nf' and schema name: 'analysisresulttemplate'"
-    },
     "org.synapse.nf-processedaggregateddatatemplate": {
       "ok": false,
       "error": "404 Client Error: JSON schema not found for organization name 'org.synapse.nf' and schema name: 'processedaggregateddatatemplate'"
+    },
+    "org.synapse.nf-analysisresulttemplate": {
+      "ok": false,
+      "error": "404 Client Error: JSON schema not found for organization name 'org.synapse.nf' and schema name: 'analysisresulttemplate'"
     }
   }
 }
