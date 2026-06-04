@@ -1,0 +1,83 @@
+# Tests schema URI checking against the Synapse staging folder
+# using the develop branch of the Synapse Python client.
+#
+# This workflow does not update docs/data.json, deploy GitHub Pages,
+# publish to CoreModels, or commit generated files back to the repo.
+
+name: Check Staging URIs with Synapse Client Develop
+
+on:
+  workflow_dispatch:
+    inputs:
+      org_name:
+        description: "Optional organization_name filter (e.g. ADA.PSI). Leave blank to check all."
+        required: false
+        default: ""
+      check_task_creation:
+        description: "Create Synapse tasks in the staging folder when issues are found."
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      max_workers:
+        description: "Number of parallel workers."
+        required: false
+        default: "4"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-staging-synapseclient-develop
+  cancel-in-progress: false
+
+jobs:
+  check-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout core-models repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Synapse Python client from develop branch
+        run: |
+          python -m pip install --upgrade pip
+          pip install "git+https://github.com/Sage-Bionetworks/synapsePythonClient.git@develop"
+          pip install python-dotenv
+
+      - name: Show installed Synapse client version
+        run: |
+          python - <<'PY'
+          import synapseclient
+          print("synapseclient version:", getattr(synapseclient, "__version__", "unknown"))
+          print("synapseclient path:", synapseclient.__file__)
+          PY
+
+      - name: Check schema URIs against staging
+        env:
+          SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
+          STAGING_FOLDER_ID: ${{ secrets.STAGING_FOLDER_ID }}
+          ASSIGNEE_PRINCIPAL_ID: ${{ secrets.ASSIGNEE_PRINCIPAL_ID }}
+          CHECK_TASK_CREATION: ${{ github.event.inputs.check_task_creation }}
+          MAX_WORKERS: ${{ github.event.inputs.max_workers }}
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
+        run: |
+          python docs/check_schema_uris_staging.py
+
+      - name: Upload staging check results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-check-results-synapseclient-develop
+          path: |
+            docs/staging_checks.json
+          if-no-files-found: warn
