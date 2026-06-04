@@ -48,18 +48,20 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Synapse Python client from develop branch
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install pandas python-dotenv
           pip install "git+https://github.com/Sage-Bionetworks/synapsePythonClient.git@develop"
-          pip install python-dotenv
 
-      - name: Show installed Synapse client version
+      - name: Show installed package versions
         run: |
           python - <<'PY'
           import synapseclient
+          import pandas
           print("synapseclient version:", getattr(synapseclient, "__version__", "unknown"))
           print("synapseclient path:", synapseclient.__file__)
+          print("pandas version:", pandas.__version__)
           PY
 
       - name: Check schema URIs against staging
@@ -78,6 +80,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: staging-check-results-synapseclient-develop
-          path: |
-            docs/staging_checks.json
+          path: docs/staging_checks.json
           if-no-files-found: warn
