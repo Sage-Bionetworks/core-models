@@ -1,4 +1,4 @@
-```yaml
+
 # Runs the Synapse export script, commits updated schema data,
 # deploys docs/ to GitHub Pages, then publishes schemas to CoreModels.
 
@@ -220,4 +220,5 @@ jobs:
 
         run: |
           python docs/import_to_coremodels.py
-```
+
+          
