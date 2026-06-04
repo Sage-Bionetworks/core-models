@@ -1,3 +1,4 @@
+```yaml
 # Runs the Synapse export script, commits updated schema data,
 # deploys docs/ to GitHub Pages, then publishes schemas to CoreModels.
 
@@ -40,6 +41,15 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync with latest main
+        run: |
+          git pull --rebase origin main
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -53,7 +63,7 @@ jobs:
       - name: Run Synapse export
         env:
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
-          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
           SKIP_TEST_SCHEMAS: "true"
           MAX_WORKERS: "4"
         run: |
@@ -69,16 +79,12 @@ jobs:
       - name: Commit and push updated data.json
         if: steps.diff.outputs.changed == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git fetch origin main
-          git rebase origin/main
+          git pull --rebase --autostash origin main
 
           git add docs/data.json
 
           if git diff --cached --quiet; then
-            echo "No changes to commit after rebase"
+            echo "No changes to commit after syncing with main"
             exit 0
           fi
 
@@ -98,6 +104,15 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync with latest main
+        run: |
+          git pull --rebase origin main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -119,13 +134,9 @@ jobs:
         run: |
           python docs/check_schema_uris_staging.py
 
-      - name: Commit staging check results
+      - name: Commit and push staging check results
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git fetch origin main
-          git rebase origin/main
+          git pull --rebase --autostash origin main
 
           git add docs/staging_checks.json
 
@@ -200,7 +211,7 @@ jobs:
           COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
           COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
 
-          ORG_NAME_FILTER: ${{ github.event.inputs.org_name }}
+          ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
 
           # Speed controls
           MAX_WORKERS: "1"
@@ -209,3 +220,4 @@ jobs:
 
         run: |
           python docs/import_to_coremodels.py
+```
