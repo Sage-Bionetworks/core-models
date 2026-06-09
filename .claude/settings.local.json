@@ -9,7 +9,14 @@
       "Bash(grep -n \"def.*trash\\\\|def.*purge\\\\|trash\\\\|trashcan\" \"C:\\\\Users\\\\cconrad\\\\AppData\\\\Roaming\\\\Python\\\\Python313\\\\site-packages\\\\synapseclient\\\\client.py\" | head -20)",
       "Bash(npm install *)",
       "Bash(npm run *)",
-      "Bash(mkdir -p \"C:\\\\Users\\\\cconrad\\\\OneDrive - Sage Bionetworks\\\\Documents\\\\github\\\\core-models\\\\.claude\")"
+      "Bash(mkdir -p \"C:\\\\Users\\\\cconrad\\\\OneDrive - Sage Bionetworks\\\\Documents\\\\github\\\\core-models\\\\.claude\")",
+      "Bash(findstr /n \"CSV xlsx export Excel\" \"C:\\\\Users\\\\cconrad\\\\OneDrive - Sage Bionetworks\\\\Documents\\\\github\\\\core-models\\\\src\\\\components\\\\SchemaTable.jsx\")",
+      "Bash(npm uninstall *)",
+      "Bash(git reset *)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
