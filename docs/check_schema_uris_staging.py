@@ -49,17 +49,38 @@ ASSIGNEE_PRINCIPAL_ID = os.environ.get("ASSIGNEE_PRINCIPAL_ID", "")
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "8"))
 
 
+STAGING_SERVERDOWN_URL = "https://staging.synapse.org/ServerDown.html"
+
+
 def staging_is_available(timeout: int = 10) -> bool:
     """
-    Probe the staging /status endpoint.
-    Returns False (skip) when:
-      - status field is not "READ_WRITE"  (e.g. "READ_ONLY" during migration)
-      - HTTP 502 / 503
-      - Connection error or timeout
+    Two-stage probe — returns False (skip) as soon as either check fails:
+
+    1. ServerDown page: GET https://staging.synapse.org/ServerDown.html
+       - 200  → maintenance page is live → entire service is down
+       - 404  → page not found → service is up, continue to stage 2
+
+    2. Status API: GET STAGING_REPO/status
+       - status != "READ_WRITE" → write services unavailable (e.g. READ_ONLY)
+       - HTTP 502/503           → gateway down
+       - timeout/connection err → unreachable
     """
-    probe_url = f"{STAGING_REPO}/status"
+    # ── Stage 1: ServerDown page ──────────────────────────────
     try:
-        r = requests.get(probe_url, timeout=timeout)
+        r = requests.get(STAGING_SERVERDOWN_URL, timeout=timeout)
+        if r.status_code == 200:
+            print("Staging is down (ServerDown.html is live) — skipping checks.")
+            return False
+    except requests.exceptions.Timeout:
+        print(f"Staging unreachable (ServerDown probe timed out after {timeout}s) — skipping checks.")
+        return False
+    except requests.exceptions.ConnectionError as e:
+        print(f"Staging unreachable ({e}) — skipping checks.")
+        return False
+
+    # ── Stage 2: Status API ───────────────────────────────────
+    try:
+        r = requests.get(f"{STAGING_REPO}/status", timeout=timeout)
         if r.status_code in (502, 503):
             print(f"Staging returned HTTP {r.status_code} — skipping checks.")
             return False
@@ -69,13 +90,14 @@ def staging_is_available(timeout: int = 10) -> bool:
             msg = data.get("currentMessage", "")
             print(f"Staging is {status}{f' — {msg}' if msg else ''}. Write services unavailable, skipping checks.")
             return False
-        return True
     except requests.exceptions.Timeout:
-        print(f"Staging probe timed out after {timeout}s — skipping checks.")
+        print(f"Staging status probe timed out after {timeout}s — skipping checks.")
         return False
     except requests.exceptions.ConnectionError as e:
         print(f"Staging unreachable ({e}) — skipping checks.")
         return False
+
+    return True
 
 
 def login_staging():
