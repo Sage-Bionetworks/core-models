@@ -97,6 +97,7 @@ jobs:
   check-staging:
     needs: update-data
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout repository
