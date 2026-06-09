@@ -1,0 +1,58 @@
+export const DCC_DATA = [
+  {
+    name: 'ARK',
+    repo: { label: 'ARK-Portal/data_model', url: 'https://github.com/ARK-Portal/data_model' },
+    schemas: { label: 'model_json_schema', url: 'https://github.com/ARK-Portal/data_model/tree/main/model_json_schema' },
+    docs: { label: 'ark-portal.github.io/data_model', url: 'https://ark-portal.github.io/data_model/' },
+    portal: { label: 'arkportal.synapse.org', url: 'https://arkportal.synapse.org/' },
+  },
+  {
+    name: 'ADKP',
+    repo: { label: 'adknowledgeportal/data-models', url: 'https://github.com/adknowledgeportal/data-models' },
+    schemas: { label: 'current-manifest-schemas/AD.model', url: 'https://github.com/adknowledgeportal/data-models/tree/main/current-manifest-schemas/AD.model' },
+    docs: { label: 'amp-ad-metadata-dictionary', url: 'https://sagebio.shinyapps.io/amp-ad-metadata-dictionary/' },
+    portal: { label: 'adknowledgeportal.synapse.org', url: 'https://adknowledgeportal.synapse.org/' },
+  },
+  {
+    name: 'ALS',
+    repo: { label: 'amp-als/data-model', url: 'https://github.com/amp-als/data-model' },
+    schemas: { label: 'json-schemas', url: 'https://github.com/amp-als/data-model/tree/main/json-schemas' },
+    docs: null,
+    portal: { label: 'ampals.synapse.org', url: 'https://ampals.synapse.org/' },
+  },
+  {
+    name: 'Classic',
+    repo: { label: 'Sage-Bionetworks/CLASSIC', url: 'https://github.com/Sage-Bionetworks/CLASSIC' },
+    schemas: { label: 'model', url: 'https://github.com/Sage-Bionetworks/CLASSIC/tree/main/model' },
+    docs: null,
+    portal: { label: 'classicportal.synapse.org', url: 'https://classicportal.synapse.org/' },
+  },
+  {
+    name: 'ELITE',
+    repo: { label: 'eliteportal/data-models', url: 'https://github.com/eliteportal/data-models' },
+    schemas: null,
+    docs: { label: 'eliteportal.github.io/data-dictionary', url: 'https://eliteportal.github.io/data-dictionary/' },
+    portal: { label: 'eliteportal.synapse.org', url: 'https://eliteportal.synapse.org/' },
+  },
+  {
+    name: 'HTAN2',
+    repo: { label: 'ncihtan/htan2-data-model', url: 'https://github.com/ncihtan/htan2-data-model' },
+    schemas: { label: 'JSON_Schemas', url: 'https://github.com/ncihtan/htan2-data-model/tree/main/JSON_Schemas' },
+    docs: { label: 'docs.humantumoratlas.org', url: 'https://docs.humantumoratlas.org/data_model/overview/' },
+    portal: { label: 'humantumoratlas.org', url: 'https://humantumoratlas.org/' },
+  },
+  {
+    name: 'MC2',
+    repo: { label: 'mc2-center/data-models', url: 'https://github.com/mc2-center/data-models' },
+    schemas: { label: 'json_schemas', url: 'https://github.com/mc2-center/data-models/tree/main/mc2.model' },
+    docs: { label: 'mc2-center.github.io/data-models', url: 'https://mc2-center.github.io/data-models/' },
+    portal: { label: 'cancercomplexity.synapse.org', url: 'https://cancercomplexity.synapse.org/' },
+  },
+  {
+    name: 'NF',
+    repo: { label: 'nf-osi/nf-metadata-dictionary', url: 'https://github.com/nf-osi/nf-metadata-dictionary' },
+    schemas: { label: 'registered-json-schemas', url: 'https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas' },
+    docs: { label: 'nf-osi.github.io/nf-metadata-dictionary', url: 'https://nf-osi.github.io/nf-metadata-dictionary/' },
+    portal: { label: 'nf.synapse.org', url: 'https://nf.synapse.org/' },
+  },
+]

@@ -1,11 +1,1 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "docs",
-      "runtimeExecutable": "C:\\Python313\\python.exe",
-      "runtimeArgs": ["-m", "http.server", "3131", "--directory", "docs"],
-      "port": 3131
-    }
-  ]
-}
+{"version":"0.0.1","configurations":[{"name":"core-models","runtimeExecutable":"npm","runtimeArgs":["run","dev"],"port":5174}]}

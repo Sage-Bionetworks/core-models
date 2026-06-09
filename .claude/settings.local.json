@@ -6,7 +6,10 @@
       "Read(//c/Windows/System32/WindowsPowerShell//**)",
       "Read(//c/Python313/**)",
       "Bash(python -c \":*)",
-      "Bash(grep -n \"def.*trash\\\\|def.*purge\\\\|trash\\\\|trashcan\" \"C:\\\\Users\\\\cconrad\\\\AppData\\\\Roaming\\\\Python\\\\Python313\\\\site-packages\\\\synapseclient\\\\client.py\" | head -20)"
+      "Bash(grep -n \"def.*trash\\\\|def.*purge\\\\|trash\\\\|trashcan\" \"C:\\\\Users\\\\cconrad\\\\AppData\\\\Roaming\\\\Python\\\\Python313\\\\site-packages\\\\synapseclient\\\\client.py\" | head -20)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\cconrad\\\\OneDrive - Sage Bionetworks\\\\Documents\\\\github\\\\core-models\\\\.claude\")"
     ]
   }
 }

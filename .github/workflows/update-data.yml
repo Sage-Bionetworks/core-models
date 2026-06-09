@@ -150,7 +150,7 @@ jobs:
           git push origin HEAD:main
 
   # ════════════════════════════════════════════
-  # Job 3: Deploy docs/ to GitHub Pages
+  # Job 3: Build React app + Deploy to GitHub Pages
   # ════════════════════════════════════════════
   deploy-pages:
     needs: check-staging
@@ -168,13 +168,27 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build
+        # Vite uses publicDir: 'docs', so data.json & staging_checks.json
+        # are automatically copied into dist/ alongside the React bundle.
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload docs/ as Pages artifact
+      - name: Upload dist/ as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/
+          path: dist/
 
       - name: Deploy to GitHub Pages
         id: deployment
