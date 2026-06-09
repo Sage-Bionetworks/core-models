@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import StatusBadge from './StatusBadge.jsx'
 import JsonModal from './JsonModal.jsx'
 import Popover from './Popover.jsx'
@@ -246,16 +246,60 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
 
   const { pinned, togglePin, isPinned } = usePinnedSchemas()
 
-  // ── URL sync ─────────────────────────────────────────────
+  // ── Build a lookup map for fast row-by-URI resolution ────────
+  const rowByUri = useMemo(() => {
+    const map = {}
+    for (const row of data) map[`${row.organization_name}-${row.schema_name}`] = row
+    return map
+  }, [data])
+
+  // ── Open a row and push a history entry so Back closes it ────
+  const openDetailRow = useCallback((row) => {
+    const uri = `${row.organization_name}-${row.schema_name}`
+    const p = new URLSearchParams(window.location.search)
+    p.set('open', uri)
+    history.pushState(null, '', `?${p.toString()}`)
+    setDetailRow(row)
+  }, [])
+
+  // ── Close the panel and remove ?open= from the URL ───────────
+  const closeDetailRow = useCallback(() => {
+    const p = new URLSearchParams(window.location.search)
+    if (p.has('open')) {
+      p.delete('open')
+      const qs = p.toString()
+      history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname)
+    }
+    setDetailRow(null)
+  }, [])
+
+  // ── Deep-link: open panel if ?open= present when data loads ──
+  useEffect(() => {
+    if (data.length === 0) return
+    const uri = new URLSearchParams(window.location.search).get('open')
+    if (uri && rowByUri[uri]) setDetailRow(rowByUri[uri])
+  }, [data, rowByUri])
+
+  // ── Popstate: keep React state in sync with Back/Forward ─────
+  useEffect(() => {
+    function onPopState() {
+      const uri = new URLSearchParams(window.location.search).get('open')
+      setDetailRow(uri && rowByUri[uri] ? rowByUri[uri] : null)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [rowByUri])
+
+  // ── URL sync (filters only — ?open= is managed separately) ───
   useEffect(() => {
     const p = new URLSearchParams(window.location.search)
-    // Write our params
     if (search) p.set('q', search); else p.delete('q')
     if (colFilters.org) p.set('org', colFilters.org); else p.delete('org')
     if (colFilters.schema) p.set('schema', colFilters.schema); else p.delete('schema')
     if (colFilters.status) p.set('status', colFilters.status); else p.delete('status')
     if (colFilters.version) p.set('ver', colFilters.version); else p.delete('ver')
     if (!hideDrafts) p.set('drafts', '1'); else p.delete('drafts')
+    // ?open= is intentionally preserved (managed by openDetailRow/closeDetailRow)
     const qs = p.toString()
     history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname)
   }, [search, colFilters, hideDrafts])
@@ -367,7 +411,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
       })
     } else if (e.key === 'Enter') {
       if (focusedIdx >= 0 && focusedIdx < len) {
-        setDetailRow(pageRows[focusedIdx])
+        openDetailRow(pageRows[focusedIdx])
       }
     } else if (e.key === 'p' || e.key === 'P') {
       if (focusedIdx >= 0 && focusedIdx < len) {
@@ -599,7 +643,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                       onTogglePin={togglePin}
                       isFocused={focusedIdx === i}
                       rowRef={el => { rowRefs.current[i] = el }}
-                      onRowClick={row => { setDetailRow(row); setFocusedIdx(i) }}
+                      onRowClick={row => { openDetailRow(row); setFocusedIdx(i) }}
                     />
                   ))}
                 </tbody>
@@ -640,7 +684,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
           checksDate={checksDate}
           isPinned={isPinned}
           onTogglePin={togglePin}
-          onClose={() => setDetailRow(null)}
+          onClose={closeDetailRow}
         />
       )}
     </div>
