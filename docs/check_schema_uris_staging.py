@@ -51,17 +51,23 @@ MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "8"))
 
 def staging_is_available(timeout: int = 10) -> bool:
     """
-    Probe the staging repo endpoint. Returns False (skip) when:
-      - HTTP 503 Service Unavailable  (maintenance window)
-      - HTTP 502 Bad Gateway
-      - Connection error / timeout
-    Any other response (including 401 Unauthorized) means the service is up.
+    Probe the staging /status endpoint.
+    Returns False (skip) when:
+      - status field is not "READ_WRITE"  (e.g. "READ_ONLY" during migration)
+      - HTTP 502 / 503
+      - Connection error or timeout
     """
-    probe_url = f"{STAGING_REPO}/version"
+    probe_url = f"{STAGING_REPO}/status"
     try:
         r = requests.get(probe_url, timeout=timeout)
         if r.status_code in (502, 503):
-            print(f"Staging returned HTTP {r.status_code} — write services unavailable. Skipping checks.")
+            print(f"Staging returned HTTP {r.status_code} — skipping checks.")
+            return False
+        data = r.json()
+        status = data.get("status", "").upper()
+        if status != "READ_WRITE":
+            msg = data.get("currentMessage", "")
+            print(f"Staging is {status}{f' — {msg}' if msg else ''}. Write services unavailable, skipping checks.")
             return False
         return True
     except requests.exceptions.Timeout:
