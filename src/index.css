@@ -989,6 +989,19 @@ select.col-filter.has-value {
 .pin-btn:hover { color: var(--accent); }
 .pin-btn.pinned { color: #f59e0b; }
 .pin-btn.pinned:hover { color: #d97706; }
+.share-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--muted2);
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.share-btn:hover { color: var(--accent); }
+.share-btn.copied { color: #16a34a; }
 
 /* ─── Clickable rows ────────────────────────────────────────── */
 .schema-row {

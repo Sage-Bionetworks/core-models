@@ -24,6 +24,7 @@ function CopyButton({ text }) {
 
 export default function SchemaDetailPanel({ row, stagingResults, checksDate, isPinned, onTogglePin, onClose }) {
   const [showJson, setShowJson] = useState(false)
+  const [linkCopied, setLinkCopied] = useState(false)
   const [excelState, setExcelState] = useState('idle') // idle | loading | error
   const [propsState, setPropsState] = useState('idle') // idle | loading | loaded | error
   const [properties, setProperties] = useState(null)
@@ -120,6 +121,19 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
               onClick={() => onTogglePin(uri)}
             >
               {pinned ? '★' : '☆'}
+            </button>
+            <button
+              className={`share-btn${linkCopied ? ' copied' : ''}`}
+              type="button"
+              title={linkCopied ? 'Link copied!' : 'Copy shareable link'}
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                  setLinkCopied(true)
+                  setTimeout(() => setLinkCopied(false), 2000)
+                })
+              }}
+            >
+              {linkCopied ? '✓' : '⎘'}
             </button>
             <button className="btn" type="button" onClick={onClose} aria-label="Close panel">✕</button>
           </div>
