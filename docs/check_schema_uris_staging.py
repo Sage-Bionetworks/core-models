@@ -25,6 +25,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, date
 
+import requests
 from dotenv import load_dotenv
 from synapseclient import Folder, Synapse
 from synapseclient.extensions.curator import create_file_based_metadata_task
@@ -46,6 +47,29 @@ CHECK_TASK_CREATION = os.environ.get("CHECK_TASK_CREATION", "true").lower() == "
 STAGING_FOLDER_ID = os.environ.get("STAGING_FOLDER_ID", "")
 ASSIGNEE_PRINCIPAL_ID = os.environ.get("ASSIGNEE_PRINCIPAL_ID", "")
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "8"))
+
+
+def staging_is_available(timeout: int = 10) -> bool:
+    """
+    Probe the staging repo endpoint. Returns False (skip) when:
+      - HTTP 503 Service Unavailable  (maintenance window)
+      - HTTP 502 Bad Gateway
+      - Connection error / timeout
+    Any other response (including 401 Unauthorized) means the service is up.
+    """
+    probe_url = f"{STAGING_REPO}/version"
+    try:
+        r = requests.get(probe_url, timeout=timeout)
+        if r.status_code in (502, 503):
+            print(f"Staging returned HTTP {r.status_code} — write services unavailable. Skipping checks.")
+            return False
+        return True
+    except requests.exceptions.Timeout:
+        print(f"Staging probe timed out after {timeout}s — skipping checks.")
+        return False
+    except requests.exceptions.ConnectionError as e:
+        print(f"Staging unreachable ({e}) — skipping checks.")
+        return False
 
 
 def login_staging():
@@ -157,6 +181,10 @@ def run_check(uri, syn):
 
 
 def main():
+    # Fast pre-flight: bail out immediately if staging is in maintenance
+    if not staging_is_available():
+        sys.exit(0)
+
     if CHECK_TASK_CREATION:
         missing = [n for n, v in [("STAGING_FOLDER_ID", STAGING_FOLDER_ID), ("ASSIGNEE_PRINCIPAL_ID", ASSIGNEE_PRINCIPAL_ID)] if not v]
         if missing:
