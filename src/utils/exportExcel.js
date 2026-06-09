@@ -93,12 +93,12 @@ function buildTemplateSheets(wb, schema, schemaName) {
   const FILL_GRAY_HDR  = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE0E0E0' } }
   const BORDER_THIN    = { style: 'thin', color: { argb: 'FFBDD7EE' } }
 
-  // Hidden lookup sheet — one column per property that has enums
-  const wsLists = wb.addWorksheet('Lists')
-  wsLists.state = 'hidden'
-
-  // Template sheet
+  // Template sheet (first visible tab)
   const wsTmpl = wb.addWorksheet('Template')
+
+  // Lists sheet added AFTER Template so tab order is: Template … Lists(hidden)
+  // We'll populate it below then hide it at the end
+  const wsLists = wb.addWorksheet('Lists')
   wsTmpl.views = [{ state: 'frozen', xSplit: 0, ySplit: 1 }]
 
   names.forEach((name, i) => {
@@ -198,6 +198,9 @@ function buildTemplateSheets(wb, schema, schemaName) {
 
   // Row 1 height
   wsTmpl.getRow(1).height = 22
+
+  // Hide the Lists lookup sheet — must be done after all cells are populated
+  wsLists.state = 'hidden'
 }
 
 // ─── Export a SINGLE schema from the detail panel ────────────

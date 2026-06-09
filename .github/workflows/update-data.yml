@@ -33,6 +33,8 @@ jobs:
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
+    outputs:
+      data_changed: ${{ steps.diff.outputs.changed }}
 
     steps:
       - name: Checkout repository
@@ -153,9 +155,9 @@ jobs:
   # Job 3: Build React app + Deploy to GitHub Pages
   # ════════════════════════════════════════════
   deploy-pages:
-    needs: check-staging
+    needs: [update-data, check-staging]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.update-data.outputs.data_changed == 'true'
 
     environment:
       name: github-pages

@@ -1082,7 +1082,9 @@ select.col-filter.has-value {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 380px;
+  width: 480px;
+  min-width: 300px;
+  max-width: 90vw;
   z-index: 201;
   background: var(--panel);
   box-shadow: -4px 0 32px rgba(0,0,0,0.13);
@@ -1090,6 +1092,20 @@ select.col-filter.has-value {
   flex-direction: column;
   animation: slideInPanel 0.22s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
+}
+.panel-resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  cursor: col-resize;
+  z-index: 10;
+}
+.panel-resize-handle:hover,
+.panel-resize-handle.dragging {
+  background: var(--accent);
+  opacity: 0.35;
 }
 @keyframes slideInPanel {
   from { transform: translateX(100%); opacity: 0; }

@@ -29,6 +29,30 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   const [properties, setProperties] = useState(null)
   const [showProps, setShowProps] = useState(false)
   const [expandedEnums, setExpandedEnums] = useState(new Set())
+  const [panelWidth, setPanelWidth] = useState(480)
+  const resizeHandleRef = useRef(null)
+
+  function onResizeMouseDown(e) {
+    e.preventDefault()
+    const startX = e.pageX
+    const startW = panelWidth
+    resizeHandleRef.current?.classList.add('dragging')
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+    function onMove(e) {
+      const newW = Math.max(300, Math.min(window.innerWidth * 0.9, startW - (e.pageX - startX)))
+      setPanelWidth(newW)
+    }
+    function onUp() {
+      resizeHandleRef.current?.classList.remove('dragging')
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseup', onUp)
+    }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
 
   // Reset properties when a different row is selected
   useEffect(() => {
@@ -81,7 +105,8 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   return (
     <>
       <div className="panel-overlay" onClick={onClose} />
-      <div className="detail-panel" role="dialog" aria-modal="true" aria-label="Schema details">
+      <div className="detail-panel" role="dialog" aria-modal="true" aria-label="Schema details" style={{ width: panelWidth }}>
+        <div className="panel-resize-handle" ref={resizeHandleRef} onMouseDown={onResizeMouseDown} />
         <div className="detail-panel-header">
           <div className="detail-panel-title">
             <span className="detail-schema-name" title={row.schema_name}>{row.schema_name}</span>

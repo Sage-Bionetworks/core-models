@@ -532,7 +532,27 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                     <SortTh col="semantic_version" label="Version" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 80 }} />
                     <SortTh col="created_on" label="Created" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 108 }} />
                     <th style={{ width: 40 }} />
-                    <th style={{ width: 48 }}>JSON</th>
+                    <th style={{ width: 72, position: 'relative' }}>
+                      JSON
+                      <div className="col-resize-handle" onMouseDown={e => {
+                        e.stopPropagation()
+                        const th = e.currentTarget.parentElement
+                        const startX = e.pageX, startW = th.offsetWidth
+                        e.currentTarget.classList.add('dragging')
+                        document.body.style.cursor = 'col-resize'
+                        document.body.style.userSelect = 'none'
+                        const onMove = e => { const w = Math.max(48, startW + e.pageX - startX); th.style.width = w + 'px' }
+                        const onUp = () => {
+                          e.currentTarget?.classList.remove('dragging')
+                          document.body.style.cursor = ''
+                          document.body.style.userSelect = ''
+                          document.removeEventListener('mousemove', onMove)
+                          document.removeEventListener('mouseup', onUp)
+                        }
+                        document.addEventListener('mousemove', onMove)
+                        document.addEventListener('mouseup', onUp)
+                      }} />
+                    </th>
                   </tr>
                   {/* Column filter row */}
                   {showFilters && (
