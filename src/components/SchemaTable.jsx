@@ -1,8 +1,12 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import StatusBadge from './StatusBadge.jsx'
 import JsonModal from './JsonModal.jsx'
 import Popover from './Popover.jsx'
+import FilterChips from './FilterChips.jsx'
+import SchemaDetailPanel from './SchemaDetailPanel.jsx'
+import usePinnedSchemas from '../hooks/usePinnedSchemas.js'
 import { relDate, fmtDate } from '../utils/dates.js'
+import { exportListToExcel } from '../utils/exportExcel.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
 const PAGE_SIZES = [10, 25, 50, 100]
@@ -24,37 +28,6 @@ function ShaCell({ hex }) {
         {copied ? 'Copied!' : 'Copy'}
       </button>
     </div>
-  )
-}
-
-// ─── More (⠇) popover content ────────────────────────────────
-function MorePopoverContent({ row }) {
-  return (
-    <>
-      <div className="popover-row">
-        <span className="popover-label">Org ID</span>
-        <span className="popover-val">{row.organization_id || '—'}</span>
-      </div>
-      <div className="popover-row">
-        <span className="popover-label">Schema ID</span>
-        <span className="popover-val">{row.schema_id || '—'}</span>
-      </div>
-      <div className="popover-row">
-        <span className="popover-label">Version ID</span>
-        <span className="popover-val">{row.version_id || '—'}</span>
-      </div>
-      <div className="popover-row">
-        <span className="popover-label">Created by</span>
-        <span className="popover-val">{row.created_by || '—'}</span>
-      </div>
-      <div className="popover-row">
-        <span className="popover-label">SHA256</span>
-        <span className="popover-val">
-          {row.json_sha256_hex ? row.json_sha256_hex.substring(0, 16) + '…' : '—'}
-        </span>
-        {row.json_sha256_hex && <ShaCell hex={row.json_sha256_hex} />}
-      </div>
-    </>
   )
 }
 
@@ -88,19 +61,34 @@ function StagingPopoverContent({ result, checksDate }) {
 }
 
 // ─── A single row ─────────────────────────────────────────────
-function SchemaRow({ row, stagingResults, checksDate }) {
-  const [moreOpen, setMoreOpen] = useState(false)
+function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isFocused, rowRef, onRowClick }) {
   const [stagingOpen, setStagingOpen] = useState(false)
   const [modal, setModal] = useState(false)
-  const moreBtnRef = useRef(null)
   const stagingBtnRef = useRef(null)
 
   const uri = `${row.organization_name}-${row.schema_name}`
   const url = PROD_BASE + uri
   const sr = stagingResults[uri]
+  const pinned = isPinned(uri)
 
   return (
-    <tr>
+    <tr
+      ref={rowRef}
+      className={`schema-row${isFocused ? ' focused' : ''}`}
+      tabIndex={isFocused ? 0 : -1}
+      onClick={() => onRowClick(row)}
+    >
+      {/* Pin cell */}
+      <td className="pin-cell" onClick={e => { e.stopPropagation(); onTogglePin(uri) }}>
+        <button
+          className={`pin-btn${pinned ? ' pinned' : ''}`}
+          type="button"
+          title={pinned ? 'Unpin' : 'Pin this schema'}
+          tabIndex={-1}
+        >
+          {pinned ? '★' : '☆'}
+        </button>
+      </td>
       <td title={row.organization_name}>{row.organization_name}</td>
       <td title={row.schema_name}>{row.schema_name}</td>
       <td><StatusBadge status={row.status} /></td>
@@ -112,7 +100,7 @@ function SchemaRow({ row, stagingResults, checksDate }) {
         </span>
       </td>
       {/* Staging check */}
-      <td style={{ overflow: 'visible' }}>
+      <td style={{ overflow: 'visible' }} onClick={e => e.stopPropagation()}>
         {sr !== undefined && (
           <>
             <button
@@ -120,7 +108,7 @@ function SchemaRow({ row, stagingResults, checksDate }) {
               className={sr.ok ? 'staging-ok' : 'staging-fail'}
               type="button"
               title={sr.ok ? 'Passed staging check' : 'Failed — click for details'}
-              onClick={() => { setStagingOpen(v => !v); setMoreOpen(false) }}
+              onClick={() => setStagingOpen(v => !v)}
             >
               {sr.ok ? '✓' : '✗'}
             </button>
@@ -133,7 +121,7 @@ function SchemaRow({ row, stagingResults, checksDate }) {
         )}
       </td>
       {/* JSON viewer */}
-      <td>
+      <td onClick={e => e.stopPropagation()}>
         <button
           className="schema-link"
           type="button"
@@ -143,23 +131,6 @@ function SchemaRow({ row, stagingResults, checksDate }) {
           {'{ }'}
         </button>
         {modal && <JsonModal url={url} name={row.schema_name} onClose={() => setModal(false)} />}
-      </td>
-      {/* More (⠇) */}
-      <td>
-        <button
-          ref={moreBtnRef}
-          className={`more-btn${moreOpen ? ' active' : ''}`}
-          type="button"
-          title="More details"
-          onClick={() => { setMoreOpen(v => !v); setStagingOpen(false) }}
-        >
-          ⠇
-        </button>
-        {moreOpen && (
-          <Popover anchorRef={moreBtnRef} onClose={() => setMoreOpen(false)}>
-            <MorePopoverContent row={row} />
-          </Popover>
-        )}
       </td>
     </tr>
   )
@@ -244,14 +215,65 @@ function exportCSV(rows, stagingResults) {
 
 // ─── Main table component ─────────────────────────────────────
 export default function SchemaTable({ data, stagingResults, checksDate }) {
-  const [search, setSearch] = useState('')
-  const [colFilters, setColFilters] = useState({ org: '', schema: '', status: '', version: '' })
-  const [hideDrafts, setHideDrafts] = useState(true)
+  // URL-initialised state
+  const [search, setSearch] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
+  const [colFilters, setColFilters] = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    return {
+      org: p.get('org') || '',
+      schema: p.get('schema') || '',
+      status: p.get('status') || '',
+      version: p.get('ver') || '',
+    }
+  })
+  const [hideDrafts, setHideDrafts] = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    // drafts=1 means SHOW drafts (i.e. hideDrafts=false)
+    return p.get('drafts') !== '1'
+  })
+
   const [showFilters, setShowFilters] = useState(false)
   const [sortCol, setSortCol] = useState('created_on')
   const [sortDir, setSortDir] = useState('desc')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(25)
+  const [focusedIdx, setFocusedIdx] = useState(-1)
+  const [detailRow, setDetailRow] = useState(null)
+
+  const searchRef = useRef(null)
+  const tableRef = useRef(null)
+  const rowRefs = useRef([])
+
+  const { pinned, togglePin, isPinned } = usePinnedSchemas()
+
+  // ── URL sync ─────────────────────────────────────────────
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search)
+    // Write our params
+    if (search) p.set('q', search); else p.delete('q')
+    if (colFilters.org) p.set('org', colFilters.org); else p.delete('org')
+    if (colFilters.schema) p.set('schema', colFilters.schema); else p.delete('schema')
+    if (colFilters.status) p.set('status', colFilters.status); else p.delete('status')
+    if (colFilters.version) p.set('ver', colFilters.version); else p.delete('ver')
+    if (!hideDrafts) p.set('drafts', '1'); else p.delete('drafts')
+    const qs = p.toString()
+    history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname)
+  }, [search, colFilters, hideDrafts])
+
+  // ── "/" shortcut focuses search ───────────────────────────
+  useEffect(() => {
+    const handler = e => {
+      if (e.key === '/' &&
+          document.activeElement.tagName !== 'INPUT' &&
+          document.activeElement.tagName !== 'SELECT') {
+        e.preventDefault()
+        searchRef.current?.focus()
+        searchRef.current?.select()
+      }
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [])
 
   // ── Filtering ─────────────────────────────────────────────
   const q = search.toLowerCase()
@@ -270,6 +292,11 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
 
   // ── Sorting ───────────────────────────────────────────────
   filtered = [...filtered].sort((a, b) => {
+    const aPin = isPinned(`${a.organization_name}-${a.schema_name}`)
+    const bPin = isPinned(`${b.organization_name}-${b.schema_name}`)
+    if (aPin && !bPin) return -1
+    if (!aPin && bPin) return 1
+
     let av = a[sortCol] ?? ''
     let bv = b[sortCol] ?? ''
     if (sortCol === 'created_on') {
@@ -309,6 +336,49 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
     setColFilters({ org: '', schema: '', status: '', version: '' })
     setPage(1)
   }
+
+  // ── Chip removal ──────────────────────────────────────────
+  function removeFilter(key) {
+    if (key === 'search') { setSearch(''); setPage(1) }
+    else if (key === 'drafts') { setHideDrafts(true); setPage(1) }
+    else { setColFilter(key, '') }
+  }
+
+  // ── Keyboard navigation ───────────────────────────────────
+  function handleTableKeyDown(e) {
+    const len = pageRows.length
+    if (len === 0) return
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setFocusedIdx(prev => {
+        const next = prev < len - 1 ? prev + 1 : prev
+        rowRefs.current[next]?.focus()
+        rowRefs.current[next]?.scrollIntoView({ block: 'nearest' })
+        return next
+      })
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setFocusedIdx(prev => {
+        const next = prev > 0 ? prev - 1 : 0
+        rowRefs.current[next]?.focus()
+        rowRefs.current[next]?.scrollIntoView({ block: 'nearest' })
+        return next
+      })
+    } else if (e.key === 'Enter') {
+      if (focusedIdx >= 0 && focusedIdx < len) {
+        setDetailRow(pageRows[focusedIdx])
+      }
+    } else if (e.key === 'p' || e.key === 'P') {
+      if (focusedIdx >= 0 && focusedIdx < len) {
+        const row = pageRows[focusedIdx]
+        togglePin(`${row.organization_name}-${row.schema_name}`)
+      }
+    }
+  }
+
+  // Reset focused index when page/filters change
+  useEffect(() => { setFocusedIdx(-1) }, [page, search, colFilters, hideDrafts, sortCol, sortDir])
 
   // ── Unique values for dropdowns ───────────────────────────
   const orgs = [...new Set(data.map(r => r.organization_name).filter(Boolean))].sort()
@@ -354,13 +424,15 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
           <div className="search-wrap">
             <span className="search-icon">⌕</span>
             <input
+              ref={searchRef}
               type="text"
               className="global-search"
-              placeholder="Search all columns…"
+              placeholder="Search all columns… (press /)"
               aria-label="Search schemas"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1) }}
             />
+            <span className="search-count">{filtered.length.toLocaleString()} results</span>
           </div>
 
           <select
@@ -413,7 +485,25 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
           >
             ↓ CSV
           </button>
+
+          <button
+            className="btn"
+            type="button"
+            title="Export filtered rows as Excel"
+            onClick={() => exportListToExcel(filtered, stagingResults)}
+          >
+            ↓ Excel
+          </button>
         </div>
+
+        {/* Active filter chips */}
+        <FilterChips
+          search={search}
+          colFilters={colFilters}
+          hideDrafts={hideDrafts}
+          onRemove={removeFilter}
+          onClearAll={clearAll}
+        />
       </div>
 
       <div className="panel-body">
@@ -428,9 +518,14 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
         ) : (
           <>
             <div className="table-wrap">
-              <table className="schema-table">
+              <table
+                className="schema-table"
+                ref={tableRef}
+                onKeyDown={handleTableKeyDown}
+              >
                 <thead>
                   <tr>
+                    <th style={{ width: 36 }} />
                     <SortTh col="organization_name" label="Org Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 140 }} />
                     <SortTh col="schema_name" label="Schema Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ minWidth: 160 }} />
                     <SortTh col="status" label="Status" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 96 }} />
@@ -438,11 +533,11 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                     <SortTh col="created_on" label="Created" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 108 }} />
                     <th style={{ width: 40 }} />
                     <th style={{ width: 48 }}>JSON</th>
-                    <th style={{ width: 36 }}>⠇</th>
                   </tr>
                   {/* Column filter row */}
                   {showFilters && (
                     <tr className="filters-row">
+                      <th />
                       <th>
                         <select className={`col-filter${colFilters.org ? ' has-value' : ''}`} value={colFilters.org} onChange={e => setColFilter('org', e.target.value)}>
                           <option value="">All</option>
@@ -470,17 +565,21 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
-                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                     </tr>
                   )}
                 </thead>
                 <tbody>
-                  {pageRows.map(row => (
+                  {pageRows.map((row, i) => (
                     <SchemaRow
                       key={`${row.organization_name}-${row.schema_name}-${row.version_id}`}
                       row={row}
                       stagingResults={stagingResults}
                       checksDate={checksDate}
+                      isPinned={isPinned}
+                      onTogglePin={togglePin}
+                      isFocused={focusedIdx === i}
+                      rowRef={el => { rowRefs.current[i] = el }}
+                      onRowClick={row => { setDetailRow(row); setFocusedIdx(i) }}
                     />
                   ))}
                 </tbody>
@@ -507,11 +606,23 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
 
             <div className="footer">
               <span style={{ opacity: 0.45, fontSize: 12 }}>ⓘ</span>
-              Columns with many unique values show a dropdown; use global search for free text.
+              Click any row to view details · ↑↓ to navigate · Enter to open · P to pin · / to search
             </div>
           </>
         )}
       </div>
+
+      {/* Schema detail side panel */}
+      {detailRow && (
+        <SchemaDetailPanel
+          row={detailRow}
+          stagingResults={stagingResults}
+          checksDate={checksDate}
+          isPinned={isPinned}
+          onTogglePin={togglePin}
+          onClose={() => setDetailRow(null)}
+        />
+      )}
     </div>
   )
 }
