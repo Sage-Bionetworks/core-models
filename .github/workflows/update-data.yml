@@ -157,7 +157,7 @@ jobs:
   deploy-pages:
     needs: [update-data, check-staging]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && needs.update-data.outputs.data_changed == 'true'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || needs.update-data.outputs.data_changed == 'true')
 
     environment:
       name: github-pages
