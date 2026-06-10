@@ -42,7 +42,8 @@ PUBLISHED_ORGS = {
     "org.synapse.nf",
     "HTAN2Organization",
     "sage.schemas.ad",
-    "sage.schemas.elite"
+    "sage.schemas.elite",
+    "NAMhub"
 }
 
 

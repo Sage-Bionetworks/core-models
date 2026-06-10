@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import SchemaTable from './components/SchemaTable.jsx'
 import DCCTable from './components/DCCTable.jsx'
+import StatsPage from './components/StatsPage.jsx'
+import sageLogo from './assets/sage-logo.svg'
 
 const TABS = [
   { id: 'schemas', label: 'Registered Schemas' },
-  { id: 'dcc', label: 'DCC Links', count: 8 },
+  { id: 'dcc',     label: 'DCC Links', count: 8 },
+  { id: 'stats',   label: 'Insights' },
 ]
 
 export default function App() {
@@ -73,7 +76,11 @@ export default function App() {
       {/* ── Header ── */}
       <div className="top">
         <div className="title">
-          <h1>Index of Data Models Across Sage</h1>
+          <h1>Index of Data Models</h1>
+          <div className="sage-byline">
+            <img src={sageLogo} alt="Sage Bionetworks logo" className="sage-logo" />
+            <span>Sage Bionetworks</span>
+          </div>
           <p>
             Browse registered Synapse JSON schemas across Sage and jump directly to DCC data models,
             documentation, and portals.
@@ -110,9 +117,11 @@ export default function App() {
             onKeyDown={e => handleTabKey(e, t.id)}
           >
             {t.label}
-            <span className="tab-badge">
-              {t.id === 'schemas' ? (loadState === 'ok' ? data.length.toLocaleString() : '—') : t.count}
-            </span>
+            {t.count !== undefined || t.id === 'schemas' ? (
+              <span className="tab-badge">
+                {t.id === 'schemas' ? (loadState === 'ok' ? data.length.toLocaleString() : '—') : t.count}
+              </span>
+            ) : null}
           </button>
         ))}
       </div>
@@ -160,6 +169,10 @@ export default function App() {
 
       <div id="tab-dcc" role="tabpanel" aria-labelledby="tab-dcc" style={{ display: tab === 'dcc' ? 'block' : 'none' }}>
         <DCCTable />
+      </div>
+
+      <div id="tab-stats" role="tabpanel" aria-labelledby="tab-stats" style={{ display: tab === 'stats' ? 'block' : 'none' }}>
+        <StatsPage data={data} loadState={loadState} />
       </div>
     </div>
   )

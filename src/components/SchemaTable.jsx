@@ -93,7 +93,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
       <td title={row.schema_name}>{row.schema_name}</td>
       <td><StatusBadge status={row.status} /></td>
       <td>{row.semantic_version}</td>
-      <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0}>
+      <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
         <span className="date-cell">
           {relDate(row.created_on)}
           <span className="date-abs">{fmtDate(row.created_on)}</span>
