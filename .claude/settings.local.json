@@ -24,7 +24,10 @@
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Skill(claude-api)",
       "Skill(claude-api:*)",
-      "Bash(cp \"C:/Users/cconrad/Downloads/Sage Bionetworks - Mark Only in Color.svg\" \"C:/Users/cconrad/OneDrive - Sage Bionetworks/Documents/github/core-models/src/assets/sage-logo.svg\")"
+      "Bash(cp \"C:/Users/cconrad/Downloads/Sage Bionetworks - Mark Only in Color.svg\" \"C:/Users/cconrad/OneDrive - Sage Bionetworks/Documents/github/core-models/src/assets/sage-logo.svg\")",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)"
     ]
   }
 }
