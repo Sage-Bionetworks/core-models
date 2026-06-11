@@ -904,11 +904,11 @@
     "organization_name": "MC2Center",
     "schema_id": "9783",
     "schema_name": "PublicationView",
-    "version_id": "59060",
-    "semantic_version": "13.0.1",
-    "created_on": "2026-04-29T20:02:14.053Z",
+    "version_id": "64406",
+    "semantic_version": "1.1.9",
+    "created_on": "2026-06-11T00:41:34.821Z",
     "created_by": "3458480",
-    "json_sha256_hex": "76f675b298d4ecf5a640b25ea06ed53bfedd77334dcbbb5bd3dc77560d8b0243",
+    "json_sha256_hex": "811e0a515d569270f28cc66d6750a26e8f837b29a5dbeecc1ec7c534a208f0a5",
     "status": "published"
   },
   {
