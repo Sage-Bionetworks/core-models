@@ -22,11 +22,9 @@ on:
   push:
     branches: [main]
 
+# Least-privilege default; individual jobs widen this as needed.
 permissions:
-  contents: write
-  pull-requests: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
   group: update-and-deploy-main
@@ -42,6 +40,8 @@ jobs:
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # push commits to the run-scoped PR branch
     outputs:
       data_changed: ${{ steps.diff.outputs.changed }}
 
@@ -98,6 +98,8 @@ jobs:
     needs: update-data
     runs-on: ubuntu-latest
     continue-on-error: true
+    permissions:
+      contents: write  # push staging check results to the run-scoped PR branch
     outputs:
       staging_changed: ${{ steps.stage_commit.outputs.changed }}
 
@@ -162,6 +164,9 @@ jobs:
   open-pr:
     needs: [update-data, check-staging]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read         # checkout + ls-remote
+      pull-requests: write   # gh pr create
     if: needs.update-data.outputs.data_changed == 'true' || needs.check-staging.outputs.staging_changed == 'true'
 
     steps:
@@ -203,6 +208,10 @@ jobs:
   deploy-pages:
     needs: [update-data, check-staging]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read   # checkout
+      pages: write     # deploy to GitHub Pages
+      id-token: write  # OIDC token for deploy-pages
     # Deploy only from main (e.g. when the automated PR is merged, or on a
     # direct push to main) so Pages never publishes unmerged data.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -250,6 +259,8 @@ jobs:
   publish-coremodels:
     needs: deploy-pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # checkout only; publishes via external CoreModels API
 
     steps:
       - name: Checkout repository
