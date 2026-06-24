@@ -16536,6 +16536,18 @@
     "status": "published"
   },
   {
+    "organization_id": "1901",
+    "organization_name": "sage.schemas.dpe",
+    "schema_id": "10601",
+    "schema_name": "rnaSeqSamplesheetTemplate",
+    "version_id": "65337",
+    "semantic_version": "0.0.1",
+    "created_on": "2026-06-24T03:48:03.768Z",
+    "created_by": "3324230",
+    "json_sha256_hex": "ff55842769f7cb317a9efff6259ed2cb775becf0adea26c858a584406dfdabc2",
+    "status": "draft"
+  },
+  {
     "organization_id": "1634",
     "organization_name": "sage.schemas.elite",
     "schema_id": "10036",
