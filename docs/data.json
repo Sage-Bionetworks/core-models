@@ -11649,7 +11649,7 @@
     "created_on": "2026-06-24T19:23:49.121Z",
     "created_by": "3459953",
     "json_sha256_hex": "d65e4c0e8b6f68c2a8345ff05af46f8baf7f47128743f73c0242daed54aa0f78",
-    "status": "draft"
+    "status": "published"
   },
   {
     "organization_id": "1902",
@@ -11661,7 +11661,7 @@
     "created_on": "2026-06-24T19:23:50.604Z",
     "created_by": "3459953",
     "json_sha256_hex": "a56698b7c381d3043fe85bba4a0f7d40ba383abeb7e1109216cf45499a988322",
-    "status": "draft"
+    "status": "published"
   },
   {
     "organization_id": "1902",
@@ -11673,7 +11673,7 @@
     "created_on": "2026-06-24T19:23:51.748Z",
     "created_by": "3459953",
     "json_sha256_hex": "9c3ac4319b7715e89ad10d3c371a29feb8885e40a9495c966864dd41e90c0d16",
-    "status": "draft"
+    "status": "published"
   },
   {
     "organization_id": "1902",
@@ -11685,7 +11685,7 @@
     "created_on": "2026-06-24T19:23:52.932Z",
     "created_by": "3459953",
     "json_sha256_hex": "c5c17b378de2515b9c2c032e72a88c8e107362f11108a1236b509981360dadbb",
-    "status": "draft"
+    "status": "published"
   },
   {
     "organization_id": "1902",
@@ -11697,7 +11697,7 @@
     "created_on": "2026-06-24T19:23:54.401Z",
     "created_by": "3459953",
     "json_sha256_hex": "f7fd1536f7c42a011e879402f8350a04ae9e54d6c4743c4fe9c5c824e421ff1a",
-    "status": "draft"
+    "status": "published"
   },
   {
     "organization_id": "223",
