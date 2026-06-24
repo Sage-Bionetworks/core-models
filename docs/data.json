@@ -928,11 +928,11 @@
     "organization_name": "MC2Center",
     "schema_id": "10186",
     "schema_name": "SequencingRNALevel1",
-    "version_id": "64504",
-    "semantic_version": "15.0.0",
-    "created_on": "2026-06-15T18:15:14.782Z",
+    "version_id": "65348",
+    "semantic_version": "15.0.1",
+    "created_on": "2026-06-24T21:56:11.572Z",
     "created_by": "3458480",
-    "json_sha256_hex": "389073d4064ef2c5c55150b15688f92fb83ac895d1d83b45ef8a6b595ea2140a",
+    "json_sha256_hex": "92be32591af5816c616b980c79ea278d077a652bc597e2769ba458702cf1553e",
     "status": "published"
   },
   {
