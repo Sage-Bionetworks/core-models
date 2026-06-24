@@ -1,6 +1,10 @@
 
-# Runs the Synapse export script, commits updated schema data,
-# deploys docs/ to GitHub Pages, then publishes schemas to CoreModels.
+# Runs the Synapse export script, opens a PR with updated schema data,
+# deploys docs/ to GitHub Pages (from main), then publishes schemas to CoreModels.
+#
+# Branch protection on `main` forbids direct pushes, so automated changes to
+# docs/data.json and docs/staging_checks.json are collected onto a single
+# run-scoped branch and submitted as one pull request for review/merge.
 
 name: Update Schema Data → Deploy Docs → Publish to CoreModels
 
@@ -20,6 +24,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
   pages: write
   id-token: write
 
@@ -27,9 +32,13 @@ concurrency:
   group: update-and-deploy-main
   cancel-in-progress: true
 
+env:
+  # Single branch shared by the data + staging jobs, unique per run.
+  UPDATE_BRANCH: automated/schema-update-${{ github.run_id }}
+
 jobs:
   # ════════════════════════════════════════════
-  # Job 1: Update docs/data.json
+  # Job 1: Update docs/data.json (onto the PR branch)
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
@@ -78,28 +87,23 @@ jobs:
             && echo "changed=false" >> "$GITHUB_OUTPUT" \
             || echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      - name: Commit and push updated data.json
+      - name: Commit updated data.json to PR branch
         if: steps.diff.outputs.changed == 'true'
         run: |
-          git pull --rebase --autostash origin main
-
+          git checkout -b "$UPDATE_BRANCH"
           git add docs/data.json
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit after syncing with main"
-            exit 0
-          fi
-
-          git commit -m "chore: update schema data [automated] [skip ci]"
-          git push origin HEAD:main
+          git commit -m "chore: update schema data [automated]"
+          git push origin "$UPDATE_BRANCH"
 
   # ════════════════════════════════════════════
-  # Job 2: Check schema URIs against staging
+  # Job 2: Check schema URIs against staging (onto the PR branch)
   # ════════════════════════════════════════════
   check-staging:
     needs: update-data
     runs-on: ubuntu-latest
     continue-on-error: true
+    outputs:
+      staging_changed: ${{ steps.stage_commit.outputs.changed }}
 
     steps:
       - name: Checkout repository
@@ -137,27 +141,79 @@ jobs:
         run: |
           python docs/check_schema_uris_staging.py
 
-      - name: Commit and push staging check results
+      - name: Commit staging check results to PR branch
+        id: stage_commit
         run: |
-          git pull --rebase --autostash origin main
+          # Reuse the branch if update-data already created it, else start it from main.
+          git fetch origin "$UPDATE_BRANCH" 2>/dev/null || true
+          if git ls-remote --exit-code --heads origin "$UPDATE_BRANCH" >/dev/null 2>&1; then
+            git checkout -B "$UPDATE_BRANCH" "origin/$UPDATE_BRANCH"
+          else
+            git checkout -b "$UPDATE_BRANCH"
+          fi
 
           git add docs/staging_checks.json
 
           if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes to staging_checks.json"
             exit 0
           fi
 
-          git commit -m "chore: update staging validation results [automated] [skip ci]"
-          git push origin HEAD:main
+          git commit -m "chore: update staging validation results [automated]"
+          git push origin "$UPDATE_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
   # ════════════════════════════════════════════
-  # Job 3: Build React app + Deploy to GitHub Pages
+  # Job 3: Open a pull request for the collected changes
+  # ════════════════════════════════════════════
+  open-pr:
+    needs: [update-data, check-staging]
+    runs-on: ubuntu-latest
+    if: needs.update-data.outputs.data_changed == 'true' || needs.check-staging.outputs.staging_changed == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # The branch only exists if at least one file actually changed.
+          if ! git ls-remote --exit-code --heads origin "$UPDATE_BRANCH" >/dev/null 2>&1; then
+            echo "Branch $UPDATE_BRANCH was not pushed; nothing to open a PR for."
+            exit 0
+          fi
+
+          existing=$(gh pr list --head "$UPDATE_BRANCH" --state open --json number --jq 'length')
+          if [ "$existing" != "0" ]; then
+            echo "A PR already exists for $UPDATE_BRANCH."
+            exit 0
+          fi
+
+          gh pr create \
+            --base main \
+            --head "$UPDATE_BRANCH" \
+            --title "chore: automated schema data update" \
+            --body "$(cat <<'BODY'
+          Automated update of `docs/data.json` and/or `docs/staging_checks.json` from the scheduled Synapse export.
+
+          Merging this PR into `main` will trigger the GitHub Pages deploy and the CoreModels publish.
+          BODY
+          )"
+
+  # ════════════════════════════════════════════
+  # Job 4: Build React app + Deploy to GitHub Pages (from main only)
   # ════════════════════════════════════════════
   deploy-pages:
     needs: [update-data, check-staging]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || needs.update-data.outputs.data_changed == 'true')
+    # Deploy only from main (e.g. when the automated PR is merged, or on a
+    # direct push to main) so Pages never publishes unmerged data.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     environment:
       name: github-pages
@@ -197,7 +253,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   # ════════════════════════════════════════════
-  # Job 4: Publish schemas to CoreModels
+  # Job 5: Publish schemas to CoreModels
   # ════════════════════════════════════════════
   publish-coremodels:
     needs: deploy-pages
@@ -234,8 +290,7 @@ jobs:
           MAX_WORKERS: "1"
           RATE_LIMIT_SECONDS: "0.0"
           VERIFY_URLS: "false"
+          BATCH_SIZE: "10"
 
         run: |
           python docs/import_to_coremodels.py
-
-          
