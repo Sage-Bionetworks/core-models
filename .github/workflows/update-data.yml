@@ -293,7 +293,6 @@ jobs:
           MAX_WORKERS: "1"
           RATE_LIMIT_SECONDS: "0.0"
           VERIFY_URLS: "false"
-          BATCH_SIZE: "10"
 
         run: |
           python docs/import_to_coremodels.py
