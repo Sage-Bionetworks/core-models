@@ -11656,11 +11656,11 @@
     "organization_name": "org.synapse.classic",
     "schema_id": "10608",
     "schema_name": "tier2.governanceAccessProvenance",
-    "version_id": "65344",
-    "semantic_version": "1.0.0",
-    "created_on": "2026-06-24T19:23:50.604Z",
+    "version_id": "65425",
+    "semantic_version": "1.0.1",
+    "created_on": "2026-06-26T18:27:07.178Z",
     "created_by": "3459953",
-    "json_sha256_hex": "a56698b7c381d3043fe85bba4a0f7d40ba383abeb7e1109216cf45499a988322",
+    "json_sha256_hex": "0cfa682504107ef4ace891175042530a36723bbdc484e64863b28ebbc3d32db2",
     "status": "published"
   },
   {
