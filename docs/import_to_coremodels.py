@@ -62,7 +62,7 @@ DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
-BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "50"))
+BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "20"))
 POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "60"))
 JOB_TIMEOUT_SECONDS = int(os.environ.get("JOB_TIMEOUT_SECONDS", "3600"))
 
