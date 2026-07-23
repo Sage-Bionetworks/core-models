@@ -7826,13 +7826,25 @@
   {
     "organization_id": "456",
     "organization_name": "jmveraTest",
+    "schema_id": "10943",
+    "schema_name": "BiospecimenMetadataTemplate",
+    "version_id": "66970",
+    "semantic_version": "0.1.0",
+    "created_on": "2026-07-23T17:00:44.741Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "3e66e6ba3805c24f189a039fc764aeca5695b37a06a449cd336e291c2d22ec01",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
     "schema_id": "8443",
     "schema_name": "FastqFileAnnotationTemplate",
-    "version_id": "46208",
-    "semantic_version": "0.1.0",
-    "created_on": "2025-11-05T17:16:06.744Z",
+    "version_id": "66974",
+    "semantic_version": "0.1.1",
+    "created_on": "2026-07-23T17:20:33.056Z",
     "created_by": "3499646",
-    "json_sha256_hex": "6a879be92bbb30f4f205ad44c7db1d0054b87c4d93a4bb489dfea10520e0f1db",
+    "json_sha256_hex": "92a1bb2dc62c9a0663035f1790e6abb4f726c09de67646ecd0d101395e8a236a",
     "status": "draft"
   },
   {
