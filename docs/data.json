@@ -1468,11 +1468,11 @@
     "organization_name": "NAMhub",
     "schema_id": "10185",
     "schema_name": "Landscape",
-    "version_id": "66944",
-    "semantic_version": "2.0.1",
-    "created_on": "2026-07-20T21:52:43.327Z",
+    "version_id": "66963",
+    "semantic_version": "2.1.0",
+    "created_on": "2026-07-22T20:22:15.952Z",
     "created_by": "3458480",
-    "json_sha256_hex": "08f26b70fb5278b006d7bec2901e33e14927ac0ab7bd09d4a7a43e99d3dc8ca4",
+    "json_sha256_hex": "ebd05af94ad5599ffe832459e5345638276e73b15175ca88445eb6521efa47d8",
     "status": "published"
   },
   {
