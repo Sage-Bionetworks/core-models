@@ -2532,6 +2532,18 @@
     "status": "draft"
   },
   {
+    "organization_id": "80",
+    "organization_name": "dev.grosenbacher.test",
+    "schema_id": "10983",
+    "schema_name": "rnaseq.SchemaInput",
+    "version_id": "67064",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-07-27T14:07:56.378Z",
+    "created_by": "3350396",
+    "json_sha256_hex": "a74f2f0bbb4cd513f5e183bd280fd892c1786bed75c275dbecfc6d9b714d77df",
+    "status": "draft"
+  },
+  {
     "organization_id": "472",
     "organization_name": "dpetest",
     "schema_id": "9480",
