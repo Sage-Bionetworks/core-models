@@ -31,6 +31,36 @@ function ShaCell({ hex }) {
   )
 }
 
+// ─── Copy-URI cell ───────────────────────────────────────────
+// Copies the fully-qualified schema URI used by downstream tools:
+//   organizationName-schemaName-semanticVersion  (e.g.
+//   org.synapse.nf-researchToolsClinicalAssessmentTool-2.0.1)
+// Schemas registered without a semantic version copy as
+//   organizationName-schemaName  (no trailing -version).
+function CopyUriCell({ org, schema, version }) {
+  const [copied, setCopied] = useState(false)
+  const uri = version ? `${org}-${schema}-${version}` : `${org}-${schema}`
+  const fmt = version
+    ? 'organizationName-schemaName-semanticVersion'
+    : 'organizationName-schemaName (no semantic version registered)'
+  function copy() {
+    navigator.clipboard.writeText(uri).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    })
+  }
+  return (
+    <button
+      className={`copy-uri${copied ? ' copied' : ''}`}
+      type="button"
+      title={`Copy URI — format: ${fmt}\n${uri}`}
+      onClick={copy}
+    >
+      {copied ? 'Copied!' : 'Copy URI'}
+    </button>
+  )
+}
+
 // ─── Staging popover content ──────────────────────────────────
 function StagingPopoverContent({ result, checksDate }) {
   return (
@@ -92,7 +122,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
       <td title={row.organization_name}>{row.organization_name}</td>
       <td title={row.schema_name}>{row.schema_name}</td>
       <td><StatusBadge status={row.status} /></td>
-      <td>{row.semantic_version}</td>
+      <td>{row.semantic_version || <span className="muted">—</span>}</td>
       <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
         <span className="date-cell">
           {relDate(row.created_on)}
@@ -131,6 +161,10 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
           {'{ }'}
         </button>
         {modal && <JsonModal url={url} name={row.schema_name} onClose={() => setModal(false)} />}
+      </td>
+      {/* Copy URI */}
+      <td onClick={e => e.stopPropagation()}>
+        <CopyUriCell org={row.organization_name} schema={row.schema_name} version={row.semantic_version} />
       </td>
     </tr>
   )
@@ -597,6 +631,12 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                         document.addEventListener('mouseup', onUp)
                       }} />
                     </th>
+                    <th
+                      style={{ width: 92 }}
+                      title="Copy the schema URI (organizationName-schemaName-semanticVersion) for downstream tools"
+                    >
+                      URI
+                    </th>
                   </tr>
                   {/* Column filter row */}
                   {showFilters && (
@@ -626,6 +666,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                           {versions.map(v => <option key={v} value={v}>{v}</option>)}
                         </select>
                       </th>
+                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                       <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
