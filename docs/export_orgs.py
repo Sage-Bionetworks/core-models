@@ -75,37 +75,63 @@ def fetch_org_schemas(org):
 # ──────────────────────────────────────────────
 # Phase 2 — fetch latest version for one schema
 # ──────────────────────────────────────────────
+def list_all_versions(org_name, schema_name):
+    """Return every registered version of a schema as raw dicts.
+
+    Uses the /schema/version/list REST endpoint directly instead of
+    schema.get_versions(), because the synapseclient wrapper silently
+    drops any version that has no semantic version (it filters on
+    `if "semanticVersion" in schema`). Schemas registered without a
+    x.y.z semantic version therefore never reach data.json, even though
+    they are fully registered and resolvable in Synapse. Paginated.
+    """
+    body = {"organizationName": org_name, "schemaName": schema_name}
+    versions = []
+    while True:
+        resp = syn.restPOST("/schema/version/list", body=json.dumps(body))
+        versions.extend(resp.get("page", []))
+        next_token = resp.get("nextPageToken")
+        if not next_token:
+            return versions
+        body["nextPageToken"] = next_token
+
+
 def fetch_latest_schema_version(schema, cached=None):
     try:
-        versions = list(schema.get_versions())
+        versions = list_all_versions(schema.organization_name, schema.name)
         if not versions:
             return None
 
-        latest = max(versions, key=lambda v: v.created_on or "")
+        latest = max(versions, key=lambda v: v.get("createdOn") or "")
+
+        org_name = latest.get("organizationName")
+        schema_name = latest.get("schemaName")
+        sha256 = latest.get("jsonSHA256Hex")
+        # semanticVersion is absent for schemas registered without a x.y.z tag.
+        semantic_version = latest.get("semanticVersion")
+        status = "published" if org_name in PUBLISHED_ORGS else "draft"
 
         # If SHA256 matches the cached value, return the cached row unchanged
-        key = f"{latest.organization_name}-{latest.schema_name}"
-        if cached and latest.json_sha256_hex and cached.get(key) == latest.json_sha256_hex:
-            return {"_cached": True, "organization_id": latest.organization_id,
-                    "organization_name": latest.organization_name,
-                    "schema_id": latest.schema_id, "schema_name": latest.schema_name,
-                    "version_id": latest.version_id, "semantic_version": latest.semantic_version,
-                    "created_on": latest.created_on, "created_by": latest.created_by,
-                    "json_sha256_hex": latest.json_sha256_hex,
-                    "status": "published" if latest.organization_name in PUBLISHED_ORGS else "draft"}
-
-        status = "published" if latest.organization_name in PUBLISHED_ORGS else "draft"
+        key = f"{org_name}-{schema_name}"
+        if cached and sha256 and cached.get(key) == sha256:
+            return {"_cached": True, "organization_id": latest.get("organizationId"),
+                    "organization_name": org_name,
+                    "schema_id": latest.get("schemaId"), "schema_name": schema_name,
+                    "version_id": latest.get("versionId"), "semantic_version": semantic_version,
+                    "created_on": latest.get("createdOn"), "created_by": latest.get("createdBy"),
+                    "json_sha256_hex": sha256,
+                    "status": status}
 
         return {
-            "organization_id": latest.organization_id,
-            "organization_name": latest.organization_name,
-            "schema_id": latest.schema_id,
-            "schema_name": latest.schema_name,
-            "version_id": latest.version_id,
-            "semantic_version": latest.semantic_version,
-            "created_on": latest.created_on,
-            "created_by": latest.created_by,
-            "json_sha256_hex": latest.json_sha256_hex,
+            "organization_id": latest.get("organizationId"),
+            "organization_name": org_name,
+            "schema_id": latest.get("schemaId"),
+            "schema_name": schema_name,
+            "version_id": latest.get("versionId"),
+            "semantic_version": semantic_version,
+            "created_on": latest.get("createdOn"),
+            "created_by": latest.get("createdBy"),
+            "json_sha256_hex": sha256,
             "status": status,
         }
 

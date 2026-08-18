@@ -692,6 +692,30 @@ select.col-filter.has-value {
   border-color: rgba(34, 197, 94, 0.25);
 }
 
+/* ─── Copy-URI button ───────────────────────────────────────── */
+.copy-uri {
+  background: none;
+  border: 1px solid var(--borderLight);
+  color: var(--muted);
+  border-radius: 7px;
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 10.5px;
+  font-family: var(--font);
+  font-weight: 600;
+  transition: all 120ms ease;
+  white-space: nowrap;
+}
+.copy-uri:hover {
+  background: var(--accentBg);
+  color: var(--accent);
+  border-color: var(--accentBorder);
+}
+.copy-uri.copied {
+  color: var(--green);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
 /* ─── Date cell ─────────────────────────────────────────────── */
 .date-cell {
   position: relative;
