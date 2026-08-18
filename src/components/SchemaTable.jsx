@@ -7,6 +7,7 @@ import SchemaDetailPanel from './SchemaDetailPanel.jsx'
 import usePinnedSchemas from '../hooks/usePinnedSchemas.js'
 import { relDate, fmtDate } from '../utils/dates.js'
 import { exportListToExcel } from '../utils/exportExcel.js'
+import { schemaUri } from '../utils/uri.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
 const PAGE_SIZES = [10, 25, 50, 100]
@@ -39,7 +40,7 @@ function ShaCell({ hex }) {
 //   organizationName-schemaName  (no trailing -version).
 function CopyUriCell({ org, schema, version }) {
   const [copied, setCopied] = useState(false)
-  const uri = version ? `${org}-${schema}-${version}` : `${org}-${schema}`
+  const uri = schemaUri({ organization_name: org, schema_name: schema, semantic_version: version })
   const fmt = version
     ? 'organizationName-schemaName-semanticVersion'
     : 'organizationName-schemaName (no semantic version registered)'
@@ -122,7 +123,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
       <td title={row.organization_name}>{row.organization_name}</td>
       <td title={row.schema_name}>{row.schema_name}</td>
       <td><StatusBadge status={row.status} /></td>
-      <td>{row.semantic_version || <span className="muted">—</span>}</td>
+      <td>{row.semantic_version || <span className="muted" title="No semantic version registered">—</span>}</td>
       <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
         <span className="date-cell">
           {relDate(row.created_on)}
@@ -219,7 +220,7 @@ function SortTh({ col, label, sortCol, sortDir, onSort, style }) {
 
 // ─── CSV export ───────────────────────────────────────────────
 function exportCSV(rows, stagingResults) {
-  const headers = ['Org Name', 'Schema Name', 'Status', 'Version', 'Created', 'Staging', 'Org ID', 'Schema ID', 'Version ID', 'Created By', 'SHA256']
+  const headers = ['Org Name', 'Schema Name', 'URI', 'Status', 'Version', 'Created', 'Staging', 'Org ID', 'Schema ID', 'Version ID', 'Created By', 'SHA256']
   const lines = [headers.map(h => `"${h}"`).join(',')]
   for (const row of rows) {
     const uri = `${row.organization_name}-${row.schema_name}`
@@ -228,6 +229,7 @@ function exportCSV(rows, stagingResults) {
     const cells = [
       row.organization_name,
       row.schema_name,
+      schemaUri(row),
       row.status,
       row.semantic_version,
       row.created_on ? new Date(row.created_on).toISOString() : '',

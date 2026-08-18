@@ -3,6 +3,7 @@ import StatusBadge from './StatusBadge.jsx'
 import JsonModal from './JsonModal.jsx'
 import { relDate, fmtDate } from '../utils/dates.js'
 import { exportSchemaToExcel } from '../utils/exportExcel.js'
+import { schemaUri } from '../utils/uri.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
 const SYNAPSE_BASE = 'https://www.synapse.org/#!Synapse:'
@@ -160,11 +161,25 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
             </div>
             <div className="detail-row">
               <span className="detail-label">Version</span>
-              <span className="detail-value">{row.semantic_version || '—'}</span>
+              <span className="detail-value">
+                {row.semantic_version || <span title="No semantic version registered">—</span>}
+              </span>
             </div>
             <div className="detail-row">
               <span className="detail-label">Version ID</span>
               <span className="detail-value">{row.version_id || '—'}</span>
+            </div>
+            <div className="detail-row">
+              <span
+                className="detail-label"
+                title={`Schema URI for downstream tools — format: ${row.semantic_version ? 'organizationName-schemaName-semanticVersion' : 'organizationName-schemaName (no semantic version registered)'}`}
+              >
+                URI
+              </span>
+              <span className="detail-value" style={{ fontFamily: 'var(--mono)', fontSize: 11, wordBreak: 'break-all' }}>
+                {schemaUri(row)}
+                <CopyButton text={schemaUri(row)} />
+              </span>
             </div>
           </div>
 
