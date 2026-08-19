@@ -1,4 +1,5 @@
 import ExcelJS from 'exceljs'
+import { schemaUri } from './uri.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
 
@@ -277,7 +278,7 @@ export async function exportSchemaToExcel(orgName, schemaName) {
 // ─── Export the FILTERED list from the toolbar ───────────────
 export async function exportListToExcel(rows, stagingResults) {
   const KEYS = [
-    'Org Name','Schema Name','Status','Version','Created',
+    'Org Name','Schema Name','URI','Status','Version','Created',
     'Staging','Org ID','Schema ID','Version ID','Created By','SHA256',
   ]
 
@@ -297,6 +298,7 @@ export async function exportListToExcel(rows, stagingResults) {
     ws.addRow([
       row.organization_name || '',
       row.schema_name       || '',
+      schemaUri(row),
       row.status            || '',
       row.semantic_version  || '',
       row.created_on ? new Date(row.created_on).toISOString() : '',
@@ -313,7 +315,7 @@ export async function exportListToExcel(rows, stagingResults) {
     const col = ws.getColumn(i + 1)
     const vals = rows.map(r => {
       const cells = [
-        r.organization_name, r.schema_name, r.status, r.semantic_version,
+        r.organization_name, r.schema_name, schemaUri(r), r.status, r.semantic_version,
         r.created_on, '', r.organization_id, r.schema_id,
         r.version_id, r.created_by, r.json_sha256_hex,
       ]
