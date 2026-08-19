@@ -177,7 +177,7 @@ Edit the `cron` expression under `on.schedule` in
 
 ### Regenerate the data by hand
 
-Trigger **Update Schema Data → Deploy Docs → Publish to CoreModels** from the Actions tab
+Trigger **Update Schema Data → Deploy Pages → Publish to CoreModels** from the Actions tab
 (`workflow_dispatch`), optionally with an `org_name` filter. It will open a PR with any changes.
 
 ---
