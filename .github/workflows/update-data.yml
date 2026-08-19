@@ -1,12 +1,12 @@
 
 # Runs the Synapse export script, opens a PR with updated schema data,
-# deploys docs/ to GitHub Pages (from main), then publishes schemas to CoreModels.
+# deploys the built site to GitHub Pages (from main), then publishes schemas to CoreModels.
 #
 # Branch protection on `main` forbids direct pushes, so automated changes to
-# docs/data.json and docs/staging_checks.json are collected onto a single
+# public/data.json and public/staging_checks.json are collected onto a single
 # run-scoped branch and submitted as one pull request for review/merge.
 
-name: Update Schema Data → Deploy Docs → Publish to CoreModels
+name: Update Schema Data → Deploy Pages → Publish to CoreModels
 
 on:
   schedule:
@@ -36,7 +36,7 @@ env:
 
 jobs:
   # ════════════════════════════════════════════
-  # Job 1: Update docs/data.json (onto the PR branch)
+  # Job 1: Update public/data.json (onto the PR branch)
   # ════════════════════════════════════════════
   update-data:
     runs-on: ubuntu-latest
@@ -74,12 +74,12 @@ jobs:
           SKIP_TEST_SCHEMAS: "true"
           MAX_WORKERS: "4"
         run: |
-          python docs/export_orgs.py
+          python scripts/export_orgs.py
 
       - name: Check for changes
         id: diff
         run: |
-          git diff --quiet docs/data.json \
+          git diff --quiet public/data.json \
             && echo "changed=false" >> "$GITHUB_OUTPUT" \
             || echo "changed=true" >> "$GITHUB_OUTPUT"
 
@@ -87,7 +87,7 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           git checkout -b "$UPDATE_BRANCH"
-          git add docs/data.json
+          git add public/data.json
           git commit -m "chore: update schema data [automated]"
           git push origin "$UPDATE_BRANCH"
 
@@ -133,7 +133,7 @@ jobs:
           CHECK_TASK_CREATION: "true"
           MAX_WORKERS: "4"
         run: |
-          python docs/check_schema_uris_staging.py
+          python scripts/check_schema_uris_staging.py
 
       - name: Commit staging check results to PR branch
         id: stage_commit
@@ -146,7 +146,7 @@ jobs:
             git checkout -b "$UPDATE_BRANCH"
           fi
 
-          git add docs/staging_checks.json
+          git add public/staging_checks.json
 
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -196,7 +196,7 @@ jobs:
             --head "$UPDATE_BRANCH" \
             --title "chore: automated schema data update" \
             --body "$(cat <<'BODY'
-          Automated update of `docs/data.json` and/or `docs/staging_checks.json` from the scheduled Synapse export.
+          Automated update of `public/data.json` and/or `public/staging_checks.json` from the scheduled Synapse export.
 
           Merging this PR into `main` will trigger the GitHub Pages deploy and the CoreModels publish.
           BODY
@@ -238,7 +238,7 @@ jobs:
 
       - name: Build React app
         run: npm run build
-        # Vite uses publicDir: 'docs', so data.json & staging_checks.json
+        # Vite uses publicDir: 'public', so data.json & staging_checks.json
         # are automatically copied into dist/ alongside the React bundle.
 
       - name: Configure GitHub Pages
@@ -295,4 +295,4 @@ jobs:
           VERIFY_URLS: "false"
 
         run: |
-          python docs/import_to_coremodels.py
+          python scripts/import_to_coremodels.py

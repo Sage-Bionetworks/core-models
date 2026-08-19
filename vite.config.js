@@ -10,8 +10,8 @@ export default defineConfig({
     // Polyfills Node.js built-ins (stream, path, fs, etc.) required by exceljs
     nodePolyfills({ include: ['stream', 'path', 'fs', 'buffer', 'process', 'util', 'zlib'] }),
   ],
-  // Serve docs/ as static assets — data.json & staging_checks.json live there
-  publicDir: 'docs',
+  // Serve public/ as static assets — data.json & staging_checks.json live there
+  publicDir: 'public',
   build: {
     outDir: 'dist',
     emptyOutDir: true,

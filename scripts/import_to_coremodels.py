@@ -1,7 +1,7 @@
 """
 import_to_coremodels.py
 
-Reads docs/data.json, fetches each unique schema from the Synapse registry,
+Reads public/data.json, fetches each unique schema from the Synapse registry,
 and imports it into CoreModels via the Merge JSON Schema API.
 
 NEW:
@@ -22,7 +22,7 @@ Optional:
   OVERRIDE_OVERWRITE        - "true" to skip overwrite warning (default: "true")
   ONLY_ADD_AND_UPDATE       - "true" to only add/update, never remove (default: "true")
   DRY_RUN                   - "true" to only list schemas without importing (default: "false")
-  DATA_JSON_PATH            - Path to docs/data.json (default: "docs/data.json")
+  DATA_JSON_PATH            - Path to public/data.json (default: "public/data.json")
   RATE_LIMIT_SECONDS        - Seconds to wait between API calls PER WORKER (default: "0.0")
   MAX_WORKERS               - Thread workers for parallel import (default: "8")
   VERIFY_URLS               - "true" to pre-check schema URLs (default: "false")
@@ -57,7 +57,7 @@ OVERRIDE_OVERWRITE = os.environ.get("OVERRIDE_OVERWRITE", "true").lower() == "tr
 ONLY_ADD_UPDATE = os.environ.get("ONLY_ADD_AND_UPDATE", "false").lower() == "true"
 DRY_RUN = os.environ.get("DRY_RUN", "false").lower() == "true"
 
-DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
+DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "public/data.json")
 
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))

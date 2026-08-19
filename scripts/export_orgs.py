@@ -1,12 +1,12 @@
 """
 export_orgs.py
 
-Exports Synapse JSON Schema registry metadata into docs/data.json.
+Exports Synapse JSON Schema registry metadata into public/data.json.
 
 - Lists all schema organizations
 - Fetches all org schema lists in parallel (Phase 1)
 - Fetches latest version for every schema in parallel (Phase 2)
-- Writes ONE row per schema (LATEST version only) to docs/data.json
+- Writes ONE row per schema (LATEST version only) to public/data.json
 
 Adds:
   - status field: "published" or "draft"
@@ -18,7 +18,7 @@ Optional:
   ORG_NAME_FILTER     - If set (e.g. "ADA.PSI"), only export that org.
                         If blank/unset, exports all orgs.
   MAX_WORKERS         - Number of concurrent threads (default: 16)
-  OUTPUT_PATH         - Output file path (default: docs/data.json)
+  OUTPUT_PATH         - Output file path (default: public/data.json)
 """
 
 import json
@@ -34,7 +34,7 @@ from synapseclient.models.schema_organization import list_json_schema_organizati
 # ──────────────────────────────────────────────
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "32"))
 ORG_NAME_FILTER = os.environ.get("ORG_NAME_FILTER", "").strip()
-OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "docs/data.json")
+OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "public/data.json")
 
 # Organizations that should be marked as "published"
 PUBLISHED_ORGS = {

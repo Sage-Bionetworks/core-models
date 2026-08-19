@@ -1,3 +1,7 @@
 .env
 node_modules/
 dist/
+
+# Python
+__pycache__/
+*.pyc

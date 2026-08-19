@@ -1,16 +1,16 @@
 """
 check_schema_uris_staging.py
 
-Reads docs/data.json, extracts all published schema URIs, verifies each
+Reads public/data.json, extracts all published schema URIs, verifies each
 one is accessible in the Synapse staging registry, and optionally attempts
 to create a curation task for each URI (cleaning up afterward).
 
 Usage:
-    python docs/check_schema_uris_staging.py
+    python scripts/check_schema_uris_staging.py
 
 Optional environment variables:
     SYNAPSE_AUTH_TOKEN      - Synapse personal access token (or uses ~/.synapseConfig)
-    DATA_JSON_PATH          - Path to data.json (default: docs/data.json)
+    DATA_JSON_PATH          - Path to data.json (default: public/data.json)
     STATUS_FILTER           - Which statuses to check: "published", "all" (default: "published")
     CHECK_TASK_CREATION     - "true" to also attempt task creation for each URI (default: false)
     STAGING_FOLDER_ID       - Synapse folder ID in staging to create test tasks in (required if CHECK_TASK_CREATION=true)
@@ -39,7 +39,7 @@ STAGING_REPO = "https://repo-staging.prod.sagebase.org/repo/v1"
 STAGING_AUTH = "https://repo-staging.prod.sagebase.org/auth/v1"
 STAGING_FILE = "https://repo-staging.prod.sagebase.org/file/v1"
 
-DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "docs/data.json")
+DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "public/data.json")
 _data_dir = os.path.dirname(DATA_JSON_PATH) or "."
 CHECKS_JSON_PATH = os.path.join(_data_dir, "staging_checks.json")
 STATUS_FILTER = os.environ.get("STATUS_FILTER", "published").lower()
