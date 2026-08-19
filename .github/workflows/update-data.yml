@@ -6,7 +6,7 @@
 # public/data.json and public/staging_checks.json are collected onto a single
 # run-scoped branch and submitted as one pull request for review/merge.
 
-name: Update Schema Data → Deploy Docs → Publish to CoreModels
+name: Update Schema Data → Deploy Pages → Publish to CoreModels
 
 on:
   schedule:
