@@ -1,7 +1,7 @@
 # Tests schema URI checking against the Synapse staging folder
 # using the develop branch of the Synapse Python client.
 #
-# This workflow does not update docs/data.json, deploy GitHub Pages,
+# This workflow does not update public/data.json, deploy GitHub Pages,
 # publish to CoreModels, or commit generated files back to the repo.
 
 name: Check Staging URIs with Synapse Client Develop
@@ -73,12 +73,12 @@ jobs:
           MAX_WORKERS: ${{ github.event.inputs.max_workers }}
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
         run: |
-          python docs/check_schema_uris_staging.py
+          python scripts/check_schema_uris_staging.py
 
       - name: Upload staging check results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: staging-check-results-synapseclient-develop
-          path: docs/staging_checks.json
+          path: public/staging_checks.json
           if-no-files-found: warn
