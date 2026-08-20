@@ -516,7 +516,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
               ref={searchRef}
               type="text"
               className="global-search"
-              placeholder="Search all columns…"
+              placeholder="Search all columns"
               aria-label="Search schemas"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1) }}

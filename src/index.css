@@ -90,7 +90,7 @@ a[target='_blank']:not(.schema-link)::after {
   display: block;
 }
 .title p {
-  color: var(--muted);
+  color: rgba(15, 23, 42, 0.62);
   font-size: 13.5px;
   max-width: 960px;
   line-height: 1.55;
@@ -252,7 +252,7 @@ a[target='_blank']:not(.schema-link)::after {
   color: rgba(15, 23, 42, 0.92);
 }
 .panel-header p {
-  color: var(--muted);
+  color: rgba(15, 23, 42, 0.62);
   font-size: 12.5px;
   line-height: 1.55;
   max-width: 960px;
