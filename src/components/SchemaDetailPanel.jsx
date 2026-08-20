@@ -23,6 +23,19 @@ function CopyButton({ text }) {
   )
 }
 
+// Panel sizing — the initial width and the resize clamp share the same bounds so
+// the first drag can never snap the panel narrower than it opened.
+const MIN_PANEL_WIDTH = 300
+const viewportWidth = () => (typeof window !== 'undefined' ? window.innerWidth : 1200)
+// Largest width the panel may occupy. On narrow screens this matches the initial
+// width (92%) so a resize can't shrink it below its opened size.
+const maxPanelWidth = () => Math.round(viewportWidth() * (viewportWidth() < 768 ? 0.92 : 0.9))
+// Opens to ~2/3 of the page (nearly full width on small screens).
+const initialPanelWidth = () => {
+  const vw = viewportWidth()
+  return vw < 768 ? Math.round(vw * 0.92) : Math.round(vw * 0.66)
+}
+
 export default function SchemaDetailPanel({ row, stagingResults, checksDate, isPinned, onTogglePin, onClose }) {
   const [showJson, setShowJson] = useState(false)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -32,11 +45,7 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   const [showProps, setShowProps] = useState(false)
   const [expandedEnums, setExpandedEnums] = useState(new Set())
   // Opens to ~2/3 of the page so the auto-opened Properties table is easy to read.
-  // On small screens fall back to nearly full width.
-  const [panelWidth, setPanelWidth] = useState(() => {
-    const vw = typeof window !== 'undefined' ? window.innerWidth : 1200
-    return vw < 768 ? Math.round(vw * 0.92) : Math.round(vw * 0.66)
-  })
+  const [panelWidth, setPanelWidth] = useState(initialPanelWidth)
   const resizeHandleRef = useRef(null)
 
   function onResizeMouseDown(e) {
@@ -47,7 +56,7 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
     document.body.style.cursor = 'col-resize'
     document.body.style.userSelect = 'none'
     function onMove(e) {
-      const newW = Math.max(300, Math.min(window.innerWidth * 0.9, startW - (e.pageX - startX)))
+      const newW = Math.max(MIN_PANEL_WIDTH, Math.min(maxPanelWidth(), startW - (e.pageX - startX)))
       setPanelWidth(newW)
     }
     function onUp() {

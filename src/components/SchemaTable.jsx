@@ -498,10 +498,6 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                 </span>
               )}
             </p>
-            <div className="row-hint">
-              <span className="row-hint-icon" aria-hidden="true">👆</span>
-              Click any row to view full schema details, properties, and download a metadata template.
-            </div>
           </div>
         </div>
 
