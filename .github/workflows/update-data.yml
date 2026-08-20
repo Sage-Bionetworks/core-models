@@ -285,7 +285,11 @@ jobs:
           COREMODELS_API_TOKEN: ${{ secrets.COREMODELS_API_TOKEN }}
           COREMODELS_PROJECT_ID: ${{ secrets.COREMODELS_PROJECT_ID }}
           COREMODELS_SPACE_ID: ${{ secrets.COREMODELS_SPACE_ID }}
-          COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
+          # COREMODELS_CONFIG_TYPE_ID is intentionally omitted so CoreModels auto-selects
+          # its default import profile. The profile id changed in CoreModels v3.9.0
+          # (old default 02b22ff71dc54e23a44977fa7722f138 → new d7cf1119ad8b84b8e3a122e5a64d006e);
+          # auto-select avoids pinning a stale id. To pin a specific profile, add:
+          #   COREMODELS_CONFIG_TYPE_ID: ${{ secrets.COREMODELS_CONFIG_TYPE_ID }}
 
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
 

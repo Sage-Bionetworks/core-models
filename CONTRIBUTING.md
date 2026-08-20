@@ -80,7 +80,7 @@ Schema API.
 | `COREMODELS_API_TOKEN` | ✅ | Bearer token |
 | `COREMODELS_PROJECT_ID` | ✅ | Target project |
 | `COREMODELS_SPACE_ID` | ✅ | Target space |
-| `COREMODELS_CONFIG_TYPE_ID` | ✅ | JSON Schema import profile |
+| `COREMODELS_CONFIG_TYPE_ID` | | JSON Schema import profile. **Leave empty/unset** to auto-select the default profile (recommended — survives profile-id migrations). CoreModels v3.9.0 changed the default id to `d7cf1119ad8b84b8e3a122e5a64d006e`. |
 | `ORG_NAME_FILTER` | | Import only one org |
 | `DATA_JSON_PATH` | | Input list (default `public/data.json`) |
 | `DRY_RUN` | | `true` to list without importing |

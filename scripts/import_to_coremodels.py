@@ -12,9 +12,12 @@ Required environment variables:
   COREMODELS_API_TOKEN      - Bearer token for CoreModels
   COREMODELS_PROJECT_ID     - CoreModels project ID
   COREMODELS_SPACE_ID       - Target space ID to import into
-  COREMODELS_CONFIG_TYPE_ID - JSON Schema import profile ID
 
 Optional:
+  COREMODELS_CONFIG_TYPE_ID - JSON Schema import profile ID. Leave empty/unset to let
+                              CoreModels auto-select the default profile (recommended;
+                              survives profile-id migrations). CoreModels v3.9.0 changed
+                              the default profile id to d7cf1119ad8b84b8e3a122e5a64d006e.
   ORG_NAME_FILTER           - Organization name to filter imports (e.g. "ADA.PSI")
                               If blank or unset, imports all organizations.
   OVERRIDE_NEW_PROPERTIES   - "true" to skip unmapped properties warning (default: "true")
@@ -82,8 +85,8 @@ def validate_config():
         missing.append("COREMODELS_PROJECT_ID")
     if not SPACE_ID:
         missing.append("COREMODELS_SPACE_ID")
-    if not CONFIG_TYPE_ID:
-        missing.append("COREMODELS_CONFIG_TYPE_ID")
+    # COREMODELS_CONFIG_TYPE_ID is intentionally NOT required: when empty, CoreModels
+    # auto-selects the default import profile (see queue_merge_batch).
 
     if missing:
         print(f"ERROR: Missing required environment variables: {', '.join(missing)}")
@@ -198,7 +201,10 @@ def queue_merge_batch(schema_urls, session: requests.Session):
 
     body = {
         "spaceId": SPACE_ID,
-        "configTypeId": CONFIG_TYPE_ID,
+        # None → JSON null tells CoreModels to auto-select the default import profile.
+        # The profile id changed in CoreModels v3.9.0, so pinning a stale id fails;
+        # auto-select (empty CONFIG_TYPE_ID) is the resilient default.
+        "configTypeId": CONFIG_TYPE_ID or None,
         "sourceDtos": [{"fileUrl": url} for url in schema_urls],
         "overrideNewPropertiesWarning": OVERRIDE_NEW_PROPS,
         "overrideDifferentSourceWarning": OVERRIDE_DIFF_SRC,
@@ -282,7 +288,7 @@ def main():
     print(f"API URL:        {API_URL}")
     print(f"Project ID:     {PROJECT_ID}")
     print(f"Space ID:       {SPACE_ID}")
-    print(f"Config Type ID: {CONFIG_TYPE_ID}")
+    print(f"Config Type ID: {CONFIG_TYPE_ID or '(auto — default profile)'}")
     print(f"Org filter:     {ORG_NAME_FILTER if ORG_NAME_FILTER else '(none)'}")
     print("Status filter:  published only")
     print(f"Max workers:    {MAX_WORKERS}")
