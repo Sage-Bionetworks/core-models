@@ -366,7 +366,14 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
     if (colFilters.status && (row.status || '').toLowerCase() !== colFilters.status) return false
     if (colFilters.version && row.semantic_version !== colFilters.version) return false
     if (q) {
-      const hay = [row.organization_name, row.schema_name, row.status, row.semantic_version].join(' ').toLowerCase()
+      // Search across ALL columns (plus the composed URI), matching the placeholder.
+      const hay = [
+        row.organization_name, row.organization_id,
+        row.schema_name, row.schema_id,
+        row.semantic_version, row.version_id,
+        row.status, row.created_by, row.created_on,
+        row.json_sha256_hex, schemaUri(row),
+      ].join(' ').toLowerCase()
       if (!hay.includes(q)) return false
     }
     return true
