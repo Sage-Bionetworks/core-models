@@ -47,7 +47,8 @@ function flattenProperties(schema, prefix = '', parentRequired = new Set()) {
     }
     const fullName = prefix ? `${prefix}.${name}` : name
     const type = Array.isArray(prop.type) ? prop.type.join(' | ') : (prop.type || '')
-    const enumVals = prop.enum || prop.examples || []
+    // Surface enumerated values wherever they live so the reference sheet stays complete.
+    const enumVals = extractEnum(prop)?.values || prop.examples || []
 
     rows.push({
       'Property':    fullName,
@@ -82,10 +83,35 @@ function flattenProperties(schema, prefix = '', parentRequired = new Set()) {
   return rows
 }
 
+// ─── Extract enumerated values wherever they live ────────────
+// JSON schema properties express allowed values in several shapes:
+//   • prop.enum                    — a plain single-value enum
+//   • prop.type==='array' + items.enum — a LIST of allowed values (multi-value)
+//   • prop.anyOf[].enum            — a hybrid (e.g. a free number/string OR an enum)
+// Returns { values, multi, strict } or null.
+//   multi  = the field holds a list (array) of values
+//   strict = the enum is the only allowed form (a closed set); when false the field
+//            also permits free / comma-separated entry, so validation must not block.
+function extractEnum(prop) {
+  if (!prop) return null
+  if (Array.isArray(prop.enum) && prop.enum.length) {
+    return { values: prop.enum, multi: false, strict: true }
+  }
+  if (prop.type === 'array' && prop.items && Array.isArray(prop.items.enum) && prop.items.enum.length) {
+    return { values: prop.items.enum, multi: true, strict: false }
+  }
+  if (Array.isArray(prop.anyOf)) {
+    const branch = prop.anyOf.find(b => Array.isArray(b.enum) && b.enum.length)
+    if (branch) return { values: branch.enum, multi: false, strict: false }
+  }
+  return null
+}
+
 // ─── Build the Template + Lists sheets ───────────────────────
 function buildTemplateSheets(wb, schema, schemaName) {
   const props   = schema.properties || {}
   const required = new Set(schema.required || [])
+  // Column order follows the JSON schema's property order exactly (insertion order).
   const names   = Object.keys(props)
 
   // Fill styles — match the example file's colours
@@ -105,9 +131,10 @@ function buildTemplateSheets(wb, schema, schemaName) {
   names.forEach((name, i) => {
     const colIdx = i + 1
     const ltr    = colLetter(colIdx)
-    const prop   = props[name]
-    const isReq  = required.has(name)
-    const enums  = prop.enum || []
+    const prop     = props[name]
+    const isReq    = required.has(name)
+    const enumInfo = extractEnum(prop)        // {values, multi, strict} | null
+    const isList   = prop.type === 'array'    // a list field (with or without an enum)
 
     // Column width
     wsTmpl.getColumn(colIdx).width = Math.max(name.length + 2, 14)
@@ -131,21 +158,41 @@ function buildTemplateSheets(wb, schema, schemaName) {
       }
     }
 
-    // ── Enum dropdown ──
-    if (enums.length > 0) {
-      // Populate Lists column
+    // ── Dropdown for enumerated values (direct enum, array items.enum, or anyOf branch) ──
+    if (enumInfo) {
+      // Back the dropdown with a column on the hidden Lists sheet.
       wsLists.getCell(1, colIdx).value = name
-      enums.forEach((val, j) => { wsLists.getCell(j + 2, colIdx).value = val })
+      enumInfo.values.forEach((val, j) => { wsLists.getCell(j + 2, colIdx).value = val })
 
+      // Multi-value (array) and hybrid (anyOf) fields must allow free / comma-separated
+      // entry, so their validation is non-blocking. A closed single-value enum keeps a
+      // (still non-blocking) warning to nudge toward the list.
+      const relaxed = enumInfo.multi || !enumInfo.strict
       wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
         type: 'list',
         allowBlank: true,
-        showDropDown: false,   // show the arrow
-        showErrorMessage: true,
+        showDropDown: false,   // false = SHOW the dropdown arrow (exceljs/OOXML quirk)
+        showErrorMessage: !relaxed,
         errorStyle: 'warning',
-        errorTitle: 'Invalid value',
-        error: `Choose a value from the dropdown list.`,
-        formulae: [`Lists!$${ltr}$2:$${ltr}$${enums.length + 1}`],
+        errorTitle: 'Value not in list',
+        error: 'Choose a value from the dropdown list.',
+        showInputMessage: true,
+        promptTitle: enumInfo.multi ? 'Multiple values allowed' : 'Pick from the list',
+        prompt: enumInfo.multi
+          ? 'Pick a value from the dropdown, or enter multiple values separated by commas.'
+          : 'Pick a value from the dropdown.',
+        formulae: [`Lists!$${ltr}$2:$${ltr}$${enumInfo.values.length + 1}`],
+      })
+    } else if (isList) {
+      // Array of free-text values (no enum) — permit multiple comma-separated values.
+      // A custom "always true" rule never blocks; it just carries the input message.
+      wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
+        type: 'custom',
+        allowBlank: true,
+        formulae: ['TRUE'],
+        showInputMessage: true,
+        promptTitle: 'Multiple values allowed',
+        prompt: 'Enter one or more values separated by commas.',
       })
     } else if (prop.type === 'integer' || prop.type === 'number') {
       // Numeric validation
@@ -240,37 +287,8 @@ export async function exportSchemaToExcel(orgName, schemaName) {
     wsProps.getColumn(i + 1).width = Math.min(60, maxLen + 2)
   })
 
-  // ── Sheet 3: Enums ──
-  const enumRows = []
-  for (const [name, prop] of Object.entries(schema.properties || {})) {
-    for (const val of (prop.enum || [])) enumRows.push([name, String(val)])
-  }
-  if (enumRows.length > 0) {
-    const wsEnum = wb.addWorksheet('Enums')
-    const eh = wsEnum.addRow(['Property', 'Enum Value'])
-    eh.font = { bold: true }
-    enumRows.forEach(r => wsEnum.addRow(r))
-    wsEnum.getColumn(1).width = 30
-    wsEnum.getColumn(2).width = 40
-  }
-
-  // ── Sheet 4: Metadata ──
-  const wsMeta = wb.addWorksheet('Metadata')
-  const mh = wsMeta.addRow(['Field', 'Value'])
-  mh.font = { bold: true }
-  ;[
-    ['Schema Name',       schemaName],
-    ['Organization',      orgName],
-    ['URI',               uri],
-    ['$schema',           schema.$schema || ''],
-    ['Title',             schema.title || ''],
-    ['Description',       schema.description || ''],
-    ['Type',              schema.type || ''],
-    ['Required fields',   (schema.required || []).join(', ')],
-    ['Total properties',  Object.keys(schema.properties || {}).length],
-  ].forEach(r => wsMeta.addRow(r))
-  wsMeta.getColumn(1).width = 22
-  wsMeta.getColumn(2).width = 70
+  // Sheets are intentionally limited to Template (+ hidden Lists) and Properties.
+  // The former Enums and Metadata reference sheets were removed.
 
   await downloadWorkbook(wb, `${schemaName}.xlsx`)
 }
