@@ -1097,7 +1097,8 @@ select.col-filter.has-value {
   opacity: 0;
   transition: opacity 100ms ease;
 }
-.schema-row:hover .schema-name-cell .schema-name-text {
+.schema-row:hover .schema-name-cell .schema-name-text,
+.schema-row.focused .schema-name-cell .schema-name-text {
   text-decoration: underline;
 }
 .schema-row:hover .schema-name-cell::after,
