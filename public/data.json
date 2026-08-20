@@ -11330,6 +11330,42 @@
   {
     "organization_id": "456",
     "organization_name": "jmveraTest",
+    "schema_id": "11101",
+    "schema_name": "demo.BiospecimenMetadataTemplate",
+    "version_id": "68111",
+    "semantic_version": "0.1.2",
+    "created_on": "2026-08-20T17:28:32.028Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "35cdf3df920a3ccef3a2682f0d66a5b535110fbb2cdbd0c0e9f043a5f3f360ac",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
+    "schema_id": "11099",
+    "schema_name": "demo.ClinicalMetadataTemplate",
+    "version_id": "68109",
+    "semantic_version": "0.1.2",
+    "created_on": "2026-08-20T17:26:47.248Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "a8ce8bc8ec0ee2652604b26103537c9ec0142a0424b83e12a2b6a28c145a986c",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
+    "schema_id": "11100",
+    "schema_name": "demo.ScRNASeqAssayMetadataTemplate",
+    "version_id": "68110",
+    "semantic_version": "0.1.2",
+    "created_on": "2026-08-20T17:28:27.686Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "d4a2fcde1e14057fdc9348926cd2a9aade88297aa93e5f3696246d72d227f367",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
     "schema_id": "10054",
     "schema_name": "v412.BiospecimenMetadataTemplate",
     "version_id": "57500",
