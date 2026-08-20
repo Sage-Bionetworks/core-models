@@ -94,10 +94,14 @@ function flattenProperties(schema, prefix = '', parentRequired = new Set()) {
 //            also permits free / comma-separated entry, so validation must not block.
 function extractEnum(prop) {
   if (!prop) return null
+
+  const types = Array.isArray(prop.type) ? prop.type : (prop.type ? [prop.type] : [])
+  const isArray = types.includes('array')
+
   if (Array.isArray(prop.enum) && prop.enum.length) {
     return { values: prop.enum, multi: false, strict: true }
   }
-  if (prop.type === 'array' && prop.items && Array.isArray(prop.items.enum) && prop.items.enum.length) {
+  if (isArray && prop.items && Array.isArray(prop.items.enum) && prop.items.enum.length) {
     return { values: prop.items.enum, multi: true, strict: false }
   }
   if (Array.isArray(prop.anyOf)) {
