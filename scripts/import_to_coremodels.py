@@ -65,8 +65,10 @@ DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "public/data.json")
 RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
-BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "1000"))
-POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "60"))
+# Small batches so a single bad schema fails only its own batch (the rest still
+# import) and the failure is isolated to a handful of schemas instead of all of them.
+BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "10"))
+POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "15"))
 JOB_TIMEOUT_SECONDS = int(os.environ.get("JOB_TIMEOUT_SECONDS", "3600"))
 
 SYNAPSE_SCHEMA_BASE = "https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered"
@@ -260,8 +262,13 @@ def wait_for_job(job_id: str, session: requests.Session):
             if status == "success":
                 return True, None
             elif status == "failed":
-                error = data.get("error", "No error details provided.")
-                return False, f"Job failed: {error}"
+                # The failure detail's location in the payload varies and is often
+                # absent from `error`, which produced the useless "No error details
+                # provided." message. Surface the ENTIRE jobStatus data object so the
+                # real server-side reason (validation error, duplicate identifier,
+                # per-source failures, etc.) is visible in the CI log.
+                detail = json.dumps(data, indent=2, default=str)
+                return False, f"Job failed. Full jobStatus payload:\n{detail}"
 
         except Exception as e:
             print(f"    Error: Status check error (will retry): {e}")
@@ -361,11 +368,11 @@ def main():
         print(f"  ❌ Import failed: {reason}")
         return ("fail", batch_keys, reason)
             
+    batches = [schemas[i:i+BATCH_SIZE] for i in range(0, len(schemas), BATCH_SIZE)]
+    print(f"Split {len(schemas)} schemas into {len(batches)} batch(es) of up to {BATCH_SIZE}.\n")
+
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = [
-            executor.submit(process_schema_batch, schemas[i:i+BATCH_SIZE])
-            for i in range(0, len(schemas), BATCH_SIZE)
-        ]
+        futures = [executor.submit(process_schema_batch, batch) for batch in batches]
 
         for f in as_completed(futures):
             result, key, reason = f.result()
@@ -387,10 +394,11 @@ def main():
     print("\n" + "=" * 60)
     print("IMPORT SUMMARY")
     print("=" * 60)
-    print(f"  Total batches:  {len(schemas)}")
-    print(f"  ✅ Succeeded:   {success_count}")
-    print(f"  ❌ Failed:      {fail_count}")
-    print(f"  ⏭️  Skipped:    {skip_count}")
+    print(f"  Total schemas:  {len(schemas)}")
+    print(f"  Total batches:  {len(batches)}")
+    print(f"  ✅ Succeeded:   {success_count} batch(es)")
+    print(f"  ❌ Failed:      {fail_count} batch(es)")
+    print(f"  ⏭️  Skipped:    {skip_count} batch(es)")
 
     if failed_schemas:
         print("\nFailed/skipped batches:")
