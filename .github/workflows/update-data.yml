@@ -293,10 +293,15 @@ jobs:
 
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
 
-          # Speed controls
+          # Speed / stability controls
           MAX_WORKERS: "1"
-          RATE_LIMIT_SECONDS: "0.0"
+          # Small delay between CoreModels jobs to avoid transient backend rejections.
+          RATE_LIMIT_SECONDS: "0.2"
           VERIFY_URLS: "false"
+          # Import in small batches so one bad schema fails only its own batch (the
+          # rest still import) and the failing schema is easy to isolate in the log.
+          BATCH_SIZE: "10"
+          POLL_INTERVAL_SECONDS: "15"
 
         run: |
           python scripts/import_to_coremodels.py
