@@ -121,7 +121,9 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
         </button>
       </td>
       <td title={row.organization_name}>{row.organization_name}</td>
-      <td title={row.schema_name}>{row.schema_name}</td>
+      <td className="schema-name-cell" title={`${row.schema_name} — click to view details`}>
+        <span className="schema-name-text">{row.schema_name}</span>
+      </td>
       <td><StatusBadge status={row.status} /></td>
       <td>{row.semantic_version || <span className="muted" title="No semantic version registered">—</span>}</td>
       <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
@@ -496,6 +498,10 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                 </span>
               )}
             </p>
+            <div className="row-hint">
+              <span className="row-hint-icon" aria-hidden="true">👆</span>
+              Click any row to view full schema details, properties, and download a metadata template.
+            </div>
           </div>
         </div>
 

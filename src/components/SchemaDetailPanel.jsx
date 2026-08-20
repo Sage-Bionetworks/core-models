@@ -31,11 +31,11 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   const [properties, setProperties] = useState(null)
   const [showProps, setShowProps] = useState(false)
   const [expandedEnums, setExpandedEnums] = useState(new Set())
-  // Wider default so the auto-opened Properties table is readable without resizing.
-  // Clamped to the viewport for small screens.
+  // Opens to ~2/3 of the page so the auto-opened Properties table is easy to read.
+  // On small screens fall back to nearly full width.
   const [panelWidth, setPanelWidth] = useState(() => {
     const vw = typeof window !== 'undefined' ? window.innerWidth : 1200
-    return Math.min(760, Math.round(vw * 0.9))
+    return vw < 768 ? Math.round(vw * 0.92) : Math.round(vw * 0.66)
   })
   const resizeHandleRef = useRef(null)
 

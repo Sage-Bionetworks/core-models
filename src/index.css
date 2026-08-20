@@ -1084,6 +1084,26 @@ select.col-filter.has-value {
   transition: background 80ms ease, box-shadow 80ms ease;
   position: relative;
 }
+/* Make it obvious the schema name (and row) opens details */
+.schema-name-cell .schema-name-text {
+  color: var(--link);
+  font-weight: 600;
+}
+.schema-name-cell::after {
+  content: '›';
+  margin-left: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+.schema-row:hover .schema-name-cell .schema-name-text {
+  text-decoration: underline;
+}
+.schema-row:hover .schema-name-cell::after,
+.schema-row.focused .schema-name-cell::after {
+  opacity: 0.75;
+}
 .schema-row td:first-child {
   border-left: 3px solid transparent;
   transition: border-color 80ms ease;
@@ -1100,6 +1120,25 @@ select.col-filter.has-value {
 }
 .schema-row.focused td:first-child {
   border-left-color: var(--accent);
+}
+
+/* ─── "Click a row" hint callout ────────────────────────────── */
+.row-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: var(--accentBg);
+  border: 1px solid var(--accentBorder);
+  border-radius: 7px;
+  color: var(--link);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.row-hint-icon {
+  font-size: 14px;
+  line-height: 1;
 }
 
 /* ─── Search result count badge ─────────────────────────────── */
