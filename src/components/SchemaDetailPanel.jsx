@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import StatusBadge from './StatusBadge.jsx'
 import JsonModal from './JsonModal.jsx'
 import { relDate, fmtDate } from '../utils/dates.js'
@@ -31,7 +31,12 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   const [properties, setProperties] = useState(null)
   const [showProps, setShowProps] = useState(false)
   const [expandedEnums, setExpandedEnums] = useState(new Set())
-  const [panelWidth, setPanelWidth] = useState(480)
+  // Wider default so the auto-opened Properties table is readable without resizing.
+  // Clamped to the viewport for small screens.
+  const [panelWidth, setPanelWidth] = useState(() => {
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 1200
+    return Math.min(760, Math.round(vw * 0.9))
+  })
   const resizeHandleRef = useRef(null)
 
   function onResizeMouseDown(e) {
@@ -56,30 +61,11 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
     document.addEventListener('mouseup', onUp)
   }
 
-  // Reset properties when a different row is selected
-  useEffect(() => {
-    setShowProps(false)
-    setProperties(null)
-    setPropsState('idle')
-    setExpandedEnums(new Set())
-  }, [row?.schema_id])
-
-  // Close on Escape
-  useEffect(() => {
-    function handler(e) {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [onClose])
-
-  async function handleShowProps() {
-    if (showProps) { setShowProps(false); return }
-    setShowProps(true)
-    if (properties) return // already loaded
+  // Fetch + parse a schema's properties into the table shape.
+  const loadProperties = useCallback(async (orgName, schemaName) => {
     setPropsState('loading')
     try {
-      const res = await fetch(PROD_BASE + `${row.organization_name}-${row.schema_name}`)
+      const res = await fetch(PROD_BASE + `${orgName}-${schemaName}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const schema = await res.json()
       const required = new Set(schema.required || [])
@@ -94,6 +80,39 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
       setPropsState('loaded')
     } catch {
       setPropsState('error')
+    }
+  }, [])
+
+  // Auto-open Properties whenever a row is selected — the panel's most useful
+  // content, so users shouldn't have to click to reveal it.
+  useEffect(() => {
+    if (!row) return
+    setExpandedEnums(new Set())
+    setProperties(null)
+    setShowProps(true)
+    loadProperties(row.organization_name, row.schema_name)
+  }, [row?.schema_id, loadProperties])
+
+  // Close on Escape
+  useEffect(() => {
+    function handler(e) {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  // Toggle button: retry on error, otherwise hide/show (re-fetching only if needed).
+  function handleShowProps() {
+    if (propsState === 'error') {
+      setShowProps(true)
+      loadProperties(row.organization_name, row.schema_name)
+      return
+    }
+    if (showProps) { setShowProps(false); return }
+    setShowProps(true)
+    if (!properties && propsState !== 'loading') {
+      loadProperties(row.organization_name, row.schema_name)
     }
   }
 
@@ -244,7 +263,9 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
               type="button"
               onClick={handleShowProps}
             >
-              {propsState === 'loading' ? '⏳ Loading…' : propsState === 'error' ? '⚠ Error' : 'View Properties'}
+              {propsState === 'loading' ? '⏳ Loading…'
+                : propsState === 'error' ? '⚠ Retry Properties'
+                : showProps ? 'Hide Properties' : 'View Properties'}
             </button>
             <button
               className={`btn btn--accent${excelState === 'loading' ? ' disabled' : ''}`}
