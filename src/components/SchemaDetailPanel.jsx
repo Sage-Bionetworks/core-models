@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import StatusBadge from './StatusBadge.jsx'
 import JsonModal from './JsonModal.jsx'
 import { relDate, fmtDate } from '../utils/dates.js'
@@ -23,6 +23,19 @@ function CopyButton({ text }) {
   )
 }
 
+// Panel sizing — the initial width and the resize clamp share the same bounds so
+// the first drag can never snap the panel narrower than it opened.
+const MIN_PANEL_WIDTH = 300
+const viewportWidth = () => (typeof window !== 'undefined' ? window.innerWidth : 1200)
+// Largest width the panel may occupy. On narrow screens this matches the initial
+// width (92%) so a resize can't shrink it below its opened size.
+const maxPanelWidth = () => Math.round(viewportWidth() * (viewportWidth() < 768 ? 0.92 : 0.9))
+// Opens to ~2/3 of the page (nearly full width on small screens).
+const initialPanelWidth = () => {
+  const vw = viewportWidth()
+  return vw < 768 ? Math.round(vw * 0.92) : Math.round(vw * 0.66)
+}
+
 export default function SchemaDetailPanel({ row, stagingResults, checksDate, isPinned, onTogglePin, onClose }) {
   const [showJson, setShowJson] = useState(false)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -31,7 +44,8 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
   const [properties, setProperties] = useState(null)
   const [showProps, setShowProps] = useState(false)
   const [expandedEnums, setExpandedEnums] = useState(new Set())
-  const [panelWidth, setPanelWidth] = useState(480)
+  // Opens to ~2/3 of the page so the auto-opened Properties table is easy to read.
+  const [panelWidth, setPanelWidth] = useState(initialPanelWidth)
   const resizeHandleRef = useRef(null)
 
   function onResizeMouseDown(e) {
@@ -42,7 +56,7 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
     document.body.style.cursor = 'col-resize'
     document.body.style.userSelect = 'none'
     function onMove(e) {
-      const newW = Math.max(300, Math.min(window.innerWidth * 0.9, startW - (e.pageX - startX)))
+      const newW = Math.max(MIN_PANEL_WIDTH, Math.min(maxPanelWidth(), startW - (e.pageX - startX)))
       setPanelWidth(newW)
     }
     function onUp() {
@@ -56,30 +70,11 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
     document.addEventListener('mouseup', onUp)
   }
 
-  // Reset properties when a different row is selected
-  useEffect(() => {
-    setShowProps(false)
-    setProperties(null)
-    setPropsState('idle')
-    setExpandedEnums(new Set())
-  }, [row?.schema_id])
-
-  // Close on Escape
-  useEffect(() => {
-    function handler(e) {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [onClose])
-
-  async function handleShowProps() {
-    if (showProps) { setShowProps(false); return }
-    setShowProps(true)
-    if (properties) return // already loaded
+  // Fetch + parse a schema's properties into the table shape.
+  const loadProperties = useCallback(async (orgName, schemaName) => {
     setPropsState('loading')
     try {
-      const res = await fetch(PROD_BASE + `${row.organization_name}-${row.schema_name}`)
+      const res = await fetch(PROD_BASE + `${orgName}-${schemaName}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const schema = await res.json()
       const required = new Set(schema.required || [])
@@ -94,6 +89,39 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
       setPropsState('loaded')
     } catch {
       setPropsState('error')
+    }
+  }, [])
+
+  // Auto-open Properties whenever a row is selected — the panel's most useful
+  // content, so users shouldn't have to click to reveal it.
+  useEffect(() => {
+    if (!row) return
+    setExpandedEnums(new Set())
+    setProperties(null)
+    setShowProps(true)
+    loadProperties(row.organization_name, row.schema_name)
+  }, [row?.schema_id, loadProperties])
+
+  // Close on Escape
+  useEffect(() => {
+    function handler(e) {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  // Toggle button: retry on error, otherwise hide/show (re-fetching only if needed).
+  function handleShowProps() {
+    if (propsState === 'error') {
+      setShowProps(true)
+      loadProperties(row.organization_name, row.schema_name)
+      return
+    }
+    if (showProps) { setShowProps(false); return }
+    setShowProps(true)
+    if (!properties && propsState !== 'loading') {
+      loadProperties(row.organization_name, row.schema_name)
     }
   }
 
@@ -244,7 +272,9 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
               type="button"
               onClick={handleShowProps}
             >
-              {propsState === 'loading' ? '⏳ Loading…' : propsState === 'error' ? '⚠ Error' : 'View Properties'}
+              {propsState === 'loading' ? '⏳ Loading…'
+                : propsState === 'error' ? '⚠ Retry Properties'
+                : showProps ? 'Hide Properties' : 'View Properties'}
             </button>
             <button
               className={`btn btn--accent${excelState === 'loading' ? ' disabled' : ''}`}

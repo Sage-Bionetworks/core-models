@@ -90,7 +90,7 @@ a[target='_blank']:not(.schema-link)::after {
   display: block;
 }
 .title p {
-  color: var(--muted);
+  color: rgba(15, 23, 42, 0.62);
   font-size: 13.5px;
   max-width: 960px;
   line-height: 1.55;
@@ -252,7 +252,7 @@ a[target='_blank']:not(.schema-link)::after {
   color: rgba(15, 23, 42, 0.92);
 }
 .panel-header p {
-  color: var(--muted);
+  color: rgba(15, 23, 42, 0.62);
   font-size: 12.5px;
   line-height: 1.55;
   max-width: 960px;
@@ -1083,6 +1083,27 @@ select.col-filter.has-value {
   cursor: pointer;
   transition: background 80ms ease, box-shadow 80ms ease;
   position: relative;
+}
+/* Make it obvious the schema name (and row) opens details */
+.schema-name-cell .schema-name-text {
+  color: var(--link);
+  font-weight: 600;
+}
+.schema-name-cell::after {
+  content: '›';
+  margin-left: 6px;
+  color: var(--accent);
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+.schema-row:hover .schema-name-cell .schema-name-text,
+.schema-row.focused .schema-name-cell .schema-name-text {
+  text-decoration: underline;
+}
+.schema-row:hover .schema-name-cell::after,
+.schema-row.focused .schema-name-cell::after {
+  opacity: 0.75;
 }
 .schema-row td:first-child {
   border-left: 3px solid transparent;

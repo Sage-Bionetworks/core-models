@@ -121,7 +121,9 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
         </button>
       </td>
       <td title={row.organization_name}>{row.organization_name}</td>
-      <td title={row.schema_name}>{row.schema_name}</td>
+      <td className="schema-name-cell" title={`${row.schema_name} — click to view details`}>
+        <span className="schema-name-text">{row.schema_name}</span>
+      </td>
       <td><StatusBadge status={row.status} /></td>
       <td>{row.semantic_version || <span className="muted" title="No semantic version registered">—</span>}</td>
       <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
@@ -364,7 +366,14 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
     if (colFilters.status && (row.status || '').toLowerCase() !== colFilters.status) return false
     if (colFilters.version && row.semantic_version !== colFilters.version) return false
     if (q) {
-      const hay = [row.organization_name, row.schema_name, row.status, row.semantic_version].join(' ').toLowerCase()
+      // Search across ALL columns (plus the composed URI), matching the placeholder.
+      const hay = [
+        row.organization_name, row.organization_id,
+        row.schema_name, row.schema_id,
+        row.semantic_version, row.version_id,
+        row.status, row.created_by, row.created_on,
+        row.json_sha256_hex, schemaUri(row),
+      ].join(' ').toLowerCase()
       if (!hay.includes(q)) return false
     }
     return true
@@ -507,7 +516,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
               ref={searchRef}
               type="text"
               className="global-search"
-              placeholder="Search all columns… (press /)"
+              placeholder="Search all columns"
               aria-label="Search schemas"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1) }}
