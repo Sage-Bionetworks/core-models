@@ -66,7 +66,7 @@ RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
 # Small batches so a single bad schema fails only its own batch (the rest still
-# import) and the failure is isolated to a handful of schemas instead of all 224.
+# import) and the failure is isolated to a handful of schemas instead of all of them.
 BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "10"))
 POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "15"))
 JOB_TIMEOUT_SECONDS = int(os.environ.get("JOB_TIMEOUT_SECONDS", "3600"))
