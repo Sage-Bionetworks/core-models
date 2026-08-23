@@ -11354,6 +11354,18 @@
   {
     "organization_id": "456",
     "organization_name": "jmveraTest",
+    "schema_id": "11102",
+    "schema_name": "demo.FastqFileAnnotationTemplate",
+    "version_id": "68112",
+    "semantic_version": "0.1.2",
+    "created_on": "2026-08-21T18:13:35.445Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "16d69ccc81d377ebaebbd941fb4b38192705435c17683a963700b1f8c6fb05cd",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
     "schema_id": "11100",
     "schema_name": "demo.ScRNASeqAssayMetadataTemplate",
     "version_id": "68110",
@@ -11361,6 +11373,18 @@
     "created_on": "2026-08-20T17:28:27.686Z",
     "created_by": "3499646",
     "json_sha256_hex": "d4a2fcde1e14057fdc9348926cd2a9aade88297aa93e5f3696246d72d227f367",
+    "status": "draft"
+  },
+  {
+    "organization_id": "456",
+    "organization_name": "jmveraTest",
+    "schema_id": "11103",
+    "schema_name": "demo.ScRNASeqProcessedDataAnnotationTemplate",
+    "version_id": "68113",
+    "semantic_version": "0.1.2",
+    "created_on": "2026-08-21T18:16:23.287Z",
+    "created_by": "3499646",
+    "json_sha256_hex": "4f0d6b5ce1c63c396e8031a341cf527851cfcdb50ca5afc23943f0e776a619b9",
     "status": "draft"
   },
   {
