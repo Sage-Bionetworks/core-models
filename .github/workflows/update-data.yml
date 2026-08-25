@@ -294,13 +294,10 @@ jobs:
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
 
           # Speed / stability controls
-          MAX_WORKERS: "1"
-          # Small delay between CoreModels jobs to avoid transient backend rejections.
-          RATE_LIMIT_SECONDS: "0.2"
           VERIFY_URLS: "false"
-          # Import in small batches so one bad schema fails only its own batch (the
-          # rest still import) and the failing schema is easy to isolate in the log.
-          BATCH_SIZE: "10"
+          # Batching is disabled: all schemas import in a single merge job so the model
+          # stays valid (partial per-batch imports leave it invalid, and batching does
+          # not lower memory use since the importer loads the whole model to sync).
           POLL_INTERVAL_SECONDS: "15"
 
         run: |
