@@ -85,8 +85,8 @@ Schema API.
 | `DATA_JSON_PATH` | | Input list (default `public/data.json`) |
 | `DRY_RUN` | | `true` to list without importing |
 
-*(Additional tuning vars — `VERIFY_URLS`, `POLL_INTERVAL_SECONDS`, override flags — are
-documented in the script's docstring.)*
+*(Additional tuning vars — `VERIFY_URLS`, `POLL_INTERVAL_SECONDS`, `JOB_TIMEOUT_SECONDS`, override flags — are
+ documented in the script's docstring.)*
 
 ---
 
