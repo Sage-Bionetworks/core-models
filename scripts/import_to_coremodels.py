@@ -26,10 +26,7 @@ Optional:
   ONLY_ADD_AND_UPDATE       - "true" to only add/update, never remove (default: "true")
   DRY_RUN                   - "true" to only list schemas without importing (default: "false")
   DATA_JSON_PATH            - Path to public/data.json (default: "public/data.json")
-  RATE_LIMIT_SECONDS        - Seconds to wait between API calls PER WORKER (default: "0.0")
-  MAX_WORKERS               - Thread workers for parallel import (default: "8")
   VERIFY_URLS               - "true" to pre-check schema URLs (default: "false")
-  BATCH_SIZE                - Number of schemas to import in each batch (default: "20")
   POLL_INTERVAL_SECONDS     - Seconds between job status checks (default: "60")
   JOB_TIMEOUT_SECONDS       - Max seconds to wait for a job before failing (default: "3600")
 """
@@ -39,8 +36,6 @@ import os
 import sys
 import time
 import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from threading import Lock
 
 
 # ──────────────────────────────────────────────
@@ -62,12 +57,7 @@ DRY_RUN = os.environ.get("DRY_RUN", "false").lower() == "true"
 
 DATA_JSON_PATH = os.environ.get("DATA_JSON_PATH", "public/data.json")
 
-RATE_LIMIT_SECONDS = float(os.environ.get("RATE_LIMIT_SECONDS", "0.0"))
-MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "1"))
 VERIFY_URLS = os.environ.get("VERIFY_URLS", "false").lower() == "true"
-# Small batches so a single bad schema fails only its own batch (the rest still
-# import) and the failure is isolated to a handful of schemas instead of all of them.
-BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "10"))
 POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "15"))
 JOB_TIMEOUT_SECONDS = int(os.environ.get("JOB_TIMEOUT_SECONDS", "3600"))
 
@@ -88,7 +78,7 @@ def validate_config():
     if not SPACE_ID:
         missing.append("COREMODELS_SPACE_ID")
     # COREMODELS_CONFIG_TYPE_ID is intentionally NOT required: when empty, CoreModels
-    # auto-selects the default import profile (see queue_merge_batch).
+    # auto-selects the default import profile (see queue_merge_job).
 
     if missing:
         print(f"ERROR: Missing required environment variables: {', '.join(missing)}")
@@ -192,7 +182,7 @@ def verify_schema_url(url):
         return False
 
 
-def queue_merge_batch(schema_urls, session: requests.Session):
+def queue_merge_job(schema_urls, session: requests.Session):
     endpoint = f"{API_URL}/v1/{PROJECT_ID}/queueMergeJSONSchema"
 
     headers = {
@@ -298,9 +288,7 @@ def main():
     print(f"Config Type ID: {CONFIG_TYPE_ID or '(auto — default profile)'}")
     print(f"Org filter:     {ORG_NAME_FILTER if ORG_NAME_FILTER else '(none)'}")
     print("Status filter:  published only")
-    print(f"Max workers:    {MAX_WORKERS}")
     print(f"Verify URLs:    {VERIFY_URLS}")
-    print(f"Rate limit:     {RATE_LIMIT_SECONDS} seconds/worker")
     print(f"Poll interval:  {POLL_INTERVAL_SECONDS} seconds")
     print(f"Job timeout:    {JOB_TIMEOUT_SECONDS} seconds")
     print(
@@ -319,74 +307,46 @@ def main():
         print("No published schemas found to import. Exiting.")
         sys.exit(0)
 
-    print(f"\nStarting parallel import with {MAX_WORKERS} workers...\n")
+    # Batching is intentionally disabled: the CoreModels importer loads the entire
+    # model to compare and sync, so splitting the import into batches does not reduce
+    # memory usage — and importing schemas in separate batches leaves the model in an
+    # invalid state. All schemas are therefore imported in a SINGLE merge job.
+    print(f"\nImporting all {len(schemas)} schema(s) in a single merge job...\n")
 
-    lock = Lock()
-    success_count = 0
-    fail_count = 0
-    skip_count = 0
-    failed_schemas = []
+    # Collect every schema URL (optionally pre-verified) for the single job.
+    urls = []
+    skipped_keys = []
+    for schema in schemas:
+        org = schema["organization_name"]
+        name = schema["schema_name"]
+        url = build_synapse_schema_url(org, name)
 
-    def process_schema_batch(batch):
-        batch_keys = [s["key"] for s in batch]
-        urls = []
-        for i, schema in enumerate(batch):
-            org = schema["organization_name"]
-            name = schema["schema_name"]
-            url = build_synapse_schema_url(org, name)
-            
-            if VERIFY_URLS and not verify_schema_url(url):
-                print(f"    ⏭️  Skipping {schema['key']} — URL not accessible: {url}")
-                continue
+        if VERIFY_URLS and not verify_schema_url(url):
+            print(f"    ⏭️  Skipping {schema['key']} — URL not accessible: {url}")
+            skipped_keys.append(schema["key"])
+            continue
 
-            urls.append(url)
+        urls.append(url)
 
-        if DRY_RUN:
-            print(f"  ⏭️  Skipped batch {batch_keys} (dry run)")
-            return ("skip", batch_keys, None)
+    if DRY_RUN:
+        print(f"  ⏭️  Dry run — would import {len(urls)} schema(s):")
+        for url in urls:
+            print(f"       {url}")
+        print("\n🔍 Dry run complete — no imports were performed.")
+        sys.exit(0)
 
-        if not urls:
-            print(f"  ⏭️  Skipped batch {batch_keys} — no valid URLs")
-            return ("skip", batch_keys, "All URLs failed verification")
-        
-        with requests.Session() as session:
-            job_id, reason = queue_merge_batch(urls, session)
-            if not job_id:
-                print(f"  ❌ Failed to queue job: {reason}")
-                return ("fail", batch_keys, reason)
+    if not urls:
+        print("No valid schema URLs to import. Exiting.")
+        sys.exit(1)
 
-            print(f"  ✓ Job queued: {job_id}")
-            ok, reason = wait_for_job(job_id, session)
+    with requests.Session() as session:
+        job_id, reason = queue_merge_job(urls, session)
+        if not job_id:
+            print(f"  ❌ Failed to queue job: {reason}")
+            sys.exit(1)
 
-        if RATE_LIMIT_SECONDS > 0:
-            time.sleep(RATE_LIMIT_SECONDS)
-
-        if ok:
-            print(f"  ✅ Successfully imported batch")
-            return ("success", batch_keys, None)
-
-        print(f"  ❌ Import failed: {reason}")
-        return ("fail", batch_keys, reason)
-            
-    batches = [schemas[i:i+BATCH_SIZE] for i in range(0, len(schemas), BATCH_SIZE)]
-    print(f"Split {len(schemas)} schemas into {len(batches)} batch(es) of up to {BATCH_SIZE}.\n")
-
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = [executor.submit(process_schema_batch, batch) for batch in batches]
-
-        for f in as_completed(futures):
-            result, key, reason = f.result()
-
-            with lock:
-                if result == "success":
-                    success_count += 1
-                elif result == "fail":
-                    fail_count += 1
-                    failed_schemas.append({"key": key, "reason": reason})
-                elif result == "skip":
-                    skip_count += 1
-                    if reason:
-                        failed_schemas.append({"key": key, "reason": reason})
+        print(f"  ✓ Job queued: {job_id}")
+        ok, reason = wait_for_job(job_id, session)
 
     # ──────────────────────────────────────────────
     # Summary
@@ -394,22 +354,20 @@ def main():
     print("\n" + "=" * 60)
     print("IMPORT SUMMARY")
     print("=" * 60)
-    print(f"  Total schemas:  {len(schemas)}")
-    print(f"  Total batches:  {len(batches)}")
-    print(f"  ✅ Succeeded:   {success_count} batch(es)")
-    print(f"  ❌ Failed:      {fail_count} batch(es)")
-    print(f"  ⏭️  Skipped:    {skip_count} batch(es)")
+    print(f"  Total schemas:   {len(schemas)}")
+    print(f"  Imported:        {len(urls)}")
+    print(f"  ⏭️  Skipped:      {len(skipped_keys)}")
 
-    if failed_schemas:
-        print("\nFailed/skipped batches:")
-        for f in failed_schemas:
-            print(f"  - {f['key']}: {f['reason']}")
+    if skipped_keys:
+        print("\nSkipped schemas (URL not accessible):")
+        for key in skipped_keys:
+            print(f"  - {key}")
 
-    if fail_count > 0:
-        print(f"\n⚠️  {fail_count} batch(es) failed to import.")
+    if not ok:
+        print(f"\n❌ Import failed: {reason}")
         sys.exit(1)
 
-    print("\n🎉 All published batches processed successfully!")
+    print("\n🎉 All published schemas imported successfully!")
     sys.exit(0)
 
 
