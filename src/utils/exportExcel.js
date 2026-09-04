@@ -4,7 +4,7 @@ import { fetchDataModel, normName, defKey } from './dataModelSource.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
 
-const N_MANIFEST_ROWS = 1000   // styled/validated data rows below the header
+const N_MANIFEST_ROWS = 1000   // total styled/validated rows in the table (includes the header row)
 
 // Colours — match the R template / FileAnnotationTemplate.xlsx
 const FILL_REQUIRED     = 'FFB5E3E8'   // teal   — required columns
