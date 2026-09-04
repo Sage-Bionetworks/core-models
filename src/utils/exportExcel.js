@@ -193,7 +193,10 @@ function buildManifestSheets(wb, attrs, schemaName) {
     wsManifest.addConditionalFormatting({
       ref: `${sp}2:${sp}${N_MANIFEST_ROWS}`,
       rules: [{
+        type: 'expression', priority: 1,
+        formulae: [`AND($${rt}2="experimentalData",$${sp}2="")`],
         style: { fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: FILL_CF_RED } } },
+      }],
     })
   }
 
