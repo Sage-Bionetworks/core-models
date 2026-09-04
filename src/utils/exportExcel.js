@@ -1,7 +1,20 @@
 import ExcelJS from 'exceljs'
 import { schemaUri } from './uri.js'
+import { fetchDataModel, normName, defKey } from './dataModelSource.js'
 
 const PROD_BASE = 'https://repo-prod.prod.sagebase.org/repo/v1/schema/type/registered/'
+
+const N_MANIFEST_ROWS = 1000   // total styled/validated rows in the table (includes the header row)
+
+// Colours — match the R template / FileAnnotationTemplate.xlsx
+const FILL_REQUIRED     = 'FFB5E3E8'   // teal   — required columns
+const FILL_NONREQ_HDR   = 'FFE0E0E0'   // gray   — non-required column headers
+const BORDER_GRID       = 'FFE2E3E3'   // medium grid border on the Manifest
+const FILL_DD_HDR       = 'FF375623'   // dark green — DataDictionary header
+const FILL_DD_BAND      = 'FFEBF3E8'   // light green — DataDictionary banding
+const FILL_CF_RED       = 'FFFFC7CE'   // red — conditional-format flag
+
+const FONT = { name: 'Arial', size: 10 }
 
 // ─── Column index → Excel letter (1 → A, 27 → AA, …) ────────
 function colLetter(n) {
@@ -22,65 +35,6 @@ async function downloadWorkbook(wb, filename) {
   a.download = filename
   a.click()
   URL.revokeObjectURL(url)
-}
-
-// ─── Resolve $ref within the schema's $defs / definitions ────
-function resolveRef(ref, schema) {
-  if (!ref?.startsWith('#')) return null
-  const parts = ref.replace(/^#\//, '').split('/')
-  let node = schema
-  for (const p of parts) node = node?.[p]
-  return node || null
-}
-
-// ─── Flatten schema properties into rows ─────────────────────
-function flattenProperties(schema, prefix = '', parentRequired = new Set()) {
-  const rows = []
-  const props = schema.properties || {}
-  const required = new Set([...(schema.required || []), ...parentRequired])
-
-  for (const [name, rawProp] of Object.entries(props)) {
-    let prop = rawProp
-    if (prop.$ref) {
-      const resolved = resolveRef(prop.$ref, schema)
-      prop = resolved ? { ...resolved, ...prop, $ref: undefined } : prop
-    }
-    const fullName = prefix ? `${prefix}.${name}` : name
-    const type = Array.isArray(prop.type) ? prop.type.join(' | ') : (prop.type || '')
-    // Surface enumerated values wherever they live so the reference sheet stays complete.
-    const enumVals = extractEnum(prop)?.values || prop.examples || []
-
-    rows.push({
-      'Property':    fullName,
-      'Type':        type || (prop.$ref ? '$ref' : ''),
-      'Required':    required.has(name) ? 'Yes' : '',
-      'Description': prop.description || '',
-      'Enum Values': enumVals.map(v => String(v)).join(', '),
-      'Const':       prop.const !== undefined ? String(prop.const) : '',
-      'Default':     prop.default !== undefined ? String(prop.default) : '',
-      'Format':      prop.format || '',
-      'Pattern':     prop.pattern || '',
-      'Min Length':  prop.minLength !== undefined ? prop.minLength : '',
-      'Max Length':  prop.maxLength !== undefined ? prop.maxLength : '',
-      'Minimum':     prop.minimum !== undefined ? prop.minimum : '',
-      'Maximum':     prop.maximum !== undefined ? prop.maximum : '',
-    })
-
-    if (type === 'object' && prop.properties) rows.push(...flattenProperties(prop, fullName))
-    if (type === 'array' && prop.items?.properties) rows.push(...flattenProperties(prop.items, `${fullName}[]`))
-  }
-
-  for (const combiner of ['allOf', 'anyOf', 'oneOf']) {
-    if (schema[combiner]) {
-      rows.push({
-        'Property': `(${combiner})`, 'Type': combiner, 'Required': '',
-        'Description': `${schema[combiner].length} subschema(s)`,
-        'Enum Values': '', 'Const': '', 'Default': '', 'Format': '',
-        'Pattern': '', 'Min Length': '', 'Max Length': '', 'Minimum': '', 'Maximum': '',
-      })
-    }
-  }
-  return rows
 }
 
 // ─── Extract enumerated values wherever they live ────────────
@@ -111,148 +65,203 @@ function extractEnum(prop) {
   return null
 }
 
-// ─── Build the Template + Lists sheets ───────────────────────
-function buildTemplateSheets(wb, schema, schemaName) {
-  const props   = schema.properties || {}
+// ─── Flatten a schema's own top-level properties into attribute rows ──
+// Mirrors the R extract_attrs step: name, description, type, valid values,
+// required. Column/reference order follows the JSON schema's property order.
+function extractAttributes(schema) {
+  const props = schema.properties || {}
   const required = new Set(schema.required || [])
-  // Column order follows the JSON schema's property order exactly (insertion order).
-  const names   = Object.keys(props)
 
-  // Fill styles — match the example file's colours
-  const FILL_BLUE_HDR  = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFEAF7F9' } }
-  const FILL_BLUE_DATA = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD6EAF8' } }
-  const FILL_GRAY_HDR  = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE0E0E0' } }
-  const BORDER_THIN    = { style: 'thin', color: { argb: 'FFBDD7EE' } }
-
-  // Template sheet (first visible tab)
-  const wsTmpl = wb.addWorksheet('Template')
-
-  // Lists sheet added AFTER Template so tab order is: Template … Lists(hidden)
-  // We'll populate it below then hide it at the end
-  const wsLists = wb.addWorksheet('Lists')
-  wsTmpl.views = [{ state: 'frozen', xSplit: 0, ySplit: 1 }]
-
-  names.forEach((name, i) => {
-    const colIdx = i + 1
-    const ltr    = colLetter(colIdx)
-    const prop     = props[name]
-    const isReq    = required.has(name)
-    const enumInfo = extractEnum(prop)        // {values, multi, strict} | null
-    const isList   = prop.type === 'array'    // a list field (with or without an enum)
-
-    // Column width
-    wsTmpl.getColumn(colIdx).width = Math.max(name.length + 2, 14)
-
-    // ── Header cell ──
-    const hCell = wsTmpl.getCell(1, colIdx)
-    hCell.value = name
-    hCell.font  = { bold: true, size: 11 }
-    hCell.fill  = isReq ? FILL_BLUE_HDR : FILL_GRAY_HDR
-    hCell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: false }
-    hCell.border = {
-      bottom: { style: 'medium', color: { argb: isReq ? 'FF5BA3C9' : 'FFB0B0B0' } },
+  return Object.keys(props).map(name => {
+    const prop = props[name]
+    const types = Array.isArray(prop.type) ? prop.type : (prop.type ? [prop.type] : [])
+    const enumInfo = extractEnum(prop)
+    return {
+      attribute:   name,
+      description: prop.description || '',
+      type:        Array.isArray(prop.type) ? prop.type.join(' | ') : (prop.type || ''),
+      isArray:     types.includes('array'),
+      validValues: enumInfo ? enumInfo.values.map(v => String(v)) : null,
+      enumInfo,
+      prop,
+      required:    required.has(name),
     }
+  })
+}
 
-    // ── Blue column fill for data rows (rows 2–500) ──
-    if (isReq) {
-      for (let row = 2; row <= 500; row++) {
-        const cell = wsTmpl.getCell(row, colIdx)
-        cell.fill = FILL_BLUE_DATA
-        cell.border = { left: BORDER_THIN, right: BORDER_THIN }
+// ─── Reorder attributes to the data model's DependsOn order ──
+// Attributes named in DependsOn come first, in that order; anything the model
+// didn't list is appended in schema order. No source model → unchanged.
+function reorderByDependsOn(attrs, schemaName, orderByTemplate) {
+  const ordered = orderByTemplate?.get(normName(schemaName))
+  if (!ordered) return attrs
+
+  const byName = new Map(attrs.map(a => [a.attribute, a]))
+  const matched = ordered.filter(n => byName.has(n))
+  const leftover = attrs.map(a => a.attribute).filter(n => !matched.includes(n))
+  return [...matched, ...leftover].map(n => byName.get(n))
+}
+
+// ─── Build the Manifest (+ hidden ValidValues) sheets ────────
+function buildManifestSheets(wb, attrs, schemaName) {
+  const wsManifest = wb.addWorksheet('Manifest')
+  const wsLists    = wb.addWorksheet('ValidValues')   // hidden lookup, populated below
+
+  const n = attrs.length
+  const gridBorder = () => ({
+    top:    { style: 'medium', color: { argb: BORDER_GRID } },
+    bottom: { style: 'medium', color: { argb: BORDER_GRID } },
+    left:   { style: 'medium', color: { argb: BORDER_GRID } },
+    right:  { style: 'medium', color: { argb: BORDER_GRID } },
+  })
+
+  // Base grid: border (and Arial font) on every cell of the table; required
+  // columns additionally get the teal fill down the whole column.
+  for (let row = 1; row <= N_MANIFEST_ROWS; row++) {
+    for (let c = 1; c <= n; c++) {
+      const cell = wsManifest.getCell(row, c)
+      cell.border = gridBorder()
+      cell.font = { ...FONT }
+      if (attrs[c - 1].required) {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: FILL_REQUIRED } }
       }
     }
+  }
 
-    // ── Dropdown for enumerated values (direct enum, array items.enum, or anyOf branch) ──
-    if (enumInfo) {
-      // Back the dropdown with a column on the hidden Lists sheet.
-      wsLists.getCell(1, colIdx).value = name
-      enumInfo.values.forEach((val, j) => { wsLists.getCell(j + 2, colIdx).value = val })
+  attrs.forEach((a, i) => {
+    const colIdx = i + 1
+    const ltr = colLetter(colIdx)
 
-      // Multi-value (array) and hybrid (anyOf) fields must allow free / comma-separated
-      // entry, so their validation is non-blocking. A closed single-value enum keeps a
-      // (still non-blocking) warning to nudge toward the list.
-      const relaxed = enumInfo.multi || !enumInfo.strict
-      wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
+    // ── Header cell ──
+    const hCell = wsManifest.getCell(1, colIdx)
+    hCell.value = a.attribute
+    hCell.font = { ...FONT, bold: true }
+    hCell.alignment = { vertical: 'middle', horizontal: 'center' }
+    hCell.border = gridBorder()
+    hCell.fill = {
+      type: 'pattern', pattern: 'solid',
+      fgColor: { argb: a.required ? FILL_REQUIRED : FILL_NONREQ_HDR },
+    }
+
+    // ── Header comment carrying the property description ──
+    if (a.description) {
+      let note = a.description
+      if (a.isArray && a.validValues) {
+        note += '\n\nMultiple values allowed: type your selections separated by "; " ' +
+                '(e.g. "Human; Mouse"). Excel will show a warning since it isn\'t a single ' +
+                'listed value, but the entry is accepted.'
+      }
+      hCell.note = note
+    }
+
+    // ── Dropdown / validation ──
+    const range = `${ltr}2:${ltr}${N_MANIFEST_ROWS}`
+    if (a.enumInfo) {
+      // Back the dropdown with a column on the hidden ValidValues sheet (values
+      // start at row 1, matching the R template).
+      a.validValues.forEach((val, j) => { wsLists.getCell(j + 1, colIdx).value = val })
+
+      // Multi-value (array) and hybrid (anyOf) fields must allow free /
+      // separated entry, so validation is non-blocking. A closed single-value
+      // enum keeps a (still non-blocking) warning to nudge toward the list.
+      const relaxed = a.enumInfo.multi || !a.enumInfo.strict
+      wsManifest.dataValidations.add(range, {
         type: 'list',
         allowBlank: true,
         showDropDown: false,   // false = SHOW the dropdown arrow (exceljs/OOXML quirk)
         showErrorMessage: !relaxed,
         errorStyle: 'warning',
-        errorTitle: 'Value not in list',
-        error: 'Choose a value from the dropdown list.',
-        showInputMessage: true,
-        promptTitle: enumInfo.multi ? 'Multiple values allowed' : 'Pick from the list',
-        prompt: enumInfo.multi
-          ? 'Pick a value from the dropdown, or enter multiple values separated by commas.'
-          : 'Pick a value from the dropdown.',
-        formulae: [`Lists!$${ltr}$2:$${ltr}$${enumInfo.values.length + 1}`],
-      })
-    } else if (isList) {
-      // Array of free-text values (no enum) — permit multiple comma-separated values.
-      // A custom "always true" rule never blocks; it just carries the input message.
-      wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
-        type: 'custom',
-        allowBlank: true,
-        formulae: ['TRUE'],
-        showInputMessage: true,
-        promptTitle: 'Multiple values allowed',
-        prompt: 'Enter one or more values separated by commas.',
-      })
-    } else if (prop.type === 'integer' || prop.type === 'number') {
-      // Numeric validation
-      const hasMin = prop.minimum !== undefined
-      const hasMax = prop.maximum !== undefined
-      const operator = hasMin && hasMax ? 'between'
-                     : hasMin ? 'greaterThanOrEqual'
-                     : hasMax ? 'lessThanOrEqual'
-                     : null
-      if (operator) {
-        const formulae = hasMin && hasMax
-          ? [prop.minimum, prop.maximum]
-          : hasMin ? [prop.minimum] : [prop.maximum]
-        wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
-          type: prop.type === 'integer' ? 'whole' : 'decimal',
-          allowBlank: true,
-          showErrorMessage: true,
-          errorStyle: 'warning',
-          errorTitle: 'Invalid value',
-          error: `Must be a ${prop.type}${hasMin ? ` ≥ ${prop.minimum}` : ''}${hasMax ? ` ≤ ${prop.maximum}` : ''}.`,
-          operator,
-          formulae,
-        })
-      }
-    } else if (prop.maxLength !== undefined || prop.minLength !== undefined) {
-      // Text length validation
-      const hasMin = prop.minLength !== undefined
-      const hasMax = prop.maxLength !== undefined
-      const operator = hasMin && hasMax ? 'between'
-                     : hasMin ? 'greaterThanOrEqual'
-                     : 'lessThanOrEqual'
-      wsTmpl.dataValidations.add(`${ltr}2:${ltr}500`, {
-        type: 'textLength',
-        allowBlank: true,
-        showErrorMessage: true,
-        errorStyle: 'warning',
-        errorTitle: 'Text too long',
-        error: `Length must be${hasMin ? ` ≥ ${prop.minLength}` : ''}${hasMax ? ` ≤ ${prop.maxLength}` : ''}.`,
-        operator,
-        formulae: hasMin && hasMax ? [prop.minLength, prop.maxLength]
-                : hasMin ? [prop.minLength] : [prop.maxLength],
+        errorTitle: 'Value not in standard list',
+        error: "This entry isn't one of the standard values for this field. Keep it anyway?",
+        formulae: [`ValidValues!$${ltr}$1:$${ltr}$${a.validValues.length}`],
       })
     }
+    // Non-enum columns carry no validation, matching the source template.
+    // Free-text / multi-value guidance lives in the header comment instead.
   })
 
-  // Pre-fill Component column (row 2) with schema name if applicable
-  const compIdx = names.findIndex(n => n.toLowerCase() === 'component')
-  if (compIdx >= 0) {
-    wsTmpl.getCell(2, compIdx + 1).value = schemaName
+  // ── Pre-fill Component column (row 2) with the schema name if present ──
+  const compIdx = attrs.findIndex(a => a.attribute.toLowerCase() === 'component')
+  if (compIdx >= 0) wsManifest.getCell(2, compIdx + 1).value = schemaName
+
+  // ── Conditional flag: species empty while resourceType is experimentalData ──
+  const rtIdx = attrs.findIndex(a => a.attribute === 'resourceType')
+  const spIdx = attrs.findIndex(a => a.attribute === 'species')
+  if (rtIdx >= 0 && spIdx >= 0) {
+    const rt = colLetter(rtIdx + 1)
+    const sp = colLetter(spIdx + 1)
+    wsManifest.addConditionalFormatting({
+      ref: `${sp}2:${sp}${N_MANIFEST_ROWS}`,
+      rules: [{
+        style: { fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: FILL_CF_RED } } },
+    })
   }
 
-  // Row 1 height
-  wsTmpl.getRow(1).height = 22
-
-  // Hide the Lists lookup sheet — must be done after all cells are populated
   wsLists.state = 'hidden'
+}
+
+// ─── Build the DataDictionary sheet ──────────────────────────
+function buildDataDictionary(wb, attrs, definitions) {
+  const ws = wb.addWorksheet('DataDictionary')
+  const HEADERS = ['Property', 'Description', 'Value', 'Definition']
+
+  // One row per (attribute, valid value); attributes without an enum get a
+  // single blank-value row. Mirrors the R separate_rows + left_join.
+  const rows = []
+  for (const a of attrs) {
+    const values = a.validValues && a.validValues.length ? a.validValues : ['']
+    for (const v of values) {
+      rows.push({
+        Property:    a.attribute,
+        Description: a.description,
+        Value:       v,
+        Definition:  v ? (definitions?.get(defKey(a.attribute, v)) || '') : '',
+      })
+    }
+  }
+
+  ws.addRow(HEADERS)
+  rows.forEach(r => ws.addRow(HEADERS.map(h => r[h])))
+
+  const nRows = rows.length + 1
+
+  // Base: thin border + Arial across the whole table.
+  const thin = { style: 'thin' }
+  const thinAll = { top: thin, bottom: thin, left: thin, right: thin }
+  for (let row = 1; row <= nRows; row++) {
+    for (let c = 1; c <= HEADERS.length; c++) {
+      const cell = ws.getCell(row, c)
+      cell.border = thinAll
+      cell.font = { ...FONT }
+    }
+  }
+
+  // Header: white bold on dark green, left aligned.
+  ws.getRow(1).eachCell(cell => {
+    cell.font = { ...FONT, bold: true, color: { argb: 'FFFFFFFF' } }
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: FILL_DD_HDR } }
+    cell.alignment = { horizontal: 'left', vertical: 'top', wrapText: true }
+  })
+
+  // Body: wrap text, top aligned; banded shading per Property group (odd groups).
+  let groupIdx = 0
+  let prevProp = null
+  for (let i = 0; i < rows.length; i++) {
+    const rowNum = i + 2
+    if (rows[i].Property !== prevProp) { groupIdx++; prevProp = rows[i].Property }
+    const shade = groupIdx % 2 === 1
+    ws.getRow(rowNum).eachCell(cell => {
+      cell.alignment = { horizontal: 'left', vertical: 'top', wrapText: true }
+      if (shade) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: FILL_DD_BAND } }
+    })
+  }
+
+  ws.getColumn(1).width = 28.7
+  ws.getColumn(2).width = 40.7
+  ws.getColumn(3).width = 32.7
+  ws.getColumn(4).width = 60.7
+  ws.views = [{ state: 'frozen', ySplit: 1 }]
+  ws.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: HEADERS.length } }
 }
 
 // ─── Export a SINGLE schema from the detail panel ────────────
@@ -262,37 +271,17 @@ export async function exportSchemaToExcel(orgName, schemaName) {
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
   const schema = await response.json()
 
+  // Per-DCC source model (definitions + DependsOn order); null → graceful fallback.
+  const model = await fetchDataModel(orgName)
+
+  let attrs = extractAttributes(schema)
+  attrs = reorderByDependsOn(attrs, schemaName, model?.orderByTemplate)
+
   const wb = new ExcelJS.Workbook()
+  wb.creator = 'core-models'
 
-  // ── Sheet 1: Template (+ hidden Lists) ──
-  buildTemplateSheets(wb, schema, schemaName)
-
-  const PROP_KEYS = [
-    'Property','Type','Required','Description','Enum Values',
-    'Const','Default','Format','Pattern','Min Length','Max Length','Minimum','Maximum',
-  ]
-
-  // ── Sheet 2: Properties ──
-  const wsProps = wb.addWorksheet('Properties')
-  wsProps.views = [{ state: 'frozen', xSplit: 0, ySplit: 1 }]
-  const propRows = flattenProperties(schema)
-
-  // Header row
-  const hdr = wsProps.addRow(PROP_KEYS)
-  hdr.font = { bold: true }
-  hdr.eachCell(cell => {
-    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE0E0E0' } }
-  })
-
-  propRows.forEach(r => wsProps.addRow(PROP_KEYS.map(k => r[k] ?? '')))
-
-  PROP_KEYS.forEach((k, i) => {
-    const maxLen = Math.max(k.length, ...propRows.map(r => String(r[k] ?? '').length))
-    wsProps.getColumn(i + 1).width = Math.min(60, maxLen + 2)
-  })
-
-  // Sheets are intentionally limited to Template (+ hidden Lists) and Properties.
-  // The former Enums and Metadata reference sheets were removed.
+  buildManifestSheets(wb, attrs, schemaName)
+  buildDataDictionary(wb, attrs, model?.definitions)
 
   await downloadWorkbook(wb, `${schemaName}.xlsx`)
 }
