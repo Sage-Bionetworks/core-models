@@ -120,20 +120,20 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
           {pinned ? '★' : '☆'}
         </button>
       </td>
-      <td title={row.organization_name}>{row.organization_name}</td>
+      <td data-label="Org" title={row.organization_name}>{row.organization_name}</td>
       <td className="schema-name-cell" title={`${row.schema_name} — click to view details`}>
         <span className="schema-name-text">{row.schema_name}</span>
       </td>
-      <td><StatusBadge status={row.status} /></td>
-      <td>{row.semantic_version || <span className="muted" title="No semantic version registered">—</span>}</td>
-      <td data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
+      <td data-label="Status"><StatusBadge status={row.status} /></td>
+      <td data-label="Version">{row.semantic_version || <span className="muted" title="No semantic version registered">—</span>}</td>
+      <td data-label="Created" data-order={row.created_on ? new Date(row.created_on).getTime() : 0} style={{ overflow: 'visible' }}>
         <span className="date-cell">
           {relDate(row.created_on)}
           <span className="date-abs">{fmtDate(row.created_on)}</span>
         </span>
       </td>
       {/* Staging check */}
-      <td style={{ overflow: 'visible' }} onClick={e => e.stopPropagation()}>
+      <td className="validation-cell" data-label="Validation" style={{ overflow: 'visible' }} onClick={e => e.stopPropagation()}>
         {sr !== undefined && (
           <>
             <button
@@ -154,7 +154,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
         )}
       </td>
       {/* JSON viewer */}
-      <td onClick={e => e.stopPropagation()}>
+      <td data-label="JSON" onClick={e => e.stopPropagation()}>
         <button
           className="schema-link"
           type="button"
@@ -166,7 +166,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
         {modal && <JsonModal url={url} name={row.schema_name} onClose={() => setModal(false)} />}
       </td>
       {/* Copy URI */}
-      <td onClick={e => e.stopPropagation()}>
+      <td data-label="URI" onClick={e => e.stopPropagation()}>
         <CopyUriCell org={row.organization_name} schema={row.schema_name} version={row.semantic_version} />
       </td>
     </tr>
@@ -536,6 +536,24 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
             ))}
           </select>
 
+          {/* Mobile-only sort control (column-header sorting is hidden in card view) */}
+          <select
+            className="btn mobile-sort"
+            value={`${sortCol}:${sortDir}`}
+            onChange={e => {
+              const [col, dir] = e.target.value.split(':')
+              setSortCol(col); setSortDir(dir); setPage(1)
+            }}
+            aria-label="Sort schemas"
+          >
+            <option value="created_on:desc">Newest first</option>
+            <option value="created_on:asc">Oldest first</option>
+            <option value="organization_name:asc">Org (A–Z)</option>
+            <option value="schema_name:asc">Schema (A–Z)</option>
+            <option value="status:asc">Status</option>
+            <option value="semantic_version:asc">Version</option>
+          </select>
+
           <span className="toolbar-sep" />
 
           <button
@@ -664,35 +682,35 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                   {/* Column filter row */}
                   {showFilters && (
                     <tr className="filters-row">
-                      <th />
-                      <th>
-                        <select className={`col-filter${colFilters.org ? ' has-value' : ''}`} value={colFilters.org} onChange={e => setColFilter('org', e.target.value)}>
+                      <th className="filter-empty" />
+                      <th data-label="Org">
+                        <select className={`col-filter${colFilters.org ? ' has-value' : ''}`} value={colFilters.org} onChange={e => setColFilter('org', e.target.value)} aria-label="Filter by organization">
                           <option value="">All</option>
                           {orgs.map(v => <option key={v} value={v}>{v}</option>)}
                         </select>
                       </th>
-                      <th>
-                        <select className={`col-filter${colFilters.schema ? ' has-value' : ''}`} value={colFilters.schema} onChange={e => setColFilter('schema', e.target.value)}>
+                      <th data-label="Schema">
+                        <select className={`col-filter${colFilters.schema ? ' has-value' : ''}`} value={colFilters.schema} onChange={e => setColFilter('schema', e.target.value)} aria-label="Filter by schema name">
                           <option value="">All</option>
                           {schemas.map(v => <option key={v} value={v}>{v}</option>)}
                         </select>
                       </th>
-                      <th>
-                        <select className={`col-filter${colFilters.status ? ' has-value' : ''}`} value={colFilters.status} onChange={e => setColFilter('status', e.target.value)}>
+                      <th data-label="Status">
+                        <select className={`col-filter${colFilters.status ? ' has-value' : ''}`} value={colFilters.status} onChange={e => setColFilter('status', e.target.value)} aria-label="Filter by status">
                           <option value="">All</option>
                           {statuses.map(v => <option key={v} value={v}>{v}</option>)}
                         </select>
                       </th>
-                      <th>
-                        <select className={`col-filter${colFilters.version ? ' has-value' : ''}`} value={colFilters.version} onChange={e => setColFilter('version', e.target.value)}>
+                      <th data-label="Version">
+                        <select className={`col-filter${colFilters.version ? ' has-value' : ''}`} value={colFilters.version} onChange={e => setColFilter('version', e.target.value)} aria-label="Filter by version">
                           <option value="">All</option>
                           {versions.map(v => <option key={v} value={v}>{v}</option>)}
                         </select>
                       </th>
-                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
-                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
-                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
-                      <th><span className="muted" style={{ fontSize: 11 }}>—</span></th>
+                      <th className="filter-empty"><span className="muted" style={{ fontSize: 11 }}>—</span></th>
+                      <th className="filter-empty"><span className="muted" style={{ fontSize: 11 }}>—</span></th>
+                      <th className="filter-empty"><span className="muted" style={{ fontSize: 11 }}>—</span></th>
+                      <th className="filter-empty"><span className="muted" style={{ fontSize: 11 }}>—</span></th>
                     </tr>
                   )}
                 </thead>
