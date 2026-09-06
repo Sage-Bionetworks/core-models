@@ -7,6 +7,13 @@
 name: Check Staging URIs with Synapse Client Develop
 
 on:
+  schedule:
+    # Weekly early-warning check against the develop branch of the Synapse
+    # Python client, to catch upstream client regressions before they land
+    # in a pinned release. Thursdays 07:00 UTC (staging is more reliably
+    # up midweek than around the weekend).
+    - cron: "0 7 * * 4"
+
   workflow_dispatch:
     inputs:
       org_name:
@@ -69,8 +76,11 @@ jobs:
           SYNAPSE_AUTH_TOKEN: ${{ secrets.SYNAPSE_AUTH_TOKEN }}
           STAGING_FOLDER_ID: ${{ secrets.STAGING_FOLDER_ID }}
           ASSIGNEE_PRINCIPAL_ID: ${{ secrets.ASSIGNEE_PRINCIPAL_ID }}
-          CHECK_TASK_CREATION: ${{ github.event.inputs.check_task_creation }}
-          MAX_WORKERS: ${{ github.event.inputs.max_workers }}
+          # Fall back to the workflow_dispatch defaults on schedule events,
+          # where github.event.inputs.* expand to empty strings (an empty
+          # MAX_WORKERS would otherwise crash on int("")).
+          CHECK_TASK_CREATION: ${{ github.event.inputs.check_task_creation || 'true' }}
+          MAX_WORKERS: ${{ github.event.inputs.max_workers || '4' }}
           ORG_NAME_FILTER: ${{ github.event.inputs.org_name || '' }}
         run: |
           python scripts/check_schema_uris_staging.py

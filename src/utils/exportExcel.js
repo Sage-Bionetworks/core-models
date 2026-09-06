@@ -293,7 +293,7 @@ export async function exportSchemaToExcel(orgName, schemaName) {
 export async function exportListToExcel(rows, stagingResults) {
   const KEYS = [
     'Org Name','Schema Name','URI','Status','Version','Created',
-    'Staging','Org ID','Schema ID','Version ID','Created By','SHA256',
+    'Validation','Org ID','Schema ID','Version ID','Created By','SHA256',
   ]
 
   const wb = new ExcelJS.Workbook()

@@ -237,7 +237,7 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
           {sr !== undefined && (
             <div className="detail-section">
               <div className="detail-section-title">
-                Staging Check
+                Validation
                 {checksDate && (
                   <span style={{ fontWeight: 400, color: 'var(--muted2)', fontSize: 11, marginLeft: 6 }}>
                     · checked {relDate(checksDate)}
