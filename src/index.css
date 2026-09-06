@@ -276,6 +276,9 @@ a[target='_blank']:not(.schema-link)::after {
   background: var(--border);
   flex-shrink: 0;
 }
+/* Mobile-only sort control — hidden on desktop (headers handle sorting there).
+   Selector is scoped to .toolbar so it out-specifies the later `.btn` rule. */
+.toolbar .mobile-sort { display: none; }
 .search-wrap {
   position: relative;
   display: flex;
@@ -1041,6 +1044,134 @@ select.col-filter.has-value {
   .toolbar-sep { display: none; }
   .global-search { width: 100%; }
   .toolbar { flex-wrap: wrap; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Mobile: Schema table → stacked cards  (≤ 640px)
+   The desktop <table> is reused; below this width each row is
+   reflowed into a self-contained card with labelled fields, so
+   there is no horizontal scrolling.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .container { padding: 20px 12px 60px; }
+
+  /* Toolbar: search first + full width, controls wrap below */
+  .search-wrap { flex: 1 1 100%; }
+  .global-search { width: 100%; }
+  .toolbar .mobile-sort { display: inline-flex; }
+  .toolbar .btn,
+  .toolbar .length-sel,
+  .toolbar .mobile-sort { min-height: 40px; }
+
+  /* Drop the horizontal-scroll strip; let the table flow as blocks */
+  .table-wrap { overflow-x: visible; }
+  .schema-table { min-width: 0; display: block; table-layout: auto; width: 100%; }
+  .schema-table thead { display: block; }
+  /* Hide the sort-header row (sorting moves to the toolbar dropdown) */
+  .schema-table thead tr:first-child { display: none; }
+  .schema-table tbody { display: block; }
+
+  /* Each row → a card */
+  .schema-table tbody tr.schema-row {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px 6px;
+    margin-bottom: 10px;
+    background: var(--panel);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .schema-table tbody tr.schema-row:nth-child(even) { background: var(--panel); }
+
+  /* Every cell → a label / value row */
+  .schema-row td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 7px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid var(--borderLight) !important;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-size: 13px;
+    min-height: 34px;
+  }
+  .schema-row td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 700;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .schema-row td:last-child { border-bottom: none !important; }
+
+  /* Hide the validation cell entirely when there is no result to show */
+  .schema-row td.validation-cell:not(:has(button)) { display: none; }
+
+  /* Pin → floating star in the card's top-right corner */
+  .schema-row td.pin-cell {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    width: auto;
+    padding: 0 !important;
+    border: none !important;
+    order: -2;
+  }
+  .schema-row td.pin-cell::before { content: none; }
+  .schema-row .pin-btn { font-size: 20px; padding: 6px; }
+
+  /* Schema name → card title, first, spanning full width */
+  .schema-row td.schema-name-cell {
+    order: -1;
+    justify-content: flex-start;
+    padding: 2px 40px 9px 0 !important;
+    border-bottom: 1px solid var(--borderLight) !important;
+  }
+  .schema-row td.schema-name-cell::before { content: none; }
+  .schema-row td.schema-name-cell .schema-name-text {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .schema-row td.schema-name-cell::after { display: none; }
+
+  /* Column filters → stacked, labelled, two-up */
+  .filters-row { display: flex; flex-wrap: wrap; gap: 10px; padding: 4px 0 12px !important; }
+  .filters-row th {
+    display: block;
+    flex: 1 1 44%;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: static !important;
+  }
+  .filters-row th.filter-empty { display: none; }
+  .filters-row th::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 700;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+
+  /* Pagination + footer breathe a little */
+  .pagination { flex-direction: column; gap: 10px; align-items: stretch; }
+  .pagination-btns { justify-content: center; flex-wrap: wrap; }
+  .page-btn { min-width: 38px; min-height: 38px; }
+  .footer { flex-wrap: wrap; }
 }
 
 /* ─── Pin button & cell ─────────────────────────────────────── */
