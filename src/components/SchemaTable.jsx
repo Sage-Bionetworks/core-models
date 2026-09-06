@@ -67,7 +67,7 @@ function StagingPopoverContent({ result, checksDate }) {
   return (
     <>
       <div className="popover-row">
-        <span className="popover-label">Staging check</span>
+        <span className="popover-label">Validation</span>
         {result.ok
           ? <span style={{ color: 'rgba(22,163,74,0.95)', fontWeight: 700 }}>✓ Passed</span>
           : <span style={{ color: 'rgba(185,28,28,0.92)', fontWeight: 700 }}>✗ Failed</span>
@@ -140,7 +140,7 @@ function SchemaRow({ row, stagingResults, checksDate, isPinned, onTogglePin, isF
               ref={stagingBtnRef}
               className={sr.ok ? 'staging-ok' : 'staging-fail'}
               type="button"
-              title={sr.ok ? 'Passed staging check' : 'Failed — click for details'}
+              title={sr.ok ? 'Passed validation check' : 'Failed — click for details'}
               onClick={() => setStagingOpen(v => !v)}
             >
               {sr.ok ? '✓' : '✗'}
@@ -223,7 +223,7 @@ function SortTh({ col, label, sortCol, sortDir, onSort, style, title }) {
 
 // ─── CSV export ───────────────────────────────────────────────
 function exportCSV(rows, stagingResults) {
-  const headers = ['Org Name', 'Schema Name', 'URI', 'Status', 'Version', 'Created', 'Staging', 'Org ID', 'Schema ID', 'Version ID', 'Created By', 'SHA256']
+  const headers = ['Org Name', 'Schema Name', 'URI', 'Status', 'Version', 'Created', 'Validation', 'Org ID', 'Schema ID', 'Version ID', 'Created By', 'SHA256']
   const lines = [headers.map(h => `"${h}"`).join(',')]
   for (const row of rows) {
     const uri = `${row.organization_name}-${row.schema_name}`
@@ -502,7 +502,7 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
               Search across all columns, or open column filters for per-column control.
               {checksDate && (
                 <span style={{ color: 'var(--muted2)', fontSize: 11.5 }}>
-                  {' '}· Staging validated {relDate(checksDate)}
+                  {' '}· Validated {relDate(checksDate)}
                 </span>
               )}
             </p>
