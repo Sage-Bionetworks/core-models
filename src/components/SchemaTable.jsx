@@ -203,7 +203,7 @@ function ResizeHandle({ thRef }) {
 }
 
 // ─── Column sort header ───────────────────────────────────────
-function SortTh({ col, label, sortCol, sortDir, onSort, style }) {
+function SortTh({ col, label, sortCol, sortDir, onSort, style, title }) {
   const active = sortCol === col
   const arrow = active ? (sortDir === 'asc' ? '↑' : '↓') : '↕'
   const thRef = useRef(null)
@@ -212,6 +212,7 @@ function SortTh({ col, label, sortCol, sortDir, onSort, style }) {
       ref={thRef}
       className={`sortable${active ? ` sort-${sortDir}` : ''}`}
       style={style}
+      title={title}
       onClick={() => onSort(col)}
     >
       {label}<span className="sort-arrow">{arrow}</span>
@@ -614,19 +615,25 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
               >
                 <thead>
                   <tr>
-                    <th style={{ width: 36 }} />
-                    <SortTh col="organization_name" label="Org Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 140 }} />
-                    <SortTh col="schema_name" label="Schema Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ minWidth: 160 }} />
-                    <SortTh col="status" label="Status" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 96 }} />
-                    <SortTh col="semantic_version" label="Version" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 80 }} />
-                    <SortTh col="created_on" label="Created" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 108 }} />
                     <th
-                      style={{ width: 92, cursor: 'help' }}
+                      style={{ width: 36 }}
+                      title="Pin a schema to keep it at the top of the list."
+                    />
+                    <SortTh col="organization_name" label="Org Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 140 }} title="Organization that registered the schema (organization_name). Click to sort." />
+                    <SortTh col="schema_name" label="Schema Name" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ minWidth: 160 }} title="Name of the registered schema. Click a row to view details; click the header to sort." />
+                    <SortTh col="status" label="Status" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 96 }} title="Registration status of this schema version (e.g. published or draft). Click to sort." />
+                    <SortTh col="semantic_version" label="Version" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 80 }} title="Semantic version of the schema, if one was registered (organizationName-schemaName-semanticVersion). Click to sort." />
+                    <SortTh col="created_on" label="Created" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 108 }} title="Date this schema version was registered in Synapse. Click to sort." />
+                    <th
+                      style={{ width: 92 }}
                       title="Validation — each schema's URI is checked against the Synapse staging registry using the Synapse Python client to confirm it is registered and resolvable. ✓ = passed, ✗ = failed (click a cell for details)."
                     >
                       Validation
                     </th>
-                    <th style={{ width: 72, position: 'relative' }}>
+                    <th
+                      style={{ width: 72, position: 'relative' }}
+                      title="Open the schema's raw JSON definition in a viewer."
+                    >
                       JSON
                       <div className="col-resize-handle" onMouseDown={e => {
                         e.stopPropagation()
