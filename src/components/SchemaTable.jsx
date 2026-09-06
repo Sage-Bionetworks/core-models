@@ -620,7 +620,12 @@ export default function SchemaTable({ data, stagingResults, checksDate }) {
                     <SortTh col="status" label="Status" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 96 }} />
                     <SortTh col="semantic_version" label="Version" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 80 }} />
                     <SortTh col="created_on" label="Created" sortCol={sortCol} sortDir={sortDir} onSort={handleSort} style={{ width: 108 }} />
-                    <th style={{ width: 40 }} />
+                    <th
+                      style={{ width: 92, cursor: 'help' }}
+                      title="Validation — each schema's URI is checked against the Synapse staging registry using the Synapse Python client to confirm it is registered and resolvable. ✓ = passed, ✗ = failed (click a cell for details)."
+                    >
+                      Validation
+                    </th>
                     <th style={{ width: 72, position: 'relative' }}>
                       JSON
                       <div className="col-resize-handle" onMouseDown={e => {
