@@ -10,8 +10,9 @@ on:
   schedule:
     # Weekly early-warning check against the develop branch of the Synapse
     # Python client, to catch upstream client regressions before they land
-    # in a pinned release. Mondays 07:00 UTC.
-    - cron: "0 7 * * 1"
+    # in a pinned release. Thursdays 07:00 UTC (staging is more reliably
+    # up midweek than around the weekend).
+    - cron: "0 7 * * 4"
 
   workflow_dispatch:
     inputs:
