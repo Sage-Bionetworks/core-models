@@ -147,9 +147,9 @@ function buildManifestSheets(wb, attrs, schemaName) {
     if (a.description) {
       let note = a.description
       if (a.isArray && a.validValues) {
-        note += '\n\nMultiple values allowed: type your selections separated by "; " ' +
-                '(e.g. "Human; Mouse"). Excel will show a warning since it isn\'t a single ' +
-                'listed value, but the entry is accepted.'
+        note += '\nMultiple values allowed: type your selections separated by "," ' +
+                'with no space (e.g. "Human,Mouse"). When you enter multiple values, Excel will ' +
+                'show a warning because the entry is not a single listed value, but it is accepted.'
       }
       hCell.note = note
     }
@@ -161,15 +161,17 @@ function buildManifestSheets(wb, attrs, schemaName) {
       // start at row 1, matching the R template).
       a.validValues.forEach((val, j) => { wsLists.getCell(j + 1, colIdx).value = val })
 
-      // Multi-value (array) and hybrid (anyOf) fields must allow free /
-      // separated entry, so validation is non-blocking. A closed single-value
-      // enum keeps a (still non-blocking) warning to nudge toward the list.
-      const relaxed = a.enumInfo.multi || !a.enumInfo.strict
+      // Every enum field carries a non-blocking (warning) validation. This
+      // matches the R template's patch_data_validation_style step, which stamps
+      // errorStyle="warning" onto ALL validations — including multi-value
+      // (array) and hybrid (anyOf) fields. Those legitimately hold free /
+      // comma-separated entry, so the warning fires but never blocks; the
+      // header comment tells the user to keep the entry anyway.
       wsManifest.dataValidations.add(range, {
         type: 'list',
         allowBlank: true,
         showDropDown: false,   // false = SHOW the dropdown arrow (exceljs/OOXML quirk)
-        showErrorMessage: !relaxed,
+        showErrorMessage: true,
         errorStyle: 'warning',
         errorTitle: 'Value not in standard list',
         error: "This entry isn't one of the standard values for this field. Keep it anyway?",
