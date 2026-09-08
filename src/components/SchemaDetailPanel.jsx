@@ -36,6 +36,71 @@ const initialPanelWidth = () => {
   return vw < 768 ? Math.round(vw * 0.92) : Math.round(vw * 0.66)
 }
 
+// Collect a schema's properties into a flat table shape.
+//
+// Some registered schemas (e.g. conditional manifest templates) no longer put
+// their fields in a flat top-level `properties`; instead the real columns live
+// inside an `allOf` → `then` composition. We walk the composition keywords
+// (allOf/anyOf/oneOf/then/else) and merge every `properties` block we find, so
+// both flat and composed schemas render their fields.
+//
+// `if` blocks are skipped on purpose: they hold discriminator conditions
+// (e.g. concreteType) rather than user-facing columns, and any real field an
+// `if` references is also defined in the corresponding `then`/base schema.
+function collectSchemaProperties(schema) {
+  const defs = new Map()      // name → richest definition seen
+  const required = new Set()
+
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return
+
+    // Required is tied to a property's definition site, not unioned across the
+    // whole tree: a field required only inside a conditional `then` branch is
+    // conditionally required, not always required, so we'd overstate it. Taking
+    // the required flag from the same node that first defines the property gives
+    // the base required set (and matches flat-schema behaviour exactly).
+    const nodeRequired = Array.isArray(node.required) ? node.required : []
+
+    if (node.properties && typeof node.properties === 'object') {
+      for (const [name, def] of Object.entries(node.properties)) {
+        const prev = defs.get(name)
+        if (!prev) {
+          defs.set(name, def || {})
+          if (nodeRequired.includes(name)) required.add(name)
+        } else {
+          // Keep the first definition but backfill anything it was missing,
+          // so a sparse occurrence never overwrites a richer earlier one.
+          defs.set(name, {
+            ...def,
+            ...prev,
+            description: prev.description || (def && def.description) || '',
+            enum: (prev.enum && prev.enum.length) ? prev.enum : (def && def.enum) || undefined,
+            type: prev.type || (def && def.type),
+          })
+        }
+      }
+    }
+
+    for (const key of ['allOf', 'anyOf', 'oneOf']) {
+      if (Array.isArray(node[key])) node[key].forEach(visit)
+    }
+    for (const key of ['then', 'else']) {
+      if (node[key]) visit(node[key])
+    }
+  }
+
+  visit(schema)
+
+  const props = [...defs.entries()].map(([name, def]) => ({
+    name,
+    type: Array.isArray(def.type) ? def.type.join(' | ') : (def.type || ''),
+    required: required.has(name),
+    description: def.description || '',
+    enumValues: def.enum || [],
+  }))
+  return props
+}
+
 export default function SchemaDetailPanel({ row, stagingResults, checksDate, isPinned, onTogglePin, onClose }) {
   const [showJson, setShowJson] = useState(false)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -77,14 +142,7 @@ export default function SchemaDetailPanel({ row, stagingResults, checksDate, isP
       const res = await fetch(PROD_BASE + `${orgName}-${schemaName}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const schema = await res.json()
-      const required = new Set(schema.required || [])
-      const props = Object.entries(schema.properties || {}).map(([name, def]) => ({
-        name,
-        type: Array.isArray(def.type) ? def.type.join(' | ') : (def.type || ''),
-        required: required.has(name),
-        description: def.description || '',
-        enumValues: def.enum || [],
-      }))
+      const props = collectSchemaProperties(schema)
       setProperties(props)
       setPropsState('loaded')
     } catch {
