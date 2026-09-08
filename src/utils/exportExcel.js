@@ -148,8 +148,8 @@ function buildManifestSheets(wb, attrs, schemaName) {
       let note = a.description
       if (a.isArray && a.validValues) {
         note += '\nMultiple values allowed: type your selections separated by "," ' +
-                'with no space (e.g. "Human,Mouse"). Excel will show a warning since it ' +
-                'isn\'t a single listed value, but the entry is accepted.'
+                'with no space (e.g. "Human,Mouse"). When you enter multiple values, Excel will ' +
+                'show a warning because the entry is not a single listed value, but it is accepted.'
       }
       hCell.note = note
     }
