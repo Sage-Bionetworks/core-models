@@ -5,9 +5,12 @@ direct links to DCC data models, documentation, and portals.
 
 **🔗 Live site: <https://sage-bionetworks.github.io/core-models/>**
 
-The site refreshes itself automatically every day from the Synapse JSON Schema registry — no
-manual steps are needed to keep it current. If you just want to *find a schema*, start at the
-live site. If you maintain the pipeline, see [CONTRIBUTING.md](CONTRIBUTING.md).
+The site rebuilds its data automatically every day from the Synapse JSON Schema registry, but
+it does **not** publish itself: the automation opens a pull request that a maintainer has to
+**merge each day** for the live site to update. If you just want to *find a schema*, start at the
+live site. If you're the person responsible for keeping the site current, see
+[For the repository maintainer](#for-the-repository-maintainer-merge-the-daily-update-pr) below.
+If you maintain the pipeline itself, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -15,6 +18,7 @@ live site. If you maintain the pipeline, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 - [What you can do here](#what-you-can-do-here)
 - [For data managers](#for-data-managers)
+- [For the repository maintainer: merge the daily update PR](#for-the-repository-maintainer-merge-the-daily-update-pr)
 - [How the data stays up to date](#how-the-data-stays-up-to-date)
 - [Schema statuses](#schema-statuses)
 - [What a schema URI looks like](#what-a-schema-uri-looks-like)
@@ -67,6 +71,49 @@ Common things you'll want to do, and how:
 - **Confirm a schema is deployable** — The ✓ / ✗ in the *Staging* column shows whether the
   schema resolved successfully in the Synapse **staging** registry during the last automated
   check. Click it for details. See [Schema statuses](#schema-statuses).
+
+---
+
+## For the repository maintainer: merge the daily update PR
+
+**The live site only updates when you merge the automated pull request. This is a manual,
+daily task — please do it every working day.**
+
+Every day at **06:00 UTC** the automation re-exports the schema data from Synapse. If anything
+changed, it opens a single pull request titled **"chore: automated schema data update"**. That PR
+sits and waits for a human — nothing reaches the public site until you merge it. If you skip a day,
+the live site simply keeps showing yesterday's data until the next PR is merged.
+
+### Do this each day
+
+1. Go to the repository's **[Pull requests](https://github.com/Sage-Bionetworks/core-models/pulls)**
+   tab.
+2. Look for an open PR named **"chore: automated schema data update"** from the
+   `github-actions[bot]` (branch `automated/schema-update-…`).
+   - **No such PR?** Then nothing changed today — there is nothing to do. ✅
+3. Open the PR and glance at the **Files changed** tab to see which schemas moved (it only touches
+   `public/data.json` and `public/staging_checks.json`).
+4. Click **Merge pull request** → **Confirm merge**. (You can delete the branch afterward when
+   prompted — it's optional and safe.)
+5. Merging into `main` automatically rebuilds the React app, deploys it to GitHub Pages, and
+   publishes the schemas to CoreModels. Give it a few minutes, then confirm the
+   **[live site](https://sage-bionetworks.github.io/core-models/)** reflects the update.
+
+That's the whole job: **check for the PR once a day and merge it.**
+
+### Watch how it's done
+
+A short screen recording of the merge, start to finish:
+
+<video src="https://raw.githubusercontent.com/Sage-Bionetworks/core-models/main/docs/how-to-merge-pr.mp4" controls width="720"></video>
+
+> If the player above doesn't load (some Markdown viewers don't embed video), download or open the
+> recording directly: [`docs/how-to-merge-pr.mp4`](docs/how-to-merge-pr.mp4).
+
+> **Why isn't this automatic?** Branch protection on `main` blocks direct pushes, and the PR is a
+> deliberate safety gate — it lets you see exactly which schemas changed before the public site and
+> CoreModels are updated. See [How the data stays up to date](#how-the-data-stays-up-to-date) for
+> the full pipeline.
 
 ---
 
