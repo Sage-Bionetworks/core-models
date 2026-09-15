@@ -4416,6 +4416,18 @@
     "status": "draft"
   },
   {
+    "organization_id": "2190",
+    "organization_name": "cckpmigrationtest",
+    "schema_id": "11304",
+    "schema_name": "TestSchema",
+    "version_id": "70421",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-09-14T19:12:44.294Z",
+    "created_by": "3458480",
+    "json_sha256_hex": "c068d3afff5ac2f348f137286f82e3f67b46a0b0c1eb0093849d71fa4a796c32",
+    "status": "draft"
+  },
+  {
     "organization_id": "37",
     "organization_name": "cmolitor.test",
     "schema_id": "681",
