@@ -1,0 +1,13 @@
+Hi, here's what we have for the plexiform neurofibroma RNA-seq set we want to share.
+
+Four patients, all NF1, ages 14, 17, 22 and 31. Biopsies taken during debulking
+surgery, flash-frozen in theatre. Human samples, primary tumour tissue.
+
+Library prep was done in the core: poly-A selected, KAPA mRNA HyperPrep kit.
+Sequenced on a NovaSeq 6000, paired-end 2x150. The core returned FASTQs, two per
+sample, plus RIN values from the Bioanalyzer.
+
+We also tracked how long each sample sat between removal and freezing, which the
+pathology group asked us to record. That's the cold ischemia column.
+
+Let me know what else you need before we can publish this.
