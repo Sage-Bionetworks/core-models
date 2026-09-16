@@ -1,0 +1,5 @@
+sample,patient,tissue,prep,file_r1,file_r2,rin,cold_ischemia_min
+PN-014-T1,NF-014,plexiform neurofibroma,flash-frozen,PN014_T1_R1.fastq.gz,PN014_T1_R2.fastq.gz,8.4,12
+PN-017-T1,NF-017,plexiform neurofibroma,flash-frozen,PN017_T1_R1.fastq.gz,PN017_T1_R2.fastq.gz,7.9,18
+PN-022-T1,NF-022,plexiform neurofibroma,flash-frozen,PN022_T1_R1.fastq.gz,PN022_T1_R2.fastq.gz,8.8,9
+PN-031-T1,NF-031,plexiform neurofibroma,flash-frozen,PN031_T1_R1.fastq.gz,PN031_T1_R2.fastq.gz,6.2,27

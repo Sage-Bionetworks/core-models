@@ -568,43 +568,9 @@
     border-radius: 999px;
     white-space: nowrap;
   }
+  a.scenario-role { text-decoration: none; transition: color 0.15s ease, border-color 0.15s ease; }
+  a.scenario-role:hover { color: var(--accent); border-color: var(--accent); }
   .scenario-scenario { color: var(--ink-muted); max-width: 68ch; margin-top: 14px; font-size: 0.98rem; }
-
-  .assay-picker {
-    margin-top: 20px;
-    padding: 14px 16px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-  }
-  .assay-picker-label {
-    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    display: block;
-    margin-bottom: 9px;
-  }
-  .assay-options { display: flex; gap: 8px; flex-wrap: wrap; }
-  .assay-btn {
-    font: inherit;
-    font-size: 0.86rem;
-    font-weight: 500;
-    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    color: var(--ink-muted);
-    padding: 7px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-  .assay-btn[aria-pressed="true"] {
-    border-color: var(--accent-3);
-    background: var(--accent-3-soft);
-    color: var(--accent-3);
-    font-weight: 600;
-  }
 
   .workflow-head {
     margin-top: 30px;
@@ -641,6 +607,26 @@
   .step-body { color: var(--ink-muted); font-size: 0.93rem; }
   .step-body ul { margin: 8px 0 0; padding-left: 1.1em; }
   .step-body li { margin-bottom: 3px; }
+
+  .step-files { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .step-files-label {
+    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .step-file {
+    font-size: 0.82rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    transition: border-color 0.15s ease;
+  }
+  .step-file:hover { border-color: var(--accent); }
 
   .prompt-box {
     margin-top: 12px;
@@ -796,6 +782,8 @@
         <a href="#glossary" role="menuitem">Glossary</a>
         <a href="#objectives" role="menuitem">Objectives</a>
         <a href="#demos" role="menuitem">Demos</a>
+        <a href="#prompts" role="menuitem">Prompt pack</a>
+        <a href="#prompts-cross" role="menuitem">Across standards</a>
         <a href="#links" role="menuitem">Links</a>
       </div>
     </div>
@@ -861,12 +849,12 @@
       <div class="about-card" data-about-card="aramai">
         <h3>Aramai <span class="about-tag">&amp; CoreModels</span></h3>
         <p>Aramai builds infrastructure for managing structured knowledge, data models, and semantic relationships, so organizations can work with information consistently across people, software, and AI systems.</p>
-        <p><strong style="color:var(--ink);">CoreModels</strong> is Aramai's platform for creating, managing, and reusing schemas and data models — a shared environment for concepts, relationships, and validation rules, with API and MCP integration for software and AI systems.</p>
+        <p><strong style="color:var(--ink);">CoreModels</strong> is Aramai's platform for creating, managing, and reusing schemas and data models - a shared environment for concepts, relationships, and validation rules, with API and MCP integration for software and AI systems.</p>
       </div>
       <div class="about-card" data-about-card="sage">
         <h3>Sage Bionetworks <span class="about-tag">&amp; Synapse</span></h3>
         <p>Sage Bionetworks is a nonprofit biomedical research organization focused on advancing open science, responsible data sharing, and collaborative research. Sage builds infrastructure, governance approaches, and data resources that help research communities make biomedical data more accessible and reusable.</p>
-        <p><strong style="color:var(--ink);">Synapse.org</strong> is Sage's collaborative research platform for organizing, sharing, and analyzing biomedical data — supporting everything from individual research teams to large scientific consortia with structured metadata, controlled access, provenance, and programmatic data access.</p>
+        <p><strong style="color:var(--ink);">Synapse.org</strong> is Sage's collaborative research platform for organizing, sharing, and analyzing biomedical data - supporting everything from individual research teams to large scientific consortia with structured metadata, controlled access, provenance, and programmatic data access.</p>
       </div>
     </div>
   </section>
@@ -888,21 +876,21 @@
     <div class="objectives">
       <div class="objective">
         <span class="objective-tag">Taught by Demo 1</span>
-        <h3>Reuse existing models</h3>
-        <div class="objective-chain"><span class="chain-pill">Look up</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Copy / Edit / Append</span></div>
-        <p>Find, reuse, and modify existing schema content instead of starting from scratch.</p>
+        <h3>Reuse &amp; extend a model</h3>
+        <div class="objective-chain"><span class="chain-pill">Identify</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Inspect</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Compare</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Sandbox</span></div>
+        <p>Identify what you have, find the same type in the graph, compare it against its neighbours, then extend it in a sandbox copy.</p>
       </div>
       <div class="objective">
         <span class="objective-tag">Taught by Demo 2</span>
-        <h3>Harmonize multiple models</h3>
-        <div class="objective-chain"><span class="chain-pill">Look up</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Compare</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Reuse</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Extend</span></div>
-        <p>Compare existing standards and combine them into one consistent, consortium-wide data model.</p>
+        <h3>Harmonize across standards</h3>
+        <div class="objective-chain"><span class="chain-pill">Compare</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Virtualize both</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Extend</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Verify</span></div>
+        <p>Compare two standards, then hold both in a single consortium project so the mapping between them is stored, not re-derived.</p>
       </div>
       <div class="objective">
         <span class="objective-tag">Taught by Demo 3</span>
-        <h3>Match real datasets to models</h3>
-        <div class="objective-chain"><span class="chain-pill">Look up</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Match</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Extract</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Gap analysis</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Extend</span></div>
-        <p>Use researcher-provided files to identify the best-fit model, spot missing metadata, and extend only where needed.</p>
+        <h3>Generate a model from files</h3>
+        <div class="objective-chain"><span class="chain-pill">Look up</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Match</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Table</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Approve</span><span class="chain-arrow">&rarr;</span><span class="chain-pill">Extend</span></div>
+        <p>Turn researcher notes and manifests into a fit-for-purpose model: match it, review the gaps in a table, approve, and extend only where needed.</p>
       </div>
     </div>
   </section>
@@ -920,15 +908,15 @@
     </div>
     <div class="glossary-card">
       <dl class="glossary-grid">
-        <div class="glossary-item"><dt>FAIR</dt><dd>Findable, Accessible, Interoperable, Reusable — the four principles that decide whether a dataset can actually be discovered and reused by someone else.</dd></div>
+        <div class="glossary-item"><dt>FAIR</dt><dd>Findable, Accessible, Interoperable, Reusable - the four principles that decide whether a dataset can actually be discovered and reused by someone else.</dd></div>
         <div class="glossary-item"><dt>Schema</dt><dd>A structured definition of what a dataset's fields, types, and relationships should look like.</dd></div>
-        <div class="glossary-item"><dt>Metadata</dt><dd>The descriptive context around raw data — assay type, sample details, experimental conditions — that makes it interpretable later.</dd></div>
+        <div class="glossary-item"><dt>Metadata</dt><dd>The descriptive context around raw data - assay type, sample details, experimental conditions - that makes it interpretable later.</dd></div>
         <div class="glossary-item"><dt>Controlled vocabulary</dt><dd>A fixed, agreed-upon list of allowed values for a field, so the same concept isn't recorded differently across projects.</dd></div>
-        <div class="glossary-item"><dt>Enum</dt><dd>One allowed value within a controlled vocabulary — one entry in a field's list of valid options.</dd></div>
+        <div class="glossary-item"><dt>Enum</dt><dd>One allowed value within a controlled vocabulary - one entry in a field's list of valid options.</dd></div>
         <div class="glossary-item"><dt>Provenance</dt><dd>The traceable record of where a schema or dataset came from, including what it was copied or extended from.</dd></div>
-        <div class="glossary-item"><dt>MCP</dt><dd>Model Context Protocol — lets an AI agent like Claude query and act on Core Models' schema graph directly, instead of guessing from training data.</dd></div>
+        <div class="glossary-item"><dt>MCP</dt><dd>Model Context Protocol - lets an AI agent like Claude query and act on Core Models' schema graph directly, instead of guessing from training data.</dd></div>
         <div class="glossary-item"><dt>Knowledge graph</dt><dd>A network of connected schemas, types, and enums that can be queried for relationships, rather than searched as flat text.</dd></div>
-        <div class="glossary-item"><dt>Assay</dt><dd>A specific type of experiment or measurement — whole genome sequencing, MRI imaging — that a data model is built to describe.</dd></div>
+        <div class="glossary-item"><dt>Assay</dt><dd>A specific type of experiment or measurement - whole genome sequencing, MRI imaging - that a data model is built to describe.</dd></div>
         <div class="glossary-item"><dt>Consortium</dt><dd>A group of research teams agreeing to collect and report data the same way, so it can be combined and compared across sites.</dd></div>
         <div class="glossary-item"><dt>Parent model</dt><dd>An existing schema that a new, more specific model is built from, automatically inheriting its fields.</dd></div>
         <div class="glossary-item"><dt>Gap analysis</dt><dd>Comparing what metadata a dataset already has against what a model requires, to see exactly what's still missing.</dd></div>
@@ -950,6 +938,38 @@
 
     <div class="menu-grid" role="tablist" aria-label="Demo scenarios" id="menuGrid"></div>
     <div class="scenario-panel" id="scenarioPanel"></div>
+  </section>
+
+  <section id="prompts">
+    <div class="section-head">
+      <h2 class="heading-with-icon">
+        <svg class="heading-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" rx="2"/>
+          <path d="M7.5 9.5l2.5 2.5-2.5 2.5"/>
+          <path d="M12.5 15h4"/>
+        </svg>
+        Prompt pack &mdash; ladders
+      </h2>
+      <p>Standalone prompts for a live Claude session connected to the Core Models MCP. Pick a project, then start anywhere in its ladder &mdash; each prompt works on its own.</p>
+    </div>
+    <div class="menu-grid" role="tablist" aria-label="Prompt ladders" id="packGrid"></div>
+    <div class="scenario-panel" id="packPanel"></div>
+  </section>
+
+  <section id="prompts-cross">
+    <div class="section-head">
+      <h2 class="heading-with-icon">
+        <svg class="heading-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 7h7"/>
+          <path d="M13 17h7"/>
+          <path d="M8.5 4.5 11 7l-2.5 2.5"/>
+          <path d="M15.5 14.5 13 17l2.5 2.5"/>
+        </svg>
+        Prompt pack &mdash; across standards
+      </h2>
+      <p>These reach into more than one project at once. They work because every project is available in the same session.</p>
+    </div>
+    <div class="scenario-panel" id="crossPanel"></div>
   </section>
 
   <section id="links">
@@ -1007,6 +1027,20 @@
           </div>
           <span class="link-item-arrow">&nearr;</span>
         </a>
+        <a class="link-item" href="https://go.coremodels.io/app/62b6848984bc40bc9e4486e00fb146cb" target="_blank" rel="noopener">
+          <div>
+            <span class="link-item-title">openEHR Reference Model &mdash; public project</span>
+            <span class="link-item-url">go.coremodels.io/app/62b6848984bc40bc9e4486e00fb146cb</span>
+          </div>
+          <span class="link-item-arrow">&nearr;</span>
+        </a>
+        <a class="link-item" href="https://go.coremodels.io/app/147815447b91401685e6ad3615de1814" target="_blank" rel="noopener">
+          <div>
+            <span class="link-item-title">FHIR V6 &mdash; public project</span>
+            <span class="link-item-url">go.coremodels.io/app/147815447b91401685e6ad3615de1814</span>
+          </div>
+          <span class="link-item-arrow">&nearr;</span>
+        </a>
       </div>
     </div>
   </section>
@@ -1020,132 +1054,334 @@
 (function () {
   "use strict";
 
-  var ASSAYS = ["Whole Genome Sequencing", "Bulk RNA Sequencing", "MRI Imaging"];
 
   var SCENARIOS = [
     {
-      id: "reuse",
-      num: "Demo 1",
-      role: "Data manager",
-      title: "Reuse and Extend an Existing Data Model",
-      menuTitle: "Reuse & Extend a Model",
-      menuBlurb: "Find an existing assay model and adapt it instead of building new.",
-      chain: ["Look up", "Copy / Edit / Append"],
-      scenario: "You're preparing a metadata model for a new research project. A suitable model already exists in Core Models, but this project has slightly different requirements. Rather than starting a new schema from scratch, you use an AI agent to find the existing model, inspect its structure, and decide whether to copy, edit, or append to it.",
-      steps: [
+      "id": "reuse",
+      "num": "Demo 1",
+      "role": "Data manager",
+      "title": "Reuse and Extend an Existing Data Model",
+      "menuTitle": "Reuse & Extend a Model",
+      "menuBlurb": "Identify what you have, find it in the graph, then extend it safely.",
+      "chain": [
+        "Identify",
+        "Inspect",
+        "Compare",
+        "Sandbox"
+      ],
+      "scenario": "You have a data sample and a model that probably already describes it. Rather than writing a new schema, you ask an agent to identify the type, then follow it into Core Models to see its fields and relationships, compare it with its near neighbours, and extend it in a sandbox copy that leaves the original untouched.",
+      "steps": [
         {
-          title: "Find the relevant model",
-          body: "Search Core Models for an existing assay or project model. Review its attributes, descriptions, controlled values, and relationships before touching anything.",
-          prompt: "Search Core Models for an existing assay or project model I could reuse for a new project. Show me its attributes, descriptions, controlled values, and relationships."
+          "title": "Identify what you have",
+          "body": "The sample carries no type discriminator, so it has to be identified from the shape of its fields alone. The answer cites the node it used.",
+          "prompt": "I have this data sample and I don't know what it is. Using CoreModels, identify which type in the openEHR project best describes it, and cite the node you used.\n\n{\n  \"magnitude\": 120.0,\n  \"units\": \"mm[Hg]\",\n  \"precision\": 0,\n  \"units_system\": \"http://unitsofmeasure.org\",\n  \"units_display_name\": \"mmHg\"\n}"
         },
         {
-          title: "Create a reusable copy",
-          body: "Ask the agent to create a new project based on the existing model, keeping the relationship to the original intact so its source and provenance stay clear.",
-          prompt: "Create a new project based on that model, and preserve its relationship back to the original so the provenance is clear."
+          "title": "Find the same type in Core Models",
+          "body": "No prompt for this one. Search the openEHR project's grid for DV_QUANTITY: the columns are the type's attributes, and expanding the elements grid shows all thirteen of them - magnitude, units, precision, units_system and units_display_name among them, the same fields the agent just matched on.",
+          "prompt": ""
         },
         {
-          title: "Review and customize the model",
-          body: "Confirm the inherited fields fit the new project, then edit or append fields to meet this project's specific requirements.",
-          prompt: "Walk me through the fields this new project inherited — which ones fit as-is, and which should I edit or append for our requirements?"
+          "title": "See its relationships",
+          "body": "Open the type to bring up its graph view. Four of its properties point at other types - property and normal_status at CODE_PHRASE, normal_range at DV_INTERVAL, other_reference_ranges at REFERENCE_RANGE. Switch between the two visualisations: same relationships, two renderings.",
+          "prompt": ""
+        },
+        {
+          "title": "Compare it with its neighbour",
+          "body": "A question openEHR modellers argue about in practice, where the deciding detail sits behind a reference rather than in either type's own field list.",
+          "prompt": "In openEHR, compare OBSERVATION and EVALUATION. What properties do they share, what differs between them, and when should I use each?"
+        },
+        {
+          "title": "Open a sandbox",
+          "body": "Nothing is written to the source project. The virtual project inherits everything and keeps the link back, so provenance stays clear.",
+          "prompt": "Create a virtual project from openEHR so I can experiment without affecting the original."
+        },
+        {
+          "title": "Extend it safely",
+          "body": "Add the field in the copy, then check the parent to confirm it is unchanged.",
+          "prompt": "In the virtual project only, extend OBSERVATION with a property deviceSerialNumber (a string, for the instrument that produced the reading). Then show me that the original openEHR project is unchanged."
         }
       ],
-      outcome: [
-        "Reuses existing, verified schema components",
-        "Maintains clear provenance back to the original model",
-        "Is customized to project-specific requirements without starting from scratch"
+      "outcome": [
+        "Identifies a payload from field shape alone, citing the node it matched",
+        "Follows one type from a chat answer into the model without losing the thread",
+        "Reuses existing, verified schema components instead of starting from scratch",
+        "Never writes to the source project - every change lands in the virtual copy"
       ]
     },
     {
-      id: "consortium",
-      num: "Demo 2",
-      role: "Data manager",
-      title: "Build a Consortium Data Model from Existing Standards",
-      menuTitle: "Harmonize Consortium Standards",
-      menuBlurb: "Compare several existing models and reconcile them into one.",
-      chain: ["Look up", "Compare", "Reuse", "Extend"],
-      scenario: "You're launching a new research consortium and need to define the metadata researchers should collect for each assay, so submissions stay consistent and interoperable. Your manager has flagged several existing consortium models and standards — instead of reconciling them by hand, you use an AI agent to compare them and propose a harmonized model.",
-      assayPicker: true,
-      steps: [
+      "id": "consortium",
+      "num": "Demo 2",
+      "role": "Data manager",
+      "title": "Build a Consortium Model from Two Standards",
+      "menuTitle": "Harmonize Across Standards",
+      "menuBlurb": "Map a concept across two standards, then hold both in one project.",
+      "chain": [
+        "Compare",
+        "Virtualize both",
+        "Extend",
+        "Verify"
+      ],
+      "scenario": "Two standards describe the same concept in different words, and the relationship between them usually lives in a spreadsheet or in somebody's head. Here an agent works out the mapping, then brings both standards into a single virtual project and extends it for a new consortium - so the relationship is stored rather than re-derived, and neither source model is touched.",
+      "steps": [
         {
-          title: "Connect to existing data models",
-          body: "Use Core Models to search for and access relevant consortium and assay-specific models, including Sage's own common data models.",
-          prompt: "Search Core Models for consortium and {assay} models that already exist, including the Sage Common Data Models project."
+          "title": "Ask the mapping question",
+          "body": "Structural alignment is evidence for a discussion, not a verdict - a matching shape is not the same as a matching meaning. Read the answer with that in mind.",
+          "prompt": "In NF & HTAN, find the property that captures anatomical site. Then find the closest equivalent in FHIR V6. Are they interchangeable, and what evidence are you basing that on?"
         },
         {
-          title: "Compare existing models",
-          body: "Ask the agent to identify common fields, differences, missing or conflicting concepts, and any controlled vocabularies or standards in play.",
-          prompt: "Compare the {assay} models you found. What fields do they share, where do they differ, and are there missing or conflicting concepts? Note any controlled vocabularies or standards each one uses."
+          "title": "Bring both standards into one project",
+          "body": "A virtual project can inherit from more than one parent. This is where the mapping stops being an answer and becomes a durable artifact.",
+          "prompt": "Create a virtual project from both NF & HTAN and FHIR V6 for a new consortium, inheriting BiospecimenTemplate. Then add the two fields my consortium needs that aren't in the parent: collectionProtocolID and sitePreparationMethod. Keep the link to the original."
         },
         {
-          title: "Propose the new consortium model",
-          body: "Ask for a recommended, harmonized set of metadata fields — and review it before anything changes in Core Models.",
-          prompt: "Based on that comparison, recommend a harmonized set of metadata fields for our consortium's {assay} model. Don't change anything yet — just show me the proposal."
-        },
-        {
-          title: "Create the new model",
-          body: "Instruct the agent to create a new project for the consortium under the Sage Common Data Models project as parent, reusing existing components wherever possible.",
-          prompt: "Create a new project for our consortium, using Sage Common Data Models as the parent. Reuse the existing components wherever possible instead of duplicating concepts."
-        },
-        {
-          title: "Extend the model where necessary",
-          body: "Add consortium- or assay-specific attributes that aren't already represented in the parent model, preserving the relationship to the components reused.",
-          prompt: "Add the {assay}-specific attributes that aren't already represented in the parent model, and preserve the relationship back to the components we reused."
+          "title": "See it in Core Models",
+          "body": "No prompt for this one. Open BiospecimenTemplate in the new project and expand its elements grid: the two new properties sit among the inherited ones. Pull back and the Spaces dropdown shows nf, htan and fhir side by side - three sources, one project, each still identifiable as what it is.",
+          "prompt": ""
         }
       ],
-      outcome: [
-        "Reuses Sage Common Data Models",
-        "Incorporates relevant standards from existing consortium models",
+      "outcome": [
+        "Turns a cross-standard mapping into stored structure instead of a one-off answer",
+        "Holds two standards in a single governed workspace, each still distinguishable",
         "Adds only the metadata requirements unique to the new consortium",
-        "Gives researchers a clear definition of what metadata to collect for the selected assay"
+        "Leaves both source models untouched"
       ]
     },
     {
-      id: "researcher-files",
-      num: "Demo 3",
-      role: "Researcher",
-      title: "Generate a Data Model from Researcher Files",
-      menuTitle: "Generate a Model from Files",
-      menuBlurb: "Turn scattered notes and manifests into a fit-for-purpose model.",
-      chain: ["Look up", "Match", "Extract", "Gap analysis", "Extend"],
-      scenario: "You're preparing data for a publication and need enough metadata to make the dataset FAIR — Findable, Accessible, Interoperable, Reusable. The information is scattered across files, notes, and manifests, and you don't know which fields are required or which model fits best. An AI agent reads what you already have and recommends the right structure.",
-      steps: [
+      "id": "researcher-files",
+      "num": "Demo 3",
+      "role": "Researcher",
+      "title": "Generate a Data Model from Researcher Files",
+      "menuTitle": "Generate a Model from Files",
+      "menuBlurb": "Turn scattered notes and manifests into a fit-for-purpose model.",
+      "chain": [
+        "Look up",
+        "Match",
+        "Table",
+        "Approve",
+        "Extend"
+      ],
+      "scenario": "You're preparing data for a publication and need enough metadata to make the dataset FAIR - Findable, Accessible, Interoperable, Reusable. The information is scattered across notes and manifests, and you don't know which fields are required or which model fits best. An agent reads what you already have, maps your informal wording onto the project's own terms, and works out what's still missing.",
+      "steps": [
         {
-          title: "Provide existing research materials",
-          body: "Attach the files, notes, manifests, or documentation already on hand to the chat, then send this.",
-          prompt: "Here are my experiment files, notes, and manifests. Take a look before we go further."
+          "title": "Share what you already have",
+          "body": "Don't have your own to hand? Download the two sample files below and attach them to the chat, then send this. The agent reads them, maps informal wording onto the project's governed terms, and picks the model that fits - saying what else it considered.",
+          "prompt": "I'm getting this dataset ready to publish and I'm not sure what metadata I need. I've attached my notes and the manifest. Can you work out what's in there and which model in NF & HTAN it should use? Show me what else you considered and why you settled on that one.",
+          "files": [
+            {
+              "label": "study-notes.txt",
+              "href": "sample-data/study-notes.txt"
+            },
+            {
+              "label": "nf-rnaseq-manifest.csv",
+              "href": "sample-data/nf-rnaseq-manifest.csv"
+            }
+          ]
         },
         {
-          title: "Extract available metadata",
-          body: "The agent identifies assay type, sample information, experimental conditions, instrument or platform, processing methods, and relevant biological or clinical context.",
-          prompt: "Pull out everything you can find about assay type, sample information, experimental conditions, instrument or platform, processing methods, and biological or clinical context."
+          "title": "See the model, and its allowed values",
+          "body": "No prompt for this one. Find the matched template in the Core Models grid and expand its elements. Open a field with a controlled value list - the terms the agent mapped your wording onto are in there, which is what makes the mapping more than helpful synonyms.",
+          "prompt": ""
         },
         {
-          title: "Match the dataset to an existing model",
-          body: "The agent searches assay and research data models registered in Core Models to find the closest match.",
-          prompt: "Search the assay and research data models in Core Models and tell me which one is the closest match for this dataset."
+          "title": "Get it in a table",
+          "body": "The agent already noticed the gaps while matching. This asks for them as something you can work through, rather than asking again.",
+          "prompt": "Can you put all that in a table for me? One for what I still need to go and get, and one for what you'd add to the model. Don't change anything yet, I want to see it first."
         },
         {
-          title: "Identify gaps",
-          body: "The agent compares the files against the matched model: what's already covered, what's required but missing, and what's dataset-specific and not yet represented.",
-          prompt: "Compare what's in my files against that model. What metadata do I already have, what's required but missing, and are there dataset-specific attributes the model doesn't represent?"
+          "title": "Approve it - into a sandbox",
+          "body": "Nothing is created until you say so, and this is the only point where anything is written. Naming the sandbox here is what keeps the source project clean.",
+          "prompt": "Looks good, go ahead, but do it in a virtual project off NF & HTAN so my project stays clean."
         },
         {
-          title: "Create a customized data model",
-          body: "The agent creates a new project with the closest existing assay model as parent, inheriting its standard fields and adding only what this dataset needs.",
-          prompt: "Create a new project in Core Models with that model as the parent. Inherit its standard fields and add only the attributes this dataset needs."
+          "title": "Watch it build",
+          "body": "No prompt for this one. The agent creates the virtual project and adds the fields. In Core Models, the new template shows your additions among the inherited fields - then open the original project and see it unchanged.",
+          "prompt": ""
         },
         {
-          title: "Guide the researcher through remaining metadata",
-          body: "Review the generated model together and fill in anything the agent couldn't determine automatically.",
-          prompt: "Show me exactly what's left for me to fill in by hand before this dataset is ready to share."
+          "title": "See what's still missing",
+          "body": "Validate a record against the new template. Whatever is still required comes back as a list to go and collect.",
+          "prompt": "Here's the record for my first sample. Does it pass against my new template? Tell me what I still need before I can publish this."
         }
       ],
-      outcome: [
-        "Reuses an established assay model",
-        "Automatically incorporates metadata already present in the researcher's files",
-        "Identifies missing metadata needed for FAIR data sharing",
-        "Adds dataset-specific requirements without duplicating existing standards",
-        "Is stored in Core Models for provenance and future reuse"
+      "outcome": [
+        "Starts from what a researcher actually sends, not a clean payload",
+        "Maps informal wording onto the project's controlled vocabularies",
+        "Reuses an established assay model and adds only what this dataset needs",
+        "Proposes before it creates, and waits for a person to approve",
+        "Is built in a virtual project, so the source project is never written to"
+      ]
+    }
+  ];
+
+  var PACK = [
+    {
+      "id": "pack-openehr",
+      "num": "Ladder A",
+      "project": "openEHR",
+      "menuTitle": "openEHR",
+      "title": "openEHR",
+      "menuBlurb": "A cross-linked reference model - good for showing how the graph is navigated.",
+      "chain": [
+        "Orient",
+        "Identify",
+        "Traverse",
+        "Sandbox"
+      ],
+      "note": "openEHR's Reference Model is many small, cross-linked types. This ladder runs from orientation through to a safe extension; each rung stands on its own.",
+      "items": [
+        {
+          "title": "See what's in the project",
+          "body": "One call, and the scale of the model lands on screen.",
+          "prompt": "Using CoreModels, give me a summary of the openEHR project: how many types and properties it holds, and what the main groups of types are."
+        },
+        {
+          "title": "Identify a payload",
+          "body": "No type discriminator in the sample, so it has to be identified from field shape alone.",
+          "prompt": "I have this data sample and I don't know what it is. Using CoreModels, identify which type in the openEHR project best describes it, and cite the node you used.\n\n{\n  \"magnitude\": 120.0,\n  \"units\": \"mm[Hg]\",\n  \"precision\": 0,\n  \"units_system\": \"http://unitsofmeasure.org\",\n  \"units_display_name\": \"mmHg\"\n}"
+        },
+        {
+          "title": "Trace the answer back",
+          "body": "Run this straight after any identification. Every answer resolves to a node you can open.",
+          "prompt": "For that answer, show me the source node: its identifier, where the definition lives, and exactly which properties you matched on."
+        },
+        {
+          "title": "Compare two types",
+          "body": "The deciding detail sits behind a reference rather than in either type's own field list.",
+          "prompt": "In openEHR, compare OBSERVATION and EVALUATION. What properties do they share, what differs between them, and when should I use each?"
+        },
+        {
+          "title": "Follow a reference across documents",
+          "body": "Two hops across three separate schema documents, ending at the terminology a coded value came from.",
+          "prompt": "In openEHR, when a value is recorded as a coded term, how does the model say which terminology that code came from? Start at DV_CODED_TEXT and show me the type at each hop, the property that links it to the next, and where each type is defined."
+        },
+        {
+          "title": "Work in a sandbox",
+          "body": "Create the virtual project first, then change things inside it.",
+          "prompt": "Create a virtual project from openEHR so I can experiment without affecting the original."
+        },
+        {
+          "title": "Extend it safely",
+          "body": "Run after the sandbox exists, then check the parent to see it unchanged.",
+          "prompt": "In the virtual project only, extend OBSERVATION with a property deviceSerialNumber (a string, for the instrument that produced the reading). Then show me that the original openEHR project is unchanged."
+        }
+      ],
+      "url": "https://go.coremodels.io/app/62b6848984bc40bc9e4486e00fb146cb"
+    },
+    {
+      "id": "pack-fhir",
+      "num": "Ladder B",
+      "project": "FHIR V6",
+      "menuTitle": "FHIR V6",
+      "title": "FHIR V6",
+      "menuBlurb": "A standard everyone knows, delivered as one very large document.",
+      "chain": [
+        "Orient",
+        "Identify",
+        "Compare",
+        "Profile"
+      ],
+      "note": "HL7 FHIR R6 arrives as a single very large document. Scoped retrieval is the difference between getting an answer and overflowing the context window.",
+      "items": [
+        {
+          "title": "See what's in the project",
+          "body": "",
+          "prompt": "Using CoreModels, summarize the FHIR V6 project: which resource types it covers and how they're organized."
+        },
+        {
+          "title": "Identify a payload",
+          "body": "resourceType is deliberately left out, so the resource has to be identified from its fields.",
+          "prompt": "I have this data sample. Using CoreModels, identify which resource in the FHIR V6 project it is, and cite the node you used.\n\n{\n  \"status\": \"final\",\n  \"code\": {\n    \"coding\": [ { \"system\": \"http://loinc.org\", \"code\": \"718-7\",\n                  \"display\": \"Hemoglobin [Mass/volume] in Blood\" } ]\n  },\n  \"subject\": { \"reference\": \"Patient/example\" },\n  \"effectiveDateTime\": \"2026-05-01T09:30:00Z\",\n  \"valueQuantity\": { \"value\": 13.5, \"unit\": \"g/dL\",\n                     \"system\": \"http://unitsofmeasure.org\", \"code\": \"g/dL\" }\n}"
+        },
+        {
+          "title": "Compare two resources",
+          "body": "A real and frequently-argued FHIR modelling question.",
+          "prompt": "In FHIR V6, compare Observation and DiagnosticReport. When should I use each, and how do they relate to one another?"
+        },
+        {
+          "title": "See what a resource links to",
+          "body": "",
+          "prompt": "In FHIR V6, starting from Observation, show me every resource it can reference and what each reference means."
+        },
+        {
+          "title": "Profile it safely",
+          "body": "Profiling, done in a sandbox rather than against the standard itself.",
+          "prompt": "Create a virtual project from FHIR V6 so I can profile it without touching the original. Then add a studyProtocolID property to Observation in the virtual project only."
+        }
+      ],
+      "url": "https://go.coremodels.io/app/147815447b91401685e6ad3615de1814"
+    },
+    {
+      "id": "pack-nfhtan",
+      "num": "Ladder C",
+      "project": "NF & HTAN",
+      "menuTitle": "NF & HTAN",
+      "title": "NF & HTAN",
+      "menuBlurb": "Consortium templates with dense controlled vocabularies.",
+      "chain": [
+        "Orient",
+        "Identify",
+        "Values",
+        "Extend"
+      ],
+      "note": "NF-OSI and HTAN templates, with vocabularies bound to real code systems - the place to show value-level grounding rather than field names alone.",
+      "items": [
+        {
+          "title": "See what's in the project",
+          "body": "",
+          "prompt": "Using CoreModels, summarize the NF & HTAN project: which consortia and templates it covers, and how many properties and enumerated values it holds."
+        },
+        {
+          "title": "Identify a payload",
+          "body": "The identifier fields alone appear in many templates. One field decides it - watch whether the answer says which.",
+          "prompt": "I have this data sample from a researcher. Using CoreModels, identify which template in the NF & HTAN project it belongs to, and cite the node.\n\n{\n  \"individualID\": \"NF0007-P02\",\n  \"specimenID\": \"NF0007-P02-S1-T2\",\n  \"aliquotID\": \"NF0007-P02-S1-T2-A1\",\n  \"bodySite\": \"forearm\"\n}"
+        },
+        {
+          "title": "Check the allowed values",
+          "body": "The controlled vocabulary is this project's distinctive asset, and this is the prompt that shows it.",
+          "prompt": "In NF & HTAN, what values are allowed for tumorType, and where does that value set come from?"
+        },
+        {
+          "title": "Spot the mismatch",
+          "body": "Two consortia's naming conventions fused into one record. The right answer flags the inconsistency instead of quietly picking one.",
+          "prompt": "Using CoreModels, tell me what this is. Something looks off about it.\n\n{\n  \"individualID\": \"NF0007-P02\",\n  \"tumorType\": \"Plexiform Neurofibroma\",\n  \"HTAN_BIOSPECIMEN_ID\": \"HTA9_1_2001\",\n  \"HTAN_PARENT_ID\": \"HTA9_1_2000\"\n}"
+        },
+        {
+          "title": "Start a consortium copy",
+          "body": "Inherit an existing template, add only what's genuinely new, keep the link to the original.",
+          "prompt": "Create a virtual project from NF & HTAN for a new consortium, inheriting BiospecimenTemplate. Then add the two fields my consortium needs that aren't in the parent: collectionProtocolID and sitePreparationMethod. Keep the link to the original."
+        }
+      ]
+    },
+    {
+      "id": "pack-cross",
+      "num": "Cross-standard",
+      "project": "Multiple projects",
+      "menuTitle": "Across Standards",
+      "title": "Across Standards",
+      "menuBlurb": "Map one concept between standards, and see what translation costs.",
+      "chain": [
+        "Compare",
+        "Map",
+        "Coverage"
+      ],
+      "note": "These work because every project is reachable in one session. Structural alignment is evidence for a discussion, not a verdict - a matching shape is not the same as a matching meaning.",
+      "items": [
+        {
+          "title": "The same concept, modelled twice",
+          "body": "",
+          "prompt": "Compare how openEHR models a measured quantity (DV_QUANTITY) with how FHIR V6 models one (Quantity). Where do they line up, where do they genuinely differ, and what would I lose translating between them?"
+        },
+        {
+          "title": "Is this field the same as that one?",
+          "body": "The mapping question that sits behind most interoperability work.",
+          "prompt": "In NF & HTAN, find the property that captures anatomical site. Then find the closest equivalent in FHIR V6. Are they interchangeable, and what evidence are you basing that on?"
+        },
+        {
+          "title": "What would I lose in translation?",
+          "body": "",
+          "prompt": "If I have data conforming to FHIR V6 Observation, which templates in NF & HTAN could I map it onto, and what would be missing?"
+        }
       ]
     }
   ];
@@ -1192,17 +1428,12 @@
 
   var menuGrid = document.getElementById("menuGrid");
   var panel = document.getElementById("scenarioPanel");
-  var currentAssay = {}; // per-scenario selected assay index
   var activeId = SCENARIOS[0].id;
 
   function esc(s) {
     return String(s).replace(/[&<>]/g, function (c) {
       return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
     });
-  }
-
-  function fillPrompt(text, assay) {
-    return text.split("{assay}").join(assay);
   }
 
   function chainHtml(stages) {
@@ -1266,8 +1497,6 @@
 
   function renderPanel() {
     var s = SCENARIOS.filter(function (x) { return x.id === activeId; })[0];
-    var assayIdx = currentAssay[s.id] || 0;
-    var assay = ASSAYS[assayIdx];
 
     var html = '';
     html += '<div class="scenario-head">';
@@ -1276,27 +1505,27 @@
     html += '</div>';
     html += '<p class="scenario-scenario">' + esc(s.scenario) + '</p>';
 
-    if (s.assayPicker) {
-      html += '<div class="assay-picker"><span class="assay-picker-label">Choose an assay for this walkthrough</span><div class="assay-options">';
-      ASSAYS.forEach(function (a, i) {
-        html += '<button type="button" class="assay-btn" data-assay-idx="' + i + '" aria-pressed="' + (i === assayIdx) + '">' + esc(a) + '</button>';
-      });
-      html += '</div></div>';
-    }
-
     html += '<div class="workflow-head">Demo workflow</div>';
     html += '<div class="steps">';
     s.steps.forEach(function (step, i) {
-      var promptText = fillPrompt(step.prompt, assay);
       html += '<div class="step">';
       html += '<div class="step-num">' + (i + 1) + '</div>';
       html += '<div>';
       html += '<div class="step-title">' + esc(step.title) + '</div>';
       html += '<div class="step-body">' + esc(step.body) + '</div>';
-      html += '<div class="prompt-box">';
-      html += '<div class="prompt-box-head"><span class="prompt-box-label">Suggested prompt</span><button type="button" class="copy-btn" data-copy-idx="' + i + '" data-orig="Copy">Copy</button></div>';
-      html += '<p class="prompt-text" data-prompt-idx="' + i + '">' + esc(promptText) + '</p>';
-      html += '</div>';
+      if (step.files && step.files.length) {
+        html += '<div class="step-files"><span class="step-files-label">Sample files</span>';
+        step.files.forEach(function (f) {
+          html += '<a class="step-file" href="' + esc(f.href) + '" download>' + esc(f.label) + '</a>';
+        });
+        html += '</div>';
+      }
+      if (step.prompt) {
+        html += '<div class="prompt-box">';
+        html += '<div class="prompt-box-head"><span class="prompt-box-label">Suggested prompt</span><button type="button" class="copy-btn" data-copy-idx="' + i + '" data-orig="Copy">Copy</button></div>';
+        html += '<p class="prompt-text" data-prompt-idx="' + i + '">' + esc(step.prompt) + '</p>';
+        html += '</div>';
+      }
       html += '</div>';
       html += '</div>';
     });
@@ -1332,16 +1561,6 @@
       });
     });
 
-    if (s.assayPicker) {
-      var abtns = panel.querySelectorAll(".assay-btn");
-      abtns.forEach(function (b) {
-        b.addEventListener("click", function () {
-          currentAssay[s.id] = parseInt(b.getAttribute("data-assay-idx"), 10);
-          renderPanel();
-        });
-      });
-    }
-
     var cbtns = panel.querySelectorAll(".copy-btn");
     cbtns.forEach(function (b) {
       b.addEventListener("click", function () {
@@ -1352,8 +1571,145 @@
     });
   }
 
+  var LADDERS = PACK.filter(function (g) { return g.id !== "pack-cross"; });
+  var CROSS = PACK.filter(function (g) { return g.id === "pack-cross"; })[0];
+
+  var packGrid = document.getElementById("packGrid");
+  var packPanel = document.getElementById("packPanel");
+  var crossPanel = document.getElementById("crossPanel");
+  var activePackId = LADDERS[0].id;
+
+  function renderPackMenu() {
+    if (!packGrid) { return; }
+    packGrid.innerHTML = "";
+    LADDERS.forEach(function (g) {
+      var btn = document.createElement("button");
+      btn.className = "menu-card";
+      btn.type = "button";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", String(g.id === activePackId));
+      btn.id = "tab-" + g.id;
+      btn.innerHTML =
+        '<span class="menu-card-num">' + esc(g.num) + '</span>' +
+        '<h3>' + esc(g.menuTitle) + '</h3>' +
+        '<p>' + esc(g.menuBlurb) + '</p>' +
+        '<span class="chain">' + chainHtml(g.chain) + '</span>';
+      btn.addEventListener("click", function () {
+        activePackId = g.id;
+        renderPackMenu();
+        renderPackPanel();
+        packPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      packGrid.appendChild(btn);
+    });
+  }
+
+  function renderPackPanel() {
+    if (!packPanel) { return; }
+    var g = LADDERS.filter(function (x) { return x.id === activePackId; })[0];
+
+    var html = '';
+    html += '<div class="scenario-head">';
+    html += '<div><span class="scenario-eyebrow">' + esc(g.num) + '</span><h3 class="scenario-title">' + esc(g.title) + '</h3></div>';
+    if (g.url) {
+      html += '<a class="scenario-role" href="' + esc(g.url) + '" target="_blank" rel="noopener">Project: ' + esc(g.project) + ' &nearr;</a>';
+    } else {
+      html += '<span class="scenario-role">Project: ' + esc(g.project) + '</span>';
+    }
+    html += '</div>';
+    if (g.note) { html += '<p class="scenario-scenario">' + esc(g.note) + '</p>'; }
+
+    html += '<div class="workflow-head">Prompts</div>';
+    html += '<div class="steps">';
+    g.items.forEach(function (it, i) {
+      html += '<div class="step">';
+      html += '<div class="step-num">' + (i + 1) + '</div>';
+      html += '<div>';
+      html += '<div class="step-title">' + esc(it.title) + '</div>';
+      if (it.body) { html += '<div class="step-body">' + esc(it.body) + '</div>'; }
+      html += '<div class="prompt-box">';
+      html += '<div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn" data-copy-idx="' + i + '" data-orig="Copy">Copy</button></div>';
+      html += '<p class="prompt-text" data-prompt-idx="' + i + '">' + esc(it.prompt) + '</p>';
+      html += '</div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+
+    var currentIndex = LADDERS.findIndex(function (x) { return x.id === g.id; });
+    var prevGroup = currentIndex > 0 ? LADDERS[currentIndex - 1] : null;
+    var nextGroup = currentIndex < LADDERS.length - 1 ? LADDERS[currentIndex + 1] : null;
+    html += '<div class="panel-nav">';
+    if (prevGroup) {
+      html += '<button type="button" class="panel-nav-btn prev" data-nav-id="' + prevGroup.id + '"><span class="panel-nav-label">&larr; Previous ladder</span><span class="panel-nav-title">' + esc(prevGroup.num) + ': ' + esc(prevGroup.menuTitle) + '</span></button>';
+    }
+    if (nextGroup) {
+      html += '<button type="button" class="panel-nav-btn next" data-nav-id="' + nextGroup.id + '"><span class="panel-nav-label">Next ladder &rarr;</span><span class="panel-nav-title">' + esc(nextGroup.num) + ': ' + esc(nextGroup.menuTitle) + '</span></button>';
+    }
+    html += '</div>';
+
+    packPanel.innerHTML = html;
+
+    packPanel.querySelectorAll(".panel-nav-btn").forEach(function (b) {
+      b.addEventListener("click", function () {
+        activePackId = b.getAttribute("data-nav-id");
+        renderPackMenu();
+        renderPackPanel();
+        packPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    packPanel.querySelectorAll(".copy-btn").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var idx = b.getAttribute("data-copy-idx");
+        var pEl = packPanel.querySelector('.prompt-text[data-prompt-idx="' + idx + '"]');
+        copyPrompt(pEl.textContent, b);
+      });
+    });
+  }
+
+  function renderCross() {
+    if (!crossPanel || !CROSS) { return; }
+    var html = '';
+    html += '<div class="scenario-head">';
+    html += '<div><span class="scenario-eyebrow">' + esc(CROSS.num) + '</span><h3 class="scenario-title">' + esc(CROSS.title) + '</h3></div>';
+    html += '<span class="scenario-role">Project: ' + esc(CROSS.project) + '</span>';
+    html += '</div>';
+    if (CROSS.note) { html += '<p class="scenario-scenario">' + esc(CROSS.note) + '</p>'; }
+
+    html += '<div class="workflow-head">Prompts</div>';
+    html += '<div class="steps">';
+    CROSS.items.forEach(function (it, i) {
+      html += '<div class="step">';
+      html += '<div class="step-num">' + (i + 1) + '</div>';
+      html += '<div>';
+      html += '<div class="step-title">' + esc(it.title) + '</div>';
+      if (it.body) { html += '<div class="step-body">' + esc(it.body) + '</div>'; }
+      html += '<div class="prompt-box">';
+      html += '<div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn" data-copy-idx="' + i + '" data-orig="Copy">Copy</button></div>';
+      html += '<p class="prompt-text" data-prompt-idx="' + i + '">' + esc(it.prompt) + '</p>';
+      html += '</div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+
+    crossPanel.innerHTML = html;
+
+    crossPanel.querySelectorAll(".copy-btn").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var idx = b.getAttribute("data-copy-idx");
+        var pEl = crossPanel.querySelector('.prompt-text[data-prompt-idx="' + idx + '"]');
+        copyPrompt(pEl.textContent, b);
+      });
+    });
+  }
+
   renderMenu();
   renderPanel();
+  renderPackMenu();
+  renderPackPanel();
+  renderCross();
 })();
 </script>
 
