@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Data Model Harmonization Relay</title>
+<meta name="description" content="A four-leg team relay for harmonizing consortium data models into one reusable, ontology-aligned model with Claude, CoreModels and Synapse.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap">
+<style>
+  /* Layout: one centred column; a title row with the track drawing, then goals and legs as tabs. */
+  :root {
+    --bg: #F5F6FA;
+    --surface: #FFFFFF;
+    --surface-2: #ECEEF6;
+    --ink: #12141F;
+    --ink-muted: #454A5E;
+    --ink-faint: #83879C;
+    --border: #DEE1ED;
+    --border-strong: #C5C9DE;
+    --accent: #2E44E0;
+    --accent-soft: #E4E7FC;
+    --accent-2: #D9431E;
+    --accent-2-soft: #FCE1D8;
+    --accent-3: #0B8F5A;
+    --accent-3-soft: #DAF3E7;
+    --code-bg: #10132A;
+    --code-text: #D7E0FF;
+    --code-border: #262B52;
+    --leg1: #2E44E0;
+    --leg2: #7A3FD1;
+    --leg3: #D9431E;
+    --leg4: #0B8F5A;
+    --shadow: 0 1px 2px rgba(18,20,31,0.06), 0 8px 24px -12px rgba(18,20,31,0.2);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0B13;
+      --surface: #12141F;
+      --surface-2: #1B1E2D;
+      --ink: #EDEFF9;
+      --ink-muted: #A7ABC3;
+      --ink-faint: #75798F;
+      --border: #262A3D;
+      --border-strong: #363B55;
+      --accent: #7B90FF;
+      --accent-soft: #1C2247;
+      --accent-2: #FF7A52;
+      --accent-2-soft: #3A2418;
+      --accent-3: #3DDB93;
+      --accent-3-soft: #103525;
+      --code-bg: #07081A;
+      --code-text: #CBDAFF;
+      --code-border: #1E2440;
+      --leg1: #7B90FF;
+      --leg2: #B48CFF;
+      --leg3: #FF7A52;
+      --leg4: #3DDB93;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.55);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0A0B13;
+    --surface: #12141F;
+    --surface-2: #1B1E2D;
+    --ink: #EDEFF9;
+    --ink-muted: #A7ABC3;
+    --ink-faint: #75798F;
+    --border: #262A3D;
+    --border-strong: #363B55;
+    --accent: #7B90FF;
+    --accent-soft: #1C2247;
+    --accent-2: #FF7A52;
+    --accent-2-soft: #3A2418;
+    --accent-3: #3DDB93;
+    --accent-3-soft: #103525;
+    --code-bg: #07081A;
+    --code-text: #CBDAFF;
+    --code-border: #1E2440;
+    --leg1: #7B90FF;
+    --leg2: #B48CFF;
+    --leg3: #FF7A52;
+    --leg4: #3DDB93;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.55);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    padding-inline: 20px;
+    padding-block: 0 48px;
+  }
+  @media (max-width: 600px) { body { padding-inline: 16px; } }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--ink); text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--accent); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 5px;
+    word-break: break-word;
+  }
+
+  .wrap { max-width: 1080px; margin-inline: auto; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding-block: 12px;
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+  @media (max-width: 600px) { .masthead { margin-inline: -16px; padding-inline: 16px; } }
+  .masthead-row {
+    max-width: 1080px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .masthead-brand { font-size: 0.92rem; font-weight: 600; min-width: 0; }
+  .masthead-brand a { color: var(--ink-muted); text-decoration: none; }
+  .masthead-brand a:hover { color: var(--accent); }
+  .masthead-brand .divider { color: var(--border-strong); margin-inline: 6px; }
+  .masthead-nav { position: relative; flex: none; }
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 7px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .nav-toggle:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .nav-toggle-chevron { transition: transform 0.15s ease; color: var(--ink-faint); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-chevron { transform: rotate(180deg); }
+  .nav-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 210px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: var(--shadow);
+    z-index: 50;
+  }
+  .nav-menu a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 500;
+    padding: 8px 10px;
+    border-radius: 6px;
+  }
+  .nav-menu a.sub { padding-left: 22px; }
+  .nav-menu a:hover { background: var(--surface-2); color: var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px 28px;
+    flex-wrap: wrap;
+  }
+  .hero h1 { font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.12; }
+  .hero-art { flex: none; width: 240px; max-width: 100%; height: auto; display: block; }
+  .hero-art .infield { fill: var(--surface-2); stroke: var(--border); }
+  .hero-art .lane { stroke: var(--surface); }
+  .hero-art .seg { fill: none; stroke-width: 20; }
+  .hero-art .leg-label { fill: #FFFFFF; font: 700 11px "DM Sans", ui-sans-serif, system-ui, sans-serif; }
+  .hero-art .runner { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  .hero-art .head { fill: var(--ink); }
+  .hero-art .baton { fill: var(--accent-2); stroke: var(--surface); stroke-width: 1.5; }
+  .hero-art .speed { stroke: var(--ink-faint); stroke-width: 2.5; stroke-linecap: round; }
+
+  /* ---------- Sections ---------- */
+  section { margin-top: 44px; scroll-margin-top: 72px; }
+  .section-title {
+    font-size: clamp(1.3rem, 2.2vw, 1.55rem);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sub-title { font-size: 1rem; margin: 24px 0 10px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) { .card { padding: 16px; } }
+
+  /* ---------- Mission ---------- */
+  .mission-lead { display: grid; gap: 10px; }
+  .mission-lead p { color: var(--ink-muted); font-size: 0.96rem; max-width: 90ch; }
+  .mission-lead strong { color: var(--ink); }
+  .mission-challenge {
+    font-size: 1rem;
+    padding: 10px 14px;
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 10px 10px 0;
+  }
+  .needs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 8px;
+  }
+  .needs li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .needs label { font-size: 0.9rem; line-height: 1.35; }
+  .needs label span { display: flex; flex-direction: column; gap: 2px; }
+  .needs small { color: var(--ink-muted); font-size: 0.8rem; font-weight: 400; }
+  .needs input:checked + span strong { color: var(--ink-faint); }
+
+  .relay-legs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 900px) { .relay-legs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .relay-legs { grid-template-columns: 1fr; } }
+  .relay-leg {
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--leg);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .relay-leg:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .relay-leg:focus-visible { outline: 2px solid var(--leg); outline-offset: 2px; }
+  .leg-num {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--leg);
+  }
+  .relay-leg h3 { font-size: 1rem; }
+  .relay-leg p { color: var(--ink-muted); font-size: 0.87rem; line-height: 1.45; }
+  .relay-leg .cta { margin-top: auto; padding-top: 4px; font-size: 0.82rem; font-weight: 600; color: var(--leg); }
+
+  .finish { margin-top: 10px; }
+  .finish h3 { font-size: 1rem; margin-bottom: 4px; }
+  .finish > p { color: var(--ink-muted); font-size: 0.93rem; }
+  .finish ul {
+    margin: 6px 0 0;
+    padding-left: 1.2em;
+    color: var(--ink-muted);
+    font-size: 0.93rem;
+    columns: 3 200px;
+    column-gap: 32px;
+  }
+  .finish li { margin-bottom: 3px; }
+  .bonus {
+    margin-top: 12px;
+    padding: 10px 14px;
+    font-size: 0.93rem;
+    border-radius: 10px;
+    background: var(--accent-3-soft);
+    color: var(--ink);
+  }
+
+  /* ---------- Prompts ---------- */
+  .prompt-box {
+    margin-top: 8px;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prompt-box-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 10px 6px 12px;
+    border-bottom: 1px solid var(--code-border);
+  }
+  .prompt-box-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--code-text) 60%, transparent);
+  }
+  .copy-btn {
+    font: inherit;
+    font-size: 0.72rem;
+    background: transparent;
+    border: 1px solid var(--code-border);
+    color: var(--code-text);
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex: none;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.06); }
+  .copy-btn.copied { color: #3DDB93; border-color: #3DDB93; }
+  .prompt-text {
+    font-size: 0.85rem;
+    color: var(--code-text);
+    padding: 10px 12px;
+    margin: 0;
+    white-space: pre-wrap;
+    line-height: 1.55;
+  }
+
+  /* ---------- Leg tabs ---------- */
+  .leg-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 6px;
+  }
+  @media (max-width: 700px) { .leg-tabs { grid-template-columns: repeat(2, 1fr); } }
+  .leg-tab {
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--ink-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .leg-tab:hover { background: var(--surface); color: var(--ink); }
+  .leg-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .leg-tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+  .leg-tab-title { font-weight: 600; font-size: 0.94rem; }
+
+  .leg-panel {
+    margin-top: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--leg);
+    border-radius: 14px;
+    padding: 22px 26px 24px;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) { .leg-panel { padding: 18px 16px 20px; } }
+  .leg-title { font-size: 1.25rem; margin-top: 2px; }
+  .leg-intro { color: var(--ink-muted); max-width: 80ch; margin-top: 8px; font-size: 0.95rem; }
+  .leg-setup {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+  .leg-setup strong { color: var(--ink); }
+
+  .steps-head {
+    margin-top: 20px;
+    font-size: 0.74rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .steps { margin-top: 4px; }
+  .step {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+    padding-block: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .step-num {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--leg);
+    background: color-mix(in srgb, var(--leg) 12%, transparent);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-title { font-weight: 600; font-size: 0.96rem; line-height: 26px; }
+  .step-note { color: var(--ink-muted); font-size: 0.92rem; margin-top: 4px; }
+  .step ul { margin: 8px 0 0; padding-left: 1.15em; color: var(--ink-muted); font-size: 0.92rem; }
+  .step li + li { margin-top: 3px; }
+  .step li strong { color: var(--ink); }
+
+  .handoff-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .handoff, .done { border-radius: 10px; padding: 14px 16px; }
+  .handoff {
+    background: color-mix(in srgb, var(--leg) 9%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--leg) 30%, var(--border));
+  }
+  .done {
+    background: var(--accent-3-soft);
+    border: 1px solid color-mix(in srgb, var(--accent-3) 35%, var(--border));
+  }
+  .handoff h4, .done h4 {
+    font-size: 0.74rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .handoff h4 { color: var(--leg); }
+  .done h4 { color: var(--accent-3); }
+  .handoff ul { margin: 0; padding-left: 1.15em; font-size: 0.88rem; }
+  .handoff li + li { margin-top: 4px; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .checks label { display: flex; gap: 8px; align-items: flex-start; font-size: 0.88rem; line-height: 1.4; cursor: pointer; }
+  .checks input { margin-top: 2px; accent-color: var(--accent-3); flex: none; }
+  .checks input:checked + span { color: var(--ink-faint); text-decoration: line-through; }
+
+  /* ---------- Leg 4 checklist ---------- */
+  .checklist-groups {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+  }
+  .checklist-group {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: var(--surface);
+  }
+  .checklist-group h4 { font-size: 0.88rem; margin-bottom: 8px; display: flex; gap: 8px; align-items: baseline; }
+  .checklist-group h4 span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--leg4);
+    background: color-mix(in srgb, var(--leg4) 14%, transparent);
+    padding: 1px 7px;
+    border-radius: 6px;
+  }
+  .checklist-actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 600;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--border-strong);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.copied { color: var(--accent-3); border-color: var(--accent-3); }
+  .hint { font-size: 0.84rem; color: var(--ink-faint); }
+
+  /* ---------- Links ---------- */
+  .links-card { padding: 6px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 2px; }
+  .link-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px 12px;
+    border-radius: 8px;
+    min-width: 0;
+  }
+  .link-item:hover { background: var(--surface-2); }
+  .link-item-title { font-weight: 600; font-size: 0.92rem; color: var(--ink); }
+  .link-item-url { display: block; margin-top: 1px; font-size: 0.8rem; color: var(--accent); word-break: break-all; }
+  .link-item-arrow { flex: none; color: var(--ink-faint); }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  @media print {
+    .masthead, .leg-tabs, .copy-btn, .checklist-actions { display: none !important; }
+    .leg-panel[hidden] { display: block !important; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-row">
+    <div class="masthead-brand">
+      <a href="../">Core Models</a><span class="divider">/</span><span>Data Model Harmonization Relay</span>
+    </div>
+    <div class="masthead-nav">
+      <button type="button" class="nav-toggle" id="navToggle" aria-haspopup="true" aria-expanded="false" aria-controls="navMenu">
+        Menu
+        <svg class="nav-toggle-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-menu" id="navMenu" role="menu" hidden>
+        <a href="#goals" role="menuitem">Goals</a>
+        <a href="#legs" role="menuitem">The legs</a>
+        <a href="#leg-1" role="menuitem" class="sub">Leg 1 · Harmonize</a>
+        <a href="#leg-2" role="menuitem" class="sub">Leg 2 · Harmonize</a>
+        <a href="#leg-3" role="menuitem" class="sub">Leg 3 · Match to Ontologies</a>
+        <a href="#leg-4" role="menuitem" class="sub">Leg 4 · Validate in Synapse</a>
+        <a href="#links" role="menuitem">Links</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ─── Hero ─────────────────────────────────────────────── -->
+  <header class="hero">
+    <h1>Data Model Harmonization Relay</h1>
+    <svg class="hero-art" id="heroArt" viewBox="0 0 260 150" role="img" aria-label="A relay runner carrying a baton inside a running track split into four coloured legs">
+      <rect class="infield" x="36" y="36" width="188" height="78" rx="39"/>
+      <path class="seg" d="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z" pathLength="100" stroke="var(--leg1)" stroke-dasharray="23.5 76.5" stroke-dashoffset="0"/>
+      <path class="seg" d="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z" pathLength="100" stroke="var(--leg2)" stroke-dasharray="23.5 76.5" stroke-dashoffset="-25"/>
+      <path class="seg" d="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z" pathLength="100" stroke="var(--leg3)" stroke-dasharray="23.5 76.5" stroke-dashoffset="-50"/>
+      <path class="seg" d="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z" pathLength="100" stroke="var(--leg4)" stroke-dasharray="23.5 76.5" stroke-dashoffset="-75"/>
+      <path class="lane" d="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z" fill="none" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <text class="leg-label" x="145" y="19" text-anchor="middle">1</text>
+      <text class="leg-label" x="243" y="94" text-anchor="middle">2</text>
+      <text class="leg-label" x="115" y="139" text-anchor="middle">3</text>
+      <text class="leg-label" x="17" y="64" text-anchor="middle">4</text>
+      <g class="speed">
+        <line x1="84" y1="60" x2="100" y2="60"/>
+        <line x1="78" y1="72" x2="98" y2="72"/>
+        <line x1="86" y1="84" x2="100" y2="84"/>
+      </g>
+      <g>
+        <circle class="head" cx="141" cy="47" r="7"/>
+        <path class="runner" d="M137 57L127 80"/>
+        <path class="runner" d="M135 62L147 68L156 60"/>
+        <path class="runner" d="M135 62L123 66L117 75"/>
+        <path class="runner" d="M127 80L140 89L137 104"/>
+        <path class="runner" d="M127 80L117 93L104 95"/>
+        <rect class="baton" x="151" y="51" width="16" height="6" rx="3" transform="rotate(-35 159 54)"/>
+      </g>
+      <g>
+        <rect class="baton" x="-7" y="-3" width="14" height="6" rx="3"/>
+        <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path="M75 15H185A60 60 0 0 1 185 135H75A60 60 0 0 1 75 15Z"/>
+      </g>
+    </svg>
+  </header>
+
+  <!-- ─── Goals ──────────────────────────────────────────── -->
+  <section id="goals">
+    <h2 class="section-title">Goals</h2>
+
+    <div class="mission-lead card">
+      <p>Your team has been handed data models from multiple research consortia. They overlap, they use different terminology, and they don&rsquo;t always agree.</p>
+      <p class="mission-challenge">Your challenge: <strong>harmonize them into one reusable, ontology-aligned model before the other teams do.</strong></p>
+      <p>This workshop is a <strong>relay race</strong> in four legs. Each teammate runs one leg, then passes the baton to the next teammate. The baton is a saved copy of the project plus a handoff comment.</p>
+      <p>You&rsquo;ll use the <strong>CoreModels MCP</strong> and <strong>Synapse MCP</strong> to search existing models, compare standards, reuse what already exists, resolve differences, and validate the final model.</p>
+    </div>
+
+    <h3 class="sub-title">What you need</h3>
+    <ul class="needs checks">
+      <li><label><input type="checkbox" id="need1"><span><strong>4+ team members</strong><small>Have more than four? Pair up for each leg.</small></span></label></li>
+      <li><label><input type="checkbox" id="need2"><span><strong>One computer per team member</strong></span></label></li>
+      <li><label><input type="checkbox" id="need3"><span><strong>Claude with access to the Sage Bionetworks plan</strong></span></label></li>
+      <li><label><input type="checkbox" id="need4"><span><strong>CoreModels Write Access connector</strong></span></label></li>
+      <li><label><input type="checkbox" id="need5"><span><strong>Access to the Synapse MCP</strong></span></label></li>
+    </ul>
+
+    <h3 class="sub-title">The relay</h3>
+    <div class="relay-legs">
+      <button type="button" class="relay-leg" style="--leg: var(--leg1)" data-goto="1">
+        <span class="leg-num">&#127937; Leg 1</span>
+        <h3>Harmonize</h3>
+        <p>Search existing consortium models, identify reusable data elements, and draft one common model with a mapping from every old field.</p>
+        <span class="cta">Open Leg 1 &rarr;</span>
+      </button>
+      <button type="button" class="relay-leg" style="--leg: var(--leg2)" data-goto="2">
+        <span class="leg-num">&#129513; Leg 2</span>
+        <h3>Harmonize</h3>
+        <p>Resolve differences in names, definitions, data types, and allowed values, reusing existing model components wherever possible.</p>
+        <span class="cta">Open Leg 2 &rarr;</span>
+      </button>
+      <button type="button" class="relay-leg" style="--leg: var(--leg3)" data-goto="3">
+        <span class="leg-num">&#128279; Leg 3</span>
+        <h3>Match to Ontologies</h3>
+        <p>Map fields and values to established ontologies, and record every term that has no good match.</p>
+        <span class="cta">Open Leg 3 &rarr;</span>
+      </button>
+      <button type="button" class="relay-leg" style="--leg: var(--leg4)" data-goto="4">
+        <span class="leg-num">&#9989; Leg 4</span>
+        <h3>Validate in Synapse</h3>
+        <p>Check that the model is structurally valid, ontology-aligned, and able to represent the required data across the participating consortia.</p>
+        <span class="cta">Open Leg 4 &rarr;</span>
+      </button>
+    </div>
+
+    <div class="finish card">
+      <h3>&#127942; Finish line</h3>
+      <p>Present your team&rsquo;s harmonized model and explain:</p>
+      <ul>
+        <li>What you reused</li>
+        <li>What you changed</li>
+        <li>Which conflicts you resolved</li>
+        <li>Which ontologies you aligned to</li>
+        <li>What validation issues you found</li>
+        <li>Where gaps still remain</li>
+      </ul>
+      <p class="bonus"><strong>Bonus challenge:</strong> Can your team finish with the fewest new fields while still meeting all of the requirements?</p>
+    </div>
+  </section>
+
+  <!-- ─── Legs ─────────────────────────────────────────────── -->
+  <section id="legs">
+    <h2 class="section-title">The legs</h2>
+
+    <div class="leg-tabs" role="tablist" aria-label="Legs">
+      <button type="button" class="leg-tab" role="tab" id="tab-1" aria-controls="leg-1" aria-selected="true" style="--leg: var(--leg1)"><span class="leg-num">Leg 1</span><span class="leg-tab-title">Harmonize</span></button>
+      <button type="button" class="leg-tab" role="tab" id="tab-2" aria-controls="leg-2" aria-selected="false" tabindex="-1" style="--leg: var(--leg2)"><span class="leg-num">Leg 2</span><span class="leg-tab-title">Harmonize</span></button>
+      <button type="button" class="leg-tab" role="tab" id="tab-3" aria-controls="leg-3" aria-selected="false" tabindex="-1" style="--leg: var(--leg3)"><span class="leg-num">Leg 3</span><span class="leg-tab-title">Match to Ontologies</span></button>
+      <button type="button" class="leg-tab" role="tab" id="tab-4" aria-controls="leg-4" aria-selected="false" tabindex="-1" style="--leg: var(--leg4)"><span class="leg-num">Leg 4</span><span class="leg-tab-title">Validate in Synapse</span></button>
+    </div>
+
+    <!-- Leg 1 -->
+    <article class="leg-panel" id="leg-1" role="tabpanel" aria-labelledby="tab-1" style="--leg: var(--leg1)">
+      <div class="leg-num">&#127937; Leg 1</div>
+      <h3 class="leg-title">Discover Data Models</h3>
+      <p class="leg-intro">Find every existing model for the assay, work out which fields describe the same concept, and draft one common model. Leg 1 decides the concepts. Value lists belong to Leg 2 and ontology terms to Leg 3.</p>
+      <p class="leg-setup"><strong>Setup.</strong> The facilitator creates a working project for each team as a live child of the source project. Your team picks any assay or data type that already has templates there.</p>
+
+      <div class="steps-head">Steps</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">0</span><div>
+          <div class="step-title">Set the context (fill in once)</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · fill in the brackets</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">My working project in CoreModels is "[project name]" and the assay or data type I am modelling is "[assay or data type]". Remember both for this conversation. Everything below refers to them.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">1</span><div>
+          <div class="step-title">Find the existing models</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">In my working project, list every Type that relates to the assay or data type I named. Treat variants of it separately. For each Type, tell me how many fields it has and which consortium or program it seems to come from. Then use the Synapse MCP to check whether any consortium has a registered schema for this assay that is missing from the list.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">2</span><div>
+          <div class="step-title">Compare the fields</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">For the Types you just found, list every field with its label. Group fields that describe the same concept even when their names differ, for example because of different prefixes, casing, or wording. Show a table with one row per concept and one column per Type. Flag fields that appear in only one Type, and mark fields that already exist as shared elements we could reuse as they are.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">3</span><div>
+          <div class="step-title">Draft the common model</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Propose one common template for this assay or data type with exactly one term per concept, so a contributor fills in each idea once. Reuse existing elements wherever they fit instead of creating new ones. Use one naming convention with no program prefixes. Organize the fields into logical groups that follow the steps of the workflow, and mark which fields are required. Move fields that are specific to one program, or that describe processed results instead of the original data, into a separate list. Do not write value lists or ontology terms yet.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">4</span><div>
+          <div class="step-title">Record the mapping and the doubts</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Make a table mapping every old field in every source Type to its new term, or to "dropped" or "moved out" with a reason. Then list the merges you are least sure about, where two old fields might mean different things or use different sets of allowed values.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">5</span><div>
+          <div class="step-title">Build it and pass the baton</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">In a new space of my project, create a Type named "Common" followed by the assay or data type name (no spaces), with these fields and a description for each. Mark required fields. Then leave a project-level comment titled "Leg 1 handoff" containing the mapping table, the list of reused elements, and the list of uncertain merges. Finally copy the project and name the copy "[assay or data type] - Leg 1 handoff".</p></div>
+        </div></div>
+      </div>
+
+      <div class="handoff-grid">
+        <div class="handoff">
+          <h4>Pass the baton to Leg 2</h4>
+          <ul>
+            <li>The copied project with the draft Common Type and field descriptions</li>
+            <li>The old-to-new mapping table in the "Leg 1 handoff" comment</li>
+            <li>The list of reused elements and the list of uncertain merges</li>
+          </ul>
+        </div>
+        <div class="done">
+          <h4>Done when</h4>
+          <ul class="checks">
+            <li><label><input type="checkbox" id="l1c1"><span>Every source field appears in the mapping</span></label></li>
+            <li><label><input type="checkbox" id="l1c2"><span>Each concept has one term</span></label></li>
+            <li><label><input type="checkbox" id="l1c3"><span>Required fields are marked and every field has a description</span></label></li>
+            <li><label><input type="checkbox" id="l1c4"><span>Uncertain merges are listed, not hidden</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- Leg 2 -->
+    <article class="leg-panel" id="leg-2" role="tabpanel" aria-labelledby="tab-2" style="--leg: var(--leg2)" hidden>
+      <div class="leg-num">&#129513; Leg 2</div>
+      <h3 class="leg-title">Harmonize: resolve and reuse</h3>
+      <p class="leg-intro">Take the Leg 1 draft and settle its differences: decide the uncertain merges, agree one definition and data type per field, write value lists, and reuse existing components wherever possible.</p>
+      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read the "Leg 1 handoff" comment first. Work in a new copy of it named "Leg 2 working".</p>
+
+      <div class="steps-head">Steps</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">0</span><div>
+          <div class="step-title">Set the context (fill in once)</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · fill in the brackets</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comment titled "Leg 1 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">1</span><div>
+          <div class="step-title">Decide the uncertain merges</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">For each uncertain merge in the Leg 1 handoff, compare the old fields' definitions, data types, and allowed values. Recommend keeping the merge or splitting it, and give the reason. Show the evidence for each recommendation.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">2</span><div>
+          <div class="step-title">Agree definitions and data types</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">For every field in the Common Type, compare the descriptions and data types of the old fields it replaces. Propose one definition and one data type for each field, and flag every place where the source models disagree.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">3</span><div>
+          <div class="step-title">Write the value lists</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Which fields in the Common Type should have a fixed list of allowed values, and which should stay free text or numeric? For each list field, propose the values, making sure the list covers every value the merged old fields allowed.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">4</span><div>
+          <div class="step-title">Reuse, remove duplicates, find gaps</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Check whether any field or value list in the Common Type duplicates an element that already exists in the parent project. Where one exists, propose reusing it instead of keeping a new node. Then list any concept the source models need that the Common Type is still missing.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">5</span><div>
+          <div class="step-title">Apply the changes and pass the baton</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · list the changes you accepted</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Apply only these changes: [list the ones you accepted]. Create the value lists and link them to their fields. For each change, add a comment on the node saying what changed and why. Then leave a project-level comment titled "Leg 2 handoff" listing: merges kept or split with reasons, definitions and data types changed, value lists created, elements reused, and gaps still open. Copy the project and name the copy "[assay or data type] - Leg 2 handoff".</p></div>
+        </div></div>
+      </div>
+
+      <div class="handoff-grid">
+        <div class="handoff">
+          <h4>Pass the baton to Leg 3</h4>
+          <ul>
+            <li>The model with merges decided, one definition and data type per field, and value lists</li>
+            <li>A reason for every change, as comments on the nodes</li>
+            <li>The list of reused elements and open gaps in the "Leg 2 handoff" comment</li>
+          </ul>
+        </div>
+        <div class="done">
+          <h4>Done when</h4>
+          <ul class="checks">
+            <li><label><input type="checkbox" id="l2c1"><span>Every uncertain merge is kept or split, with a reason</span></label></li>
+            <li><label><input type="checkbox" id="l2c2"><span>Every field has one definition and one data type</span></label></li>
+            <li><label><input type="checkbox" id="l2c3"><span>Every fixed-answer field has a value list</span></label></li>
+            <li><label><input type="checkbox" id="l2c4"><span>Existing elements are reused instead of duplicated, and gaps are listed</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- Leg 3 -->
+    <article class="leg-panel" id="leg-3" role="tabpanel" aria-labelledby="tab-3" style="--leg: var(--leg3)" hidden>
+      <div class="leg-num">&#128279; Leg 3</div>
+      <h3 class="leg-title">Match to Ontologies</h3>
+      <p class="leg-intro">Give the model its meaning by binding fields and values to established ontology terms. Leg 3 owns the bindings. If a match makes you doubt an earlier decision, leave a comment on that node instead of editing it.</p>
+      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read the "Leg 1 handoff" and "Leg 2 handoff" comments. Work in a new copy named "Leg 3 working".</p>
+
+      <div class="steps-head">Steps</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">0</span><div>
+          <div class="step-title">Set the context (fill in once)</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · fill in the brackets</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comments titled "Leg 1 handoff" and "Leg 2 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">1</span><div>
+          <div class="step-title">Search ontologies</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">For each field and each value-list value in the Common Type, search public ontologies (for example through the EBI Ontology Lookup Service) for a matching term. For every field or value, show the top candidates with their ID, definition, and source ontology. Say which candidate you would choose and why, and say plainly where nothing matches.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">2</span><div>
+          <div class="step-title">Check the matches yourself</div>
+          <p class="step-note">Read each definition. A label match is not enough. Ask three questions:</p>
+          <ul>
+            <li>Does the definition say the same thing as our field description?</li>
+            <li>Does the ontology belong to this field's community, or is it borrowed from another (for example, one written for a different organism or discipline)?</li>
+            <li>Does the term describe the field, or only one of its values?</li>
+          </ul>
+        </div></div>
+        <div class="step"><span class="step-num">3</span><div>
+          <div class="step-title">Bind what you accept</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · list the terms you accepted</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Bind only these ontology terms: [list the ones you accepted, with their IDs]. Do not bind anything else. For each binding, add a comment on the node stating why it was chosen and recording the term's IRI.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">4</span><div>
+          <div class="step-title">Record gaps and pass the baton</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Leave a project-level comment titled "Leg 3 handoff" listing: every binding with its reason, every field or value with no ontology match, any binding borrowed from another community, and any place where an ontology match made you doubt an earlier merge. Then copy the project and name the copy "[assay or data type] - Leg 3 handoff".</p></div>
+        </div></div>
+      </div>
+
+      <div class="handoff-grid">
+        <div class="handoff">
+          <h4>Pass the baton to Leg 4</h4>
+          <ul>
+            <li>The model with ontology bindings</li>
+            <li>A reason and IRI for each binding</li>
+            <li>A list of unmatched terms, borrowed terms, and merges that now look wrong</li>
+          </ul>
+        </div>
+        <div class="done">
+          <h4>Done when</h4>
+          <ul class="checks">
+            <li><label><input type="checkbox" id="l3c1"><span>Every binding has a reason and a reviewer</span></label></li>
+            <li><label><input type="checkbox" id="l3c2"><span>Unmatched terms are listed as gaps, not left blank</span></label></li>
+            <li><label><input type="checkbox" id="l3c3"><span>Terms borrowed from another community are flagged</span></label></li>
+            <li><label><input type="checkbox" id="l3c4"><span>Doubts about earlier legs are raised as comments, and no field was edited or removed</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- Leg 4 -->
+    <article class="leg-panel" id="leg-4" role="tabpanel" aria-labelledby="tab-4" style="--leg: var(--leg4)" hidden>
+      <div class="leg-num">&#9989; Leg 4</div>
+      <h3 class="leg-title">Validate in Synapse</h3>
+      <p class="leg-intro">Put the harmonized model to the test with sample data from every consortium, fix what the tests show is wrong with the model, and prepare the finish-line summary. Every change needs a reason that traces to a failed test.</p>
+      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read all three handoff comments in order. Work in a new copy named "Leg 4 working". The facilitator may supply one sample manifest per consortium. If there are none, use the generator prompt in Step 1.</p>
+
+      <div class="steps-head">Steps</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">0</span><div>
+          <div class="step-title">Set the context (fill in once)</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · fill in the brackets</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comments titled "Leg 1 handoff", "Leg 2 handoff", and "Leg 3 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">1</span><div>
+          <div class="step-title">Get test data</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Sample generator prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">For each source Type listed in the Leg 1 handoff mapping, write a realistic sample manifest as CSV with 5 rows, using that Type's original field names. Include two deliberate problems in each: one missing required value and one value outside the expected set. Label which rows are valid and which are not.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">2</span><div>
+          <div class="step-title">Translate each manifest with the mapping</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Using the mapping table in the Leg 1 handoff comment and the changes in the Leg 2 handoff comment, convert each sample manifest into the fields of the Common Type. Show me what happened to every column: mapped cleanly, merged (with the rule used), or dropped. List any value that had no home in the value lists.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">3</span><div>
+          <div class="step-title">Validate</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Export the Common Type as a JSON Schema and read it back to me: field names, types, required list, and allowed values. Then validate each converted row against it. Report per source consortium: rows passed, rows failed, and the reason for each failure.</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">4</span><div>
+          <div class="step-title">Diagnose failures</div>
+          <p class="step-note">Sort each failure into one of these before fixing anything:</p>
+          <ul>
+            <li><strong>The test data was wrong</strong> (bad row, expected to fail)</li>
+            <li><strong>The mapping was wrong</strong> (an old value converted badly)</li>
+            <li><strong>The model was wrong</strong> (a field is missing, a list lacks a real value, a required flag is too strict)</li>
+          </ul>
+        </div></div>
+        <div class="step"><span class="step-num">5</span><div>
+          <div class="step-title">Fix the model and run the checklist</div>
+          <p class="step-note">The Copy button on this prompt includes the full validation checklist below.</p>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt · checklist included on copy</span><button type="button" class="copy-btn" data-append-checklist>Copy</button></div>
+          <p class="prompt-text">Fix the model failures only. For each change, add a comment on the node saying what changed and which failure it fixed. Then work through this checklist against the project and the three handoff comments. For each item say PASS or FAIL and give the evidence, or say what is missing.
+
+[validation checklist below]</p></div>
+        </div></div>
+        <div class="step"><span class="step-num">6</span><div>
+          <div class="step-title">Prepare the finish line</div>
+          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Prompt</span><button type="button" class="copy-btn">Copy</button></div>
+          <p class="prompt-text">Leave a project-level comment titled "Leg 4 handoff" that summarizes, across all four legs: what we reused, what we changed, which conflicts we resolved, which ontologies we aligned to, what validation found (rows passed of rows tested per consortium), where gaps remain, and how many new fields the model adds compared with reusing existing ones. Then copy the project and name the copy "[assay or data type] - Finish line".</p></div>
+        </div></div>
+      </div>
+
+      <div class="steps-head">Validation checklist</div>
+      <div class="checklist-groups" id="validationChecklist">
+        <div class="checklist-group"><h4><span>A</span>Completeness</h4><ul class="checks">
+          <li><label><input type="checkbox" id="vA1"><span>Every field has a description a contributor could follow without help</span></label></li>
+          <li><label><input type="checkbox" id="vA2"><span>Every field has a data type, and required fields are marked</span></label></li>
+          <li><label><input type="checkbox" id="vA3"><span>Each concept has exactly one term</span></label></li>
+          <li><label><input type="checkbox" id="vA4"><span>Every value list has a description and the values consortia currently use</span></label></li>
+        </ul></div>
+        <div class="checklist-group"><h4><span>B</span>Traceability and reuse</h4><ul class="checks">
+          <li><label><input type="checkbox" id="vB1"><span>Every source field maps to a new term or is listed as dropped, with a reason</span></label></li>
+          <li><label><input type="checkbox" id="vB2"><span>Merged fields have a documented rule for converting old values</span></label></li>
+          <li><label><input type="checkbox" id="vB3"><span>Existing elements are reused wherever they fit</span></label></li>
+          <li><label><input type="checkbox" id="vB4"><span>Left-out program-specific fields have a named home</span></label></li>
+        </ul></div>
+        <div class="checklist-group"><h4><span>C</span>Ontology alignment</h4><ul class="checks">
+          <li><label><input type="checkbox" id="vC1"><span>Each binding has a stated reason and a reviewer</span></label></li>
+          <li><label><input type="checkbox" id="vC2"><span>Terms with no match are listed as gaps</span></label></li>
+          <li><label><input type="checkbox" id="vC3"><span>Bindings from outside the field's community are accepted or replaced explicitly</span></label></li>
+          <li><label><input type="checkbox" id="vC4"><span>Ontology IRIs are recorded</span></label></li>
+        </ul></div>
+        <div class="checklist-group"><h4><span>D</span>Validation</h4><ul class="checks">
+          <li><label><input type="checkbox" id="vD1"><span>A sample manifest from each consortium was run through the mapping</span></label></li>
+          <li><label><input type="checkbox" id="vD2"><span>Failures are listed with a cause and are fixed or accepted</span></label></li>
+          <li><label><input type="checkbox" id="vD3"><span>The JSON Schema export matches the intended fields, types, and required list</span></label></li>
+          <li><label><input type="checkbox" id="vD4"><span>A valid sample passes and an invalid sample fails</span></label></li>
+        </ul></div>
+        <div class="checklist-group"><h4><span>E</span>Governance</h4><ul class="checks">
+          <li><label><input type="checkbox" id="vE1"><span>Nothing in the parent project was edited</span></label></li>
+          <li><label><input type="checkbox" id="vE2"><span>Naming follows one convention</span></label></li>
+          <li><label><input type="checkbox" id="vE3"><span>Every change has a comment with its reason</span></label></li>
+          <li><label><input type="checkbox" id="vE4"><span>Open comments are closed or carried forward as known gaps</span></label></li>
+        </ul></div>
+      </div>
+      <div class="checklist-actions">
+        <button type="button" class="btn" id="copyChecklist">Copy checklist as text</button>
+        <button type="button" class="btn" id="clearChecks">Clear all ticks</button>
+        <span class="hint">Ticks stay in this browser only.</span>
+      </div>
+
+      <div class="handoff-grid">
+        <div class="handoff">
+          <h4>Cross the finish line</h4>
+          <ul>
+            <li>The validated model in the "Finish line" copy</li>
+            <li>The "Leg 4 handoff" summary, ready to present</li>
+            <li>The checklist results and the count of new fields for the bonus challenge</li>
+          </ul>
+        </div>
+        <div class="done">
+          <h4>Done when</h4>
+          <ul class="checks">
+            <li><label><input type="checkbox" id="l4c1"><span>Every source consortium was tested with at least one manifest</span></label></li>
+            <li><label><input type="checkbox" id="l4c2"><span>A valid row passes and an invalid row fails, both shown</span></label></li>
+            <li><label><input type="checkbox" id="l4c3"><span>Each change traces to a failure</span></label></li>
+            <li><label><input type="checkbox" id="l4c4"><span>Ontology bindings from Leg 3 are unchanged, or changes are explained</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ─── Links ────────────────────────────────────────────── -->
+  <section id="links">
+    <h2 class="section-title">Useful links</h2>
+    <div class="card links-card">
+      <a class="link-item" href="https://library.schematica.io/mcp-server" target="_blank" rel="noopener">
+        <div><span class="link-item-title">Connect Claude to the CoreModels MCP</span><span class="link-item-url">library.schematica.io/mcp-server</span></div>
+        <span class="link-item-arrow">&nearr;</span>
+      </a>
+      <a class="link-item" href="https://go.coremodels.io/app/9beb8916977c46149f7a0180b50d41ba" target="_blank" rel="noopener">
+        <div><span class="link-item-title">Sage Core Data Models (source project)</span><span class="link-item-url">go.coremodels.io/app/9beb8916977c46149f7a0180b50d41ba</span></div>
+        <span class="link-item-arrow">&nearr;</span>
+      </a>
+      <a class="link-item" href="https://www.synapse.org" target="_blank" rel="noopener">
+        <div><span class="link-item-title">Synapse</span><span class="link-item-url">synapse.org</span></div>
+        <span class="link-item-arrow">&nearr;</span>
+      </a>
+      <a class="link-item" href="https://www.ebi.ac.uk/ols4/" target="_blank" rel="noopener">
+        <div><span class="link-item-title">EBI Ontology Lookup Service</span><span class="link-item-url">ebi.ac.uk/ols4</span></div>
+        <span class="link-item-arrow">&nearr;</span>
+      </a>
+      <a class="link-item" href="../">
+        <div><span class="link-item-title">Index of Data Models</span><span class="link-item-url">sage-bionetworks.github.io/core-models</span></div>
+        <span class="link-item-arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Data Model Harmonization Relay · Christina Parry · Sage Bionetworks</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // ── Hero animation: respect reduced motion ─────────────────
+  try {
+    var art = document.getElementById("heroArt");
+    var rm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var applyMotion = function () { if (rm.matches) { art.pauseAnimations(); art.setCurrentTime(0); } else { art.unpauseAnimations(); } };
+    applyMotion();
+    if (rm.addEventListener) rm.addEventListener("change", applyMotion);
+  } catch (e) { /* ignore */ }
+
+  // ── Nav menu ──────────────────────────────────────────────
+  var navToggle = document.getElementById("navToggle");
+  var navMenu = document.getElementById("navMenu");
+  function setNav(open) {
+    navMenu.hidden = !open;
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  navToggle.addEventListener("click", function (e) { e.stopPropagation(); setNav(navMenu.hidden); });
+  document.addEventListener("click", function (e) { if (!navMenu.hidden && !navMenu.contains(e.target)) setNav(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !navMenu.hidden) { setNav(false); navToggle.focus(); } });
+  navMenu.addEventListener("click", function () { setNav(false); });
+
+  // ── Leg tabs ──────────────────────────────────────────────
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".leg-tab"));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
+
+  function selectLeg(n, focus) {
+    tabs.forEach(function (t, i) {
+      var on = i === n - 1;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      panels[i].hidden = !on;
+      if (on && focus) t.focus();
+    });
+  }
+  function setHash(n) { try { history.replaceState(null, "", "#leg-" + n); } catch (e) { /* ignore */ } }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { selectLeg(i + 1); setHash(i + 1); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      selectLeg(((i + d + tabs.length) % tabs.length) + 1, true);
+    });
+  });
+  document.querySelectorAll("[data-goto]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var n = Number(b.getAttribute("data-goto"));
+      selectLeg(n);
+      document.getElementById("legs").scrollIntoView({ behavior: "smooth", block: "start" });
+      setHash(n);
+    });
+  });
+  function handleHash() {
+    var m = /^#leg-([1-4])$/.exec(location.hash);
+    if (m) {
+      selectLeg(Number(m[1]));
+      document.getElementById("legs").scrollIntoView({ block: "start" });
+    }
+  }
+  window.addEventListener("hashchange", handleHash);
+  handleHash();
+
+  // ── Clipboard ─────────────────────────────────────────────
+  function copyText(text, btn) {
+    var orig = btn.textContent;
+    var done = function () {
+      btn.textContent = "Copied";
+      btn.classList.add("copied");
+      setTimeout(function () { btn.textContent = orig; btn.classList.remove("copied"); }, 1400);
+    };
+    function fallback() {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch (e) { /* ignore */ }
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(); done(); });
+        return;
+      }
+    } catch (e) { /* fall through */ }
+    fallback(); done();
+  }
+
+  var checklistRoot = document.getElementById("validationChecklist");
+  function checklistText() {
+    var lines = ["Validation checklist"];
+    checklistRoot.querySelectorAll(".checklist-group").forEach(function (g) {
+      var h = g.querySelector("h4");
+      var letter = h.querySelector("span").textContent;
+      lines.push("", letter + ". " + h.textContent.replace(letter, "").trim());
+      g.querySelectorAll("li span").forEach(function (s) { lines.push("[ ] " + s.textContent); });
+    });
+    return lines.join("\n");
+  }
+  document.querySelectorAll(".copy-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.closest(".prompt-box").querySelector(".prompt-text").textContent;
+      if (btn.hasAttribute("data-append-checklist")) text = text.replace("[validation checklist below]", checklistText());
+      copyText(text, btn);
+    });
+  });
+  document.getElementById("copyChecklist").addEventListener("click", function (e) { copyText(checklistText(), e.currentTarget); });
+
+  // ── Checkbox persistence (per viewer, best effort) ────────
+  var KEY = "harmonization-relay-checks-v1";
+  var boxes = Array.prototype.slice.call(document.querySelectorAll(".checks input[type=checkbox]"));
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+  boxes.forEach(function (b) {
+    if (saved[b.id]) b.checked = true;
+    b.addEventListener("change", function () {
+      saved[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* ignore */ }
+    });
+  });
+  document.getElementById("clearChecks").addEventListener("click", function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    saved = {};
+    try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+  });
+})();
+</script>
+</body>
+</html>
