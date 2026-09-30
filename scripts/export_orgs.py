@@ -26,7 +26,15 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from synapseclient import Synapse
-from synapseclient.models.schema_organization import list_json_schema_organizations
+
+# synapseclient 4.14 renamed models.schema_organization to models.organization
+# and list_json_schema_organizations to list_organizations.
+try:
+    from synapseclient.models.organization import list_organizations
+except ImportError:
+    from synapseclient.models.schema_organization import (
+        list_json_schema_organizations as list_organizations,
+    )
 
 
 # ──────────────────────────────────────────────
@@ -163,7 +171,7 @@ def main():
     cached = load_existing_sha256s(OUTPUT_PATH)
     print(f"Loaded {len(cached)} cached schema SHA256s from {OUTPUT_PATH}\n")
 
-    all_orgs = list_json_schema_organizations()
+    all_orgs = list_organizations()
     total_orgs = len(all_orgs)
     print(f"Found {total_orgs} organizations. Using {MAX_WORKERS} workers.\n")
 
