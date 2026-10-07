@@ -128,39 +128,6 @@
   .timer-start:focus-visible, .timer-reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .timer-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  /* Scoring and scoresheet */
-  .score-help { margin-top: 8px; color: var(--ink-muted); }
-  .score-wrap { overflow-x: auto; margin-top: 12px; }
-  .score-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.95rem; }
-  .score-table th, .score-table td { text-align: left; padding: 8px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
-  .score-table th { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
-  .score-table .pts, .score-table .sub { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 16px; }
-  .score-table .pts { color: var(--ink-muted); font-weight: 600; }
-  .score-table td.sub { font-weight: 700; min-width: 3em; }
-  .score-table .count { text-align: center; padding-left: 16px; width: 1%; white-space: nowrap; }
-  .score-table tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; font-size: 1.05rem; padding-top: 10px; }
-  .score-table tfoot td.sub { font-size: 1.4rem; color: var(--navy); }
-  .stepper { display: inline-flex; align-items: center; gap: 6px; }
-  .stepper output { min-width: 2ch; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .step-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    border: 1px solid var(--rule);
-    background: var(--bg);
-    color: var(--ink);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-  }
-  .step-btn[data-dir="1"] { background: var(--navy); border-color: var(--navy); color: #FFFFFF; }
-  .step-btn:hover { border-color: var(--ink-faint); }
-  .step-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .score-check input { width: 20px; height: 20px; accent-color: var(--navy); cursor: pointer; }
-  .score-actions { margin-top: 12px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
   /* Overview */
   #overview {
     background: var(--navy);
@@ -174,15 +141,13 @@
   #overview .checks input { accent-color: #FFFFFF; }
   #overview .checks input:checked + span { color: rgba(255, 255, 255, 0.6); }
   #overview .checks input:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
-  .goal-list { margin: 6px 0 12px; padding-left: 1.5em; }
-  .goal-list li { margin-bottom: 2px; }
 
   /* Roles */
   .roles {
     margin-top: 14px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 22px 32px;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   .role { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: start; }
   .role img { width: 112px; height: 112px; display: block; }
@@ -373,17 +338,11 @@
   <!-- ─── Overview, roles, team goal ─────────────────────── -->
   <section id="overview">
     <h2 class="section-title">Overview</h2>
-    <p>In this 30-minute team relay, you and at least 3 teammates will work through an end-to-end data modeling exercise. Team members will choose a role, perform the task, then pass the baton to the next teammate. Your goal is to:</p>
-    <ol class="goal-list">
-      <li>discover existing data models</li>
-      <li>harmonize and combine them</li>
-      <li>align terms to ontologies</li>
-      <li>create the final model in Curator and validate it before time runs out</li>
-    </ol>
+    <p>In this 30-minute relay, a team of 4 or more works through an end-to-end data modeling exercise. Each team member chooses a role, does that task, then passes the baton to the next team member.</p>
 
     <h3 class="sub-title">What you need</h3>
     <ul class="needs checks">
-      <li><label><input type="checkbox" id="need1"><span><strong>4+ team members</strong><small>Have more than four? Pair up for each role.</small></span></label></li>
+      <li><label><input type="checkbox" id="need1"><span><strong>A team of 4 or more</strong><small>More than 4? Pair up on a role.</small></span></label></li>
       <li><label><input type="checkbox" id="need2"><span><strong>One computer per leg of the relay</strong></span></label></li>
       <li><label><input type="checkbox" id="need3"><span><strong>Claude with access to the Sage Bionetworks plan</strong></span></label></li>
       <li><label><input type="checkbox" id="need4"><span><strong>&ldquo;CoreModel Write Access&rdquo; connector turned on</strong></span></label></li>
@@ -401,14 +360,13 @@
         <span class="timer-status" aria-live="polite"></span>
       </div>
     </div>
-    <p>This is a relay race, so work together and decide who should take each role based on their strengths.</p>
     <div class="roles">
       <div class="role" style="--leg: var(--leg1)">
         <img src="img/model-scout.webp" width="112" height="112" alt="Robot explorer in a safari hat holding a magnifying glass">
         <div>
           <span class="leg-num">Leg 1</span>
           <h3>&#128270; The Model Scout</h3>
-          <p>Search for and identify existing data models, schemas, and standards that may be useful to reuse.</p>
+          <p>Discover existing Sage data models for the same assay or concept, and flag what can be reused.</p>
           <button type="button" class="role-link" data-goto="1">See the Model Scout steps &rarr;</button>
         </div>
       </div>
@@ -417,7 +375,7 @@
         <div>
           <span class="leg-num">Leg 2</span>
           <h3>&#127753; The Bridge Builder</h3>
-          <p>Compare and harmonize information from multiple models, combining them into one consistent structure.</p>
+          <p>Create a single data model that harmonizes the terms and concepts from those models.</p>
           <button type="button" class="role-link" data-goto="2">See the Bridge Builder steps &rarr;</button>
         </div>
       </div>
@@ -426,7 +384,7 @@
         <div>
           <span class="leg-num">Leg 3</span>
           <h3>&#129668; The Vocabulary Wizard</h3>
-          <p>Align fields and values to the appropriate ontologies, controlled vocabularies, and standard terms.</p>
+          <p>Analyze how well the terms align with ontologies, controlled vocabularies, and standard terms.</p>
           <button type="button" class="role-link" data-goto="3">See the Vocabulary Wizard steps &rarr;</button>
         </div>
       </div>
@@ -435,40 +393,13 @@
         <div>
           <span class="leg-num">Leg 4</span>
           <h3>&#128126; The Final Boss</h3>
-          <p>Build and validate the final model in Curator, review the results, and catch any remaining issues before submission.</p>
+          <p>Register the final data model in Synapse and create a Curator task, catching any remaining issues before submission.</p>
           <button type="button" class="role-link" data-goto="4">See the Final Boss steps &rarr;</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="scoring">
-    <h2 class="section-title">Scoring and Scoresheet</h2>
-    <p>Work together to move the model from discovery to validation as quickly and accurately as possible. Each role builds on the one before it, so strong handoffs and teamwork are key.</p>
-    <p class="score-help">Keep score as you go: use <strong>+</strong> and <strong>&minus;</strong> to count how many times you earn each item, and tick the one-time items. Your total updates automatically.</p>
-    <div class="score-wrap">
-    <table class="score-table" id="scoresheet">
-      <thead><tr><th>How to earn points</th><th class="pts">Points</th><th class="count">Count</th><th class="sub">Score</th></tr></thead>
-      <tbody>
-        <tr data-points="3" data-max="1"><td><strong>Clean handoff, Model Scout &rarr; Bridge Builder:</strong> the Bridge Builder finds everything on the &ldquo;Pass the baton&rdquo; list</td><td class="pts">+3</td><td class="count"><label class="score-check"><input type="checkbox" id="score-handoff-1" data-score-input><span class="visually-hidden">Earned</span></label></td><td class="sub">0</td></tr>
-        <tr data-points="3" data-max="1"><td><strong>Clean handoff, Bridge Builder &rarr; Vocabulary Wizard:</strong> the Vocabulary Wizard finds everything on the &ldquo;Pass the baton&rdquo; list</td><td class="pts">+3</td><td class="count"><label class="score-check"><input type="checkbox" id="score-handoff-2" data-score-input><span class="visually-hidden">Earned</span></label></td><td class="sub">0</td></tr>
-        <tr data-points="3" data-max="1"><td><strong>Clean handoff, Vocabulary Wizard &rarr; Final Boss:</strong> the Final Boss finds everything on the &ldquo;Pass the baton&rdquo; list</td><td class="pts">+3</td><td class="count"><label class="score-check"><input type="checkbox" id="score-handoff-3" data-score-input><span class="visually-hidden">Earned</span></label></td><td class="sub">0</td></tr>
-        <tr data-points="-2" data-max=""><td><strong>Dropped baton:</strong> something on the list is missing and has to be sent back</td><td class="pts">&minus;2 each</td><td class="count"><div class="stepper"><button type="button" class="step-btn" data-dir="-1" aria-label="One fewer">&minus;</button><output id="score-dropped" data-score-input aria-live="polite">0</output><button type="button" class="step-btn" data-dir="1" aria-label="One more">+</button></div></td><td class="sub">0</td></tr>
-        <tr data-points="1" data-max=""><td><strong>Done when:</strong> each &ldquo;Done when&rdquo; item a role can tick off</td><td class="pts">+1 each</td><td class="count"><div class="stepper"><button type="button" class="step-btn" data-dir="-1" aria-label="One fewer">&minus;</button><output id="score-done" data-score-input aria-live="polite">0</output><button type="button" class="step-btn" data-dir="1" aria-label="One more">+</button></div></td><td class="sub">0</td></tr>
-        <tr data-points="2" data-max=""><td><strong>Reuse:</strong> an existing element reused instead of creating a new field</td><td class="pts">+2 each</td><td class="count"><div class="stepper"><button type="button" class="step-btn" data-dir="-1" aria-label="One fewer">&minus;</button><output id="score-reuse" data-score-input aria-live="polite">0</output><button type="button" class="step-btn" data-dir="1" aria-label="One more">+</button></div></td><td class="sub">0</td></tr>
-        <tr data-points="2" data-max=""><td><strong>Ontology match:</strong> a binding with a stated reason</td><td class="pts">+2 each</td><td class="count"><div class="stepper"><button type="button" class="step-btn" data-dir="-1" aria-label="One fewer">&minus;</button><output id="score-ontology" data-score-input aria-live="polite">0</output><button type="button" class="step-btn" data-dir="1" aria-label="One more">+</button></div></td><td class="sub">0</td></tr>
-        <tr data-points="1" data-max=""><td><strong>Honest gap:</strong> a term with no good match, listed as a gap</td><td class="pts">+1 each</td><td class="count"><div class="stepper"><button type="button" class="step-btn" data-dir="-1" aria-label="One fewer">&minus;</button><output id="score-gap" data-score-input aria-live="polite">0</output><button type="button" class="step-btn" data-dir="1" aria-label="One more">+</button></div></td><td class="sub">0</td></tr>
-        <tr data-points="5" data-max="1"><td><strong>Validation:</strong> a valid sample passes and an invalid sample fails</td><td class="pts">+5</td><td class="count"><label class="score-check"><input type="checkbox" id="score-validation" data-score-input><span class="visually-hidden">Earned</span></label></td><td class="sub">0</td></tr>
-        <tr data-points="5" data-max="1"><td><strong>Beat the clock:</strong> the Final Boss submits before the 30-minute timer runs out</td><td class="pts">+5</td><td class="count"><label class="score-check"><input type="checkbox" id="score-clock" data-score-input><span class="visually-hidden">Earned</span></label></td><td class="sub">0</td></tr>
-      </tbody>
-      <tfoot><tr><td colspan="3">Team total</td><td class="sub" id="scoreTotal">0</td></tr></tfoot>
-    </table>
-    </div>
-    <div class="score-actions">
-      <button type="button" class="btn" id="scoreReset">Reset scoresheet</button>
-      <span class="hint">Ties go to the team that finished first. Scores stay in this browser only.</span>
-    </div>
-  </section>
 
   <!-- ─── Legs ─────────────────────────────────────────────── -->
   <section id="legs">
@@ -862,62 +793,6 @@
     });
     render();
   });
-
-  // ── Scoresheet ──────────────────────────────────────────
-  (function () {
-    var sheet = document.getElementById("scoresheet");
-    if (!sheet) return;
-    var KEY = "data-model-relay-score-v1";
-    var rows = Array.prototype.slice.call(sheet.querySelectorAll("tbody tr"));
-    var totalEl = document.getElementById("scoreTotal");
-    var saved = {};
-    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
-
-    function fmt(n) { return n < 0 ? "\u2212" + Math.abs(n) : String(n); }
-    function countOf(row) {
-      var input = row.querySelector("[data-score-input]");
-      return input.type === "checkbox" ? (input.checked ? 1 : 0) : Number(input.textContent) || 0;
-    }
-    function update() {
-      var total = 0, state = {};
-      rows.forEach(function (row) {
-        var input = row.querySelector("[data-score-input]");
-        var n = countOf(row);
-        var sub = n * Number(row.getAttribute("data-points"));
-        row.querySelector("td.sub").textContent = fmt(sub);
-        total += sub;
-        state[input.id] = n;
-      });
-      totalEl.textContent = fmt(total);
-      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
-    }
-
-    rows.forEach(function (row) {
-      var input = row.querySelector("[data-score-input]");
-      var n = Number(saved[input.id]) || 0;
-      if (input.type === "checkbox") {
-        input.checked = n > 0;
-        input.addEventListener("change", update);
-      } else {
-        input.textContent = String(Math.max(0, n));
-        row.querySelectorAll(".step-btn").forEach(function (b) {
-          b.addEventListener("click", function () {
-            var next = Math.max(0, (Number(input.textContent) || 0) + Number(b.getAttribute("data-dir")));
-            input.textContent = String(next);
-            update();
-          });
-        });
-      }
-    });
-    document.getElementById("scoreReset").addEventListener("click", function () {
-      rows.forEach(function (row) {
-        var input = row.querySelector("[data-score-input]");
-        if (input.type === "checkbox") input.checked = false; else input.textContent = "0";
-      });
-      update();
-    });
-    update();
-  })();
 
   // ── Leg tabs ──────────────────────────────────────────────
   var tabs = Array.prototype.slice.call(document.querySelectorAll(".leg-tab"));
