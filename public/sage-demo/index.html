@@ -207,9 +207,6 @@
   .leg-head { display: flex; align-items: center; gap: 14px; }
   .leg-head img { width: 72px; height: 72px; flex: none; }
   .leg-title { font-size: 1.3rem; margin-top: 2px; }
-  .leg-intro { margin-top: 8px; }
-  .leg-setup { margin-top: 8px; color: var(--ink-muted); }
-  .leg-setup strong { color: var(--ink); }
 
   .steps-head { margin-top: 24px; font-size: 1.05rem; font-weight: 700; }
   .steps { margin-top: 4px; }
@@ -222,6 +219,9 @@
   .step-num { font-weight: 700; color: var(--leg); line-height: 1.6; }
   .step-title { font-weight: 600; }
   .step-note { color: var(--ink-muted); margin-top: 2px; }
+  .file-links { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .step-shot-sm { max-width: 240px !important; }
+  .step-shot { display: block; width: 100%; max-width: 420px; height: auto; margin-top: 8px; border: 1px solid var(--rule); border-radius: 8px; }
   .step ul { margin-top: 4px; padding-left: 1.15em; color: var(--ink-muted); }
   .step li strong { color: var(--ink); }
 
@@ -274,30 +274,6 @@
   .handoff ul { padding-left: 1.15em; }
   .handoff li + li { margin-top: 2px; }
 
-  /* Leg 4 checklist */
-  .checklist-groups {
-    margin-top: 8px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-    gap: 16px 32px;
-  }
-  .checklist-group h4 { font-size: 0.95rem; margin-bottom: 4px; }
-  .checklist-group h4 span { color: var(--leg4); margin-right: 6px; }
-  .checklist-actions { margin-top: 12px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
-  .btn {
-    background: none;
-    border: 0;
-    padding: 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent);
-    cursor: pointer;
-  }
-  .btn:hover { text-decoration: underline; }
-  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .btn.copied { color: var(--leg4); }
-  .hint { font-size: 0.85rem; color: var(--ink-faint); }
-
   /* ---------- Links ---------- */
   .links-card { display: grid; gap: 8px; }
   .link-item { display: block; text-decoration: none; color: inherit; }
@@ -321,7 +297,7 @@
   }
 
   @media print {
-    .leg-tabs, .copy-btn, .checklist-actions { display: none !important; }
+    .leg-tabs, .copy-btn { display: none !important; }
     .leg-panel[hidden] { display: block !important; }
   }
 </style>
@@ -371,7 +347,7 @@
         </div>
       </div>
       <div class="role" style="--leg: var(--leg2)">
-        <img src="img/bridge-builder.webp" width="112" height="112" alt="Robot fitting two puzzle pieces together">
+        <img src="img/bridge-builder.webp" width="112" height="112" alt="Robot in an orange hard hat and safety vest in front of a suspension bridge">
         <div>
           <span class="leg-num">Leg 2</span>
           <h3>&#127753; The Bridge Builder</h3>
@@ -384,7 +360,7 @@
         <div>
           <span class="leg-num">Leg 3</span>
           <h3>&#129668; The Vocabulary Wizard</h3>
-          <p>Analyze how well the terms align with ontologies, controlled vocabularies, and standard terms.</p>
+          <p>Analyze how well the terms align with ontologies.</p>
           <button type="button" class="role-link" data-goto="3">See the Vocabulary Wizard steps &rarr;</button>
         </div>
       </div>
@@ -418,6 +394,7 @@
       <button type="button" class="leg-tab" role="tab" id="tab-2" aria-controls="leg-2" aria-selected="false" tabindex="-1" style="--leg: var(--leg2)"><span class="leg-num">Leg 2</span><span class="leg-tab-title">The Bridge Builder</span></button>
       <button type="button" class="leg-tab" role="tab" id="tab-3" aria-controls="leg-3" aria-selected="false" tabindex="-1" style="--leg: var(--leg3)"><span class="leg-num">Leg 3</span><span class="leg-tab-title">The Vocabulary Wizard</span></button>
       <button type="button" class="leg-tab" role="tab" id="tab-4" aria-controls="leg-4" aria-selected="false" tabindex="-1" style="--leg: var(--leg4)"><span class="leg-num">Leg 4</span><span class="leg-tab-title">The Final Boss</span></button>
+      <button type="button" class="leg-tab" role="tab" id="tab-5" aria-controls="leg-5" aria-selected="false" tabindex="-1" style="--leg: var(--navy)"><span class="leg-num">Wrap-up</span><span class="leg-tab-title">Presentations</span></button>
     </div>
 
     <!-- Leg 1 -->
@@ -426,58 +403,32 @@
         <img src="img/model-scout.webp" width="72" height="72" alt="">
         <div><div class="leg-num">Leg 1</div><h3 class="leg-title">&#128270; The Model Scout</h3></div>
       </div>
-      <p class="leg-intro">Search for and identify existing data models, schemas, and standards that may be useful to reuse. Work out which fields describe the same concept and draft one common model. The Model Scout decides the concepts. Value lists belong to the Bridge Builder and ontology terms to the Vocabulary Wizard.</p>
 
       <div class="steps-head">Steps</div>
       <div class="steps">
         <div class="step"><span class="step-num">1</span><div>
-          <div class="step-title">Set the context (fill in once)</div>
+          <div class="step-title">Find and group all assay templates</div>
           <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">My working project in CoreModels is "[project name]" and the assay or data type I am modelling is "[assay or data type]". Remember both for this conversation. Everything below refers to them.</p></div>
+          <p class="prompt-text">I'm exploring assay types in order to build a common data model. Using CoreModels Write Access, look at the Home Week Demo Fall 2026 project, Sage Core Data Models space.
+
+Find all assay-related Types (templates), including versioned or near-duplicate ones.
+Group them into assay families (e.g. DNA/epigenomic sequencing, RNA-seq/transcriptomics, proteomics/mass spec, imaging, metabolomics, microbiome, arrays/genotyping, immunoassay, clinical/behavioral/PK, other). Show the count per family as a table and a chart.</p></div>
         </div></div>
         <div class="step"><span class="step-num">2</span><div>
-          <div class="step-title">Find the existing models</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">In my working project, list every Type that relates to the assay or data type I named. Treat variants of it separately. For each Type, tell me how many fields it has and which consortium or program it seems to come from. Then use the Synapse MCP to check whether any consortium has a registered schema for this assay that is missing from the list.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">3</span><div>
-          <div class="step-title">Compare the fields</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">For the Types you just found, list every field with its label. Group fields that describe the same concept even when their names differ, for example because of different prefixes, casing, or wording. Show a table with one row per concept and one column per Type. Flag fields that appear in only one Type, and mark fields that already exist as shared elements we could reuse as they are.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">4</span><div>
-          <div class="step-title">Draft the common model</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Propose one common template for this assay or data type with exactly one term per concept, so a contributor fills in each idea once. Reuse existing elements wherever they fit instead of creating new ones. Use one naming convention with no program prefixes. Organize the fields into logical groups that follow the steps of the workflow, and mark which fields are required. Move fields that are specific to one program, or that describe processed results instead of the original data, into a separate list. Do not write value lists or ontology terms yet.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">5</span><div>
-          <div class="step-title">Record the mapping and the doubts</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Make a table mapping every old field in every source Type to its new term, or to "dropped" or "moved out" with a reason. Then list the merges you are least sure about, where two old fields might mean different things or use different sets of allowed values.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">6</span><div>
-          <div class="step-title">Build it and pass the baton</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">In a new space of my project, create a Type named "Common" followed by the assay or data type name (no spaces), with these fields and a description for each. Mark required fields. Then leave a project-level comment titled "Leg 1 handoff" containing the mapping table, the list of reused elements, and the list of uncertain merges. Finally copy the project and name the copy "[assay or data type] - Leg 1 handoff".</p></div>
+          <div class="step-title">Open CoreModels</div>
+          <p class="step-note">Open <a href="https://go.coremodels.io" target="_blank" rel="noopener">go.coremodels.io</a> and log in with your sagebase.org email to follow along in the user interface.</p>
+          <p class="step-note">Then open the <strong>Home Week Demo Fall 2026</strong> project:</p>
+          <img class="step-shot" src="img/home-week-project.webp" width="622" height="204" alt="CoreModels project card titled Home Week Demo Fall 2026, marked Public, described as a demo for Homeweek to practice creating common data models using the CoreModels MCP">
+          <p class="step-note">In the project, open <strong>Select Space</strong>, choose <strong>Sage Core Data Models</strong>, and click <strong>Select</strong>:</p>
+          <img class="step-shot step-shot-sm" src="img/select-space.webp" width="620" height="473" alt="CoreModels Select Space menu with Sage Core Data Models checked and the Select button">
         </div></div>
       </div>
 
       <div class="handoff-grid">
         <div class="handoff">
-          <h4>Pass the baton to Leg 2</h4>
-          <ul>
-            <li>The copied project with the draft Common Type and field descriptions</li>
-            <li>The old-to-new mapping table in the "Leg 1 handoff" comment</li>
-            <li>The list of reused elements and the list of uncertain merges</li>
-          </ul>
-        </div>
-        <div class="done">
-          <h4>Done when</h4>
+          <h4>Pass the baton to the Bridge Builder when</h4>
           <ul class="checks">
-            <li><label><input type="checkbox" id="l1c1"><span>Every source field appears in the mapping</span></label></li>
-            <li><label><input type="checkbox" id="l1c2"><span>Each concept has one term</span></label></li>
-            <li><label><input type="checkbox" id="l1c3"><span>Required fields are marked and every field has a description</span></label></li>
-            <li><label><input type="checkbox" id="l1c4"><span>Uncertain merges are listed, not hidden</span></label></li>
+            <li><label><input type="checkbox" id="l1c1"><span>you have selected which assay/data models you want to target to combine</span></label></li>
           </ul>
         </div>
       </div>
@@ -489,59 +440,30 @@
         <img src="img/bridge-builder.webp" width="72" height="72" alt="">
         <div><div class="leg-num">Leg 2</div><h3 class="leg-title">&#127753; The Bridge Builder</h3></div>
       </div>
-      <p class="leg-intro">Compare and harmonize information from multiple models, combining them into one consistent structure. Decide the uncertain merges, agree one definition and data type per field, write value lists, and reuse existing components wherever possible.</p>
-      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read the "Leg 1 handoff" comment first. Work in a new copy of it named "Leg 2 working".</p>
 
       <div class="steps-head">Steps</div>
       <div class="steps">
         <div class="step"><span class="step-num">1</span><div>
-          <div class="step-title">Set the context (fill in once)</div>
+          <div class="step-title">Harmonize the data models</div>
           <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comment titled "Leg 1 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">2</span><div>
-          <div class="step-title">Decide the uncertain merges</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">For each uncertain merge in the Leg 1 handoff, compare the old fields' definitions, data types, and allowed values. Recommend keeping the merge or splitting it, and give the reason. Show the evidence for each recommendation.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">3</span><div>
-          <div class="step-title">Agree definitions and data types</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">For every field in the Common Type, compare the descriptions and data types of the old fields it replaces. Propose one definition and one data type for each field, and flag every place where the source models disagree.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">4</span><div>
-          <div class="step-title">Write the value lists</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Which fields in the Common Type should have a fixed list of allowed values, and which should stay free text or numeric? For each list field, propose the values, making sure the list covers every value the merged old fields allowed.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">5</span><div>
-          <div class="step-title">Reuse, remove duplicates, find gaps</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Check whether any field or value list in the Common Type duplicates an element that already exists in the parent project. Where one exists, propose reusing it instead of keeping a new node. Then list any concept the source models need that the Common Type is still missing.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">6</span><div>
-          <div class="step-title">Apply the changes and pass the baton</div>
-          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">List the changes you accepted</span><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Apply only these changes: [list the ones you accepted]. Create the value lists and link them to their fields. For each change, add a comment on the node saying what changed and why. Then leave a project-level comment titled "Leg 2 handoff" listing: merges kept or split with reasons, definitions and data types changed, value lists created, elements reused, and gaps still open. Copy the project and name the copy "[assay or data type] - Leg 2 handoff".</p></div>
+          <p class="prompt-text">I'm building a common data model for one assay. Using CoreModels Write Access, work in the Home Week Demo Fall 2026 project, in the Sage Core Data Models space.
+
+Find these data models: [insert names]
+
+Walk me through harmonizing them into a single new Type:
+1. Compare their elements and taxonomies. Show me which ones mean the same thing, which differ, and which appear in only one model.
+2. Propose one element per concept, reusing existing elements where they fit.
+3. Create the new Type, named "[insert a name]", with those elements and taxonomies.
+
+Don't edit, move or delete the original models. In the end, I need a single schema that I will call the data model for this assay.</p></div>
         </div></div>
       </div>
 
       <div class="handoff-grid">
         <div class="handoff">
-          <h4>Pass the baton to Leg 3</h4>
-          <ul>
-            <li>The model with merges decided, one definition and data type per field, and value lists</li>
-            <li>A reason for every change, as comments on the nodes</li>
-            <li>The list of reused elements and open gaps in the "Leg 2 handoff" comment</li>
-          </ul>
-        </div>
-        <div class="done">
-          <h4>Done when</h4>
+          <h4>Pass the baton to the Vocabulary Wizard when</h4>
           <ul class="checks">
-            <li><label><input type="checkbox" id="l2c1"><span>Every uncertain merge is kept or split, with a reason</span></label></li>
-            <li><label><input type="checkbox" id="l2c2"><span>Every field has one definition and one data type</span></label></li>
-            <li><label><input type="checkbox" id="l2c3"><span>Every fixed-answer field has a value list</span></label></li>
-            <li><label><input type="checkbox" id="l2c4"><span>Existing elements are reused instead of duplicated, and gaps are listed</span></label></li>
+            <li><label><input type="checkbox" id="l2c1"><span>you have a single new Type that harmonizes the data models</span></label></li>
           </ul>
         </div>
       </div>
@@ -553,58 +475,25 @@
         <img src="img/vocabulary-wizard.webp" width="72" height="72" alt="">
         <div><div class="leg-num">Leg 3</div><h3 class="leg-title">&#129668; The Vocabulary Wizard</h3></div>
       </div>
-      <p class="leg-intro">Align fields and values to the appropriate ontologies, controlled vocabularies, and standard terms. The Vocabulary Wizard owns the bindings. If a match makes you doubt an earlier decision, leave a comment on that node instead of editing it.</p>
-      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read the "Leg 1 handoff" and "Leg 2 handoff" comments. Work in a new copy named "Leg 3 working".</p>
 
       <div class="steps-head">Steps</div>
       <div class="steps">
         <div class="step"><span class="step-num">1</span><div>
-          <div class="step-title">Set the context (fill in once)</div>
+          <div class="step-title">Create an ontology match table</div>
           <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comments titled "Leg 1 handoff" and "Leg 2 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">2</span><div>
-          <div class="step-title">Search ontologies</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">For each field and each value-list value in the Common Type, search public ontologies (for example through the EBI Ontology Lookup Service) for a matching term. For every field or value, show the top candidates with their ID, definition, and source ontology. Say which candidate you would choose and why, and say plainly where nothing matches.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">3</span><div>
-          <div class="step-title">Check the matches yourself</div>
-          <p class="step-note">Read each definition. A label match is not enough. Ask three questions:</p>
-          <ul>
-            <li>Does the definition say the same thing as our field description?</li>
-            <li>Does the ontology belong to this field's community, or is it borrowed from another (for example, one written for a different organism or discipline)?</li>
-            <li>Does the term describe the field, or only one of its values?</li>
-          </ul>
-        </div></div>
-        <div class="step"><span class="step-num">4</span><div>
-          <div class="step-title">Bind what you accept</div>
-          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">List the terms you accepted</span><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Bind only these ontology terms: [list the ones you accepted, with their IDs]. Do not bind anything else. For each binding, add a comment on the node stating why it was chosen and recording the term's IRI.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">5</span><div>
-          <div class="step-title">Record gaps and pass the baton</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Leave a project-level comment titled "Leg 3 handoff" listing: every binding with its reason, every field or value with no ontology match, any binding borrowed from another community, and any place where an ontology match made you doubt an earlier merge. Then copy the project and name the copy "[assay or data type] - Leg 3 handoff".</p></div>
+          <p class="prompt-text">Using CoreModels Write Access, look at the Home Week Demo Fall 2026 project, Sage Core Data Models space.
+
+Find the new data model [insert name] that was just created.
+
+Create a table that shows which ontologies are matched: for each element, the matching ontology term (term ID and ontology), or "no match".</p></div>
         </div></div>
       </div>
 
       <div class="handoff-grid">
         <div class="handoff">
-          <h4>Pass the baton to Leg 4</h4>
-          <ul>
-            <li>The model with ontology bindings</li>
-            <li>A reason and IRI for each binding</li>
-            <li>A list of unmatched terms, borrowed terms, and merges that now look wrong</li>
-          </ul>
-        </div>
-        <div class="done">
-          <h4>Done when</h4>
+          <h4>Pass the baton to the Final Boss when</h4>
           <ul class="checks">
-            <li><label><input type="checkbox" id="l3c1"><span>Every binding has a reason and a reviewer</span></label></li>
-            <li><label><input type="checkbox" id="l3c2"><span>Unmatched terms are listed as gaps, not left blank</span></label></li>
-            <li><label><input type="checkbox" id="l3c3"><span>Terms borrowed from another community are flagged</span></label></li>
-            <li><label><input type="checkbox" id="l3c4"><span>Doubts about earlier legs are raised as comments, and no field was edited or removed</span></label></li>
+            <li><label><input type="checkbox" id="l3c1"><span>you have a table that shows which ontologies are matched</span></label></li>
           </ul>
         </div>
       </div>
@@ -616,112 +505,69 @@
         <img src="img/final-boss.webp" width="72" height="72" alt="">
         <div><div class="leg-num">Leg 4</div><h3 class="leg-title">&#128126; The Final Boss</h3></div>
       </div>
-      <p class="leg-intro">Build and validate the final model in Curator, review the results, and catch any remaining issues before submission. Every fix needs a reason that traces to a failed test.</p>
-      <p class="leg-setup"><strong>Setup.</strong> Open the project your teammate handed you and read all three handoff comments in order. Work in a new copy named "Leg 4 working". The facilitator may supply one sample manifest per consortium. If there are none, use the generator prompt in Step 2.</p>
 
       <div class="steps-head">Steps</div>
       <div class="steps">
         <div class="step"><span class="step-num">1</span><div>
-          <div class="step-title">Set the context (fill in once)</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">My working project in CoreModels is "[project name]". A teammate handed it to me. Read the comments titled "Leg 1 handoff", "Leg 2 handoff", and "Leg 3 handoff" and the Type whose name starts with "Common", and remember them for this conversation. Everything below refers to them.</p></div>
+          <div class="step-title">Open the Synapse project and create a folder</div>
+          <p class="step-note">Open <a href="https://www.synapse.org/Synapse:syn77578115/files/" target="_blank" rel="noopener">the project&rsquo;s Files page in Synapse</a>, then create a new folder and give it a name your team will recognize.</p>
+          <p class="step-note"><strong>Write down the folder&rsquo;s Synapse ID.</strong></p>
         </div></div>
         <div class="step"><span class="step-num">2</span><div>
-          <div class="step-title">Get test data</div>
-          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Sample generator</span><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">For each source Type listed in the Leg 1 handoff mapping, write a realistic sample manifest as CSV with 5 rows, using that Type's original field names. Include two deliberate problems in each: one missing required value and one value outside the expected set. Label which rows are valid and which are not.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">3</span><div>
-          <div class="step-title">Translate each manifest with the mapping</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Using the mapping table in the Leg 1 handoff comment and the changes in the Leg 2 handoff comment, convert each sample manifest into the fields of the Common Type. Show me what happened to every column: mapped cleanly, merged (with the rule used), or dropped. List any value that had no home in the value lists.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">4</span><div>
-          <div class="step-title">Build in Curator and validate</div>
-          <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Export the Common Type as a JSON Schema and read it back to me: field names, types, required list, and allowed values. Then use the Synapse MCP to set up the model in Curator and validate each converted row against it. If a step can't be done through the Synapse MCP, tell me exactly what to do in Curator instead. Report per source consortium: rows passed, rows failed, and the reason for each failure.</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">5</span><div>
-          <div class="step-title">Diagnose failures</div>
-          <p class="step-note">Sort each failure into one of these before fixing anything:</p>
-          <ul>
-            <li><strong>The test data was wrong</strong> (bad row, expected to fail)</li>
-            <li><strong>The mapping was wrong</strong> (an old value converted badly)</li>
-            <li><strong>The model was wrong</strong> (a field is missing, a list lacks a real value, a required flag is too strict)</li>
+          <div class="step-title">Upload example files</div>
+          <p class="step-note">Upload at least 1 file to your new folder. You can use these example files:</p>
+          <ul class="file-links">
+            <li><a href="example-files/file1.txt" target="_blank" rel="noopener">file1.txt</a></li>
+            <li><a href="example-files/file2.txt" target="_blank" rel="noopener">file2.txt</a></li>
+            <li><a href="example-files/file3.txt" target="_blank" rel="noopener">file3.txt</a></li>
+            <li><a href="example-files/file4.txt" target="_blank" rel="noopener">file4.txt</a></li>
+            <li><a href="example-files/file5.txt" target="_blank" rel="noopener">file5.txt</a></li>
           </ul>
         </div></div>
-        <div class="step"><span class="step-num">6</span><div>
-          <div class="step-title">Fix the model and run the checklist</div>
-          <p class="step-note">The Copy button on this prompt includes the full validation checklist below.</p>
-          <div class="prompt-box"><div class="prompt-box-head"><span class="prompt-box-label">Checklist included on copy</span><button type="button" class="copy-btn" data-append-checklist>Copy prompt</button></div>
-          <p class="prompt-text">Fix the model failures only. For each change, add a comment on the node saying what changed and which failure it fixed. Then work through this checklist against the project and the three handoff comments. For each item say PASS or FAIL and give the evidence, or say what is missing.
-
-[validation checklist below]</p></div>
-        </div></div>
-        <div class="step"><span class="step-num">7</span><div>
-          <div class="step-title">Review and submit</div>
+        <div class="step"><span class="step-num">3</span><div>
+          <div class="step-title">Register the schema in Synapse and create a curation task</div>
           <div class="prompt-box"><div class="prompt-box-head"><button type="button" class="copy-btn">Copy prompt</button></div>
-          <p class="prompt-text">Leave a project-level comment titled "Leg 4 handoff" that summarizes, across all four legs: what we reused, what we changed, which conflicts we resolved, which ontologies we aligned to, what validation found (rows passed of rows tested per consortium), where gaps remain, and how many new fields the model adds compared with reusing existing ones. Then copy the project and name the copy "[assay or data type] - Final".</p></div>
-        </div></div>
-      </div>
+          <p class="prompt-text">Using CoreModels Write Access, look at the Home Week Demo Fall 2026 project, Sage Core Data Models space.
 
-      <div class="steps-head">Validation checklist</div>
-      <div class="checklist-groups" id="validationChecklist">
-        <div class="checklist-group"><h4><span>A</span>Completeness</h4><ul class="checks">
-          <li><label><input type="checkbox" id="vA1"><span>Every field has a description a contributor could follow without help</span></label></li>
-          <li><label><input type="checkbox" id="vA2"><span>Every field has a data type, and required fields are marked</span></label></li>
-          <li><label><input type="checkbox" id="vA3"><span>Each concept has exactly one term</span></label></li>
-          <li><label><input type="checkbox" id="vA4"><span>Every value list has a description and the values consortia currently use</span></label></li>
-        </ul></div>
-        <div class="checklist-group"><h4><span>B</span>Traceability and reuse</h4><ul class="checks">
-          <li><label><input type="checkbox" id="vB1"><span>Every source field maps to a new term or is listed as dropped, with a reason</span></label></li>
-          <li><label><input type="checkbox" id="vB2"><span>Merged fields have a documented rule for converting old values</span></label></li>
-          <li><label><input type="checkbox" id="vB3"><span>Existing elements are reused wherever they fit</span></label></li>
-          <li><label><input type="checkbox" id="vB4"><span>Left-out program-specific fields have a named home</span></label></li>
-        </ul></div>
-        <div class="checklist-group"><h4><span>C</span>Ontology alignment</h4><ul class="checks">
-          <li><label><input type="checkbox" id="vC1"><span>Each binding has a stated reason and a reviewer</span></label></li>
-          <li><label><input type="checkbox" id="vC2"><span>Terms with no match are listed as gaps</span></label></li>
-          <li><label><input type="checkbox" id="vC3"><span>Bindings from outside the field's community are accepted or replaced explicitly</span></label></li>
-          <li><label><input type="checkbox" id="vC4"><span>Ontology IRIs are recorded</span></label></li>
-        </ul></div>
-        <div class="checklist-group"><h4><span>D</span>Validation</h4><ul class="checks">
-          <li><label><input type="checkbox" id="vD1"><span>A sample manifest from each consortium was run through the mapping</span></label></li>
-          <li><label><input type="checkbox" id="vD2"><span>Failures are listed with a cause and are fixed or accepted</span></label></li>
-          <li><label><input type="checkbox" id="vD3"><span>The JSON Schema export matches the intended fields, types, and required list</span></label></li>
-          <li><label><input type="checkbox" id="vD4"><span>A valid sample passes and an invalid sample fails</span></label></li>
-        </ul></div>
-        <div class="checklist-group"><h4><span>E</span>Governance</h4><ul class="checks">
-          <li><label><input type="checkbox" id="vE1"><span>Nothing in the parent project was edited</span></label></li>
-          <li><label><input type="checkbox" id="vE2"><span>Naming follows one convention</span></label></li>
-          <li><label><input type="checkbox" id="vE3"><span>Every change has a comment with its reason</span></label></li>
-          <li><label><input type="checkbox" id="vE4"><span>Open comments are closed or carried forward as known gaps</span></label></li>
-        </ul></div>
-      </div>
-      <div class="checklist-actions">
-        <button type="button" class="btn" id="copyChecklist">Copy checklist as text</button>
-        <button type="button" class="btn" id="clearChecks">Clear all ticks</button>
-        <span class="hint">Ticks stay in this browser only.</span>
+Find the new data model [insert name] that was just created.
+
+Then walk me through these steps, using the Synapse.org connector:
+1. Register the new JSON schema in Synapse.
+2. Bind the schema to the folder [insert the folder's Synapse ID from Step 1].
+3. Create a new file-based curation task.
+
+If you need any details, such as the organization or schema name, ask me.</p></div>
+        </div></div>
       </div>
 
       <div class="handoff-grid">
         <div class="handoff">
-          <h4>Ready to submit</h4>
-          <ul>
-            <li>The model in Curator and the validated "Final" copy</li>
-            <li>The "Leg 4 handoff" summary, ready to present</li>
-            <li>The checklist results and the count of new fields for the bonus challenge</li>
-          </ul>
-        </div>
-        <div class="done">
-          <h4>Done when</h4>
+          <h4>You have crossed the finish line when</h4>
           <ul class="checks">
-            <li><label><input type="checkbox" id="l4c1"><span>Every source consortium was tested with at least one manifest</span></label></li>
-            <li><label><input type="checkbox" id="l4c2"><span>A valid row passes and an invalid row fails, both shown</span></label></li>
-            <li><label><input type="checkbox" id="l4c3"><span>Each change traces to a failure</span></label></li>
-            <li><label><input type="checkbox" id="l4c4"><span>Ontology bindings from Leg 3 are unchanged, or changes are explained</span></label></li>
+            <li><label><input type="checkbox" id="l4c1"><span>the JSON schema is registered in Synapse</span></label></li>
+            <li><label><input type="checkbox" id="l4c2"><span>the schema is bound to the folder you created in Step 1</span></label></li>
+            <li><label><input type="checkbox" id="l4c3"><span>a new file-based curation task is created</span></label></li>
           </ul>
         </div>
+      </div>
+    </article>
+
+    <article class="leg-panel" id="leg-5" role="tabpanel" aria-labelledby="tab-5" style="--leg: var(--navy)" hidden>
+      <div class="leg-head">
+        <div><div class="leg-num">Wrap-up</div><h3 class="leg-title">&#127908; Presentations</h3></div>
+      </div>
+
+      <div class="steps-head">Steps</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><div>
+          <div class="step-title">Present your findings to the group</div>
+          <p class="step-note">Show your final template.</p>
+          <p class="step-note">Share some of your experience, for example:</p>
+          <ul>
+            <li>What worked and what didn&rsquo;t?</li>
+            <li>What would you do differently if you had more time?</li>
+          </ul>
+        </div></div>
       </div>
     </article>
   </section>
@@ -730,12 +576,8 @@
   <section id="links">
     <h2 class="section-title">Useful links</h2>
     <div class="card links-card">
-      <a class="link-item" href="https://library.schematica.io/mcp-server" target="_blank" rel="noopener">
-        <div><span class="link-item-title">Connect Claude to the CoreModels MCP</span><span class="link-item-url">library.schematica.io/mcp-server</span></div>
-        <span class="link-item-arrow">&nearr;</span>
-      </a>
-      <a class="link-item" href="https://go.coremodels.io/app/9beb8916977c46149f7a0180b50d41ba" target="_blank" rel="noopener">
-        <div><span class="link-item-title">Sage Core Data Models (source project)</span><span class="link-item-url">go.coremodels.io/app/9beb8916977c46149f7a0180b50d41ba</span></div>
+      <a class="link-item" href="https://go.coremodels.io" target="_blank" rel="noopener">
+        <div><span class="link-item-title">CoreModels</span><span class="link-item-url">go.coremodels.io</span></div>
         <span class="link-item-arrow">&nearr;</span>
       </a>
       <a class="link-item" href="https://www.synapse.org" target="_blank" rel="noopener">
@@ -826,7 +668,7 @@
     });
   });
   function handleHash() {
-    var m = /^#leg-([1-4])$/.exec(location.hash);
+    var m = /^#leg-([1-5])$/.exec(location.hash);
     if (m) {
       selectLeg(Number(m[1]));
       document.getElementById("legs").scrollIntoView({ block: "start" });
@@ -864,25 +706,12 @@
     fallback(); done();
   }
 
-  var checklistRoot = document.getElementById("validationChecklist");
-  function checklistText() {
-    var lines = ["Validation checklist"];
-    checklistRoot.querySelectorAll(".checklist-group").forEach(function (g) {
-      var h = g.querySelector("h4");
-      var letter = h.querySelector("span").textContent;
-      lines.push("", letter + ". " + h.textContent.replace(letter, "").trim());
-      g.querySelectorAll("li span").forEach(function (s) { lines.push("[ ] " + s.textContent); });
-    });
-    return lines.join("\n");
-  }
   document.querySelectorAll(".copy-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var text = btn.closest(".prompt-box").querySelector(".prompt-text").textContent;
-      if (btn.hasAttribute("data-append-checklist")) text = text.replace("[validation checklist below]", checklistText());
       copyText(text, btn);
     });
   });
-  document.getElementById("copyChecklist").addEventListener("click", function (e) { copyText(checklistText(), e.currentTarget); });
 
   // ── Checkbox persistence (per viewer, best effort) ────────
   var KEY = "harmonization-relay-checks-v1";
@@ -895,11 +724,6 @@
       saved[b.id] = b.checked;
       try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* ignore */ }
     });
-  });
-  document.getElementById("clearChecks").addEventListener("click", function () {
-    boxes.forEach(function (b) { b.checked = false; });
-    saved = {};
-    try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
   });
 })();
 </script>
