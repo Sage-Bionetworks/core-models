@@ -16190,6 +16190,18 @@
   {
     "organization_id": "7",
     "organization_name": "org.sagebionetworks",
+    "schema_id": "11466",
+    "schema_name": "AccessRequirementBaseSchema",
+    "version_id": "72803",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-19T03:21:02.492Z",
+    "created_by": "1",
+    "json_sha256_hex": "e4a5ee14f94c60d0c3020e3d6d9d51d9244cb2f86a0f10b4f183dc3b25a5c7a5",
+    "status": "draft"
+  },
+  {
+    "organization_id": "7",
+    "organization_name": "org.sagebionetworks",
     "schema_id": "37",
     "schema_name": "repo.model.Entity",
     "version_id": "5278",
