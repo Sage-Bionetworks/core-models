@@ -16248,6 +16248,66 @@
     "status": "draft"
   },
   {
+    "organization_id": "2262",
+    "organization_name": "org.mofib3d.demo",
+    "schema_id": "11516",
+    "schema_name": "AnalysisResultTemplate",
+    "version_id": "73829",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-30T19:22:18.105Z",
+    "created_by": "3459953",
+    "json_sha256_hex": "b8dd0193ccd62ae05ceca1028d368720d72f9ec879f7848401ecf4f1f97a818b",
+    "status": "draft"
+  },
+  {
+    "organization_id": "2262",
+    "organization_name": "org.mofib3d.demo",
+    "schema_id": "11513",
+    "schema_name": "AssayImmunoassayMetadataTemplate",
+    "version_id": "73826",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-30T19:21:53.401Z",
+    "created_by": "3459953",
+    "json_sha256_hex": "0e826a4f8fd7a333c3b1af335f8937f6632a7af74d6ad41289334137c91bd668",
+    "status": "draft"
+  },
+  {
+    "organization_id": "2262",
+    "organization_name": "org.mofib3d.demo",
+    "schema_id": "11512",
+    "schema_name": "AssayRnaSeqMetadataTemplate",
+    "version_id": "73825",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-30T19:21:46.327Z",
+    "created_by": "3459953",
+    "json_sha256_hex": "e45b65fc9991e08b8123b3f3833266802d498505f875c916993ce27e5e40595a",
+    "status": "draft"
+  },
+  {
+    "organization_id": "2262",
+    "organization_name": "org.mofib3d.demo",
+    "schema_id": "11515",
+    "schema_name": "AssaySpatialTranscriptomicsMetadataTemplate",
+    "version_id": "73828",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-30T19:22:13.556Z",
+    "created_by": "3459953",
+    "json_sha256_hex": "51228b80528452a087a3b6fdb436789f1dc12e89962a57ab81b95aab9aed6669",
+    "status": "draft"
+  },
+  {
+    "organization_id": "2262",
+    "organization_name": "org.mofib3d.demo",
+    "schema_id": "11514",
+    "schema_name": "CellTissuePhenotypingTemplate",
+    "version_id": "73827",
+    "semantic_version": "1.0.0",
+    "created_on": "2026-10-30T19:22:01.809Z",
+    "created_by": "3459953",
+    "json_sha256_hex": "4366fb9221c826aab858ac07d644e80d967c914faaa400f00284a93e93682fc4",
+    "status": "draft"
+  },
+  {
     "organization_id": "7",
     "organization_name": "org.sagebionetworks",
     "schema_id": "11466",
