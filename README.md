@@ -36,7 +36,7 @@ The live site has three tabs:
 | Tab | What it shows |
 | --- | --- |
 | **Registered Schemas** | Every JSON schema registered in the Synapse schema registry — one row per schema, at its latest version. Search, filter by organization / schema / version / status, sort, pin favorites, view the raw JSON, and export to CSV or Excel. |
-| **DCC Links** | A hand-curated table of Data Coordinating Centers (ARK, ADKP, ALS, Classic, ELITE, HTAN2, MC2, NF) linking straight to each one's GitHub data model, JSON schemas, documentation site, and Synapse portal. |
+| **DCC Links** | A hand-curated table of Data Coordinating Centers (ARK, ADKP, ALS, Classic, ELITE, HTAN2, MC2, NAMHub, NF) linking straight to each one's GitHub data model, JSON schemas, documentation site, and Synapse portal. |
 | **Insights** | Summary statistics across all registered schemas — counts by organization, status, and activity over time. |
 
 You can also **Open in CoreModels** (top-right) to explore the published schemas in the

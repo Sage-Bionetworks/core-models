@@ -49,6 +49,13 @@ export const DCC_DATA = [
     portal: { label: 'cancercomplexity.synapse.org', url: 'https://cancercomplexity.synapse.org/' },
   },
   {
+    name: 'NAMHub',
+    repo: { label: 'sagebio-ada/nam-hub-models', url: 'https://github.com/sagebio-ada/nam-hub-models' },
+    schemas: { label: 'releases', url: 'https://github.com/sagebio-ada/nam-hub-models/releases' },
+    docs: null,
+    portal: { label: 'namhub.synapse.org', url: 'https://namhub.synapse.org/' },
+  },
+  {
     name: 'NF',
     repo: { label: 'nf-osi/nf-metadata-dictionary', url: 'https://github.com/nf-osi/nf-metadata-dictionary' },
     schemas: { label: 'registered-json-schemas', url: 'https://github.com/nf-osi/nf-metadata-dictionary/tree/main/registered-json-schemas' },

@@ -6,7 +6,7 @@ import sageLogo from './assets/sage-logo.svg'
 
 const TABS = [
   { id: 'schemas', label: 'Registered Schemas' },
-  { id: 'dcc',     label: 'DCC Links', count: 8 },
+  { id: 'dcc',     label: 'DCC Links', count: 9 },
   { id: 'stats',   label: 'Insights' },
 ]
 
