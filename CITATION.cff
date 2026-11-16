@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software or its associated resources, please cite it as below."
+
+title: "Core Models: Index of Data Models"
+
+authors:
+  - name: "Sage Bionetworks"
+
+abstract: >-
+  Core Models provides a centralized, browsable index
+  of registered Synapse JSON Schemas across Sage
+  Bionetworks data coordinating centers. The resource
+  supports metadata discovery, schema exploration,
+  validation, and standardized data management
+  across research initiatives.
+
+version: "1.0.0"
+
+repository-code: "https://github.com/Sage-Bionetworks/core-models"
+
+url: "https://sage-bionetworks.github.io/core-models/"
+
+keywords:
+  - metadata
+  - data models
+  - JSON Schema
+  - Synapse
+  - interoperability
+  - data standardization
