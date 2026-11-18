@@ -16334,6 +16334,18 @@
   {
     "organization_id": "486",
     "organization_name": "linglp.test.schemas",
+    "schema_id": "11830",
+    "schema_name": "GridSyncErrorsTest",
+    "version_id": "76053",
+    "semantic_version": "0.0.1",
+    "created_on": "2026-11-18T15:57:45.073Z",
+    "created_by": "3443707",
+    "json_sha256_hex": "76f0a66360d3a5cc3f3c4f5233acbe5ec303d4387b7b1d8310d68977280ff006",
+    "status": "draft"
+  },
+  {
+    "organization_id": "486",
+    "organization_name": "linglp.test.schemas",
     "schema_id": "9637",
     "schema_name": "IndividualAnimalMODEL.ADMetadataTemplate",
     "version_id": "61313",
